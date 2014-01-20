@@ -1,17 +1,24 @@
 #include <cstdio>
 #include <QMessageBox>
+#include <QSerialPort>
 
 #include "mainwindow.h"
 #include "newconnectiondialog.h"
 #include "ui_mainwindow.h"
 #include "consoleview.h"
+#include "../consolemgr.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(ConsoleMgr& consoleMgr, QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_consoleMgr(consoleMgr)
 {
+    QSerialPort *port = new QSerialPort("/dev/pts/16");
+    if (port->open(QIODevice::ReadWrite)){
+        puts("PORT OPEN");
+    }
     ui->setupUi(this);
-    ui->tabWidget->insertTab(0, new ConsoleView(), "TG+ Modul");
+    ui->tabWidget->insertTab(0, new ConsoleView(port, this), "TG+ Modul");
     ui->tabWidget->setCurrentIndex(0);
 
     ui->statusBar->showMessage("Ready");
@@ -42,10 +49,12 @@ void MainWindow::showAbout(void)
 void MainWindow::connectPort()
 {
     puts("CONNECT");
+#if 0
     NewConnectionDialog dialog;
     dialog.exec();
     ui->tabWidget->insertTab(-1, new ConsoleView(), "SpaceControl");
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+#endif
 }
 
 void MainWindow::closeTab()

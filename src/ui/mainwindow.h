@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+class ConsoleMgr;
+
 namespace Ui {
     class MainWindow;
 }
@@ -12,7 +14,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(ConsoleMgr& m_consoleMgr, QWidget *parent = 0);
     ~MainWindow();
     
 public slots:
@@ -22,6 +24,7 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
+    ConsoleMgr& m_consoleMgr;
 };
 
 #endif // MAINWINDOW_H
