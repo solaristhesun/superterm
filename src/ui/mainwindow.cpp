@@ -13,7 +13,7 @@ MainWindow::MainWindow(ConsoleMgr& consoleMgr, QWidget *parent) :
     ui(new Ui::MainWindow),
     m_consoleMgr(consoleMgr)
 {
-    QSerialPort *port = new QSerialPort("/dev/pts/16");
+    QSerialPort *port = new QSerialPort("/dev/ttyS10");
     if (port->open(QIODevice::ReadWrite)){
         puts("PORT OPEN");
     }

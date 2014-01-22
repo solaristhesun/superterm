@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="terminal_16x16.png">img/terminal_16x16.png</file>
+        <file alias="terminal_32x32.png">img/terminal_32x32.png</file>
+    </qresource>
+</RCC>

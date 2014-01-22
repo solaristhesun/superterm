@@ -9,6 +9,7 @@ DESTDIR = build/release
 OBJECTS_DIR = $$DESTDIR/.obj
 MOC_DIR = $$DESTDIR/.moc
 UI_DIR  = $$DESTDIR/.ui
+RCC_DIR = $$DESTDIR/.rcc
 
 SOURCES += src/main.cpp \
            src/ui/mainwindow.cpp \
@@ -25,3 +26,6 @@ HEADERS += src/ui/mainwindow.h \
 FORMS   += src/ui/mainwindow.ui \
     src/ui/consoleview.ui \
     src/ui/newconnectiondialog.ui
+
+RESOURCES += \
+    superterm.qrc
