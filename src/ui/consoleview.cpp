@@ -1,6 +1,7 @@
-
+#include <QScrollBar>
 #include <iostream>
 #include <QSerialPort>
+#include <QKeyEvent>
 
 #include "consoleview.h"
 #include "ui_consoleview.h"
@@ -20,14 +21,26 @@ ConsoleView::~ConsoleView()
     delete ui;
 }
 
-void ConsoleView::keyPressEvent(QKeyEvent *)
+void ConsoleView::keyPressEvent(QKeyEvent *e)
 {
     std::cout << "KEY" << std::endl;
+    QByteArray data;
+    data.append(e->text());
+    m_port->write(data);
 }
 
 void ConsoleView::showData()
 {
     QByteArray data = m_port->readAll();
-    append(QString(data));
+    //append(QString(data));
     std::cout << "NEW DATA" << std::endl;
+    QString oldText = toPlainText();
+    setPlainText(oldText + QString(data));
+#if 0
+    QTextCursor c = textCursor();
+    c.movePosition(QTextCursor::End);
+    setTextCursor(c);
+#endif
+    QScrollBar *sb = verticalScrollBar();
+    sb->setValue(sb->maximum());
 }
