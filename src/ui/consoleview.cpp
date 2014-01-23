@@ -34,8 +34,11 @@ void ConsoleView::showData()
     QByteArray data = m_port->readAll();
     //append(QString(data));
     std::cout << "NEW DATA" << std::endl;
-    QString oldText = toPlainText();
-    setPlainText(oldText + QString(data));
+    QString str = data;
+    str.replace("\n", "<br>");
+    moveCursor(QTextCursor::End);
+    textCursor().insertHtml(str);
+    moveCursor(QTextCursor::End);
 #if 0
     QTextCursor c = textCursor();
     c.movePosition(QTextCursor::End);
@@ -43,4 +46,5 @@ void ConsoleView::showData()
 #endif
     QScrollBar *sb = verticalScrollBar();
     sb->setValue(sb->maximum());
+    std::cout << toHtml().toStdString() << std::endl;
 }
