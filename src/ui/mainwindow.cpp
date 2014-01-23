@@ -62,6 +62,7 @@ void MainWindow::connectPort()
     }
     ui->tabWidget->insertTab(0, new ConsoleView(port), ui->lineEdit->text());
     port->setBaudRate(ui->comboBox_3->currentText().toUInt());
+    port->setFlowControl(QSerialPort::NoFlowControl);
     ui->tabWidget->setCurrentIndex(0);
 }
 
