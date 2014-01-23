@@ -15,13 +15,15 @@ SOURCES += src/main.cpp \
            src/ui/mainwindow.cpp \
            src/ui/consoleview.cpp \
     src/ui/newconnectiondialog.cpp \
-    src/consolemgr.cpp
+    src/consolemgr.cpp \
+    src/ui/consoletabwidget.cpp
 
 
 HEADERS += src/ui/mainwindow.h \
            src/ui/consoleview.h \
     src/ui/newconnectiondialog.h \
-    src/consolemgr.h
+    src/consolemgr.h \
+    src/ui/consoletabwidget.h
 
 FORMS   += src/ui/mainwindow.ui \
     src/ui/consoleview.ui \

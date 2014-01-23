@@ -11,6 +11,7 @@ ConsoleView::ConsoleView(QSerialPort *port, QWidget *parent) :
     ui(new Ui::ConsoleView),
     m_port(port)
 {
+    puts("CONSTRUCTOR");
     ui->setupUi(this);
 
     connect(m_port, SIGNAL(readyRead()), this, SLOT(showData()));
@@ -18,6 +19,8 @@ ConsoleView::ConsoleView(QSerialPort *port, QWidget *parent) :
 
 ConsoleView::~ConsoleView()
 {
+    puts("DESSTRUCTOR");
+    delete m_port;
     delete ui;
 }
 
@@ -32,19 +35,28 @@ void ConsoleView::keyPressEvent(QKeyEvent *e)
 void ConsoleView::showData()
 {
     QByteArray data = m_port->readAll();
+    for (int p = 0; p < data.size(); p++)
+    {
+        printf("0x%02x ", data.at(p));
+    }
+    printf("\n");
     //append(QString(data));
-    std::cout << "NEW DATA" << std::endl;
     QString str = data;
-    str.replace("\n", "<br>");
+    std::cout << "NEW DATA [" << str.toStdString() << "]" << std::endl;
+    str = str.replace("\r", "<br>");
+    str = str.replace(" ", "&nbsp;");
+
     moveCursor(QTextCursor::End);
     textCursor().insertHtml(str);
     moveCursor(QTextCursor::End);
-#if 0
-    QTextCursor c = textCursor();
-    c.movePosition(QTextCursor::End);
-    setTextCursor(c);
-#endif
+
+    scrollDown();
+}
+
+void ConsoleView::scrollDown(void)
+{
     QScrollBar *sb = verticalScrollBar();
     sb->setValue(sb->maximum());
-    std::cout << toHtml().toStdString() << std::endl;
 }
+
+// EOF <stefan@scheler.com>

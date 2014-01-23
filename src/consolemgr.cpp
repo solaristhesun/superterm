@@ -1,5 +1,6 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
+#include <QList>
 #include <iostream>
 
 #include "consolemgr.h"
@@ -15,6 +16,11 @@ ConsoleMgr::ConsoleMgr(QObject *parent) :
     for(i=info.begin(); i!=info.end(); ++i) {
         std::cout << i->portName().toStdString() << std::endl;
     }
+
+    QList<qint32> list = QSerialPortInfo::standardBaudRates();
+    QList<qint32>::iterator it;
+    for (it = list.begin(); it != list.end(); ++it)
+        std::cout << *it << std::endl;
 
     QSerialPortInfo info2("/dev/pts/16");
     std::cout << info2.description().toStdString() << "DONE" << std::endl;

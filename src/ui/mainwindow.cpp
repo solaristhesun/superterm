@@ -13,14 +13,15 @@ MainWindow::MainWindow(ConsoleMgr& consoleMgr, QWidget *parent) :
     ui(new Ui::MainWindow),
     m_consoleMgr(consoleMgr)
 {
+    ui->setupUi(this);
+#if 0
     QSerialPort *port = new QSerialPort("/dev/ttyS10");
     if (port->open(QIODevice::ReadWrite)){
         puts("PORT OPEN");
     }
-    ui->setupUi(this);
     ui->tabWidget->insertTab(0, new ConsoleView(port, this), "TG+ Modul");
     ui->tabWidget->setCurrentIndex(0);
-
+#endif
     ui->statusBar->showMessage("Ready");
 }
 
@@ -55,6 +56,13 @@ void MainWindow::connectPort()
     ui->tabWidget->insertTab(-1, new ConsoleView(), "SpaceControl");
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
 #endif
+    QSerialPort *port = new QSerialPort(ui->comboBox->currentText());
+    if (port->open(QIODevice::ReadWrite)){
+        puts("PORT OPEN");
+    }
+    ui->tabWidget->insertTab(0, new ConsoleView(port), ui->lineEdit->text());
+    port->setBaudRate(ui->comboBox_3->currentText().toUInt());
+    ui->tabWidget->setCurrentIndex(0);
 }
 
 void MainWindow::closeTab()

@@ -25,6 +25,8 @@ public slots:
 private:
     Ui::ConsoleView *ui;
     QSerialPort* m_port;
+
+    void scrollDown(void);
 };
 
 #endif // CONSOLEVIEW_H

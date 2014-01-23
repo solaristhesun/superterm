@@ -34,7 +34,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="ConsoleTabWidget" name="tabWidget">
       <property name="tabPosition">
        <enum>QTabWidget::West</enum>
       </property>
@@ -199,10 +199,61 @@
                   <string>COM1</string>
                  </property>
                 </item>
+                <item>
+                 <property name="text">
+                  <string>COM2</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>COM3</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>COM4</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>COM5</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>COM6</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>COM7</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>COM8</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>/dev/ttyS10</string>
+                 </property>
+                </item>
                </widget>
               </item>
               <item row="4" column="1">
-               <widget class="QComboBox" name="comboBox_3"/>
+               <widget class="QComboBox" name="comboBox_3">
+                <item>
+                 <property name="text">
+                  <string>19200</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>115200</string>
+                 </property>
+                </item>
+               </widget>
               </item>
               <item row="5" column="1">
                <widget class="QComboBox" name="comboBox_2"/>
@@ -349,6 +400,17 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ConsoleTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>src/ui/consoletabwidget.h</header>
+   <container>1</container>
+   <slots>
+    <slot>closeTab(int)</slot>
+   </slots>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
@@ -386,16 +448,32 @@
   <connection>
    <sender>tabWidget</sender>
    <signal>tabCloseRequested(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>closeTab()</slot>
+   <receiver>tabWidget</receiver>
+   <slot>closeTab(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>199</x>
      <y>150</y>
     </hint>
     <hint type="destinationlabel">
-     <x>199</x>
-     <y>138</y>
+     <x>263</x>
+     <y>178</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>connectPort()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>445</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>263</x>
+     <y>189</y>
     </hint>
    </hints>
   </connection>
