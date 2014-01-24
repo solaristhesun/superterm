@@ -13,21 +13,21 @@ RCC_DIR = $$DESTDIR/.rcc
 
 SOURCES += src/main.cpp \
            src/ui/mainwindow.cpp \
-           src/ui/consoleview.cpp \
-    src/ui/newconnectiondialog.cpp \
-    src/consolemgr.cpp \
-    src/ui/consoletabwidget.cpp
+           src/ui/newconnectiondialog.cpp \
+           src/consolemgr.cpp \
+           src/ui/consoletabwidget.cpp \
+           src/ui/consoletab.cpp
 
 
 HEADERS += src/ui/mainwindow.h \
-           src/ui/consoleview.h \
-    src/ui/newconnectiondialog.h \
-    src/consolemgr.h \
-    src/ui/consoletabwidget.h
+           src/ui/newconnectiondialog.h \
+           src/consolemgr.h \
+           src/ui/consoletabwidget.h \
+           src/ui/consoletab.h
 
 FORMS   += src/ui/mainwindow.ui \
-    src/ui/consoleview.ui \
-    src/ui/newconnectiondialog.ui
+           src/ui/newconnectiondialog.ui \
+           src/ui/consoletab.ui
 
 RESOURCES += \
-    superterm.qrc
+           superterm.qrc

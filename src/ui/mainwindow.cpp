@@ -5,7 +5,7 @@
 #include "mainwindow.h"
 #include "newconnectiondialog.h"
 #include "ui_mainwindow.h"
-#include "consoleview.h"
+#include "consoletab.h"
 #include "../consolemgr.h"
 
 MainWindow::MainWindow(ConsoleMgr& consoleMgr, QWidget *parent) :
@@ -60,7 +60,7 @@ void MainWindow::connectPort()
     if (port->open(QIODevice::ReadWrite)){
         puts("PORT OPEN");
     }
-    ui->tabWidget->insertTab(0, new ConsoleView(port, ui->tabWidget), ui->lineEdit->text());
+    ui->tabWidget->insertTab(0, new ConsoleTab(port, ui->lineEdit->text(), ui->tabWidget ), ui->lineEdit->text());
     port->setBaudRate(ui->comboBox_3->currentText().toUInt());
     port->setFlowControl(QSerialPort::NoFlowControl);
     ui->tabWidget->setCurrentIndex(0);

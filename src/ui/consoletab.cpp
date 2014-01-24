@@ -3,30 +3,29 @@
 #include <QSerialPort>
 #include <QKeyEvent>
 
-#include "consoleview.h"
-#include "ui_consoleview.h"
+#include "consoletab.h"
+#include "ui_consoletab.h"
 
-ConsoleView::ConsoleView(QSerialPort *port, QTabWidget *parent) :
+ConsoleTab::ConsoleTab(QSerialPort *port, QString title, QTabWidget *parent) :
     QTextEdit(parent),
-    ui(new Ui::ConsoleView),
+    m_ui(new Ui::ConsoleTab),
     m_port(port),
+    m_title(title),
     m_parent(parent),
     m_lastTabIndex(0)
 {
-    puts("CONSTRUCTOR");
-    ui->setupUi(this);
+    m_ui->setupUi(this);
 
     connect(m_port, SIGNAL(readyRead()), this, SLOT(showData()));
 }
 
-ConsoleView::~ConsoleView()
+ConsoleTab::~ConsoleTab()
 {
-    puts("DESSTRUCTOR");
     delete m_port;
-    delete ui;
+    delete m_ui;
 }
 
-void ConsoleView::toggleFullScreen(void)
+void ConsoleTab::toggleFullScreen(void)
 {
     if (!isFullScreen())
     {
@@ -37,12 +36,12 @@ void ConsoleView::toggleFullScreen(void)
     else
     {
         setParent(m_parent);
-        m_parent->insertTab(m_lastTabIndex, this, "foo");
+        m_parent->insertTab(m_lastTabIndex, this, m_title);
         m_parent->setCurrentIndex(m_lastTabIndex);
     }
 }
 
-void ConsoleView::keyPressEvent(QKeyEvent *e)
+void ConsoleTab::keyPressEvent(QKeyEvent *e)
 {
     if ((e->key()==Qt::Key_Return) && (e->modifiers()==Qt::AltModifier))
     {
@@ -50,13 +49,13 @@ void ConsoleView::keyPressEvent(QKeyEvent *e)
         return;
     }
 
-    std::cout << "KEY" << std::endl;
     QByteArray data;
     data.append(e->text());
+
     m_port->write(data);
 }
 
-void ConsoleView::showData()
+void ConsoleTab::showData()
 {
     QByteArray data = m_port->readAll();
     for (int p = 0; p < data.size(); p++)
@@ -64,7 +63,7 @@ void ConsoleView::showData()
         printf("0x%02x ", data.at(p));
     }
     printf("\n");
-    //append(QString(data));
+
     QString str = data;
     std::cout << "NEW DATA [" << str.toStdString() << "]" << std::endl;
     str = str.replace("\r", "<br>");
@@ -77,7 +76,7 @@ void ConsoleView::showData()
     scrollDown();
 }
 
-void ConsoleView::scrollDown(void)
+void ConsoleTab::scrollDown(void)
 {
     QScrollBar *sb = verticalScrollBar();
     sb->setValue(sb->maximum());

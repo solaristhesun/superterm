@@ -1,22 +1,22 @@
-#ifndef CONSOLEVIEW_H
-#define CONSOLEVIEW_H
+#ifndef CONSOLETAB_H
+#define CONSOLETAB_H
 
 #include <QTextEdit>
 
 namespace Ui {
-	class ConsoleView;
+    class ConsoleTab;
 }
 
 class QSerialPort;
 class QTabWidget;
 
-class ConsoleView : public QTextEdit
+class ConsoleTab : public QTextEdit
 {
     Q_OBJECT
     
 public:
-    ConsoleView(QSerialPort *port, QTabWidget *parent = 0);
-    ~ConsoleView();
+    ConsoleTab(QSerialPort *port, QString title, QTabWidget *parent = 0);
+    ~ConsoleTab();
 
     void keyPressEvent(QKeyEvent * e);
 
@@ -24,8 +24,9 @@ public slots:
     void showData(void);
 
 private:
-    Ui::ConsoleView *ui;
+    Ui::ConsoleTab* m_ui;
     QSerialPort*    m_port;
+    QString         m_title;
     QTabWidget*     m_parent;
     int             m_lastTabIndex;
 
@@ -33,4 +34,4 @@ private:
     void toggleFullScreen(void);
 };
 
-#endif // CONSOLEVIEW_H
+#endif // CONSOLETAB_H

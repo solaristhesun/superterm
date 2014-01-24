@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ConsoleView</class>
- <widget class="QTextEdit" name="ConsoleView">
+ <class>ConsoleTab</class>
+ <widget class="QTextEdit" name="ConsoleTab">
   <property name="geometry">
    <rect>
     <x>0</x>
