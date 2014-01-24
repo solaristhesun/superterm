@@ -13,6 +13,14 @@
   <property name="windowTitle">
    <string>superterm 2014.1</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QTextEdit {
+color: black;
+font: 10pt &quot;Courier&quot;;
+border: 1px solid white;
+}
+</string>
+  </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>false</bool>
   </property>

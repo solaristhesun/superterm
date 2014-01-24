@@ -1,6 +1,7 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QList>
+#include <QDebug>
 #include <iostream>
 
 #include "consolemgr.h"
@@ -8,6 +9,14 @@
 ConsoleMgr::ConsoleMgr(QObject *parent) :
     QObject(parent)
 {
+    qDebug() << "BAZINGA";
+    // Example use QSerialPortInfo
+    foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts()) {
+        qDebug() << "Name        : " << info.portName();
+        qDebug() << "Description : " << info.description();
+        qDebug() << "Manufacturer: " << info.manufacturer();
+     }
+
     QList<QSerialPortInfo> info = QSerialPortInfo::availablePorts();
 
     std::cout << "hallo" << info.size() << std::endl;

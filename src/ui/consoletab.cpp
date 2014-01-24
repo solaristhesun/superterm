@@ -2,6 +2,8 @@
 #include <iostream>
 #include <QSerialPort>
 #include <QKeyEvent>
+#include <QMenu>
+#include <QColorDialog>
 
 #include "consoletab.h"
 #include "ui_consoletab.h"
@@ -74,6 +76,20 @@ void ConsoleTab::showData()
     moveCursor(QTextCursor::End);
 
     scrollDown();
+}
+
+void ConsoleTab::showContextMenu(const QPoint &pt)
+{
+    QMenu *menu = new QMenu(this);
+    menu->addAction(m_ui->actionChangeColor);
+    menu->exec(mapToGlobal(pt));
+    delete menu;
+}
+
+void ConsoleTab::showColorDialog(void)
+{
+    QColor rgb = QColorDialog::getColor(Qt::white, this);
+    setStyleSheet("QTextEdit { background-color: " + rgb.name() + " }");
 }
 
 void ConsoleTab::scrollDown(void)
