@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QScrollBar>
 #include <iostream>
 #include <QSerialPort>
@@ -88,8 +89,8 @@ void ConsoleTab::showContextMenu(const QPoint &pt)
 
 void ConsoleTab::showColorDialog(void)
 {
-    QColor rgb = QColorDialog::getColor(Qt::white, this);
-    setStyleSheet("QTextEdit { background-color: " + rgb.name() + " }");
+    QColor rgb = QColorDialog::getColor(palette().color(QPalette::Window), this);
+    setStyleSheet(QString("QTextEdit { background-color: %1; }").arg(rgb.name()));
 }
 
 void ConsoleTab::scrollDown(void)
