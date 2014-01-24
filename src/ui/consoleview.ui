@@ -14,9 +14,11 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(18, 146, 171);
+   <string notr="true">QTextEdit {
+background-color: rgb(18, 146, 171);
 color: black;
 font: 10pt &quot;Courier&quot;;
+}
 </string>
   </property>
   <property name="readOnly">

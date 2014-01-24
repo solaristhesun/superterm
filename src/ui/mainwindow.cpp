@@ -60,7 +60,7 @@ void MainWindow::connectPort()
     if (port->open(QIODevice::ReadWrite)){
         puts("PORT OPEN");
     }
-    ui->tabWidget->insertTab(0, new ConsoleView(port), ui->lineEdit->text());
+    ui->tabWidget->insertTab(0, new ConsoleView(port, ui->tabWidget), ui->lineEdit->text());
     port->setBaudRate(ui->comboBox_3->currentText().toUInt());
     port->setFlowControl(QSerialPort::NoFlowControl);
     ui->tabWidget->setCurrentIndex(0);

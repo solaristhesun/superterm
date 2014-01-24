@@ -6,10 +6,12 @@
 #include "consoleview.h"
 #include "ui_consoleview.h"
 
-ConsoleView::ConsoleView(QSerialPort *port, QWidget *parent) :
+ConsoleView::ConsoleView(QSerialPort *port, QTabWidget *parent) :
     QTextEdit(parent),
     ui(new Ui::ConsoleView),
-    m_port(port)
+    m_port(port),
+    m_parent(parent),
+    m_lastTabIndex(0)
 {
     puts("CONSTRUCTOR");
     ui->setupUi(this);
@@ -24,8 +26,30 @@ ConsoleView::~ConsoleView()
     delete ui;
 }
 
+void ConsoleView::toggleFullScreen(void)
+{
+    if (!isFullScreen())
+    {
+        m_lastTabIndex = m_parent->currentIndex();
+        setParent(0);
+        showFullScreen();
+    }
+    else
+    {
+        setParent(m_parent);
+        m_parent->insertTab(m_lastTabIndex, this, "foo");
+        m_parent->setCurrentIndex(m_lastTabIndex);
+    }
+}
+
 void ConsoleView::keyPressEvent(QKeyEvent *e)
 {
+    if ((e->key()==Qt::Key_Return) && (e->modifiers()==Qt::AltModifier))
+    {
+        toggleFullScreen();
+        return;
+    }
+
     std::cout << "KEY" << std::endl;
     QByteArray data;
     data.append(e->text());
