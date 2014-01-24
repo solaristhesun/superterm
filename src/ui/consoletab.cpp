@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <QMenu>
 #include <QColorDialog>
+#include <QFontMetrics>
 
 #include "consoletab.h"
 #include "ui_consoletab.h"
@@ -18,6 +19,8 @@ ConsoleTab::ConsoleTab(QSerialPort *port, QString title, QTabWidget *parent) :
     m_lastTabIndex(0)
 {
     m_ui->setupUi(this);
+
+    setCursorWidth(fontMetrics().width(' '));
 
     connect(m_port, SIGNAL(readyRead()), this, SLOT(showData()));
 }
