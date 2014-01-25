@@ -40,6 +40,14 @@ height: 18px;
 }
 QPushButton {
 height: 18px;
+}
+
+QFrame#btnBar
+{
+border-left: 1px solid white;
+border-right: 1px solid white;
+border-top: 1px solid white;
+background: qlineargradient(x1:0,y1:0,x2:1,y2:1, stop:0 rgb(104,104,104), stop: 1 white);
 }</string>
      </property>
      <property name="frameShape">
@@ -124,7 +132,7 @@ height: 18px;
     <widget class="ConsoleView" name="consoleView">
      <property name="styleSheet">
       <string notr="true">QTextEdit {
-background-color: rgb(18, 146, 171);
+background-color: #003460;
 }
 </string>
      </property>

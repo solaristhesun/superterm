@@ -34,3 +34,5 @@ FORMS += \
 
 RESOURCES += \
     superterm.qrc
+
+win32:INCLUDEPATH += C:\DUMP\projects\superterm\

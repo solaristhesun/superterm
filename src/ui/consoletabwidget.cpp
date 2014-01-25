@@ -1,10 +1,12 @@
 #include <iostream>
 
+
 #include "consoletabwidget.h"
 
 ConsoleTabWidget::ConsoleTabWidget(QWidget *parent) :
     QTabWidget(parent)
 {
+
 }
 
 void ConsoleTabWidget::closeTab(int index)

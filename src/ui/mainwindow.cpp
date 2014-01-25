@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <QMessageBox>
 #include <QSerialPort>
+#include <QPushButton>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -15,7 +16,11 @@ MainWindow::MainWindow(ConsoleMgr& consoleMgr, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->tabWidget->tabBar()->tabButton(0, QTabBar::RightSide)->resize(0, 0);
+    ui->tabWidget->setTabEnabled(0, false);
+
     ui->tabWidget->insertTab(0, new ConsoleTab(ui->tabWidget), "test");
+    ui->tabWidget->setCurrentIndex(0);
     ui->statusBar->showMessage("Ready");
 }
 

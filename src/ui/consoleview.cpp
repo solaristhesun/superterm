@@ -45,6 +45,8 @@ void ConsoleView::showContextMenu(const QPoint &pt)
 {
     QMenu *menu = new QMenu(this);
     menu->addAction(m_ui->actionChangeColor);
+    menu->addSeparator();
+    menu->addAction(m_ui->actionChangeColor);
     menu->exec(mapToGlobal(pt));
     delete menu;
 }
