@@ -55,6 +55,9 @@ void ConsoleTab::refreshPorts(void)
         qDebug() << info.vendorIdentifier();
         qDebug() << info.productIdentifier();
     }
+
+    m_ui->comboPorts->addItem("/dev/ttyS10");
+    m_ui->comboPorts->addItem("/dev/ttyS11");
 }
 
 void ConsoleTab::toggleFullScreen(void)
@@ -106,15 +109,6 @@ void ConsoleTab::onComboChanged(void)
     {
         m_ui->btnConnect->setEnabled(false);
     }
-}
-
-void ConsoleTab::mousePressEvent ( QMouseEvent * event )
-{
-    qDebug() << "BAZINGA";
-    QMenu *menu = new QMenu(this);
-    menu->addSeparator();
-    menu->exec(mapToGlobal(event->pos()));
-    delete menu;
 }
 
 void ConsoleTab::onDataAvailable(void)

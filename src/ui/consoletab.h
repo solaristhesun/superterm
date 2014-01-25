@@ -20,7 +20,6 @@ public:
 
     void toggleFullScreen(void);
 
-    void	mousePressEvent ( QMouseEvent * event );
 
 public slots:
     void onConnectClicked(void);
