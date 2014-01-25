@@ -6,15 +6,32 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>168</height>
+    <width>696</width>
+    <height>475</height>
    </rect>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::DefaultContextMenu</enum>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QComboBox
+{
+min-height: 20px;
+ }
+
+QPushButton {
+min-height: 18px;
+}
+
+QTextEdit
+{
+font: 12pt &quot;Courier&quot;;
+}
+
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -47,7 +64,8 @@ QFrame#btnBar
 border-left: 1px solid white;
 border-right: 1px solid white;
 border-top: 1px solid white;
-background: qlineargradient(x1:0,y1:0,x2:1,y2:1, stop:0 rgb(104,104,104), stop: 1 white);
+background-color: #ffe6ab;
+/*background: qlineargradient(x1:0,y1:0,x2:1,y2:1, stop:0 rgb(104,104,104), stop: 1 white); */
 }</string>
      </property>
      <property name="frameShape">
@@ -70,13 +88,16 @@ background: qlineargradient(x1:0,y1:0,x2:1,y2:1, stop:0 rgb(104,104,104), stop: 
        <number>5</number>
       </property>
       <property name="rightMargin">
-       <number>5</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>5</number>
       </property>
       <item>
        <widget class="QComboBox" name="comboPorts">
+        <property name="toolTip">
+         <string>Select port</string>
+        </property>
         <property name="editable">
          <bool>false</bool>
         </property>
@@ -92,6 +113,9 @@ background: qlineargradient(x1:0,y1:0,x2:1,y2:1, stop:0 rgb(104,104,104), stop: 
       </item>
       <item>
        <widget class="QComboBox" name="comboBaudrates">
+        <property name="toolTip">
+         <string>Select baudrate</string>
+        </property>
         <property name="sizeAdjustPolicy">
          <enum>QComboBox::AdjustToContents</enum>
         </property>
@@ -103,9 +127,127 @@ background: qlineargradient(x1:0,y1:0,x2:1,y2:1, stop:0 rgb(104,104,104), stop: 
        </widget>
       </item>
       <item>
+       <widget class="QComboBox" name="comboDataBits">
+        <property name="toolTip">
+         <string>Select data bits</string>
+        </property>
+        <property name="currentText">
+         <string>8</string>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+        <item>
+         <property name="text">
+          <string>5</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>6</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>7</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>8</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboParity">
+        <property name="toolTip">
+         <string>Select parity</string>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+        <item>
+         <property name="text">
+          <string>None</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Even</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Odd</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Mark</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Space</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboStopBits">
+        <property name="toolTip">
+         <string>Select stop bits</string>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+        <item>
+         <property name="text">
+          <string>1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1.5</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>2</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboFlowControl">
+        <property name="toolTip">
+         <string>Select flow control</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>None</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Xon/Xoff</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Hardware</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btnConnect">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>&amp;Connect</string>
@@ -116,12 +258,9 @@ background: qlineargradient(x1:0,y1:0,x2:1,y2:1, stop:0 rgb(104,104,104), stop: 
        </widget>
       </item>
       <item>
-       <spacer name="spacer">
+       <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -141,6 +280,13 @@ background: qlineargradient(x1:0,y1:0,x2:1,y2:1, stop:0 rgb(104,104,104), stop: 
 background-color: #003460;
 }
 </string>
+     </property>
+     <property name="html">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Courier'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
@@ -227,5 +373,6 @@ background-color: #003460;
   <slot>onConnectClicked()</slot>
   <slot>onKeyPressed(QString)</slot>
   <slot>onComboChanged()</slot>
+  <slot>onContextMenuRequested(QPoint)</slot>
  </slots>
 </ui>

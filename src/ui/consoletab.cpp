@@ -1,12 +1,16 @@
 #include <QSerialPort>
 #include <QDebug>
 #include <iostream>
+#include <QMenu>
+#include <QMouseEvent>
 #include <cstdio>
 #include <QSerialPortInfo>
 
 #include "consoletab.h"
 #include "ui_consoletab.h"
 #include "consoletabwidget.h"
+
+quint32   ConsoleTab::m_u32counter = 1;
 
 ConsoleTab::ConsoleTab(QTabWidget *parent) :
     QWidget(parent),
@@ -25,6 +29,11 @@ ConsoleTab::ConsoleTab(QTabWidget *parent) :
     {
         m_ui->comboBaudrates->addItem(QString::number(baudrate));
     }
+
+    // resize combo boxes
+    //m_ui->comboBaudrates->setFixedHeight(m_ui->btnConnect->height());
+    qDebug() <<  m_ui->btnConnect->height();
+    qDebug() <<  m_ui->comboBaudrates->height();
 
 }
 
@@ -80,6 +89,8 @@ void ConsoleTab::onConnectClicked(void)
     }
     connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
 
+    m_parent->addTab(new ConsoleTab(m_parent), QString(tr("Untitled%1")).arg(++m_u32counter));
+
     m_ui->btnBar->hide();
     m_ui->consoleView->setEnabled(true);
     m_ui->consoleView->setFocus();
@@ -95,6 +106,15 @@ void ConsoleTab::onComboChanged(void)
     {
         m_ui->btnConnect->setEnabled(false);
     }
+}
+
+void ConsoleTab::mousePressEvent ( QMouseEvent * event )
+{
+    qDebug() << "BAZINGA";
+    QMenu *menu = new QMenu(this);
+    menu->addSeparator();
+    menu->exec(mapToGlobal(event->pos()));
+    delete menu;
 }
 
 void ConsoleTab::onDataAvailable(void)

@@ -16,11 +16,8 @@ MainWindow::MainWindow(ConsoleMgr& consoleMgr, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->tabWidget->tabBar()->tabButton(0, QTabBar::RightSide)->resize(0, 0);
-    ui->tabWidget->setTabEnabled(0, false);
+    ui->tabWidget->addTab(new ConsoleTab(ui->tabWidget), QString(tr("Untitled%1")).arg(1));
 
-    ui->tabWidget->insertTab(0, new ConsoleTab(ui->tabWidget), "test");
-    ui->tabWidget->setCurrentIndex(0);
     ui->statusBar->showMessage("Ready");
 }
 

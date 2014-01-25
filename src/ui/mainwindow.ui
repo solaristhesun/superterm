@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>527</width>
-    <height>380</height>
+    <width>387</width>
+    <height>211</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,7 +50,7 @@ border: 1px solid white;
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>-1</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -64,16 +64,6 @@ border: 1px solid white;
       <property name="movable">
        <bool>true</bool>
       </property>
-      <widget class="QWidget" name="tab">
-       <property name="styleSheet">
-        <string notr="true">height: 10px;
-padding: 0;
-width: 10px;</string>
-       </property>
-       <attribute name="title">
-        <string>+</string>
-       </attribute>
-      </widget>
      </widget>
     </item>
    </layout>

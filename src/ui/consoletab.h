@@ -20,17 +20,22 @@ public:
 
     void toggleFullScreen(void);
 
+    void	mousePressEvent ( QMouseEvent * event );
+
 public slots:
     void onConnectClicked(void);
     void onDataAvailable(void);
     void onKeyPressed(QString text);
     void onComboChanged(void);
 
+
 private:
     Ui::ConsoleTab*  m_ui;
     QTabWidget*      m_parent;
     QSerialPort*     m_port;
     int              m_lastTabIndex;
+
+    static quint32   m_u32counter;
 
     void refreshPorts();
 };

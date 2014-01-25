@@ -17,8 +17,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(ConsoleMgr& m_consoleMgr, QWidget *parent = 0);
     ~MainWindow();
-    void	contextMenuEvent ( QContextMenuEvent * event ) { qDebug() << "BAZINGA! MENU!"; };
-    
+
 public slots:
     void showAbout(void);
     void connectPort(void);
