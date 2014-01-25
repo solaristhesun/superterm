@@ -85,6 +85,18 @@ void ConsoleTab::onConnectClicked(void)
     m_ui->consoleView->setFocus();
 }
 
+void ConsoleTab::onComboChanged(void)
+{
+    if (m_ui->comboPorts->currentIndex() != 0 && m_ui->comboBaudrates->currentIndex() != 0)
+    {
+        m_ui->btnConnect->setEnabled(true);
+    }
+    else
+    {
+        m_ui->btnConnect->setEnabled(false);
+    }
+}
+
 void ConsoleTab::onDataAvailable(void)
 {
     QByteArray data = m_port->readAll();

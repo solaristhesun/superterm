@@ -24,6 +24,7 @@ public slots:
     void onConnectClicked(void);
     void onDataAvailable(void);
     void onKeyPressed(QString text);
+    void onComboChanged(void);
 
 private:
     Ui::ConsoleTab*  m_ui;
