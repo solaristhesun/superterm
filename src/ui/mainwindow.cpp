@@ -47,8 +47,6 @@ void MainWindow::connectPort()
 #if 0
     puts("CONNECT");
 #if 0
-    NewConnectionDialog dialog;
-    dialog.exec();
     ui->tabWidget->insertTab(-1, new ConsoleView(), "SpaceControl");
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
 #endif

@@ -68,7 +68,7 @@ height: 18px;
        <number>5</number>
       </property>
       <item>
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="comboPorts">
         <property name="editable">
          <bool>false</bool>
         </property>
@@ -80,30 +80,10 @@ height: 18px;
           <string>Select port</string>
          </property>
         </item>
-        <item>
-         <property name="text">
-          <string>COM1</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>COM2</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>COM3</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>ttyS10</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox2">
+       <widget class="QComboBox" name="comboBaudrates">
         <property name="sizeAdjustPolicy">
          <enum>QComboBox::AdjustToContents</enum>
         </property>
@@ -112,27 +92,17 @@ height: 18px;
           <string>Select baudrate</string>
          </property>
         </item>
-        <item>
-         <property name="text">
-          <string>19200</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>115200</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="btnConnect">
         <property name="text">
          <string>&amp;Connect</string>
         </property>
        </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer">
+       <spacer name="spacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -151,7 +121,7 @@ height: 18px;
     </widget>
    </item>
    <item>
-    <widget class="ConsoleView" name="textEdit">
+    <widget class="ConsoleView" name="consoleView">
      <property name="styleSheet">
       <string notr="true">QTextEdit {
 background-color: rgb(18, 146, 171);
@@ -175,7 +145,7 @@ background-color: rgb(18, 146, 171);
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton</sender>
+   <sender>btnConnect</sender>
    <signal>clicked()</signal>
    <receiver>ConsoleTab</receiver>
    <slot>onConnectClicked()</slot>
@@ -191,7 +161,7 @@ background-color: rgb(18, 146, 171);
    </hints>
   </connection>
   <connection>
-   <sender>textEdit</sender>
+   <sender>consoleView</sender>
    <signal>keyPressed(QString)</signal>
    <receiver>ConsoleTab</receiver>
    <slot>onKeyPressed(QString)</slot>

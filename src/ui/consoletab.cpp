@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <iostream>
 #include <cstdio>
+#include <QSerialPortInfo>
 
 #include "consoletab.h"
 #include "ui_consoletab.h"
@@ -9,20 +10,43 @@
 
 ConsoleTab::ConsoleTab(QTabWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ConsoleTab),
+    m_ui(new Ui::ConsoleTab),
     m_parent(parent),
     m_port(NULL),
     m_lastTabIndex(0)
 {
-    ui->setupUi(this);
+    m_ui->setupUi(this);
+
+    // fill port combo box
+    refreshPorts();
+
+    // fill baud combo box
+    foreach (const qint32 baudrate, QSerialPortInfo::standardBaudRates())
+    {
+        m_ui->comboBaudrates->addItem(QString::number(baudrate));
+    }
+
 }
 
 ConsoleTab::~ConsoleTab()
 {
-    delete ui;
+    delete m_ui;
     delete m_port;
 }
 
+void ConsoleTab::refreshPorts(void)
+{
+    m_ui->comboPorts->clear();
+    m_ui->comboPorts->addItem(tr("Select port"));
+
+    foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
+    {
+        m_ui->comboPorts->addItem(QString("%1 (%2) [%3]").arg(info.portName(), info.description(), info.manufacturer()));
+        qDebug() << info.systemLocation();
+        qDebug() << info.vendorIdentifier();
+        qDebug() << info.productIdentifier();
+    }
+}
 
 void ConsoleTab::toggleFullScreen(void)
 {
@@ -37,25 +61,28 @@ void ConsoleTab::toggleFullScreen(void)
         setParent(m_parent);
         m_parent->insertTab(m_lastTabIndex, this, "foo");
         m_parent->setCurrentIndex(m_lastTabIndex);
-        ui->textEdit->setFocus();
+        m_ui->consoleView->setFocus();
     }
 }
 
 void ConsoleTab::onConnectClicked(void)
 {
-    ui->btnBar->hide();
-    m_port = new QSerialPort(ui->comboBox->currentText());
+    const QString portName = m_ui->comboPorts->currentText();
+
+    m_port = new QSerialPort(portName);
+
     if (m_port->open(QIODevice::ReadWrite)){
         puts("PORT OPEN");
     }
     else
     {
-        qDebug() << ui->comboBox->currentText();
+        qDebug() << portName;
     }
     connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
 
-    ui->textEdit->setEnabled(true);
-    ui->textEdit->setFocus();
+    m_ui->btnBar->hide();
+    m_ui->consoleView->setEnabled(true);
+    m_ui->consoleView->setFocus();
 }
 
 void ConsoleTab::onDataAvailable(void)
@@ -72,9 +99,9 @@ void ConsoleTab::onDataAvailable(void)
     str = str.replace("\r", "<br>");
     str = str.replace(" ", "&nbsp;");
 
-    ui->textEdit->moveCursor(QTextCursor::End);
-    ui->textEdit->textCursor().insertHtml(str);
-    ui->textEdit->moveCursor(QTextCursor::End);
+    m_ui->consoleView->moveCursor(QTextCursor::End);
+    m_ui->consoleView->textCursor().insertHtml(str);
+    m_ui->consoleView->moveCursor(QTextCursor::End);
 }
 
 void ConsoleTab::onKeyPressed(QString text)

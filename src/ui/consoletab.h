@@ -26,10 +26,12 @@ public slots:
     void onKeyPressed(QString text);
 
 private:
-    Ui::ConsoleTab *ui;
+    Ui::ConsoleTab*  m_ui;
     QTabWidget*      m_parent;
     QSerialPort*     m_port;
     int              m_lastTabIndex;
+
+    void refreshPorts();
 };
 
 #endif // CONSOLETAB_H
