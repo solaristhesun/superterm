@@ -60,7 +60,15 @@ void MainWindow::connectPort()
     if (port->open(QIODevice::ReadWrite)){
         puts("PORT OPEN");
     }
-    ui->tabWidget->insertTab(0, new ConsoleTab(port, ui->lineEdit->text(), ui->tabWidget ), ui->lineEdit->text());
+
+    QString tabTitle = ui->lineEdit->text();
+
+    if (tabTitle.isEmpty())
+    {
+        tabTitle = tr("Untitled") + QString::number(ui->tabWidget->count());
+    }
+
+    ui->tabWidget->insertTab(0, new ConsoleTab(port, tabTitle, ui->tabWidget ), tabTitle);
     port->setBaudRate(ui->comboBox_3->currentText().toUInt());
     port->setFlowControl(QSerialPort::NoFlowControl);
     ui->tabWidget->setCurrentIndex(0);
