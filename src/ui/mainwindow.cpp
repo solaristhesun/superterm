@@ -3,9 +3,9 @@
 #include <QSerialPort>
 
 #include "mainwindow.h"
-#include "newconnectiondialog.h"
 #include "ui_mainwindow.h"
 #include "consoletab.h"
+#include "consoleview.h"
 #include "../consolemgr.h"
 
 MainWindow::MainWindow(ConsoleMgr& consoleMgr, QWidget *parent) :
@@ -14,16 +14,11 @@ MainWindow::MainWindow(ConsoleMgr& consoleMgr, QWidget *parent) :
     m_consoleMgr(consoleMgr)
 {
     ui->setupUi(this);
-#if 0
-    QSerialPort *port = new QSerialPort("/dev/ttyS10");
-    if (port->open(QIODevice::ReadWrite)){
-        puts("PORT OPEN");
-    }
-    ui->tabWidget->insertTab(0, new ConsoleView(port, this), "TG+ Modul");
-    ui->tabWidget->setCurrentIndex(0);
-#endif
+
+    ui->tabWidget->insertTab(0, new ConsoleTab(ui->tabWidget), "test");
     ui->statusBar->showMessage("Ready");
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -49,6 +44,7 @@ void MainWindow::showAbout(void)
 
 void MainWindow::connectPort()
 {
+#if 0
     puts("CONNECT");
 #if 0
     NewConnectionDialog dialog;
@@ -68,10 +64,11 @@ void MainWindow::connectPort()
         tabTitle = tr("Untitled") + QString::number(ui->tabWidget->count());
     }
 
-    ui->tabWidget->insertTab(0, new ConsoleTab(port, tabTitle, ui->tabWidget ), tabTitle);
+    ui->tabWidget->insertTab(0, new ConsoleView(port, tabTitle, ui->tabWidget ), tabTitle);
     port->setBaudRate(ui->comboBox_3->currentText().toUInt());
     port->setFlowControl(QSerialPort::NoFlowControl);
     ui->tabWidget->setCurrentIndex(0);
+#endif
 }
 
 void MainWindow::closeTab()

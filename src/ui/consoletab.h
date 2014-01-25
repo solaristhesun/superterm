@@ -1,39 +1,35 @@
 #ifndef CONSOLETAB_H
 #define CONSOLETAB_H
 
-#include <QTextEdit>
+#include <QWidget>
 
 namespace Ui {
-    class ConsoleTab;
+class ConsoleTab;
 }
 
 class QSerialPort;
 class QTabWidget;
 
-class ConsoleTab : public QTextEdit
+class ConsoleTab : public QWidget
 {
     Q_OBJECT
-    
+
 public:
-    ConsoleTab(QSerialPort *port, QString title, QTabWidget *parent = 0);
+    explicit ConsoleTab(QTabWidget *parent = 0);
     ~ConsoleTab();
 
-    void keyPressEvent(QKeyEvent * e);
+    void toggleFullScreen(void);
 
 public slots:
-    void showData(void);
-    void showContextMenu(const QPoint &pt);
-    void showColorDialog(void);
+    void onConnectClicked(void);
+    void onDataAvailable(void);
+    void onKeyPressed(QString text);
 
 private:
-    Ui::ConsoleTab* m_ui;
-    QSerialPort*    m_port;
-    QString         m_title;
-    QTabWidget*     m_parent;
-    int             m_lastTabIndex;
-
-    void scrollDown(void);
-    void toggleFullScreen(void);
+    Ui::ConsoleTab *ui;
+    QTabWidget*      m_parent;
+    QSerialPort*     m_port;
+    int              m_lastTabIndex;
 };
 
 #endif // CONSOLETAB_H

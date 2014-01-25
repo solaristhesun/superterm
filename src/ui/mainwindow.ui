@@ -66,7 +66,7 @@ border: 1px solid white;
       </property>
       <widget class="QWidget" name="Add">
        <attribute name="title">
-        <string>Seite</string>
+        <string>New Connection</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0" columnstretch="0,0,0">
         <property name="sizeConstraint">

@@ -1,35 +1,28 @@
-#include <QDebug>
-#include <QScrollBar>
-#include <iostream>
 #include <QSerialPort>
-#include <QKeyEvent>
-#include <QMenu>
-#include <QColorDialog>
-#include <QFontMetrics>
+#include <QDebug>
+#include <iostream>
+#include <cstdio>
 
 #include "consoletab.h"
 #include "ui_consoletab.h"
+#include "consoletabwidget.h"
 
-ConsoleTab::ConsoleTab(QSerialPort *port, QString title, QTabWidget *parent) :
-    QTextEdit(parent),
-    m_ui(new Ui::ConsoleTab),
-    m_port(port),
-    m_title(title),
+ConsoleTab::ConsoleTab(QTabWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::ConsoleTab),
     m_parent(parent),
+    m_port(NULL),
     m_lastTabIndex(0)
 {
-    m_ui->setupUi(this);
-
-    setCursorWidth(fontMetrics().width(' '));
-
-    connect(m_port, SIGNAL(readyRead()), this, SLOT(showData()));
+    ui->setupUi(this);
 }
 
 ConsoleTab::~ConsoleTab()
 {
+    delete ui;
     delete m_port;
-    delete m_ui;
 }
+
 
 void ConsoleTab::toggleFullScreen(void)
 {
@@ -42,26 +35,30 @@ void ConsoleTab::toggleFullScreen(void)
     else
     {
         setParent(m_parent);
-        m_parent->insertTab(m_lastTabIndex, this, m_title);
+        m_parent->insertTab(m_lastTabIndex, this, "foo");
         m_parent->setCurrentIndex(m_lastTabIndex);
+        ui->textEdit->setFocus();
     }
 }
 
-void ConsoleTab::keyPressEvent(QKeyEvent *e)
+void ConsoleTab::onConnectClicked(void)
 {
-    if ((e->key()==Qt::Key_Return) && (e->modifiers()==Qt::AltModifier))
-    {
-        toggleFullScreen();
-        return;
+    ui->btnBar->hide();
+    m_port = new QSerialPort(ui->comboBox->currentText());
+    if (m_port->open(QIODevice::ReadWrite)){
+        puts("PORT OPEN");
     }
+    else
+    {
+        qDebug() << ui->comboBox->currentText();
+    }
+    connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
 
-    QByteArray data;
-    data.append(e->text());
-
-    m_port->write(data);
+    ui->textEdit->setEnabled(true);
+    ui->textEdit->setFocus();
 }
 
-void ConsoleTab::showData()
+void ConsoleTab::onDataAvailable(void)
 {
     QByteArray data = m_port->readAll();
     for (int p = 0; p < data.size(); p++)
@@ -75,31 +72,15 @@ void ConsoleTab::showData()
     str = str.replace("\r", "<br>");
     str = str.replace(" ", "&nbsp;");
 
-    moveCursor(QTextCursor::End);
-    textCursor().insertHtml(str);
-    moveCursor(QTextCursor::End);
-
-    scrollDown();
+    ui->textEdit->moveCursor(QTextCursor::End);
+    ui->textEdit->textCursor().insertHtml(str);
+    ui->textEdit->moveCursor(QTextCursor::End);
 }
 
-void ConsoleTab::showContextMenu(const QPoint &pt)
+void ConsoleTab::onKeyPressed(QString text)
 {
-    QMenu *menu = new QMenu(this);
-    menu->addAction(m_ui->actionChangeColor);
-    menu->exec(mapToGlobal(pt));
-    delete menu;
+    puts("KEY");
+    QByteArray data;
+    data.append(text);
+    m_port->write(data);
 }
-
-void ConsoleTab::showColorDialog(void)
-{
-    QColor rgb = QColorDialog::getColor(palette().color(QPalette::Window), this);
-    setStyleSheet(QString("QTextEdit { background-color: %1; }").arg(rgb.name()));
-}
-
-void ConsoleTab::scrollDown(void)
-{
-    QScrollBar *sb = verticalScrollBar();
-    sb->setValue(sb->maximum());
-}
-
-// EOF <stefan@scheler.com>
