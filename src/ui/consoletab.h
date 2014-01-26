@@ -8,18 +8,18 @@ class ConsoleTab;
 }
 
 class QSerialPort;
-class QTabWidget;
+class ConsoleTabWidget;
 
 class ConsoleTab : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ConsoleTab(QTabWidget *parent = 0);
+    explicit ConsoleTab(ConsoleTabWidget *parent = 0);
     ~ConsoleTab();
 
     void toggleFullScreen(void);
-
+    void hideButton(int index);
 
 public slots:
     void onConnectClicked(void);
@@ -29,12 +29,12 @@ public slots:
 
 
 private:
-    Ui::ConsoleTab*  m_ui;
-    QTabWidget*      m_parent;
-    QSerialPort*     m_port;
-    int              m_lastTabIndex;
+    Ui::ConsoleTab*   m_ui;
+    ConsoleTabWidget* m_parent;
+    QSerialPort*      m_port;
+    int               m_lastTabIndex;
 
-    static quint32   m_u32counter;
+    static quint32    m_u32counter;
 
     void refreshPorts();
 };

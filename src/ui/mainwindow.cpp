@@ -7,16 +7,14 @@
 #include "ui_mainwindow.h"
 #include "consoletab.h"
 #include "consoleview.h"
-#include "../consolemgr.h"
 
-MainWindow::MainWindow(ConsoleMgr& consoleMgr, QWidget *parent) :
+MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    m_consoleMgr(consoleMgr)
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    ui->tabWidget->addTab(new ConsoleTab(ui->tabWidget), QString(tr("Untitled%1")).arg(1));
+    ui->tabWidget->addTab(new ConsoleTab(ui->tabWidget));
 
     ui->statusBar->showMessage("Ready");
 }

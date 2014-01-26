@@ -12,7 +12,7 @@
 
 quint32   ConsoleTab::m_u32counter = 1;
 
-ConsoleTab::ConsoleTab(QTabWidget *parent) :
+ConsoleTab::ConsoleTab(ConsoleTabWidget *parent) :
     QWidget(parent),
     m_ui(new Ui::ConsoleTab),
     m_parent(parent),
@@ -50,14 +50,15 @@ void ConsoleTab::refreshPorts(void)
 
     foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
     {
-        m_ui->comboPorts->addItem(QString("%1 (%2) [%3]").arg(info.portName(), info.description(), info.manufacturer()));
+        const QString title = QString("%1 (%2) [%3]").arg(info.portName(), info.description(), info.manufacturer());
+        m_ui->comboPorts->addItem(title, QVariant(info.portName()));
         qDebug() << info.systemLocation();
         qDebug() << info.vendorIdentifier();
         qDebug() << info.productIdentifier();
     }
 
-    m_ui->comboPorts->addItem("/dev/ttyS10");
-    m_ui->comboPorts->addItem("/dev/ttyS11");
+    m_ui->comboPorts->addItem("/dev/ttyS10", QVariant("/dev/ttyS10"));
+    m_ui->comboPorts->addItem("/dev/ttyS11", QVariant("/dev/ttyS11"));
 }
 
 void ConsoleTab::toggleFullScreen(void)
@@ -79,7 +80,8 @@ void ConsoleTab::toggleFullScreen(void)
 
 void ConsoleTab::onConnectClicked(void)
 {
-    const QString portName = m_ui->comboPorts->currentText();
+    const int currentIndex = m_ui->comboPorts->currentIndex();
+    const QString portName = m_ui->comboPorts->itemData(currentIndex).toString();
 
     m_port = new QSerialPort(portName);
 
@@ -92,11 +94,12 @@ void ConsoleTab::onConnectClicked(void)
     }
     connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
 
-    m_parent->addTab(new ConsoleTab(m_parent), QString(tr("Untitled%1")).arg(++m_u32counter));
+    m_parent->addTab(new ConsoleTab(m_parent));
 
     m_ui->btnBar->hide();
     m_ui->consoleView->setEnabled(true);
     m_ui->consoleView->setFocus();
+    m_parent->setCurrentTabText(portName);
 }
 
 void ConsoleTab::onComboChanged(void)
@@ -137,3 +140,5 @@ void ConsoleTab::onKeyPressed(QString text)
     data.append(text);
     m_port->write(data);
 }
+
+// EOF <stefan@scheler.com>
