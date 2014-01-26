@@ -18,7 +18,7 @@ ConsoleView::ConsoleView(QWidget *parent) :
 {
     m_ui->setupUi(this);
 
-    setCursorWidth(fontMetrics().width(' '));
+    setCursorWidth(fontMetrics().width(' ')-2);
 }
 
 ConsoleView::~ConsoleView()

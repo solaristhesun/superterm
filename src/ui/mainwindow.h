@@ -4,8 +4,6 @@
 #include <QMainWindow>
 #include <QDebug>
 
-class ConsoleMgr;
-
 namespace Ui {
     class MainWindow;
 }
