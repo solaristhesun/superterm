@@ -14,6 +14,8 @@ ConsoleTabWidget::ConsoleTabWidget(QWidget *parent) :
     setTabBar(m_tabBar);
     onAddButtonClicked();
 
+    //QTabWidget::addTab(new ConsoleTab(this), "");
+
     connect(m_tabBar, SIGNAL(addButtonClicked()), this, SLOT(onAddButtonClicked()));
 }
 
@@ -35,7 +37,7 @@ void ConsoleTabWidget::onCloseTab(int index)
     removeTab(  index );
     if( wdgt )
       delete wdgt;
-    if (count() > 1)
+    if (count() > 0)
     {
         setCurrentIndex(index-1);
     }
