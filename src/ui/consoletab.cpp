@@ -99,6 +99,7 @@ void ConsoleTab::fillComboBoxes(void)
     combo->addItem(tr("None"), QVariant(QSerialPort::NoFlowControl));
     combo->addItem(tr("Xon/Xoff"), QVariant(QSerialPort::SoftwareControl));
     combo->addItem(tr("Hardware"), QVariant(QSerialPort::HardwareControl));
+    combo->setCurrentIndex(0);
 }
 
 void ConsoleTab::toggleFullScreen(void)
