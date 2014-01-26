@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QDebug>
 
 namespace Ui {
     class MainWindow;
@@ -18,11 +17,9 @@ public:
 
 public slots:
     void showAbout(void);
-    void connectPort(void);
-    void closeTab(void);
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow *m_ui;
 };
 
 #endif // MAINWINDOW_H

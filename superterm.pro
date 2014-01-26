@@ -16,14 +16,16 @@ SOURCES += \
     src/ui/mainwindow.cpp \
     src/ui/consoletabwidget.cpp \
     src/ui/consoleview.cpp \
-    src/ui/consoletab.cpp
+    src/ui/consoletab.cpp \
+    src/ui/consoletabbar.cpp
 
 
 HEADERS += \
     src/ui/mainwindow.h \
     src/ui/consoletabwidget.h \
     src/ui/consoleview.h \
-    src/ui/consoletab.h
+    src/ui/consoletab.h \
+    src/ui/consoletabbar.h
 
 FORMS += \
     src/ui/mainwindow.ui \

@@ -137,8 +137,6 @@ void ConsoleTab::onConnectClicked(void)
 
         connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
 
-        m_parent->addTab(new ConsoleTab(m_parent));
-
         m_ui->btnBar->hide();
         m_ui->consoleView->setEnabled(true);
         m_ui->consoleView->setFocus();

@@ -4,12 +4,14 @@
 #include <QTabWidget>
 
 class ConsoleTab;
+class ConsoleTabBar;
 
 class ConsoleTabWidget : public QTabWidget
 {
     Q_OBJECT
 public:
     explicit ConsoleTabWidget(QWidget *parent = 0);
+    ~ConsoleTabWidget();
 
     void addTab(ConsoleTab *tab);
     void setCurrentTabText(const QString& test);
@@ -17,10 +19,12 @@ public:
 signals:
 
 public slots:
-    void closeTab(int index);
+    void onCloseTab(int index);
+    void onAddButtonClicked(void);
+
 
 private:
-    QSize m_origButtonSize;
+    ConsoleTabBar* m_tabBar;
 };
 
 #endif // CONSOLETABWIDGET_H

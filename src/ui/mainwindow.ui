@@ -90,7 +90,7 @@
    <header>src/ui/consoletabwidget.h</header>
    <container>1</container>
    <slots>
-    <slot>closeTab(int)</slot>
+    <slot>onCloseTab(int)</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -132,15 +132,15 @@
    <sender>tabWidget</sender>
    <signal>tabCloseRequested(int)</signal>
    <receiver>tabWidget</receiver>
-   <slot>closeTab(int)</slot>
+   <slot>onCloseTab(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>199</x>
-     <y>150</y>
+     <x>193</x>
+     <y>188</y>
     </hint>
     <hint type="destinationlabel">
-     <x>263</x>
-     <y>178</y>
+     <x>193</x>
+     <y>188</y>
     </hint>
    </hints>
   </connection>
@@ -148,6 +148,5 @@
  <slots>
   <slot>showAbout()</slot>
   <slot>connectPort()</slot>
-  <slot>closeTab()</slot>
  </slots>
 </ui>

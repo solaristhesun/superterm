@@ -10,19 +10,16 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    m_ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-
-    ui->tabWidget->addTab(new ConsoleTab(ui->tabWidget));
-
-    ui->statusBar->showMessage("Ready");
+    m_ui->setupUi(this);
+    m_ui->statusBar->showMessage("Ready");
 }
 
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+    delete m_ui;
 }
 
 void MainWindow::showAbout(void)
@@ -39,39 +36,6 @@ void MainWindow::showAbout(void)
                     "terminating the application.</p><p> The example also demonstrates "
                     "how to use QPainter to draw an image in real time, as well as "
                     "to repaint widgets.</p>"));
-}
-
-
-void MainWindow::connectPort()
-{
-#if 0
-    puts("CONNECT");
-#if 0
-    ui->tabWidget->insertTab(-1, new ConsoleView(), "SpaceControl");
-    ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
-#endif
-    QSerialPort *port = new QSerialPort(ui->comboBox->currentText());
-    if (port->open(QIODevice::ReadWrite)){
-        puts("PORT OPEN");
-    }
-
-    QString tabTitle = ui->lineEdit->text();
-
-    if (tabTitle.isEmpty())
-    {
-        tabTitle = tr("Untitled") + QString::number(ui->tabWidget->count());
-    }
-
-    ui->tabWidget->insertTab(0, new ConsoleView(port, tabTitle, ui->tabWidget ), tabTitle);
-    port->setBaudRate(ui->comboBox_3->currentText().toUInt());
-    port->setFlowControl(QSerialPort::NoFlowControl);
-    ui->tabWidget->setCurrentIndex(0);
-#endif
-}
-
-void MainWindow::closeTab()
-{
-    ui->tabWidget->removeTab(ui->tabWidget->currentIndex());
 }
 
 // EOF <stefan@scheler.com>

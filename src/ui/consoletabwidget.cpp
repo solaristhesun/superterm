@@ -1,16 +1,27 @@
 #include <iostream>
 #include <QTabBar>
+#include <QDebug>
+#include <QApplication>
 
 #include "consoletabwidget.h"
+#include "consoletabbar.h"
 #include "consoletab.h"
 
 ConsoleTabWidget::ConsoleTabWidget(QWidget *parent) :
-    QTabWidget(parent)
+    QTabWidget(parent),
+    m_tabBar(new ConsoleTabBar(this))
 {
-    tabBar()->setFocusPolicy(Qt::NoFocus);
+    setTabBar(m_tabBar);
+    onAddButtonClicked();
+    connect(m_tabBar, SIGNAL(addButtonClicked()), this, SLOT(onAddButtonClicked()));
 }
 
-void ConsoleTabWidget::closeTab(int index)
+ConsoleTabWidget::~ConsoleTabWidget()
+{
+    delete m_tabBar;
+}
+
+void ConsoleTabWidget::onCloseTab(int index)
 {
     std::cout << "CLOSE" <<std::endl;
 #if 0
@@ -23,19 +34,30 @@ void ConsoleTabWidget::closeTab(int index)
     removeTab(  index );
     if( wdgt )
       delete wdgt;
+    if (count() > 1)
+    {
+        setCurrentIndex(index-1);
+    }
+    else
+    {
+        QApplication::quit();
+    }
 }
 
 void ConsoleTabWidget::addTab(ConsoleTab *tab)
 {
-    int index = QTabWidget::addTab(tab, "");
-    m_origButtonSize = tabBar()->tabButton(index, QTabBar::RightSide)->size();
-    tabBar()->tabButton(index, QTabBar::RightSide)->resize(0, 0);
+    int index = QTabWidget::addTab(tab, "New tab");
+}
+
+void ConsoleTabWidget::onAddButtonClicked(void)
+{
+    int index = QTabWidget::addTab(new ConsoleTab(this), "New tab");
+    setCurrentIndex(index);
 }
 
 void ConsoleTabWidget::setCurrentTabText(const QString &text)
 {
     const int curIndex = currentIndex();
-    tabBar()->tabButton(curIndex, QTabBar::RightSide)->resize(m_origButtonSize);
     setTabText(curIndex, text);
 }
 
