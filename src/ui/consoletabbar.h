@@ -10,6 +10,8 @@ public:
     explicit ConsoleTabBar(QWidget *parent = 0);
 
     void mouseReleaseEvent(QMouseEvent * event);
+    void mousePressEvent(QMouseEvent * event);
+    void mouseMoveEvent(QMouseEvent* event);
     void showEvent(QShowEvent *event);
 
 signals:
@@ -18,9 +20,11 @@ signals:
 public slots:
 
 private:
-    int m_currentIndex;
+    int m_selectedIndex;
+    int m_prevIndex;
 
-    int lastIndex(void);
+    int lastTabIndex(void);
+
 };
 
 #endif // CONSOLETABBAR_H

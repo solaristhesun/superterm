@@ -6,17 +6,20 @@
 
 ConsoleTabBar::ConsoleTabBar(QWidget *parent) :
     QTabBar(parent),
-    m_currentIndex(0)
+    m_selectedIndex(-1),
+    m_prevIndex(-1)
 {
     setFocusPolicy(Qt::NoFocus);
 
-    // add tab without close button
+    // add empty tab
     addTab("");
 }
 
 void ConsoleTabBar::showEvent(QShowEvent *event)
 {
-    tabButton(lastIndex(), QTabBar::RightSide)->resize(0, 0);
+    qDebug() << "show";
+    tabButton(lastTabIndex(), QTabBar::RightSide)->resize(0, 0);
+
     QTabBar::showEvent(event);
 }
 
@@ -24,16 +27,47 @@ void ConsoleTabBar::mouseReleaseEvent(QMouseEvent * event)
 {
      const QPoint pos = event->pos();
 
-     if (this->tabAt(pos) == lastIndex())
+     if (tabAt(pos) == lastTabIndex())
      {
          emit addButtonClicked();
          return;
      }
+     if (tabAt(pos) == -1)
+     {
+         setCurrentIndex(m_prevIndex);
+         qDebug() << "FOO";
+     }
+
+     m_selectedIndex = -1;
 
      QTabBar::mouseReleaseEvent(event);
 }
 
-int ConsoleTabBar::lastIndex(void)
+void ConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
+{
+#if 1
+    const QPoint pos = event->pos();
+    qDebug() << tabButton(m_selectedIndex,QTabBar::RightSide)->pos();
+
+    if (m_selectedIndex == lastTabIndex())
+    {
+        event->ignore();
+        return;
+    }
+#endif
+    QTabBar::mouseMoveEvent(event);
+}
+
+void  ConsoleTabBar::mousePressEvent(QMouseEvent * event)
+{
+    m_prevIndex = currentIndex();
+    m_selectedIndex = tabAt(event->pos());
+    QTabBar::mousePressEvent(event);
+}
+
+int ConsoleTabBar::lastTabIndex(void)
 {
     return count()-1;
 }
+
+// EOF <stefan@scheler.com>
