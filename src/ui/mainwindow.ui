@@ -14,12 +14,9 @@
    <string>superterm 2014.1</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QTextEdit {
-color: black;
-font: 10pt &quot;Courier&quot;;
-border: 1px solid white;
-}
-</string>
+   <string notr="true">QTabBar::tab {
+  min-height: 30px;
+}</string>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>false</bool>

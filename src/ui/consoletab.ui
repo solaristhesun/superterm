@@ -19,19 +19,27 @@
   <property name="styleSheet">
    <string notr="true">QComboBox
 {
-min-height: 20px;
- }
+  min-height: 20px;
+}
 
 QPushButton {
-min-height: 18px;
+  min-height: 18px;
 }
 
-QTextEdit
+QTextEdit {
+  color: white;
+  font: 10pt &quot;Courier&quot;;
+  border: 1px solid white;
+}
+
+QFrame#btnBar
 {
-color: white;
-font: 12pt &quot;Courier&quot;;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  border-top: 1px solid white;
+  background-color: #ffe6ab;
+  /*background: qlineargradient(x1:0,y1:0,x2:1,y2:1, stop:0 rgb(104,104,104), stop: 1 white); */
 }
-
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -53,21 +61,7 @@ font: 12pt &quot;Courier&quot;;
    <item>
     <widget class="QFrame" name="btnBar">
      <property name="styleSheet">
-      <string notr="true">QComboBox{
-height: 18px;
-}
-QPushButton {
-height: 18px;
-}
-
-QFrame#btnBar
-{
-border-left: 1px solid white;
-border-right: 1px solid white;
-border-top: 1px solid white;
-background-color: #ffe6ab;
-/*background: qlineargradient(x1:0,y1:0,x2:1,y2:1, stop:0 rgb(104,104,104), stop: 1 white); */
-}</string>
+      <string notr="true"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -279,7 +273,7 @@ background-color: #ffe6ab;
      <property name="font">
       <font>
        <family>Courier</family>
-       <pointsize>12</pointsize>
+       <pointsize>10</pointsize>
        <weight>50</weight>
        <italic>false</italic>
        <bold>false</bold>
@@ -287,7 +281,7 @@ background-color: #ffe6ab;
      </property>
      <property name="styleSheet">
       <string notr="true">QTextEdit {
-background-color: #003460;
+  background-color: #003460;
 }
 </string>
      </property>
@@ -298,8 +292,8 @@ background-color: #003460;
       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Courier'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Courier'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>

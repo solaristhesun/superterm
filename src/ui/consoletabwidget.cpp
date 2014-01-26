@@ -27,7 +27,7 @@ void ConsoleTabWidget::closeTab(int index)
 
 void ConsoleTabWidget::addTab(ConsoleTab *tab)
 {
-    int index = QTabWidget::addTab(tab, QString("      "));
+    int index = QTabWidget::addTab(tab, "");
     m_origButtonSize = tabBar()->tabButton(index, QTabBar::RightSide)->size();
     tabBar()->tabButton(index, QTabBar::RightSide)->resize(0, 0);
 }
