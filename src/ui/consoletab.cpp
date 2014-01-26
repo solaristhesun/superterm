@@ -5,12 +5,18 @@
 #include <QMouseEvent>
 #include <cstdio>
 #include <QSerialPortInfo>
+#include <QMessageBox>
 
 #include "consoletab.h"
 #include "ui_consoletab.h"
 #include "consoletabwidget.h"
 
 quint32   ConsoleTab::m_u32counter = 1;
+
+Q_DECLARE_METATYPE(QSerialPort::DataBits)
+Q_DECLARE_METATYPE(QSerialPort::StopBits)
+Q_DECLARE_METATYPE(QSerialPort::Parity)
+Q_DECLARE_METATYPE(QSerialPort::FlowControl)
 
 ConsoleTab::ConsoleTab(ConsoleTabWidget *parent) :
     QWidget(parent),
@@ -23,18 +29,7 @@ ConsoleTab::ConsoleTab(ConsoleTabWidget *parent) :
 
     // fill port combo box
     refreshPorts();
-
-    // fill baud combo box
-    foreach (const qint32 baudrate, QSerialPortInfo::standardBaudRates())
-    {
-        m_ui->comboBaudrates->addItem(QString::number(baudrate));
-    }
-
-    // resize combo boxes
-    //m_ui->comboBaudrates->setFixedHeight(m_ui->btnConnect->height());
-    qDebug() <<  m_ui->btnConnect->height();
-    qDebug() <<  m_ui->comboBaudrates->height();
-
+    fillComboBoxes();
 }
 
 ConsoleTab::~ConsoleTab()
@@ -61,6 +56,51 @@ void ConsoleTab::refreshPorts(void)
     m_ui->comboPorts->addItem("/dev/ttyS11", QVariant("/dev/ttyS11"));
 }
 
+void ConsoleTab::fillComboBoxes(void)
+{
+    QComboBox *combo = NULL;
+
+    // fill baud rates
+    combo = m_ui->comboBaudRates;
+    foreach (const qint32 baudrate, QSerialPortInfo::standardBaudRates())
+    {
+        combo->addItem(QString::number(baudrate), QVariant(baudrate));
+    }
+
+    // fill data bits
+    combo = m_ui->comboDataBits;
+    combo->clear();
+    combo->addItem("5", QVariant(QSerialPort::Data5));
+    combo->addItem("6", QVariant(QSerialPort::Data6));
+    combo->addItem("7", QVariant(QSerialPort::Data7));
+    combo->addItem("8", QVariant(QSerialPort::Data8));
+    combo->setCurrentIndex(3);
+
+    // fill parity
+    combo = m_ui->comboParity;
+    combo->clear();
+    combo->addItem(tr("None"), QVariant(QSerialPort::NoParity));
+    combo->addItem(tr("Even"), QVariant(QSerialPort::EvenParity));
+    combo->addItem(tr("Odd"), QVariant(QSerialPort::OddParity));
+    combo->addItem(tr("Space"), QVariant(QSerialPort::SpaceParity));
+    combo->addItem(tr("Mark"), QVariant(QSerialPort::MarkParity));
+
+    // fill stop bits
+    combo = m_ui->comboStopBits;
+    combo->clear();
+    combo->addItem("1", QVariant(QSerialPort::OneStop));
+    combo->addItem("1.5", QVariant(QSerialPort::OneAndHalfStop));
+    combo->addItem("2", QVariant(QSerialPort::TwoStop));
+    combo->setCurrentIndex(0);
+
+    // fill flow control
+    combo = m_ui->comboFlowControl;
+    combo->clear();
+    combo->addItem(tr("None"), QVariant(QSerialPort::NoFlowControl));
+    combo->addItem(tr("Xon/Xoff"), QVariant(QSerialPort::SoftwareControl));
+    combo->addItem(tr("Hardware"), QVariant(QSerialPort::HardwareControl));
+}
+
 void ConsoleTab::toggleFullScreen(void)
 {
     if (!isFullScreen())
@@ -80,31 +120,38 @@ void ConsoleTab::toggleFullScreen(void)
 
 void ConsoleTab::onConnectClicked(void)
 {
-    const int currentIndex = m_ui->comboPorts->currentIndex();
-    const QString portName = m_ui->comboPorts->itemData(currentIndex).toString();
+    const QString portName = m_ui->comboPorts->currentData().toString();
 
     m_port = new QSerialPort(portName);
 
-    if (m_port->open(QIODevice::ReadWrite)){
-        puts("PORT OPEN");
+    if (m_port->open(QIODevice::ReadWrite))
+    {
+        // configure serial port
+
+        m_port->setBaudRate(m_ui->comboBaudRates->currentData().toInt());
+        m_port->setDataBits(m_ui->comboDataBits->currentData().value<QSerialPort::DataBits>());
+        m_port->setParity(m_ui->comboParity->currentData().value<QSerialPort::Parity>());
+        m_port->setStopBits(m_ui->comboStopBits->currentData().value<QSerialPort::StopBits>());
+        m_port->setFlowControl(m_ui->comboFlowControl->currentData().value<QSerialPort::FlowControl>());
+
+        connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
+
+        m_parent->addTab(new ConsoleTab(m_parent));
+
+        m_ui->btnBar->hide();
+        m_ui->consoleView->setEnabled(true);
+        m_ui->consoleView->setFocus();
+        m_parent->setCurrentTabText(portName);
     }
     else
     {
-        qDebug() << portName;
+        QMessageBox::critical(this, "Error", "Failed to open port", QMessageBox::Ok, QMessageBox::NoButton);
     }
-    connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
-
-    m_parent->addTab(new ConsoleTab(m_parent));
-
-    m_ui->btnBar->hide();
-    m_ui->consoleView->setEnabled(true);
-    m_ui->consoleView->setFocus();
-    m_parent->setCurrentTabText(portName);
 }
 
 void ConsoleTab::onComboChanged(void)
 {
-    if (m_ui->comboPorts->currentIndex() != 0 && m_ui->comboBaudrates->currentIndex() != 0)
+    if (m_ui->comboPorts->currentIndex() != 0 && m_ui->comboBaudRates->currentIndex() != 0)
     {
         m_ui->btnConnect->setEnabled(true);
     }

@@ -27,7 +27,6 @@ public slots:
     void onKeyPressed(QString text);
     void onComboChanged(void);
 
-
 private:
     Ui::ConsoleTab*   m_ui;
     ConsoleTabWidget* m_parent;
@@ -37,6 +36,7 @@ private:
     static quint32    m_u32counter;
 
     void refreshPorts();
+    void fillComboBoxes();
 };
 
 #endif // CONSOLETAB_H
