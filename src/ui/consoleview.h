@@ -21,8 +21,7 @@ public:
     void scrollDown(void);
 
 public slots:
-    void showContextMenu(const QPoint &pt);
-    void showColorDialog(void);
+
 
 signals:
     void keyPressed(QString text);

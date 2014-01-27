@@ -53,47 +53,9 @@ p, li { white-space: pre-wrap; }
   <property name="cursorWidth">
    <number>1</number>
   </property>
-  <action name="actionChangeColor">
-   <property name="text">
-    <string>Change background color</string>
-   </property>
-  </action>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>ConsoleView</sender>
-   <signal>customContextMenuRequested(QPoint)</signal>
-   <receiver>ConsoleView</receiver>
-   <slot>showContextMenu(QPoint)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>199</x>
-     <y>149</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionChangeColor</sender>
-   <signal>triggered()</signal>
-   <receiver>ConsoleView</receiver>
-   <slot>showColorDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>showContextMenu(QPoint)</slot>
   <slot>showColorDialog()</slot>

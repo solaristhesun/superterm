@@ -263,6 +263,16 @@ p, li { white-space: pre-wrap; }
     </widget>
    </item>
   </layout>
+  <action name="actionChangeColor">
+   <property name="text">
+    <string>Change Color</string>
+   </property>
+  </action>
+  <action name="actionConfiguration">
+   <property name="text">
+    <string>Configuration</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -340,11 +350,62 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>consoleView</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>ConsoleTab</receiver>
+   <slot>showContextMenu(QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>347</x>
+     <y>255</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>347</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionChangeColor</sender>
+   <signal>triggered()</signal>
+   <receiver>ConsoleTab</receiver>
+   <slot>showColorDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>347</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionConfiguration</sender>
+   <signal>triggered()</signal>
+   <receiver>ConsoleTab</receiver>
+   <slot>showConnectBar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>347</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>
   <slot>onKeyPressed(QString)</slot>
   <slot>onComboChanged()</slot>
   <slot>onContextMenuRequested(QPoint)</slot>
+  <slot>showContextMenu(QPoint)</slot>
+  <slot>showColorDialog()</slot>
+  <slot>showConnectBar()</slot>
  </slots>
 </ui>

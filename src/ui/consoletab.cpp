@@ -1,3 +1,4 @@
+#include <QColorDialog>
 #include <QSerialPort>
 #include <QDebug>
 #include <iostream>
@@ -119,6 +120,28 @@ void ConsoleTab::toggleFullScreen(void)
         m_parent->setCurrentIndex(m_lastTabIndex);
         m_ui->consoleView->setFocus();
     }
+}
+
+void ConsoleTab::showContextMenu(const QPoint &pt)
+{
+    QMenu *menu = new QMenu(this);
+    menu->addAction(m_ui->actionConfiguration);
+    menu->addAction(m_ui->actionChangeColor);
+    menu->addSeparator();
+    menu->addAction(m_ui->actionChangeColor);
+    menu->exec(mapToGlobal(pt));
+    delete menu;
+}
+
+void ConsoleTab::showConnectBar(void)
+{
+    m_ui->btnBar->show();
+}
+
+void ConsoleTab::showColorDialog(void)
+{
+    QColor rgb = QColorDialog::getColor(palette().color(QPalette::Window), this);
+    setStyleSheet(QString("QTextEdit { background-color: %1; }").arg(rgb.name()));
 }
 
 void ConsoleTab::onConnectClicked(void)
