@@ -62,6 +62,7 @@ void ConsoleTabWidget::setCurrentTabText(const QString &text)
 {
     const int curIndex = currentIndex();
     setTabText(curIndex, text);
+    m_tabBar->moveButton();
 }
 
 // EOF <stefan@scheler.com>

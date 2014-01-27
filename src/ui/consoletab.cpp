@@ -52,8 +52,10 @@ void ConsoleTab::refreshPorts(void)
         qDebug() << info.productIdentifier();
     }
 
+#if defined(Q_OS_LINUX)
     m_ui->comboPorts->addItem("/dev/ttyS10", QVariant("/dev/ttyS10"));
     m_ui->comboPorts->addItem("/dev/ttyS11", QVariant("/dev/ttyS11"));
+#endif
 }
 
 void ConsoleTab::fillComboBoxes(void)
