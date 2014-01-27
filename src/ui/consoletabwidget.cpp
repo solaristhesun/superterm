@@ -54,7 +54,7 @@ void ConsoleTabWidget::addTab(ConsoleTab *tab)
 
 void ConsoleTabWidget::onAddButtonClicked(void)
 {
-    int index = QTabWidget::insertTab(count()-1, new ConsoleTab(this), "New tab");
+    int index = QTabWidget::addTab(new ConsoleTab(this), "New tab");
     setCurrentIndex(index);
 }
 

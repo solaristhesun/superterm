@@ -14,8 +14,10 @@ ConsoleTabBar::ConsoleTabBar(QWidget *parent) :
     setFocusPolicy(Qt::NoFocus);
     setMovable(false);
    // m_btn->setStyleSheet("QPushButton {border: 1px solid white; background; qlineargradient(); border-radius: 2px; } QPushButton:pressed { background-color: yellow; } QPushButton:hover { background-color: blue; }");
-    m_btn->setGeometry(QRect(0, 200, 28, 28 ));
+    m_btn->setStyleSheet("QPushButton { border: 1px solid #C4C4C3; border-right: 0; border-top-left-radius: 2px; border-bottom-left-radius: 2px;margin: 1px;     background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #E1E1E1, stop: 0.4 #DDDDdd, stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3); } QPushButton:hover, QPushButton:pressed { background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #fafafa, stop: 0.4 #f4f4f4, stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);} ");
+    m_btn->setGeometry(QRect(0, 200, 27, 27 ));
     m_btn->setFocusPolicy(Qt::NoFocus);
+    m_btn->setIcon(QIcon(":/icons/application_add_16x16.png"));
     connect(m_btn, SIGNAL(clicked()), this, SIGNAL(addButtonClicked()));
     // add empty tab
     //addTab("");
@@ -37,7 +39,8 @@ void ConsoleTabBar::moveButton(void)
 {
     int y = tabRect(lastTabIndex()).bottom();
     qDebug() << y;
-    m_btn->move(4, y + 1);
+    qDebug() << tabRect(lastTabIndex()).bottomRight();
+    m_btn->move(tabRect(lastTabIndex()).bottomRight().x()-28+3, y);
 }
 
 

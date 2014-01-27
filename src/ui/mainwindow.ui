@@ -16,7 +16,8 @@
   <property name="styleSheet">
    <string notr="true">QTabBar::tab {
   min-height: 30px;
-}</string>
+}
+</string>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>false</bool>
@@ -40,6 +41,52 @@
     </property>
     <item>
      <widget class="ConsoleTabWidget" name="tabWidget">
+      <property name="styleSheet">
+       <string notr="true">QTabWidget::pane { /* The tab widget frame */
+    border-top: 2px solid #C2C7CB;
+}
+
+QTabWidget::tab-bar {
+    top: 0px; /* move to the right by 5px */
+	min-width: 50px;
+	margin-left: 10px;
+}
+
+/* Style the tab using the tab sub-control. Note that
+    it reads QTabBar _not_ QTabWidget */
+QTabBar::tab {
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
+                                stop: 0 #E1E1E1, stop: 0.4 #DDDDdd,
+                                stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
+    border-top: 1px solid #C4C4C3;
+    border-left: 1px solid #C4C4C3;
+    border-bottom: 1px solid #C4C4C3;
+    border-right: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    padding: 2px;
+    margin-left: 1px;
+}
+
+QTabBar::tab:selected, QTabBar::tab:hover {
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
+                                stop: 0 #fafafa, stop: 0.4 #f4f4f4,
+                                stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
+}
+
+QTabBar::tab:selected {
+    border-color: #9B9B9B;
+    border-bottom-color: #C2C7CB; /* same as pane color */
+    width: 23px;
+}
+
+QTabBar::tab:!selected {
+    margin-left: 3px; /* make non-selected tabs look smaller */
+    width: 20px;
+}
+
+</string>
+      </property>
       <property name="tabPosition">
        <enum>QTabWidget::West</enum>
       </property>
