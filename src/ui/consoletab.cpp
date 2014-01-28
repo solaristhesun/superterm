@@ -161,28 +161,44 @@ void ConsoleTab::onConnectClicked(void)
 {
     const QString portName = m_ui->comboPorts->currentData().toString();
 
-    m_port = new QSerialPort(portName);
-
-    if (m_port->open(QIODevice::ReadWrite))
+    if (!m_port)
     {
-        // configure serial port
+        m_port = new QSerialPort(portName);
 
-        m_port->setBaudRate(m_ui->comboBaudRates->currentData().toInt());
-        m_port->setDataBits(m_ui->comboDataBits->currentData().value<QSerialPort::DataBits>());
-        m_port->setParity(m_ui->comboParity->currentData().value<QSerialPort::Parity>());
-        m_port->setStopBits(m_ui->comboStopBits->currentData().value<QSerialPort::StopBits>());
-        m_port->setFlowControl(m_ui->comboFlowControl->currentData().value<QSerialPort::FlowControl>());
+        if (m_port->open(QIODevice::ReadWrite))
+        {
+            // configure serial port
 
-        connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
+            m_port->setBaudRate(m_ui->comboBaudRates->currentData().toInt());
+            m_port->setDataBits(m_ui->comboDataBits->currentData().value<QSerialPort::DataBits>());
+            m_port->setParity(m_ui->comboParity->currentData().value<QSerialPort::Parity>());
+            m_port->setStopBits(m_ui->comboStopBits->currentData().value<QSerialPort::StopBits>());
+            m_port->setFlowControl(m_ui->comboFlowControl->currentData().value<QSerialPort::FlowControl>());
 
-        m_ui->btnBar->hide();
-        m_ui->consoleView->setEnabled(true);
-        m_ui->consoleView->setFocus();
-        m_parent->setCurrentTabText(portName);
+            connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
+
+            m_ui->btnBar->hide();
+            m_ui->consoleView->setEnabled(true);
+            m_ui->consoleView->setFocus();
+            m_parent->setCurrentTabText(portName);
+
+            m_ui->comboPorts->setEnabled(false);
+            m_ui->btnConnect->setText("&Disconnect");
+
+        }
+        else
+        {
+            QMessageBox::critical(this, "Error", "Failed to open port", QMessageBox::Ok, QMessageBox::NoButton);
+        }
     }
     else
     {
-        QMessageBox::critical(this, "Error", "Failed to open port", QMessageBox::Ok, QMessageBox::NoButton);
+        m_port->disconnect();
+        delete m_port;
+        m_port = NULL;
+        m_ui->comboPorts->setEnabled(true);
+        m_ui->btnConnect->setText("&Connect");
+        m_ui->consoleView->setEnabled(false);
     }
 }
 
