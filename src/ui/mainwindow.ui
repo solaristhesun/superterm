@@ -62,15 +62,16 @@
         <height>0</height>
        </size>
       </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="styleSheet">
        <string notr="true">QTabWidget::pane { /* The tab widget frame */
-
 }
 
 QTabWidget::tab-bar {
    /* top: 0px; /* move to the right by 5px */
-	min-width: 50px;
-	margin-left: 10px;
+	top: 0px;
 }
 
 /* Style the tab using the tab sub-control. Note that
@@ -79,15 +80,17 @@ QTabBar::tab {
     background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
                                 stop: 0 #E1E1E1, stop: 0.4 #DDDDdd,
                                 stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
-    border-top: 1px solid white; /*#C4C4C3;*/
-    border-left: 1px solid white; /*#C4C4C3;*/
-    border-bottom: 1px solid white; /*#C4C4C3;*/
+    border-top: 1px solid #cacaca ; /*#C4C4C3;*/
+    border-left: 1px solid #cacaca; /*#C4C4C3;*/
+   border-bottom: 1px solid #cacaca; /*#C4C4C3;*/
     border-right: 0;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
     padding: 2px;
     margin-left: 1px;
     min-height: 30px;
+	padding-bottom:10px;
+margin-top: 0px;
 }
 
 QTabBar::tab:selected, QTabBar::tab:hover {
@@ -100,6 +103,8 @@ QTabBar::tab:selected {
     border-color: white; /*#9B9B9B;*/
    /* border-bottom-color: #C2C7CB; /* same as pane color */
     width: 23px;
+/*	margin-top:-1px;
+	margin-bottom:-1px;*/
 }
 
 QTabBar::tab:!selected {
@@ -107,6 +112,13 @@ QTabBar::tab:!selected {
     width: 20px;
 }
 
+QTabBar::tab:first:selected {
+}
+
+QTabBar::tab:last:selected {
+}
+QTabBar::tab:only-one {
+}
 </string>
       </property>
       <property name="tabPosition">
