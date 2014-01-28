@@ -29,6 +29,7 @@ public slots:
     void showContextMenu(const QPoint &pt);
     void showColorDialog(void);
     void showConnectBar(void);
+    void showFontDialog(void);
 
 private:
     Ui::ConsoleTab*   m_ui;

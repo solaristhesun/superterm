@@ -273,6 +273,11 @@ p, li { white-space: pre-wrap; }
     <string>Configuration</string>
    </property>
   </action>
+  <action name="actionChangeFont">
+   <property name="text">
+    <string>Change Font</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -398,6 +403,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionChangeFont</sender>
+   <signal>triggered()</signal>
+   <receiver>ConsoleTab</receiver>
+   <slot>showFontDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>347</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>
@@ -407,5 +428,6 @@ p, li { white-space: pre-wrap; }
   <slot>showContextMenu(QPoint)</slot>
   <slot>showColorDialog()</slot>
   <slot>showConnectBar()</slot>
+  <slot>showFontDialog()</slot>
  </slots>
 </ui>

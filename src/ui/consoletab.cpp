@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <QSerialPortInfo>
 #include <QMessageBox>
+#include <QFontDialog>
 
 #include "consoletab.h"
 #include "ui_consoletab.h"
@@ -128,7 +129,7 @@ void ConsoleTab::showContextMenu(const QPoint &pt)
     menu->addAction(m_ui->actionConfiguration);
     menu->addAction(m_ui->actionChangeColor);
     menu->addSeparator();
-    menu->addAction(m_ui->actionChangeColor);
+    menu->addAction(m_ui->actionChangeFont);
     menu->exec(mapToGlobal(pt));
     delete menu;
 }
@@ -142,6 +143,18 @@ void ConsoleTab::showColorDialog(void)
 {
     QColor rgb = QColorDialog::getColor(palette().color(QPalette::Window), this);
     setStyleSheet(QString("QTextEdit { background-color: %1; }").arg(rgb.name()));
+}
+
+void ConsoleTab::showFontDialog(void)
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok, this);
+    if (ok) {
+        // font is set to the font the user selected
+    } else {
+        // the user canceled the dialog; font is set to the default
+        // application font, QApplication::font()
+    }
 }
 
 void ConsoleTab::onConnectClicked(void)
