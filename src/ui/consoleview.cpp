@@ -14,6 +14,7 @@ ConsoleView::ConsoleView(QWidget *parent) :
 {
     m_ui->setupUi(this);
 
+    setWordWrapMode(QTextOption::WrapAnywhere);
     setCursorWidth(fontMetrics().width(' ')-2);
 }
 

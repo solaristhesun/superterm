@@ -15,6 +15,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    QSize	sizeHint() const;
+
 public slots:
     void showAbout(void);
 

@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui(new Ui::MainWindow)
 {
     m_ui->setupUi(this);
-    m_ui->statusBar->showMessage("Ready");
+    //m_ui->statusBar->showMessage("Ready");
 }
 
 
@@ -36,6 +36,11 @@ void MainWindow::showAbout(void)
                     "terminating the application.</p><p> The example also demonstrates "
                     "how to use QPainter to draw an image in real time, as well as "
                     "to repaint widgets.</p>"));
+}
+
+QSize	MainWindow::sizeHint() const
+{
+    return QSize(800, 600);
 }
 
 // EOF <stefan@scheler.com>

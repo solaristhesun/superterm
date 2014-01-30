@@ -56,12 +56,6 @@
         <height>0</height>
        </size>
       </property>
-      <property name="baseSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
       <property name="autoFillBackground">
        <bool>false</bool>
       </property>
@@ -101,8 +95,9 @@ QTabBar::tab:selected, QTabBar::tab:hover {
 
 QTabBar::tab:selected {
     border-color: white; /*#9B9B9B;*/
-   /* border-bottom-color: #C2C7CB; /* same as pane color */
     width: 23px;
+   /* border-bottom-color: #C2C7CB; /* same as pane color */
+
 /*	margin-top:-1px;
 	margin-bottom:-1px;*/
 }
@@ -146,7 +141,6 @@ QTabBar::tab:only-one {
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAbout">
    <property name="text">
     <string>About</string>

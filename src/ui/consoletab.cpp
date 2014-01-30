@@ -155,6 +155,9 @@ void ConsoleTab::showFontDialog(void)
         // the user canceled the dialog; font is set to the default
         // application font, QApplication::font()
     }
+    //setStyleSheet(QString("QTextEdit ["));
+    qDebug() << font.toString();
+    setStyleSheet("font-family: " + font.family() + "; font-size: " + font.pixelSize() + "px; font-style: " + font.style() + "; font-weight: " + font.weight() + ";");
 }
 
 void ConsoleTab::onConnectClicked(void)

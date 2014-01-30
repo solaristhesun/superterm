@@ -28,7 +28,6 @@ QPushButton {
 
 QTextEdit {
   color: white;
-  font: 10pt &quot;Courier&quot;;
   border: 1px solid white;
 }
 
@@ -247,6 +246,7 @@ QFrame#btnBar
      <property name="styleSheet">
       <string notr="true">QTextEdit {
   background-color: #003460;
+  font: 10pt &quot;Courier&quot;;
 }
 </string>
      </property>
