@@ -35,4 +35,6 @@ FORMS += \
 RESOURCES += \
     superterm.qrc
 
-win32:INCLUDEPATH += C:\DUMP\projects\superterm\
+win32:INCLUDEPATH += C:\\DUMP\\projects\\superterm
+win32:RC_FILE += superterm.rc
+win32:CONFIG += embed_manifest_exe
