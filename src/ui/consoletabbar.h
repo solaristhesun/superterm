@@ -4,6 +4,7 @@
 #include <QTabBar>
 
 class QPushButton;
+class GhostTab;
 
 class ConsoleTabBar : public QTabBar
 {
@@ -11,9 +12,9 @@ class ConsoleTabBar : public QTabBar
 public:
     explicit ConsoleTabBar(QWidget *parent = 0);
 /*
-    void mouseReleaseEvent(QMouseEvent * event);
+    void mouseReleaseEvent(QMouseEvent * event);*/
     void mousePressEvent(QMouseEvent * event);
-    void mouseMoveEvent(QMouseEvent* event);*/
+    void mouseMoveEvent(QMouseEvent* event);
     void showEvent(QShowEvent *event);
 
     void	moveTab(int from, int to);
@@ -32,6 +33,7 @@ private:
     QPushButton *m_btn;
     int m_selectedIndex;
     int m_prevIndex;
+    GhostTab *m_ghost;
 
     int lastTabIndex(void);
 

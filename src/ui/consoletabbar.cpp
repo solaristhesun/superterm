@@ -4,12 +4,14 @@
 #include <QPushButton>
 
 #include "consoletabbar.h"
+#include "ghosttab.h"
 
 ConsoleTabBar::ConsoleTabBar(QWidget *parent) :
     QTabBar(parent),
     m_btn(new QPushButton(this)),
     m_selectedIndex(-1),
-    m_prevIndex(-1)
+    m_prevIndex(-1),
+    m_ghost(NULL)
 {
     setFocusPolicy(Qt::NoFocus);
     setMovable(false);
@@ -69,38 +71,28 @@ void ConsoleTabBar::mouseReleaseEvent(QMouseEvent * event)
 #endif
      QTabBar::mouseReleaseEvent(event);
 }
-
+#endif
 void ConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
 {
-#if 0
-    const QPoint pos = event->pos();
-   // qDebug() << tabButton(m_selectedIndex,QTabBar::RightSide)->pos();
-    qDebug() << event->pos();
-    const int max = tabRect(lastTabIndex()).y();
-    if (event->pos().y() > max) // FIXME
-    {
-        event->ignore();
-        return;
+    if (m_ghost) {
+        m_ghost->moveWithOffset(event->globalPos());
     }
-
-    if (m_selectedIndex == lastTabIndex())
-    {
-        event->ignore();
-        return;
-    }
-#endif
-    QTabBar::mouseMoveEvent(event);
 }
 
 void  ConsoleTabBar::mousePressEvent(QMouseEvent * event)
 {
-#if 0
-    m_prevIndex = currentIndex();
-    m_selectedIndex = tabAt(event->pos());
+    qDebug() << "MOUSEPRESSEVENT";
+    // If left button is pressed start tab move event
+    if (event->button() == Qt::LeftButton && tabAt(event->pos()) > -1) {
+        m_ghost = new GhostTab(this, event->pos());
+        m_ghost->show();
+        qDebug() << "BAZINGA";
+    }
+
+    // Call superclass
     QTabBar::mousePressEvent(event);
-#endif
 }
-#endif
+
 int ConsoleTabBar::lastTabIndex(void)
 {
     return count()-1;
