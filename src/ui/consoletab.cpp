@@ -47,7 +47,7 @@ void ConsoleTab::refreshPorts(void)
 
     foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
     {
-        const QString title = QString("%1 (%2) [%3]").arg(info.portName(), info.description(), info.manufacturer());
+        const QString title = QString("%1 [%2]").arg(info.portName(), info.description());
         m_ui->comboPorts->addItem(title, QVariant(info.portName()));
         qDebug() << info.systemLocation();
         qDebug() << info.vendorIdentifier();
@@ -65,11 +65,22 @@ void ConsoleTab::fillComboBoxes(void)
     QComboBox *combo = NULL;
 
     // fill baud rates
+
     combo = m_ui->comboBaudRates;
+#if 0
     foreach (const qint32 baudrate, QSerialPortInfo::standardBaudRates())
     {
         combo->addItem(QString::number(baudrate), QVariant(baudrate));
     }
+#endif
+    // just use more common baud rates for now
+    combo->addItem("9600", QVariant(9600));
+    combo->addItem("19200", QVariant(19200));
+    combo->addItem("38400", QVariant(38400));
+    combo->addItem("57600", QVariant(57600));
+    combo->addItem("115200", QVariant(115200));
+    combo->addItem("custom", QVariant(0));
+
 
     // fill data bits
     combo = m_ui->comboDataBits;
@@ -157,7 +168,7 @@ void ConsoleTab::showFontDialog(void)
     }
     //setStyleSheet(QString("QTextEdit ["));
     qDebug() << font.toString();
-    setStyleSheet("font-family: " + font.family() + "; font-size: " + font.pixelSize() + "px; font-style: " + font.style() + "; font-weight: " + font.weight() + ";");
+    setStyleSheet("QTextEdit { font-family: " + font.family() + "; font-size: " + font.pixelSize() + "px; font-style: " + font.style() + "; font-weight: " + font.weight() + "; }");
 }
 
 void ConsoleTab::onConnectClicked(void)
