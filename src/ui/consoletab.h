@@ -2,6 +2,7 @@
 #define CONSOLETAB_H
 
 #include <QWidget>
+#include <QSerialPort>
 
 namespace Ui {
 class ConsoleTab;
@@ -33,6 +34,7 @@ public slots:
     void showColorDialog(void);
     void showConnectBar(void);
     void showFontDialog(void);
+    void showError(QSerialPort::SerialPortError error);
 
 private:
     Ui::ConsoleTab*   m_ui;

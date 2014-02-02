@@ -222,11 +222,14 @@ void ConsoleTab::onConnectClicked(void)
         }
         else
         {
+            qDebug() << m_port->error();
             delete m_port;
             m_port = NULL;
             m_ui->statusBar->showMessage("Error. Failed to open port.");
             //QMessageBox::critical(this, "Error", "Failed to open port", QMessageBox::Ok, QMessageBox::NoButton);
         }
+
+        connect(m_port, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(showError(QSerialPort::SerialPortError)));
     }
     else
     {
@@ -237,6 +240,13 @@ void ConsoleTab::onConnectClicked(void)
         m_ui->btnConnect->setText("&Connect");
         m_ui->consoleView->setEnabled(false);
     }
+}
+
+void ConsoleTab::showError(QSerialPort::SerialPortError error)
+{
+    qDebug() << "ERROR: " << error;
+    m_port->close();
+    m_ui->statusBar->showMessage("ERROR");
 }
 
 void ConsoleTab::onComboChanged(void)
