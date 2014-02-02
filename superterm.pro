@@ -17,7 +17,8 @@ SOURCES += \
     src/ui/consoletabwidget.cpp \
     src/ui/consoleview.cpp \
     src/ui/consoletab.cpp \
-    src/ui/consoletabbar.cpp
+    src/ui/consoletabbar.cpp \
+    src/ui/statusbarframe.cpp
 
 
 HEADERS += \
@@ -25,12 +26,14 @@ HEADERS += \
     src/ui/consoletabwidget.h \
     src/ui/consoleview.h \
     src/ui/consoletab.h \
-    src/ui/consoletabbar.h
+    src/ui/consoletabbar.h \
+    src/ui/statusbarframe.h
 
 FORMS += \
     src/ui/mainwindow.ui \
     src/ui/consoleview.ui \
-    src/ui/consoletab.ui
+    src/ui/consoletab.ui \
+    src/ui/statusbarframe.ui
 
 RESOURCES += \
     superterm.qrc

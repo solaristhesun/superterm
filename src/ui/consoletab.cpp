@@ -218,10 +218,14 @@ void ConsoleTab::onConnectClicked(void)
             m_ui->comboPorts->setEnabled(false);
             m_ui->btnConnect->setText("&Disconnect");
 
+            m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(portName), 3000);
         }
         else
         {
-            QMessageBox::critical(this, "Error", "Failed to open port", QMessageBox::Ok, QMessageBox::NoButton);
+            delete m_port;
+            m_port = NULL;
+            m_ui->statusBar->showMessage("Error. Failed to open port.");
+            //QMessageBox::critical(this, "Error", "Failed to open port", QMessageBox::Ok, QMessageBox::NoButton);
         }
     }
     else
