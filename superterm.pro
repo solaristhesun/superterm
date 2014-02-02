@@ -38,3 +38,6 @@ RESOURCES += \
 win32:INCLUDEPATH += C:\\DUMP\\projects\\superterm
 win32:RC_FILE += superterm.rc
 win32:CONFIG += embed_manifest_exe
+
+OTHER_FILES += \
+    superterm.qss

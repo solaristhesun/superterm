@@ -160,15 +160,11 @@ void ConsoleTab::showFontDialog(void)
 {
     bool ok;
     QFont font = QFontDialog::getFont(&ok, this);
-    if (ok) {
-        // font is set to the font the user selected
-    } else {
-        // the user canceled the dialog; font is set to the default
-        // application font, QApplication::font()
+    if (ok)
+    {
+        m_ui->consoleView->setFont(font);
+        m_ui->consoleView->refreshCursor();
     }
-    //setStyleSheet(QString("QTextEdit ["));
-    qDebug() << font.toString();
-    setStyleSheet("QTextEdit { font-family: " + font.family() + "; font-size: " + font.pixelSize() + "px; font-style: " + font.style() + "; font-weight: " + font.weight() + "; }");
 }
 
 void ConsoleTab::onConnectClicked(void)

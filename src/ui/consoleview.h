@@ -20,6 +20,8 @@ public:
     void keyPressEvent(QKeyEvent * e);
     void scrollDown(void);
 
+    void refreshCursor();
+
 public slots:
 
 

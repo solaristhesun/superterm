@@ -8,6 +8,7 @@ QPushButton {
 }
 
 QTextEdit {
+  background-color: #003460;
   color: white;
   border: 1px solid white;
 }

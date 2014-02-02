@@ -15,12 +15,17 @@ ConsoleView::ConsoleView(QWidget *parent) :
     m_ui->setupUi(this);
 
     setWordWrapMode(QTextOption::WrapAnywhere);
-    setCursorWidth(fontMetrics().width(' ')-2);
+    refreshCursor();
 }
 
 ConsoleView::~ConsoleView()
 {
     delete m_ui;
+}
+
+void ConsoleView::refreshCursor()
+{
+    setCursorWidth(fontMetrics().width(' ')-2);
 }
 
 void ConsoleView::keyPressEvent(QKeyEvent *e)

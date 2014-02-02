@@ -222,11 +222,7 @@
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">QTextEdit {
-  background-color: #003460;
-  font: 10pt &quot;Courier&quot;;
-}
-</string>
+      <string notr="true"/>
      </property>
      <property name="tabChangesFocus">
       <bool>false</bool>
