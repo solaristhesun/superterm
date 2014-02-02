@@ -21,7 +21,7 @@ Q_DECLARE_METATYPE(QSerialPort::Parity)
 Q_DECLARE_METATYPE(QSerialPort::FlowControl)
 
 ConsoleTab::ConsoleTab(ConsoleTabWidget *parent) :
-    QMainWindow(parent),
+    QWidget(parent),
     m_ui(new Ui::ConsoleTab),
     m_parent(parent),
     m_port(NULL),

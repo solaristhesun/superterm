@@ -1,7 +1,7 @@
 #ifndef CONSOLETAB_H
 #define CONSOLETAB_H
 
-#include <QMainWindow>
+#include <QWidget>
 
 namespace Ui {
 class ConsoleTab;
@@ -10,7 +10,7 @@ class ConsoleTab;
 class QSerialPort;
 class ConsoleTabWidget;
 
-class ConsoleTab : public QMainWindow
+class ConsoleTab : public QWidget
 {
     Q_OBJECT
 

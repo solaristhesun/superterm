@@ -17,8 +17,7 @@ SOURCES += \
     src/ui/consoletabwidget.cpp \
     src/ui/consoleview.cpp \
     src/ui/consoletab.cpp \
-    src/ui/consoletabbar.cpp \
-    src/ui/ghosttab.cpp
+    src/ui/consoletabbar.cpp
 
 
 HEADERS += \
@@ -26,8 +25,7 @@ HEADERS += \
     src/ui/consoletabwidget.h \
     src/ui/consoleview.h \
     src/ui/consoletab.h \
-    src/ui/consoletabbar.h \
-    src/ui/ghosttab.h
+    src/ui/consoletabbar.h
 
 FORMS += \
     src/ui/mainwindow.ui \
