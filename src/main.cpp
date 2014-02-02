@@ -18,6 +18,10 @@ int main(int argc, char *argv[])
         style.close();
     }
 
+    QApplication::setOrganizationName("SCHELER");
+    QApplication::setOrganizationDomain("scheler.com");
+    QApplication::setApplicationName("superterm");
+
     // create main window
     MainWindow w;
     w.resize(800, 600);

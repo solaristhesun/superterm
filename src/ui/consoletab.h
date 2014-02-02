@@ -21,6 +21,8 @@ public:
     void toggleFullScreen(void);
     void hideButton(int index);
 
+    void setConsoleFont(const QFont& font);
+
 public slots:
     void onConnectClicked(void);
     void onDataAvailable(void);

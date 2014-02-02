@@ -15,6 +15,7 @@ public:
 
     void addTab(ConsoleTab *tab);
     void setCurrentTabText(const QString& test);
+    void setConsoleFont(const QFont& font);
 
 signals:
 

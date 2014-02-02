@@ -8,6 +8,7 @@
 #include <QSerialPortInfo>
 #include <QMessageBox>
 #include <QFontDialog>
+#include <QSettings>
 
 #include "consoletab.h"
 #include "ui_consoletab.h"
@@ -32,6 +33,12 @@ ConsoleTab::ConsoleTab(ConsoleTabWidget *parent) :
     // fill port combo box
     refreshPorts();
     fillComboBoxes();
+
+    // load font from settings
+    QSettings settings;
+    QFont consoleFont;
+    consoleFont.fromString(settings.value("font").toString());
+    setConsoleFont(consoleFont);
 }
 
 ConsoleTab::~ConsoleTab()
@@ -162,9 +169,16 @@ void ConsoleTab::showFontDialog(void)
     QFont font = QFontDialog::getFont(&ok, this);
     if (ok)
     {
-        m_ui->consoleView->setFont(font);
-        m_ui->consoleView->refreshCursor();
+        QSettings settings;
+        settings.setValue("font", font.toString());
+        setConsoleFont(font);
     }
+}
+
+void ConsoleTab::setConsoleFont(const QFont &font)
+{
+    m_ui->consoleView->setFont(font);
+    m_ui->consoleView->refreshCursor();
 }
 
 void ConsoleTab::onConnectClicked(void)

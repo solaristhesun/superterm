@@ -58,6 +58,16 @@ void ConsoleTabWidget::onAddButtonClicked(void)
     setCurrentIndex(index);
 }
 
+void ConsoleTabWidget::setConsoleFont(const QFont &font)
+{
+    // set font on all tabs
+    for (int i = 0; i < count(); i++)
+    {
+        ConsoleTab *tab = static_cast<ConsoleTab*>(widget(i));
+        tab->setConsoleFont(font);
+    }
+}
+
 void ConsoleTabWidget::setCurrentTabText(const QString &text)
 {
     const int curIndex = currentIndex();
