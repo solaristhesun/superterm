@@ -22,6 +22,7 @@ public:
     void hideButton(int index);
 
     void setConsoleFont(const QFont& font);
+    void setBackgroundColor(const QColor& color);
 
 public slots:
     void onConnectClicked(void);

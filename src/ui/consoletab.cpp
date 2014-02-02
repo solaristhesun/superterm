@@ -37,8 +37,10 @@ ConsoleTab::ConsoleTab(ConsoleTabWidget *parent) :
     // load font from settings
     QSettings settings;
     QFont consoleFont;
+    QColor color = QColor(settings.value("background").toString());
     consoleFont.fromString(settings.value("font").toString());
     setConsoleFont(consoleFont);
+    setBackgroundColor(color);
 }
 
 ConsoleTab::~ConsoleTab()
@@ -160,7 +162,9 @@ void ConsoleTab::showConnectBar(void)
 void ConsoleTab::showColorDialog(void)
 {
     QColor rgb = QColorDialog::getColor(palette().color(QPalette::Window), this);
-    setStyleSheet(QString("QTextEdit { background-color: %1; }").arg(rgb.name()));
+    setBackgroundColor(rgb);
+    QSettings settings;
+    settings.setValue("background", rgb.name());
 }
 
 void ConsoleTab::showFontDialog(void)
@@ -179,6 +183,11 @@ void ConsoleTab::setConsoleFont(const QFont &font)
 {
     m_ui->consoleView->setFont(font);
     m_ui->consoleView->refreshCursor();
+}
+
+void ConsoleTab::setBackgroundColor(const QColor &color)
+{
+    setStyleSheet(QString("QTextEdit { background-color: %1; }").arg(color.name()));
 }
 
 void ConsoleTab::onConnectClicked(void)
