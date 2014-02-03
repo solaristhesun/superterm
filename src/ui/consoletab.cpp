@@ -274,6 +274,7 @@ void ConsoleTab::onDataAvailable(void)
     std::cout << "NEW DATA [" << str.toStdString() << "]" << std::endl;
     str = str.replace("\r", "<br>");
     str = str.replace(" ", "&nbsp;");
+    str = str.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
 
     m_ui->consoleView->moveCursor(QTextCursor::End);
     m_ui->consoleView->textCursor().insertHtml(str);
