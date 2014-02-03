@@ -161,16 +161,20 @@ void ConsoleTab::showConnectBar(void)
 
 void ConsoleTab::showColorDialog(void)
 {
-    QColor rgb = QColorDialog::getColor(palette().color(QPalette::Window), this);
-    setBackgroundColor(rgb);
     QSettings settings;
-    settings.setValue("background", rgb.name());
+    QColor initial(settings.value("background").toString());
+    QColor rgb = QColorDialog::getColor(initial, this);
+    if (rgb.isValid())
+    {
+        setBackgroundColor(rgb);
+        settings.setValue("background", rgb.name());
+    }
 }
 
 void ConsoleTab::showFontDialog(void)
 {
     bool ok;
-    QFont font = QFontDialog::getFont(&ok, this);
+    QFont font = QFontDialog::getFont(&ok, m_ui->consoleView->font(), this);
     if (ok)
     {
         QSettings settings;
@@ -275,7 +279,16 @@ void ConsoleTab::onDataAvailable(void)
     str = str.replace("\r", "<br>");
     str = str.replace(" ", "&nbsp;");
     str = str.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
+#if 0
+    QTextEdit::ExtraSelection highlight;
+    highlight.cursor = m_ui->consoleView->textCursor();
+    highlight.format.setProperty(QTextFormat::FullWidthSelection, true);
+    highlight.format.setBackground( Qt::green );
 
+    QList<QTextEdit::ExtraSelection> extras;
+    extras << highlight;
+    m_ui->consoleView->setExtraSelections( extras );
+#endif
     m_ui->consoleView->moveCursor(QTextCursor::End);
     m_ui->consoleView->textCursor().insertHtml(str);
     m_ui->consoleView->moveCursor(QTextCursor::End);
