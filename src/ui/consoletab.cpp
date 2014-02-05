@@ -278,7 +278,7 @@ void ConsoleTab::onDataAvailable(void)
     std::cout << "NEW DATA [" << str.toStdString() << "]" << std::endl;
     str = str.replace("\r", "<br>");
     str = str.replace(" ", "&nbsp;");
-    str = str.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
+    str = str.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 #if 0
     QTextEdit::ExtraSelection highlight;
     highlight.cursor = m_ui->consoleView->textCursor();
