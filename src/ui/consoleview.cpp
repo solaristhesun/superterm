@@ -1,6 +1,7 @@
 #include <QScrollBar>
 #include <QKeyEvent>
 #include <QFontMetrics>
+#include <QDebug>
 
 #include "consoleview.h"
 #include "ui_consoleview.h"
@@ -46,6 +47,26 @@ void ConsoleView::scrollDown(void)
 {
     QScrollBar *sb = verticalScrollBar();
     sb->setValue(sb->maximum());
+}
+
+void ConsoleView::highlight(void)
+{
+    QList<QTextEdit::ExtraSelection> m_extras;
+    moveCursor(QTextCursor::Start);
+    while (find("[UI_STATE]" ))
+    {
+        textCursor().select(QTextCursor::Document);
+        qDebug() << textCursor().selectedText();
+        QTextEdit::ExtraSelection extra;
+        extra.cursor = textCursor();
+        extra.cursor.clearSelection();
+        extra.format.setProperty(QTextFormat::FullWidthSelection, true);
+        extra.format.setBackground( Qt::red );
+        m_extras << extra;
+    }
+
+    setExtraSelections( m_extras );
+    moveCursor(QTextCursor::End);
 }
 
 // EOF <stefan@scheler.com>

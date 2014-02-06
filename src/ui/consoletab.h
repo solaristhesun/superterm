@@ -42,7 +42,6 @@ private:
     ConsoleTabWidget* m_parent;
     QSerialPort*      m_port;
     int               m_lastTabIndex;
-    QList<QTextEdit::ExtraSelection> m_extras;
 
     static quint32    m_u32counter;
 

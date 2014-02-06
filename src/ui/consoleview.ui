@@ -40,12 +40,6 @@
   <property name="readOnly">
    <bool>false</bool>
   </property>
-  <property name="html">
-   <string></string>
-  </property>
-  <property name="acceptRichText">
-   <bool>false</bool>
-  </property>
   <property name="cursorWidth">
    <number>1</number>
   </property>

@@ -21,6 +21,7 @@ public:
     void scrollDown(void);
 
     void refreshCursor();
+    void highlight();
 
 public slots:
 

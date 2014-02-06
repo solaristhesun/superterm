@@ -169,6 +169,7 @@ void ConsoleTab::showColorDialog(void)
         setBackgroundColor(rgb);
         settings.setValue("background", rgb.name());
     }
+    m_ui->consoleView->highlight();
 }
 
 void ConsoleTab::showFontDialog(void)
@@ -191,7 +192,7 @@ void ConsoleTab::setConsoleFont(const QFont &font)
 
 void ConsoleTab::setBackgroundColor(const QColor &color)
 {
-    setStyleSheet(QString("QTextEdit { background-color: %1; }").arg(color.name()));
+    setStyleSheet(QString("QPlainTextEdit { background-color: %1; }").arg(color.name()));
 }
 
 void ConsoleTab::onConnectClicked(void)
@@ -223,6 +224,7 @@ void ConsoleTab::onConnectClicked(void)
             m_ui->btnConnect->setText("&Disconnect");
 
             m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(portName), 3000);
+
         }
         else
         {
@@ -277,28 +279,18 @@ void ConsoleTab::onDataAvailable(void)
 #endif
     QString str = data;
     //std::cout << "NEW DATA [" << str.toStdString() << "]" << std::endl;
-    str = str.replace("\r", "<br>");
-    str = str.replace(" ", "&nbsp;");
-    str = str.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+    str = str.replace("\r\n", "\n");
+    str = str.replace("\r", "\n");
+    //str = str.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 #if 1
-    QTextEdit::ExtraSelection highlight;
-    m_ui->consoleView->moveCursor(QTextCursor::Start);
     //highlight.cursor = m_ui->consoleView->textCursor();
 
-    while ( m_ui->consoleView->find("foo" ))
-    {
-        QTextEdit::ExtraSelection extra;
-        extra.cursor = m_ui->consoleView->textCursor();
-        extra.format.setProperty(QTextFormat::FullWidthSelection, false);
-        extra.format.setBackground( Qt::red );
-        m_extras << extra;
-    }
-
-    m_ui->consoleView->setExtraSelections( m_extras );
 #endif
     m_ui->consoleView->moveCursor(QTextCursor::End);
-    m_ui->consoleView->textCursor().insertHtml(str);
+    //m_ui->consoleView->textCursor().insertHtml(str);
+    m_ui->consoleView->insertPlainText(str);
     m_ui->consoleView->moveCursor(QTextCursor::End);
+    m_ui->consoleView->highlight();
 }
 
 void ConsoleTab::onKeyPressed(QString text)
