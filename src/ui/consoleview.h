@@ -1,7 +1,7 @@
 #ifndef CONSOLEVIEW_H
 #define CONSOLEVIEW_H
 
-#include <QTextEdit>
+#include <QPlainTextEdit>
 
 namespace Ui {
     class ConsoleView;
@@ -9,7 +9,7 @@ namespace Ui {
 
 class ConsoleTab;
 
-class ConsoleView : public QTextEdit
+class ConsoleView : public QPlainTextEdit
 {
     Q_OBJECT
     

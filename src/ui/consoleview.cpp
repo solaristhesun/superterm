@@ -8,7 +8,7 @@
 #include "consoletab.h"
 
 ConsoleView::ConsoleView(QWidget *parent) :
-    QTextEdit(parent),
+    QPlainTextEdit(parent),
     m_ui(new Ui::ConsoleView),
     m_parent(static_cast<ConsoleTab*>(parent))
 {

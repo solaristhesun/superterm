@@ -268,26 +268,33 @@ void ConsoleTab::onComboChanged(void)
 void ConsoleTab::onDataAvailable(void)
 {
     QByteArray data = m_port->readAll();
+#if 0
     for (int p = 0; p < data.size(); p++)
     {
         printf("0x%02x ", data.at(p));
     }
     printf("\n");
-
+#endif
     QString str = data;
-    std::cout << "NEW DATA [" << str.toStdString() << "]" << std::endl;
+    //std::cout << "NEW DATA [" << str.toStdString() << "]" << std::endl;
     str = str.replace("\r", "<br>");
     str = str.replace(" ", "&nbsp;");
     str = str.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-#if 0
+#if 1
     QTextEdit::ExtraSelection highlight;
-    highlight.cursor = m_ui->consoleView->textCursor();
-    highlight.format.setProperty(QTextFormat::FullWidthSelection, true);
-    highlight.format.setBackground( Qt::green );
+    m_ui->consoleView->moveCursor(QTextCursor::Start);
+    //highlight.cursor = m_ui->consoleView->textCursor();
 
-    QList<QTextEdit::ExtraSelection> extras;
-    extras << highlight;
-    m_ui->consoleView->setExtraSelections( extras );
+    while ( m_ui->consoleView->find("foo" ))
+    {
+        QTextEdit::ExtraSelection extra;
+        extra.cursor = m_ui->consoleView->textCursor();
+        extra.format.setProperty(QTextFormat::FullWidthSelection, false);
+        extra.format.setBackground( Qt::red );
+        m_extras << extra;
+    }
+
+    m_ui->consoleView->setExtraSelections( m_extras );
 #endif
     m_ui->consoleView->moveCursor(QTextCursor::End);
     m_ui->consoleView->textCursor().insertHtml(str);

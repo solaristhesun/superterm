@@ -1,3 +1,11 @@
+QPlainTextEdit
+{
+margin: 0;
+border : 0;
+padding: 0px;
+selection-color: yellow;
+}
+
 QComboBox
 {
   min-height: 20px;
@@ -7,7 +15,7 @@ QPushButton {
   min-height: 18px;
 }
 
-QTextEdit {
+QPlainTextEdit {
   background-color: #003460;
   color: white;
   border: 1px solid white;
