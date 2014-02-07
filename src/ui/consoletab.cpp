@@ -211,7 +211,7 @@ void ConsoleTab::onConnectClicked(void)
             m_port->setDataBits(m_ui->comboDataBits->currentData().value<QSerialPort::DataBits>());
             m_port->setParity(m_ui->comboParity->currentData().value<QSerialPort::Parity>());
             m_port->setStopBits(m_ui->comboStopBits->currentData().value<QSerialPort::StopBits>());
-            m_port->setFlowControl(m_ui->comboFlowControl->currentData().value<QSerialPort::FlowControl>());
+            m_port->setFlowControl(QSerialPort::NoFlowControl);
 
             connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
 
@@ -295,10 +295,13 @@ void ConsoleTab::onDataAvailable(void)
 
 void ConsoleTab::onKeyPressed(QString text)
 {
-    puts("KEY");
+    if (text.isEmpty())
+        return;
+
     QByteArray data;
-    data.append(text);
-    m_port->write(data);
+    data.append(text.toLatin1());
+    printf("KEY [%s] (0x%02x, 0x%02x)\n", text.toLatin1().constData(), text.toLatin1().constData()[0], data.constData()[0]);
+    m_port->write(data.constData());
 }
 
 // EOF <stefan@scheler.com>
