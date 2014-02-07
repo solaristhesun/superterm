@@ -45,7 +45,6 @@ private:
 
     static quint32    m_u32counter;
 
-    void refreshPorts();
     void fillComboBoxes();
 };
 

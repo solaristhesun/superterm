@@ -30,8 +30,6 @@ ConsoleTab::ConsoleTab(ConsoleTabWidget *parent) :
 {
     m_ui->setupUi(this);
 
-    // fill port combo box
-    refreshPorts();
     fillComboBoxes();
 
     // load font from settings
@@ -49,32 +47,11 @@ ConsoleTab::~ConsoleTab()
     delete m_port;
 }
 
-void ConsoleTab::refreshPorts(void)
-{
-    m_ui->comboPorts->clear();
-    m_ui->comboPorts->addItem(tr("Select port"));
-
-    foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
-    {
-        const QString title = QString("%1 [%2]").arg(info.portName(), info.description());
-        m_ui->comboPorts->addItem(title, QVariant(info.portName()));
-        qDebug() << info.systemLocation();
-        qDebug() << info.vendorIdentifier();
-        qDebug() << info.productIdentifier();
-    }
-
-#if defined(Q_OS_LINUX)
-    m_ui->comboPorts->addItem("/dev/ttyS10", QVariant("/dev/ttyS10"));
-    m_ui->comboPorts->addItem("/dev/ttyS11", QVariant("/dev/ttyS11"));
-#endif
-}
-
 void ConsoleTab::fillComboBoxes(void)
 {
     QComboBox *combo = NULL;
 
     // fill baud rates
-
     combo = m_ui->comboBaudRates;
 #if 0
     foreach (const qint32 baudrate, QSerialPortInfo::standardBaudRates())
@@ -170,6 +147,7 @@ void ConsoleTab::showColorDialog(void)
         settings.setValue("background", rgb.name());
     }
     m_ui->consoleView->highlight();
+
 }
 
 void ConsoleTab::showFontDialog(void)

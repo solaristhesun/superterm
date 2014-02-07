@@ -18,7 +18,8 @@ SOURCES += \
     src/ui/consoleview.cpp \
     src/ui/consoletab.cpp \
     src/ui/consoletabbar.cpp \
-    src/ui/statusbarframe.cpp
+    src/ui/statusbarframe.cpp \
+    src/ui/portscombobox.cpp
 
 
 HEADERS += \
@@ -27,7 +28,8 @@ HEADERS += \
     src/ui/consoleview.h \
     src/ui/consoletab.h \
     src/ui/consoletabbar.h \
-    src/ui/statusbarframe.h
+    src/ui/statusbarframe.h \
+    src/ui/portscombobox.h
 
 FORMS += \
     src/ui/mainwindow.ui \

@@ -56,8 +56,7 @@ void ConsoleView::highlight(void)
     while (find("[UI_STATE]" ))
     {
         textCursor().select(QTextCursor::Document);
-        qDebug() << textCursor().selectedText();
-        QTextEdit::ExtraSelection extra;
+         QTextEdit::ExtraSelection extra;
         extra.cursor = textCursor();
         extra.cursor.clearSelection();
         extra.format.setProperty(QTextFormat::FullWidthSelection, true);

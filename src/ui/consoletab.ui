@@ -72,7 +72,7 @@
        <number>5</number>
       </property>
       <item>
-       <widget class="QComboBox" name="comboPorts">
+       <widget class="CPortsComboBox" name="comboPorts">
         <property name="toolTip">
          <string>Select port</string>
         </property>
@@ -82,11 +82,6 @@
         <property name="sizeAdjustPolicy">
          <enum>QComboBox::AdjustToContents</enum>
         </property>
-        <item>
-         <property name="text">
-          <string>Select port</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item>
@@ -256,7 +251,7 @@
  <customwidgets>
   <customwidget>
    <class>ConsoleView</class>
-   <extends>QPlainTextEdit</extends>
+   <extends>QTextEdit</extends>
    <header>src/ui/consoleview.h</header>
    <slots>
     <signal>keyPressed(QString)</signal>
@@ -267,6 +262,11 @@
    <extends>QFrame</extends>
    <header>src/ui/statusbarframe.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CPortsComboBox</class>
+   <extends>QComboBox</extends>
+   <header>src/ui/portscombobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
