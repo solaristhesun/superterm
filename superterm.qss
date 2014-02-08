@@ -6,6 +6,12 @@ padding: 0px;
 selection-color: yellow;
 }
 
+QPushButton#btnColor
+{
+        border: 1px solid black;
+        width: 50px;
+}
+
 QComboBox
 {
   min-height: 20px;

@@ -2,6 +2,7 @@
 #define HIGHLIGHTSFRAME_H
 
 #include <QFrame>
+#include <QColor>
 
 namespace Ui {
 class CHighlightsFrame;
@@ -12,10 +13,17 @@ class CHighlightsFrame : public QFrame
     Q_OBJECT
 
 public:
+    struct Highlighting
+    {
+        QString pattern;
+        QColor color;
+    };
+
+
     explicit CHighlightsFrame(QWidget *parent = 0);
     ~CHighlightsFrame();
 
-    QStringList getItems(void);
+    QList<Highlighting> getItems(void);
     void showEvent(QShowEvent * event);
 
 public slots:
@@ -23,12 +31,14 @@ public slots:
     void deleteHighlighting(void);
     void onTextEdited(const QString& text);
     void onSelectionChanged();
+    void changeColor(void);
 
 signals:
     void highlightingChanged(void);
 
 private:
-    Ui::CHighlightsFrame *m_ui;
+    Ui::CHighlightsFrame* m_ui;
+    QColor                m_color;
 };
 
 #endif // HIGHLIGHTSFRAME_H

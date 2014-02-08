@@ -67,7 +67,7 @@ void ConsoleView::restoreCursor()
     setTextCursor(cursor);
 }
 
-void ConsoleView::setHighlighting(QStringList& highlighting)
+void ConsoleView::setHighlighting(QList<CHighlightsFrame::Highlighting>& highlighting)
 {
     m_highlightings = highlighting;
 }
@@ -78,17 +78,17 @@ void ConsoleView::insertPlainText(const QString &text)
     saveCursor();
     QPlainTextEdit::insertPlainText(text);
 
-    foreach (QString str, m_highlightings)
+    foreach (CHighlightsFrame::Highlighting h, m_highlightings)
     {
         restoreCursor();
-        while (find(str))
+        while (find(h.pattern))
         {
             textCursor().select(QTextCursor::Document);
             QTextEdit::ExtraSelection extra;
             extra.cursor = textCursor();
             extra.cursor.clearSelection();
             extra.format.setProperty(QTextFormat::FullWidthSelection, true);
-            extra.format.setBackground( Qt::red );
+            extra.format.setBackground( h.color );
             m_extras << extra;
         }
     }

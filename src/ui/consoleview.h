@@ -3,6 +3,8 @@
 
 #include <QPlainTextEdit>
 
+#include "highlightsframe.h"
+
 namespace Ui {
     class ConsoleView;
 }
@@ -20,7 +22,7 @@ public:
     void keyPressEvent(QKeyEvent * e);
     void scrollDown(void);
     void refreshCursor();
-    void setHighlighting(QStringList& highlighting);
+    void setHighlighting(QList<CHighlightsFrame::Highlighting>& highlighting);
 
 public slots:
     void clear();
@@ -34,7 +36,7 @@ private:
     ConsoleTab*                      m_parent;
     QList<QTextEdit::ExtraSelection> m_extras;
     int                              m_cursorPos;
-    QStringList                      m_highlightings;
+    QList<CHighlightsFrame::Highlighting>                      m_highlightings;
 
     void saveCursor();
     void restoreCursor();

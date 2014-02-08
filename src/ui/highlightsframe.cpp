@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <QColorDialog>
 
 #include "highlightsframe.h"
 #include "ui_highlightsframe.h"
@@ -23,7 +24,12 @@ void CHighlightsFrame::addHighlighting(void)
 
     if (!str.isEmpty())
     {
-        m_ui->filterList->addItem(str);
+        QPixmap pixmap(10, 10);
+        pixmap.fill(m_color);
+        QIcon icon(pixmap);
+        QListWidgetItem *item = new QListWidgetItem(icon, str);
+        item->setData(Qt::UserRole, QVariant(m_color));
+        m_ui->filterList->addItem(item);
         m_ui->filterEdit->setText("");
         m_ui->filterEdit->setFocus();
     }
@@ -51,6 +57,16 @@ void CHighlightsFrame::onSelectionChanged()
     m_ui->btnDelete->setEnabled(!items.isEmpty());
 }
 
+void CHighlightsFrame::changeColor()
+{
+    QColor color = QColorDialog::getColor(QColor("red"), this);
+    if (color.isValid())
+    {
+        m_color = color;
+        m_ui->btnColor->setStyleSheet(QString("background-color: %1;").arg(color.name()));
+    }
+}
+
 void CHighlightsFrame::deleteHighlighting(void)
 {
     qDebug() << "DELETE";
@@ -60,14 +76,18 @@ void CHighlightsFrame::deleteHighlighting(void)
     emit highlightingChanged();
 }
 
-QStringList CHighlightsFrame::getItems(void)
+QList<CHighlightsFrame::Highlighting> CHighlightsFrame::getItems(void)
 {
     QList<QListWidgetItem *> items = m_ui->filterList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
-    QStringList list;
+    QList<Highlighting> list;
 
     foreach(QListWidgetItem *item, items)
-        list.append(item->text());
-
+    {
+        Highlighting h;
+        h.pattern = item->text();
+        h.color = item->data(Qt::UserRole).value<QColor>();
+        list.append(h);
+    }
     return list;
 }
 

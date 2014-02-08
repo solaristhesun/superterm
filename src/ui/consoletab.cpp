@@ -13,6 +13,7 @@
 #include "consoletab.h"
 #include "ui_consoletab.h"
 #include "consoletabwidget.h"
+#include "highlightsframe.h"
 
 quint32   ConsoleTab::m_u32counter = 1;
 
@@ -140,7 +141,7 @@ void ConsoleTab::showContextMenu(const QPoint &pt)
 
 void ConsoleTab::updateHighlighting()
 {
-    QStringList h = m_ui->highlightsFrame->getItems();
+    QList<CHighlightsFrame::Highlighting> h = m_ui->highlightsFrame->getItems();
     m_ui->consoleView->setHighlighting(h);
 }
 

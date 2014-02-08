@@ -53,33 +53,15 @@
       <widget class="QLineEdit" name="filterEdit"/>
      </item>
      <item>
-      <widget class="QFrame" name="boxColor">
-       <property name="minimumSize">
-        <size>
-         <width>50</width>
-         <height>0</height>
-        </size>
+      <widget class="QPushButton" name="btnColor">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
        </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>20</height>
-        </size>
+       <property name="text">
+        <string/>
        </property>
-       <property name="baseSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color:red</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
+       <property name="flat">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -231,11 +213,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnColor</sender>
+   <signal>clicked()</signal>
+   <receiver>CHighlightsFrame</receiver>
+   <slot>changeColor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>157</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>222</x>
+     <y>44</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addHighlighting()</slot>
   <slot>deleteHighlighting()</slot>
   <slot>onTextEdited(QString)</slot>
   <slot>onSelectionChanged()</slot>
+  <slot>changeColor()</slot>
  </slots>
 </ui>

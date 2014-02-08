@@ -17,16 +17,22 @@ int main(void)
     printf("created virtual port %s\n", ptsname(fd));
     
     const char *str[] = {
-        "foo\r\n",
-        "bar\r\n",
-        "test test test\r\n",
+        "foo",
+        "bar",
+        "test test test",
     };
+
+    unsigned long c = 0;
 
     while(1)
     {
         int r = rand() % 3;
-        write(fd, str[r], strlen(str[r]));
-        sleep(1);
+        
+        char msg[100];
+        sprintf(msg, "%lu: %s\r\n", c++, str[r]);
+
+        write(fd, msg, strlen(msg));
+        usleep(100000);
     }
 }
 
