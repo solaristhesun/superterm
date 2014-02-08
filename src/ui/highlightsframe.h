@@ -39,6 +39,8 @@ signals:
 private:
     Ui::CHighlightsFrame* m_ui;
     QColor                m_color;
+
+    void refreshColorButton();
 };
 
 #endif // HIGHLIGHTSFRAME_H

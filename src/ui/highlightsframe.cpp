@@ -6,11 +6,13 @@
 
 CHighlightsFrame::CHighlightsFrame(QWidget *parent) :
     QFrame(parent),
-    m_ui(new Ui::CHighlightsFrame)
+    m_ui(new Ui::CHighlightsFrame),
+    m_color(QColor(Qt::red))
 {
     m_ui->setupUi(this);
 
     hide();
+    refreshColorButton();
 }
 
 CHighlightsFrame::~CHighlightsFrame()
@@ -63,8 +65,13 @@ void CHighlightsFrame::changeColor()
     if (color.isValid())
     {
         m_color = color;
-        m_ui->btnColor->setStyleSheet(QString("background-color: %1;").arg(color.name()));
+        refreshColorButton();
     }
+}
+
+void CHighlightsFrame::refreshColorButton()
+{
+    m_ui->btnColor->setStyleSheet(QString("background-color: %1;").arg(m_color.name()));
 }
 
 void CHighlightsFrame::deleteHighlighting(void)
