@@ -67,24 +67,31 @@ void ConsoleView::restoreCursor()
     setTextCursor(cursor);
 }
 
+void ConsoleView::setHighlighting(QStringList& highlighting)
+{
+    m_highlightings = highlighting;
+}
+
 void ConsoleView::insertPlainText(const QString &text)
 {
     moveCursor(QTextCursor::End);
     saveCursor();
     QPlainTextEdit::insertPlainText(text);
 
-    restoreCursor();
-    while (find("foo" ))
+    foreach (QString str, m_highlightings)
     {
-        textCursor().select(QTextCursor::Document);
-        QTextEdit::ExtraSelection extra;
-        extra.cursor = textCursor();
-        extra.cursor.clearSelection();
-        extra.format.setProperty(QTextFormat::FullWidthSelection, true);
-        extra.format.setBackground( Qt::red );
-        m_extras << extra;
+        restoreCursor();
+        while (find(str))
+        {
+            textCursor().select(QTextCursor::Document);
+            QTextEdit::ExtraSelection extra;
+            extra.cursor = textCursor();
+            extra.cursor.clearSelection();
+            extra.format.setProperty(QTextFormat::FullWidthSelection, true);
+            extra.format.setBackground( Qt::red );
+            m_extras << extra;
+        }
     }
-
     setExtraSelections( m_extras );
     moveCursor(QTextCursor::End);
 }

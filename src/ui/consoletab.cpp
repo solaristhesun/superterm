@@ -128,12 +128,22 @@ void ConsoleTab::showContextMenu(const QPoint &pt)
     menu->addSeparator();
     menu->addAction(m_ui->actionChangeFont);
     menu->addSeparator();
+    menu->addAction(m_ui->actionHighlight);
+    menu->addSeparator();
     menu->addAction(m_ui->actionClear);
     menu->addSeparator();
     menu->addAction(m_ui->actionAbout);
     menu->exec(mapToGlobal(pt));
     delete menu;
 }
+
+
+void ConsoleTab::updateHighlighting()
+{
+    QStringList h = m_ui->highlightsFrame->getItems();
+    m_ui->consoleView->setHighlighting(h);
+}
+
 
 void ConsoleTab::showConnectBar(void)
 {

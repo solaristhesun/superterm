@@ -39,6 +39,14 @@ QFrame#statusBar
     min-height: 35px;
 }
 
+QFrame#highlightsFrame
+{
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
+    background-color: #ffe6ab;
+}
+
 QFrame#statusBar[error="true"]
 {
     background-color: #ff4040;

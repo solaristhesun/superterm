@@ -19,8 +19,8 @@ public:
 
     void keyPressEvent(QKeyEvent * e);
     void scrollDown(void);
-
     void refreshCursor();
+    void setHighlighting(QStringList& highlighting);
 
 public slots:
     void clear();
@@ -34,6 +34,7 @@ private:
     ConsoleTab*                      m_parent;
     QList<QTextEdit::ExtraSelection> m_extras;
     int                              m_cursorPos;
+    QStringList                      m_highlightings;
 
     void saveCursor();
     void restoreCursor();

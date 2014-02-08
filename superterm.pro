@@ -19,7 +19,8 @@ SOURCES += \
     src/ui/consoletab.cpp \
     src/ui/consoletabbar.cpp \
     src/ui/statusbarframe.cpp \
-    src/ui/portscombobox.cpp
+    src/ui/portscombobox.cpp \
+    src/ui/highlightsframe.cpp
 
 
 HEADERS += \
@@ -29,13 +30,15 @@ HEADERS += \
     src/ui/consoletab.h \
     src/ui/consoletabbar.h \
     src/ui/statusbarframe.h \
-    src/ui/portscombobox.h
+    src/ui/portscombobox.h \
+    src/ui/highlightsframe.h
 
 FORMS += \
     src/ui/mainwindow.ui \
     src/ui/consoleview.ui \
     src/ui/consoletab.ui \
-    src/ui/statusbarframe.ui
+    src/ui/statusbarframe.ui \
+    src/ui/highlightsframe.ui
 
 RESOURCES += \
     superterm.qrc

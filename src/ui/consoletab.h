@@ -36,6 +36,7 @@ public slots:
     void showConnectBar(void);
     void showFontDialog(void);
     void showError(QSerialPort::SerialPortError error);
+    void updateHighlighting(void);
 
 private:
     Ui::ConsoleTab*   m_ui;
@@ -44,6 +45,7 @@ private:
     int               m_lastTabIndex;
 
     static quint32    m_u32counter;
+    QStringList       m_highlightings;
 
     void fillComboBoxes();
 };

@@ -222,6 +222,16 @@
     </widget>
    </item>
    <item>
+    <widget class="CHighlightsFrame" name="highlightsFrame">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="StatusBarFrame" name="statusBar">
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -249,12 +259,17 @@
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>&amp;About superterm</string>
+    <string>&amp;About...</string>
    </property>
   </action>
   <action name="actionClear">
    <property name="text">
     <string>Clear</string>
+   </property>
+  </action>
+  <action name="actionHighlight">
+   <property name="text">
+    <string>Highlight...</string>
    </property>
   </action>
  </widget>
@@ -277,6 +292,15 @@
    <class>CPortsComboBox</class>
    <extends>QComboBox</extends>
    <header>src/ui/portscombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CHighlightsFrame</class>
+   <extends>QFrame</extends>
+   <header>src/ui/highlightsframe.h</header>
+   <container>1</container>
+   <slots>
+    <signal>closed()</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>
@@ -425,6 +449,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionHighlight</sender>
+   <signal>triggered()</signal>
+   <receiver>highlightsFrame</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>272</x>
+     <y>197</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>highlightsFrame</sender>
+   <signal>closed()</signal>
+   <receiver>ConsoleTab</receiver>
+   <slot>updateHighlighting()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>272</x>
+     <y>197</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>272</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>
@@ -435,5 +491,6 @@
   <slot>showColorDialog()</slot>
   <slot>showConnectBar()</slot>
   <slot>showFontDialog()</slot>
+  <slot>updateHighlighting()</slot>
  </slots>
 </ui>
