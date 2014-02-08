@@ -1,3 +1,4 @@
 build/
+emulator/emulator
 Makefile
 *.user

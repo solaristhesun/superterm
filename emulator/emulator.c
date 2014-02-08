@@ -3,9 +3,12 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <string.h>
+#include <time.h>
 
 int main(void)
 {
+    srand(time(NULL));
+
     int fd = open("/dev/ptmx", O_RDWR | O_NOCTTY);
 
     grantpt(fd);
@@ -13,11 +16,16 @@ int main(void)
 
     printf("created virtual port %s\n", ptsname(fd));
     
-    const char *str = "hallo\r\n";
+    const char *str[] = {
+        "foo\r\n",
+        "bar\r\n",
+        "test test test\r\n",
+    };
 
     while(1)
     {
-        write(fd, str, strlen(str));
+        int r = rand() % 3;
+        write(fd, str[r], strlen(str[r]));
         sleep(1);
     }
 }
