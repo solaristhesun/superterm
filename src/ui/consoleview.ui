@@ -43,6 +43,9 @@
   <property name="cursorWidth">
    <number>1</number>
   </property>
+  <property name="maximumBlockCount">
+   <number>10000</number>
+  </property>
  </widget>
  <resources/>
  <connections/>

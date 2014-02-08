@@ -21,17 +21,22 @@ public:
     void scrollDown(void);
 
     void refreshCursor();
-    void highlight();
 
 public slots:
-
+    void clear();
+    void insertPlainText(const QString &text);
 
 signals:
     void keyPressed(QString text);
 
 private:
-    Ui::ConsoleView* m_ui;
-    ConsoleTab*      m_parent;
+    Ui::ConsoleView*                 m_ui;
+    ConsoleTab*                      m_parent;
+    QList<QTextEdit::ExtraSelection> m_extras;
+    int                              m_cursorPos;
+
+    void saveCursor();
+    void restoreCursor();
 
 };
 

@@ -26,8 +26,7 @@ void CPortsComboBox::refresh()
     }
 
 #if defined(Q_OS_LINUX)
-    addItem("ttyS10", QVariant("/dev/ttyS10"));
-    addItem("ttyS11", QVariant("/dev/ttyS11"));
+    addItem("pts5", QVariant("/dev/pts/5"));
 #endif
 }
 

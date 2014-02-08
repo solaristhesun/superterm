@@ -49,14 +49,35 @@ void ConsoleView::scrollDown(void)
     sb->setValue(sb->maximum());
 }
 
-void ConsoleView::highlight(void)
+void ConsoleView::clear(void)
 {
-    QList<QTextEdit::ExtraSelection> m_extras;
-    moveCursor(QTextCursor::Start);
-    while (find("[UI_STATE]" ))
+    m_extras.clear();
+    QPlainTextEdit::clear();
+}
+
+void ConsoleView::saveCursor()
+{
+     m_cursorPos = textCursor().position();
+}
+
+void ConsoleView::restoreCursor()
+{
+    QTextCursor cursor = textCursor();
+    cursor.setPosition(m_cursorPos, QTextCursor::MoveAnchor);
+    setTextCursor(cursor);
+}
+
+void ConsoleView::insertPlainText(const QString &text)
+{
+    moveCursor(QTextCursor::End);
+    saveCursor();
+    QPlainTextEdit::insertPlainText(text);
+
+    restoreCursor();
+    while (find("foo" ))
     {
         textCursor().select(QTextCursor::Document);
-         QTextEdit::ExtraSelection extra;
+        QTextEdit::ExtraSelection extra;
         extra.cursor = textCursor();
         extra.cursor.clearSelection();
         extra.format.setProperty(QTextFormat::FullWidthSelection, true);

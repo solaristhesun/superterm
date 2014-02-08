@@ -127,6 +127,10 @@ void ConsoleTab::showContextMenu(const QPoint &pt)
     menu->addAction(m_ui->actionChangeColor);
     menu->addSeparator();
     menu->addAction(m_ui->actionChangeFont);
+    menu->addSeparator();
+    menu->addAction(m_ui->actionClear);
+    menu->addSeparator();
+    menu->addAction(m_ui->actionAbout);
     menu->exec(mapToGlobal(pt));
     delete menu;
 }
@@ -146,8 +150,6 @@ void ConsoleTab::showColorDialog(void)
         setBackgroundColor(rgb);
         settings.setValue("background", rgb.name());
     }
-    m_ui->consoleView->highlight();
-
 }
 
 void ConsoleTab::showFontDialog(void)
@@ -190,6 +192,8 @@ void ConsoleTab::onConnectClicked(void)
             m_port->setParity(m_ui->comboParity->currentData().value<QSerialPort::Parity>());
             m_port->setStopBits(m_ui->comboStopBits->currentData().value<QSerialPort::StopBits>());
             m_port->setFlowControl(QSerialPort::NoFlowControl);
+
+            m_port->clear(QSerialPort::AllDirections);
 
             connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
 
@@ -264,11 +268,8 @@ void ConsoleTab::onDataAvailable(void)
     //highlight.cursor = m_ui->consoleView->textCursor();
 
 #endif
-    m_ui->consoleView->moveCursor(QTextCursor::End);
-    //m_ui->consoleView->textCursor().insertHtml(str);
+
     m_ui->consoleView->insertPlainText(str);
-    m_ui->consoleView->moveCursor(QTextCursor::End);
-    m_ui->consoleView->highlight();
 }
 
 void ConsoleTab::onKeyPressed(QString text)
