@@ -299,7 +299,7 @@
    <header>src/ui/highlightsframe.h</header>
    <container>1</container>
    <slots>
-    <signal>closed()</signal>
+    <signal>highlightingChanged()</signal>
    </slots>
   </customwidget>
  </customwidgets>
@@ -467,7 +467,7 @@
   </connection>
   <connection>
    <sender>highlightsFrame</sender>
-   <signal>closed()</signal>
+   <signal>highlightingChanged()</signal>
    <receiver>ConsoleTab</receiver>
    <slot>updateHighlighting()</slot>
    <hints>

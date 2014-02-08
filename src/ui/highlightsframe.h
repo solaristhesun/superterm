@@ -21,12 +21,11 @@ public:
 public slots:
     void addHighlighting(void);
     void deleteHighlighting(void);
-    void hideFrame(void);
     void onTextEdited(const QString& text);
     void onSelectionChanged();
 
 signals:
-    void closed(void);
+    void highlightingChanged(void);
 
 private:
     Ui::CHighlightsFrame *m_ui;

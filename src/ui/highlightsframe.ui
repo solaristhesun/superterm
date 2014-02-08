@@ -171,7 +171,7 @@
    <sender>btnClose</sender>
    <signal>clicked()</signal>
    <receiver>CHighlightsFrame</receiver>
-   <slot>hideFrame()</slot>
+   <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>398</x>
@@ -235,7 +235,6 @@
  <slots>
   <slot>addHighlighting()</slot>
   <slot>deleteHighlighting()</slot>
-  <slot>hideFrame()</slot>
   <slot>onTextEdited(QString)</slot>
   <slot>onSelectionChanged()</slot>
  </slots>

@@ -27,6 +27,8 @@ void CHighlightsFrame::addHighlighting(void)
         m_ui->filterEdit->setText("");
         m_ui->filterEdit->setFocus();
     }
+
+    emit highlightingChanged();
 }
 
 void CHighlightsFrame::showEvent(QShowEvent * event)
@@ -54,12 +56,8 @@ void CHighlightsFrame::deleteHighlighting(void)
     qDebug() << "DELETE";
     QListWidgetItem *item = m_ui->filterList->currentItem();
     delete item;
-}
 
-void CHighlightsFrame::hideFrame(void)
-{
-    hide();
-    emit closed();
+    emit highlightingChanged();
 }
 
 QStringList CHighlightsFrame::getItems(void)
