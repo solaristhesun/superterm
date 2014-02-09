@@ -37,10 +37,6 @@ private:
     QList<QTextEdit::ExtraSelection> m_extras;
     int                              m_cursorPos;
     QList<CHighlightsFrame::Highlighting>                      m_highlightings;
-
-    void saveCursor();
-    void restoreCursor();
-
 };
 
 #endif // CONSOLEVIEW

@@ -55,18 +55,6 @@ void ConsoleView::clear(void)
     QPlainTextEdit::clear();
 }
 
-void ConsoleView::saveCursor()
-{
-     m_cursorPos = textCursor().position();
-}
-
-void ConsoleView::restoreCursor()
-{
-    QTextCursor cursor = textCursor();
-    cursor.setPosition(m_cursorPos, QTextCursor::MoveAnchor);
-    setTextCursor(cursor);
-}
-
 void ConsoleView::setHighlighting(QList<CHighlightsFrame::Highlighting>& highlighting)
 {
     m_highlightings = highlighting;
@@ -75,12 +63,12 @@ void ConsoleView::setHighlighting(QList<CHighlightsFrame::Highlighting>& highlig
 void ConsoleView::insertPlainText(const QString &text)
 {
     moveCursor(QTextCursor::End);
-    saveCursor();
     QPlainTextEdit::insertPlainText(text);
 
     foreach (CHighlightsFrame::Highlighting h, m_highlightings)
     {
-        restoreCursor();
+        moveCursor(QTextCursor::Up);
+        moveCursor(QTextCursor::StartOfLine);
         while (find(h.pattern))
         {
             textCursor().select(QTextCursor::Document);
