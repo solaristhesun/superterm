@@ -323,7 +323,9 @@ void CConsoleTab::showAboutDialog(void)
     const QString contents = QString(
         "<p><font color=#000080><font size=6><b>%1</b></font> <font size=4>(revision %2)</font></font></p>"
         "<p align=left>Copyright &copy; 2014 Stefan Scheler. %3</p>"
-        "<p>The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</p>").arg(g_sAppFullName).arg(g_u32revision).arg(tr("All rights reserved."));
+        "<p><a href=\"%4\">%5</a></p>"
+        "<p>The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</p>")
+        .arg(g_sAppFullName, QString::number(g_u32revision), tr("All rights reserved."), g_sAppHomepage, tr("Visit superterm website"));
 
     QMessageBox::about(this, tr("About superterm"), contents);
 }

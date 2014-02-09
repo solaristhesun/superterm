@@ -46,12 +46,17 @@
         <translation>Markierung</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="273"/>
+        <location filename="../src/ui/consoletab.cpp" line="275"/>
         <source>&amp;Disconnect</source>
         <translation>&amp;Trennen</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="326"/>
+        <location filename="../src/ui/consoletab.cpp" line="328"/>
+        <source>Visit superterm website</source>
+        <translation>Webseite von superterm besuchen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/consoletab.cpp" line="330"/>
         <source>About superterm</source>
         <translation>Über superterm</translation>
     </message>
@@ -121,17 +126,17 @@
         <translation>Hardware</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="275"/>
+        <location filename="../src/ui/consoletab.cpp" line="277"/>
         <source>Successfully connected to %1.</source>
         <translation>Verbindung mit %1 erfolgreicht hergestellt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="283"/>
+        <location filename="../src/ui/consoletab.cpp" line="285"/>
         <source>Error. Failed to open port.</source>
         <translation>Fehler! Verbindung fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="324"/>
+        <location filename="../src/ui/consoletab.cpp" line="328"/>
         <source>All rights reserved.</source>
         <translation>Alle Rechte vorbehalten.</translation>
     </message>
