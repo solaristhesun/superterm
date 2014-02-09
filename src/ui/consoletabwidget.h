@@ -20,7 +20,7 @@ signals:
 
 public slots:
     void closeTab(int index);
-    void addTab(void);
+    void addNewTab(void);
 
 
 private:

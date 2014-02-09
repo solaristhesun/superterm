@@ -2,6 +2,7 @@
 #include <QMouseEvent>
 #include <QShowEvent>
 #include <QPushButton>
+#include <QRect>
 
 #include "consoletabbar.h"
 
@@ -36,15 +37,18 @@ void	CConsoleTabBar::tabRemoved(int index)
 
 void CConsoleTabBar::moveButton(void)
 {
-    int y = tabRect(lastTabIndex()).bottom();
-    m_btn->move(tabRect(lastTabIndex()).bottomRight().x()-28+3, y);
-}
+    const int iLastTabIndex = count() - 1;
 
+    if (iLastTabIndex != -1)
+    {
+        QRect rect = tabRect(iLastTabIndex);
+        int y = rect.bottom();
+        m_btn->move(rect.bottomRight().x()-28+3, y);
+    }
+}
 
 void CConsoleTabBar::showEvent(QShowEvent *event)
 {
-    qDebug() << "show";
-    //tabButton(lastTabIndex(), QTabBar::RightSide)->resize(0, 0);
     moveButton();
     QTabBar::showEvent(event);
 }
@@ -62,11 +66,6 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
 void  CConsoleTabBar::mousePressEvent(QMouseEvent * event)
 {
     QTabBar::mousePressEvent(event);
-}
-
-int CConsoleTabBar::lastTabIndex(void)
-{
-    return count()-1;
 }
 
 // EOF <stefan@scheler.com>

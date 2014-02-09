@@ -157,6 +157,7 @@ void CConsoleTab::toggleFullScreen(void)
     {
         m_lastTabIndex = m_parent->currentIndex();
         sLastTitle = m_parent->tabText(m_lastTabIndex);
+        m_parent->addNewTab(); // add dummy tab
         setParent(0);
         showFullScreen();
     }
@@ -165,6 +166,7 @@ void CConsoleTab::toggleFullScreen(void)
         setParent(m_parent);
         m_parent->insertTab(m_lastTabIndex, this, sLastTitle);
         m_parent->setCurrentIndex(m_lastTabIndex);
+        m_parent->closeTab(m_parent->count()-1);
         m_ui->consoleView->setFocus();
     }
 }

@@ -32,9 +32,6 @@ private:
     QPushButton *m_btn;
     int m_selectedIndex;
     int m_prevIndex;
-
-    int lastTabIndex(void);
-
 };
 
 #endif // CONSOLETABBAR_H

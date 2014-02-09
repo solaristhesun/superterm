@@ -1,6 +1,4 @@
-#include <iostream>
 #include <QTabBar>
-#include <QDebug>
 #include <QApplication>
 
 #include "consoletabwidget.h"
@@ -12,9 +10,9 @@ CConsoleTabWidget::CConsoleTabWidget(QWidget *parent) :
     m_tabBar(new CConsoleTabBar(this))
 {
     setTabBar(m_tabBar);
-    addTab();
+    addNewTab();
 
-    connect(m_tabBar, SIGNAL(addButtonClicked()), this, SLOT(addTab()));
+    connect(m_tabBar, SIGNAL(addButtonClicked()), this, SLOT(addNewTab()));
 }
 
 CConsoleTabWidget::~CConsoleTabWidget()
@@ -24,13 +22,6 @@ CConsoleTabWidget::~CConsoleTabWidget()
 
 void CConsoleTabWidget::closeTab(int index)
 {
-    std::cout << "CLOSE" <<std::endl;
-#if 0
-    QWidget *wdgt = ui->tabWidget->widget( nCurIndex );
-       ui->tabWidget->removeTab(  nCurIndex );
-       if( wdgt )
-           delete wdgt;
-#endif
     QWidget *wdgt = widget( index );
     removeTab(  index );
     if( wdgt )
@@ -45,7 +36,7 @@ void CConsoleTabWidget::closeTab(int index)
     }
 }
 
-void CConsoleTabWidget::addTab(void)
+void CConsoleTabWidget::addNewTab(void)
 {
     int index = QTabWidget::addTab(new CConsoleTab(this), tr("New tab"));
     setCurrentIndex(index);
