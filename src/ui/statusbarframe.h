@@ -4,21 +4,21 @@
 #include <QFrame>
 
 namespace Ui {
-class StatusBarFrame;
+class CStatusBarFrame;
 }
 
-class StatusBarFrame : public QFrame
+class CStatusBarFrame : public QFrame
 {
     Q_OBJECT
 
 public:
-    explicit StatusBarFrame(QWidget *parent = 0);
-    ~StatusBarFrame();
+    explicit CStatusBarFrame(QWidget *parent = 0);
+    ~CStatusBarFrame();
 
     void showMessage(const QString & message, const int timeout = 0);
 
 private:
-    Ui::StatusBarFrame *m_ui;
+    Ui::CStatusBarFrame *m_ui;
 
     void setStyleProperty(const char* name, const QVariant& variant);
 };

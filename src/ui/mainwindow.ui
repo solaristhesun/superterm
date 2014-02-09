@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>CMainWindow</class>
+ <widget class="QMainWindow" name="CMainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -43,7 +43,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="ConsoleTabWidget" name="tabWidget">
+     <widget class="CConsoleTabWidget" name="tabWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -106,7 +106,7 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>ConsoleTabWidget</class>
+   <class>CConsoleTabWidget</class>
    <extends>QTabWidget</extends>
    <header>src/ui/consoletabwidget.h</header>
    <container>1</container>
@@ -120,7 +120,7 @@
   <connection>
    <sender>actionAbout</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>CMainWindow</receiver>
    <slot>showAbout()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -136,7 +136,7 @@
   <connection>
    <sender>actionExit</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>CMainWindow</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

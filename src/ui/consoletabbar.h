@@ -5,11 +5,11 @@
 
 class QPushButton;
 
-class ConsoleTabBar : public QTabBar
+class CConsoleTabBar : public QTabBar
 {
     Q_OBJECT
 public:
-    explicit ConsoleTabBar(QWidget *parent = 0);
+    explicit CConsoleTabBar(QWidget *parent = 0);
 
     void mouseReleaseEvent(QMouseEvent * event);
     void mousePressEvent(QMouseEvent * event);

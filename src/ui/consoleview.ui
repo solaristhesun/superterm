@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ConsoleView</class>
- <widget class="QPlainTextEdit" name="ConsoleView">
+ <class>CConsoleView</class>
+ <widget class="QPlainTextEdit" name="CConsoleView">
   <property name="enabled">
    <bool>false</bool>
   </property>

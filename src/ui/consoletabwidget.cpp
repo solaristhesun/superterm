@@ -7,24 +7,24 @@
 #include "consoletabbar.h"
 #include "consoletab.h"
 
-ConsoleTabWidget::ConsoleTabWidget(QWidget *parent) :
+CConsoleTabWidget::CConsoleTabWidget(QWidget *parent) :
     QTabWidget(parent),
-    m_tabBar(new ConsoleTabBar(this))
+    m_tabBar(new CConsoleTabBar(this))
 {
     setTabBar(m_tabBar);
     onAddButtonClicked();
 
-    //QTabWidget::addTab(new ConsoleTab(this), "");
+    //QTabWidget::addTab(new CConsoleTab(this), "");
 
     connect(m_tabBar, SIGNAL(addButtonClicked()), this, SLOT(onAddButtonClicked()));
 }
 
-ConsoleTabWidget::~ConsoleTabWidget()
+CConsoleTabWidget::~CConsoleTabWidget()
 {
     delete m_tabBar;
 }
 
-void ConsoleTabWidget::onCloseTab(int index)
+void CConsoleTabWidget::onCloseTab(int index)
 {
     std::cout << "CLOSE" <<std::endl;
 #if 0
@@ -47,28 +47,28 @@ void ConsoleTabWidget::onCloseTab(int index)
     }
 }
 
-void ConsoleTabWidget::addTab(ConsoleTab *tab)
+void CConsoleTabWidget::addTab(CConsoleTab *tab)
 {
     int index = QTabWidget::addTab(tab, "New tab");
 }
 
-void ConsoleTabWidget::onAddButtonClicked(void)
+void CConsoleTabWidget::onAddButtonClicked(void)
 {
-    int index = QTabWidget::addTab(new ConsoleTab(this), "New tab");
+    int index = QTabWidget::addTab(new CConsoleTab(this), "New tab");
     setCurrentIndex(index);
 }
 
-void ConsoleTabWidget::setConsoleFont(const QFont &font)
+void CConsoleTabWidget::setConsoleFont(const QFont &font)
 {
     // set font on all tabs
     for (int i = 0; i < count(); i++)
     {
-        ConsoleTab *tab = static_cast<ConsoleTab*>(widget(i));
+        CConsoleTab *tab = static_cast<CConsoleTab*>(widget(i));
         tab->setConsoleFont(font);
     }
 }
 
-void ConsoleTabWidget::setCurrentTabText(const QString &text)
+void CConsoleTabWidget::setCurrentTabText(const QString &text)
 {
     const int curIndex = currentIndex();
     setTabText(curIndex, text);

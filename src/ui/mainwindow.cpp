@@ -8,24 +8,24 @@
 #include "consoletab.h"
 #include "consoleview.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+CMainWindow::CMainWindow(QWidget *parent) :
     QMainWindow(parent),
-    m_ui(new Ui::MainWindow)
+    m_ui(new Ui::CMainWindow)
 {
     m_ui->setupUi(this);
     //m_ui->statusBar->showMessage("Ready");
 }
 
 
-MainWindow::~MainWindow()
+CMainWindow::~CMainWindow()
 {
     delete m_ui;
 }
 
-void MainWindow::showAbout(void)
+void CMainWindow::showAbout(void)
 {
     QMessageBox::about(this, tr("About"),
-                 tr("<p>The <b>Scribble</b> example shows how to use QMainWindow as the "
+                 tr("<p>The <b>Scribble</b> example shows how to use QCMainWindow as the "
                     "base widget for an application, and how to reimplement some of "
                     "QWidget's event handlers to receive the events generated for "
                     "the application's widgets:</p><p> We reimplement the mouse event "
@@ -38,7 +38,7 @@ void MainWindow::showAbout(void)
                     "to repaint widgets.</p>"));
 }
 
-QSize	MainWindow::sizeHint() const
+QSize	CMainWindow::sizeHint() const
 {
     return QSize(800, 600);
 }

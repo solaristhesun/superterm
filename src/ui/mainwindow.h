@@ -4,16 +4,16 @@
 #include <QMainWindow>
 
 namespace Ui {
-    class MainWindow;
+    class CMainWindow;
 }
 
-class MainWindow : public QMainWindow
+class CMainWindow : public QMainWindow
 {
     Q_OBJECT
     
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit CMainWindow(QWidget *parent = 0);
+    ~CMainWindow();
 
     QSize	sizeHint() const;
 
@@ -21,7 +21,7 @@ public slots:
     void showAbout(void);
 
 private:
-    Ui::MainWindow *m_ui;
+    Ui::CMainWindow *m_ui;
 };
 
 #endif // MAINWINDOW_H

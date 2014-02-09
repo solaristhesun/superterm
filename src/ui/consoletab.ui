@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ConsoleTab</class>
- <widget class="QWidget" name="ConsoleTab">
+ <class>CConsoleTab</class>
+ <widget class="QWidget" name="CConsoleTab">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -212,7 +212,7 @@
     </widget>
    </item>
    <item>
-    <widget class="ConsoleView" name="consoleView">
+    <widget class="CConsoleView" name="consoleView">
      <property name="styleSheet">
       <string notr="true"/>
      </property>
@@ -232,7 +232,7 @@
     </widget>
    </item>
    <item>
-    <widget class="StatusBarFrame" name="statusBar">
+    <widget class="CStatusBarFrame" name="statusBar">
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -275,7 +275,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ConsoleView</class>
+   <class>CConsoleView</class>
    <extends>QTextEdit</extends>
    <header>src/ui/consoleview.h</header>
    <slots>
@@ -283,7 +283,7 @@
    </slots>
   </customwidget>
   <customwidget>
-   <class>StatusBarFrame</class>
+   <class>CStatusBarFrame</class>
    <extends>QFrame</extends>
    <header>src/ui/statusbarframe.h</header>
    <container>1</container>
@@ -308,7 +308,7 @@
   <connection>
    <sender>btnConnect</sender>
    <signal>clicked()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>CConsoleTab</receiver>
    <slot>onConnectClicked()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -324,7 +324,7 @@
   <connection>
    <sender>consoleView</sender>
    <signal>keyPressed(QString)</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>CConsoleTab</receiver>
    <slot>onKeyPressed(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -340,7 +340,7 @@
   <connection>
    <sender>comboPorts</sender>
    <signal>currentIndexChanged(int)</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>CConsoleTab</receiver>
    <slot>onComboChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -356,7 +356,7 @@
   <connection>
    <sender>comboBaudRates</sender>
    <signal>currentIndexChanged(int)</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>CConsoleTab</receiver>
    <slot>onComboChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -372,7 +372,7 @@
   <connection>
    <sender>consoleView</sender>
    <signal>customContextMenuRequested(QPoint)</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>CConsoleTab</receiver>
    <slot>showContextMenu(QPoint)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -388,7 +388,7 @@
   <connection>
    <sender>actionChangeColor</sender>
    <signal>triggered()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>CConsoleTab</receiver>
    <slot>showColorDialog()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -404,7 +404,7 @@
   <connection>
    <sender>actionConfiguration</sender>
    <signal>triggered()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>CConsoleTab</receiver>
    <slot>showConnectBar()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -420,7 +420,7 @@
   <connection>
    <sender>actionChangeFont</sender>
    <signal>triggered()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>CConsoleTab</receiver>
    <slot>showFontDialog()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -468,7 +468,7 @@
   <connection>
    <sender>highlightsFrame</sender>
    <signal>highlightingChanged()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>CConsoleTab</receiver>
    <slot>updateHighlighting()</slot>
    <hints>
     <hint type="sourcelabel">

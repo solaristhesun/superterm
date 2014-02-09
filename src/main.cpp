@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     QApplication::setApplicationName("superterm");
 
     // create main window
-    MainWindow w;
+    CMainWindow w;
     w.resize(800, 600);
     w.show();
     

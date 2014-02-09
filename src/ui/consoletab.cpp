@@ -18,7 +18,7 @@
 #include "consoletabwidget.h"
 #include "highlightsframe.h"
 
-quint32   ConsoleTab::m_u32counter = 1;
+quint32   CConsoleTab::m_u32counter = 1;
 
 Q_DECLARE_METATYPE(QSerialPort::DataBits)
 Q_DECLARE_METATYPE(QSerialPort::StopBits)
@@ -65,9 +65,9 @@ void dumpDCB(const char *strFileName)
 #endif
 }
 
-ConsoleTab::ConsoleTab(ConsoleTabWidget *parent) :
+CConsoleTab::CConsoleTab(CConsoleTabWidget *parent) :
     QWidget(parent),
-    m_ui(new Ui::ConsoleTab),
+    m_ui(new Ui::CConsoleTab),
     m_parent(parent),
     m_port(NULL),
     m_lastTabIndex(0)
@@ -85,13 +85,13 @@ ConsoleTab::ConsoleTab(ConsoleTabWidget *parent) :
     setBackgroundColor(color);
 }
 
-ConsoleTab::~ConsoleTab()
+CConsoleTab::~CConsoleTab()
 {
     delete m_ui;
     delete m_port;
 }
 
-void ConsoleTab::fillComboBoxes(void)
+void CConsoleTab::fillComboBoxes(void)
 {
     QComboBox *combo = NULL;
 
@@ -147,7 +147,7 @@ void ConsoleTab::fillComboBoxes(void)
     combo->setCurrentIndex(0);
 }
 
-void ConsoleTab::toggleFullScreen(void)
+void CConsoleTab::toggleFullScreen(void)
 {
     if (!isFullScreen())
     {
@@ -164,7 +164,7 @@ void ConsoleTab::toggleFullScreen(void)
     }
 }
 
-void ConsoleTab::showContextMenu(const QPoint &pt)
+void CConsoleTab::showContextMenu(const QPoint &pt)
 {
     QMenu *menu = new QMenu(this);
     menu->addAction(m_ui->actionConfiguration);
@@ -182,19 +182,19 @@ void ConsoleTab::showContextMenu(const QPoint &pt)
 }
 
 
-void ConsoleTab::updateHighlighting()
+void CConsoleTab::updateHighlighting()
 {
     QList<CHighlightsFrame::Highlighting> h = m_ui->highlightsFrame->getItems();
     m_ui->consoleView->setHighlighting(h);
 }
 
 
-void ConsoleTab::showConnectBar(void)
+void CConsoleTab::showConnectBar(void)
 {
     m_ui->btnBar->show();
 }
 
-void ConsoleTab::showColorDialog(void)
+void CConsoleTab::showColorDialog(void)
 {
     QSettings settings;
     QColor initial(settings.value("background").toString());
@@ -206,7 +206,7 @@ void ConsoleTab::showColorDialog(void)
     }
 }
 
-void ConsoleTab::showFontDialog(void)
+void CConsoleTab::showFontDialog(void)
 {
     bool ok;
     QFont font = QFontDialog::getFont(&ok, m_ui->consoleView->font(), this);
@@ -218,18 +218,18 @@ void ConsoleTab::showFontDialog(void)
     }
 }
 
-void ConsoleTab::setConsoleFont(const QFont &font)
+void CConsoleTab::setConsoleFont(const QFont &font)
 {
     m_ui->consoleView->setFont(font);
     m_ui->consoleView->refreshCursor();
 }
 
-void ConsoleTab::setBackgroundColor(const QColor &color)
+void CConsoleTab::setBackgroundColor(const QColor &color)
 {
     setStyleSheet(QString("QPlainTextEdit { background-color: %1; }").arg(color.name()));
 }
 
-void ConsoleTab::onConnectClicked(void)
+void CConsoleTab::onConnectClicked(void)
 {
     const QString portName = m_ui->comboPorts->currentData().toString();
 
@@ -288,14 +288,14 @@ void ConsoleTab::onConnectClicked(void)
     }
 }
 
-void ConsoleTab::showError(QSerialPort::SerialPortError error)
+void CConsoleTab::showError(QSerialPort::SerialPortError error)
 {
     qDebug() << "ERROR: " << error;
     m_port->close();
     m_ui->statusBar->showMessage("ERROR");
 }
 
-void ConsoleTab::onComboChanged(void)
+void CConsoleTab::onComboChanged(void)
 {
     if (m_ui->comboPorts->currentIndex() != 0 && m_ui->comboBaudRates->currentIndex() != 0)
     {
@@ -307,7 +307,7 @@ void ConsoleTab::onComboChanged(void)
     }
 }
 
-void ConsoleTab::onDataAvailable(void)
+void CConsoleTab::onDataAvailable(void)
 {
     QByteArray data = m_port->readAll();
 #if 0
@@ -330,7 +330,7 @@ void ConsoleTab::onDataAvailable(void)
     m_ui->consoleView->insertPlainText(str);
 }
 
-void ConsoleTab::onKeyPressed(QString text)
+void CConsoleTab::onKeyPressed(QString text)
 {
     if (text.isEmpty())
         return;

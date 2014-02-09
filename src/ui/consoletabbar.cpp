@@ -5,7 +5,7 @@
 
 #include "consoletabbar.h"
 
-ConsoleTabBar::ConsoleTabBar(QWidget *parent) :
+CConsoleTabBar::CConsoleTabBar(QWidget *parent) :
     QTabBar(parent),
     m_btn(new QPushButton(this)),
     m_selectedIndex(-1),
@@ -24,24 +24,24 @@ ConsoleTabBar::ConsoleTabBar(QWidget *parent) :
 }
 
 
-void	ConsoleTabBar::tabInserted(int index)
+void	CConsoleTabBar::tabInserted(int index)
 {
     moveButton();
 }
 
-void	ConsoleTabBar::tabRemoved(int index)
+void	CConsoleTabBar::tabRemoved(int index)
 {
     moveButton();
 }
 
-void ConsoleTabBar::moveButton(void)
+void CConsoleTabBar::moveButton(void)
 {
     int y = tabRect(lastTabIndex()).bottom();
     m_btn->move(tabRect(lastTabIndex()).bottomRight().x()-28+3, y);
 }
 
 
-void ConsoleTabBar::showEvent(QShowEvent *event)
+void CConsoleTabBar::showEvent(QShowEvent *event)
 {
     qDebug() << "show";
     //tabButton(lastTabIndex(), QTabBar::RightSide)->resize(0, 0);
@@ -49,22 +49,22 @@ void ConsoleTabBar::showEvent(QShowEvent *event)
     QTabBar::showEvent(event);
 }
 
-void ConsoleTabBar::mouseReleaseEvent(QMouseEvent * event)
+void CConsoleTabBar::mouseReleaseEvent(QMouseEvent * event)
 {
      QTabBar::mouseReleaseEvent(event);
 }
 
-void ConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
+void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
 {
     QTabBar::mouseMoveEvent(event);
 }
 
-void  ConsoleTabBar::mousePressEvent(QMouseEvent * event)
+void  CConsoleTabBar::mousePressEvent(QMouseEvent * event)
 {
     QTabBar::mousePressEvent(event);
 }
 
-int ConsoleTabBar::lastTabIndex(void)
+int CConsoleTabBar::lastTabIndex(void)
 {
     return count()-1;
 }

@@ -8,10 +8,10 @@
 
 #include "consoletab.h"
 
-ConsoleView::ConsoleView(QWidget *parent) :
+CConsoleView::CConsoleView(QWidget *parent) :
     QPlainTextEdit(parent),
-    m_ui(new Ui::ConsoleView),
-    m_parent(static_cast<ConsoleTab*>(parent))
+    m_ui(new Ui::CConsoleView),
+    m_parent(static_cast<CConsoleTab*>(parent))
 {
     m_ui->setupUi(this);
 
@@ -19,17 +19,17 @@ ConsoleView::ConsoleView(QWidget *parent) :
     refreshCursor();
 }
 
-ConsoleView::~ConsoleView()
+CConsoleView::~CConsoleView()
 {
     delete m_ui;
 }
 
-void ConsoleView::refreshCursor()
+void CConsoleView::refreshCursor()
 {
     setCursorWidth(fontMetrics().width(' ')-2);
 }
 
-void ConsoleView::keyPressEvent(QKeyEvent *e)
+void CConsoleView::keyPressEvent(QKeyEvent *e)
 {
     if ((e->key()==Qt::Key_Return) && (e->modifiers()==Qt::AltModifier))
     {
@@ -43,24 +43,24 @@ void ConsoleView::keyPressEvent(QKeyEvent *e)
     emit keyPressed(e->text());
 }
 
-void ConsoleView::scrollDown(void)
+void CConsoleView::scrollDown(void)
 {
     QScrollBar *sb = verticalScrollBar();
     sb->setValue(sb->maximum());
 }
 
-void ConsoleView::clear(void)
+void CConsoleView::clear(void)
 {
     m_extras.clear();
     QPlainTextEdit::clear();
 }
 
-void ConsoleView::setHighlighting(QList<CHighlightsFrame::Highlighting>& highlighting)
+void CConsoleView::setHighlighting(QList<CHighlightsFrame::Highlighting>& highlighting)
 {
     m_highlightings = highlighting;
 }
 
-void ConsoleView::insertPlainText(const QString &text)
+void CConsoleView::insertPlainText(const QString &text)
 {
     moveCursor(QTextCursor::End);
     QPlainTextEdit::insertPlainText(text);

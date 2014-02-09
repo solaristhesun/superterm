@@ -3,21 +3,21 @@
 #include "statusbarframe.h"
 #include "ui_statusbarframe.h"
 
-StatusBarFrame::StatusBarFrame(QWidget *parent) :
+CStatusBarFrame::CStatusBarFrame(QWidget *parent) :
     QFrame(parent),
-    m_ui(new Ui::StatusBarFrame)
+    m_ui(new Ui::CStatusBarFrame)
 {
     m_ui->setupUi(this);
 
     hide();
 }
 
-StatusBarFrame::~StatusBarFrame()
+CStatusBarFrame::~CStatusBarFrame()
 {
     delete m_ui;
 }
 
-void StatusBarFrame::showMessage(const QString& message, const int timeout)
+void CStatusBarFrame::showMessage(const QString& message, const int timeout)
 {
     m_ui->labelMessage->setText(message);
 
@@ -36,7 +36,7 @@ void StatusBarFrame::showMessage(const QString& message, const int timeout)
     show();
 }
 
-void StatusBarFrame::setStyleProperty(const char* name, const QVariant& variant)
+void CStatusBarFrame::setStyleProperty(const char* name, const QVariant& variant)
 {
     setProperty(name, variant);
     style()->unpolish(this);

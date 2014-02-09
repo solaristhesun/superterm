@@ -6,18 +6,18 @@
 #include "highlightsframe.h"
 
 namespace Ui {
-    class ConsoleView;
+    class CConsoleView;
 }
 
-class ConsoleTab;
+class CConsoleTab;
 
-class ConsoleView : public QPlainTextEdit
+class CConsoleView : public QPlainTextEdit
 {
     Q_OBJECT
     
 public:
-    ConsoleView(QWidget *parent = 0);
-    ~ConsoleView();
+    CConsoleView(QWidget *parent = 0);
+    ~CConsoleView();
 
     void keyPressEvent(QKeyEvent * e);
     void scrollDown(void);
@@ -32,8 +32,8 @@ signals:
     void keyPressed(QString text);
 
 private:
-    Ui::ConsoleView*                 m_ui;
-    ConsoleTab*                      m_parent;
+    Ui::CConsoleView*                 m_ui;
+    CConsoleTab*                      m_parent;
     QList<QTextEdit::ExtraSelection> m_extras;
     int                              m_cursorPos;
     QList<CHighlightsFrame::Highlighting>                      m_highlightings;

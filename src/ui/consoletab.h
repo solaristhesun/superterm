@@ -6,19 +6,19 @@
 #include <QTextEdit>
 
 namespace Ui {
-class ConsoleTab;
+class CConsoleTab;
 }
 
 class QSerialPort;
-class ConsoleTabWidget;
+class CConsoleTabWidget;
 
-class ConsoleTab : public QWidget
+class CConsoleTab : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ConsoleTab(ConsoleTabWidget *parent = 0);
-    ~ConsoleTab();
+    explicit CConsoleTab(CConsoleTabWidget *parent = 0);
+    ~CConsoleTab();
 
     void toggleFullScreen(void);
     void hideButton(int index);
@@ -39,8 +39,8 @@ public slots:
     void updateHighlighting(void);
 
 private:
-    Ui::ConsoleTab*   m_ui;
-    ConsoleTabWidget* m_parent;
+    Ui::CConsoleTab*   m_ui;
+    CConsoleTabWidget* m_parent;
     QSerialPort*      m_port;
     int               m_lastTabIndex;
 

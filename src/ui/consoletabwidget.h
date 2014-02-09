@@ -3,17 +3,17 @@
 
 #include <QTabWidget>
 
-class ConsoleTab;
-class ConsoleTabBar;
+class CConsoleTab;
+class CConsoleTabBar;
 
-class ConsoleTabWidget : public QTabWidget
+class CConsoleTabWidget : public QTabWidget
 {
     Q_OBJECT
 public:
-    explicit ConsoleTabWidget(QWidget *parent = 0);
-    ~ConsoleTabWidget();
+    explicit CConsoleTabWidget(QWidget *parent = 0);
+    ~CConsoleTabWidget();
 
-    void addTab(ConsoleTab *tab);
+    void addTab(CConsoleTab *tab);
     void setCurrentTabText(const QString& test);
     void setConsoleFont(const QFont& font);
 
@@ -25,7 +25,7 @@ public slots:
 
 
 private:
-    ConsoleTabBar* m_tabBar;
+    CConsoleTabBar* m_tabBar;
 };
 
 #endif // CONSOLETABWIDGET_H
