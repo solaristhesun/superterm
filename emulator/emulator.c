@@ -29,7 +29,7 @@ int main(void)
         int r = rand() % 3;
         
         char msg[100];
-        sprintf(msg, "%lu: %s\r\n", c++, str[r]);
+        sprintf(msg, "%08lx: %s\r\n", c++, str[r]);
 
         write(fd, msg, strlen(msg));
         usleep(100000);

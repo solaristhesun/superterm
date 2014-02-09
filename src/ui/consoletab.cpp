@@ -26,10 +26,10 @@ Q_DECLARE_METATYPE(QSerialPort::StopBits)
 Q_DECLARE_METATYPE(QSerialPort::Parity)
 Q_DECLARE_METATYPE(QSerialPort::FlowControl)
 
-void dumpDCB(const char *strFileName)
+void dumpDCB(const char *szFileName)
 {
 #if defined(Q_OS_WIN)
-    HANDLE h = CreateFileA(strFileName, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING,  FILE_ATTRIBUTE_NORMAL, 0);
+    HANDLE h = CreateFileA(szFileName, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING,  FILE_ATTRIBUTE_NORMAL, 0);
 
     DCB dcb;
 
@@ -240,25 +240,27 @@ void CConsoleTab::setBackgroundColor(const QColor &color)
 
 void CConsoleTab::onConnectClicked(void)
 {
-    const QString portName = m_ui->comboPorts->currentData().toString();
+    const QString sDeviceName = m_ui->comboPorts->currentData().toString();
 
     if (!m_port)
     {
-        m_port = new QSerialPort(portName);
+        m_port = new QSerialPort(sDeviceName);
 
         m_port->setSettingsRestoredOnClose(false);
 
-        dumpDCB(portName.toStdString().c_str());
+        dumpDCB(sDeviceName.toStdString().c_str());
 
         if (m_port->open(QIODevice::ReadWrite))
         {
             // configure serial port
+            const QString sPortName = m_ui->comboPorts->currentText();
+
 
             m_port->setBaudRate(m_ui->comboBaudRates->currentData().toInt());
             m_port->setDataBits(m_ui->comboDataBits->currentData().value<QSerialPort::DataBits>());
             m_port->setParity(m_ui->comboParity->currentData().value<QSerialPort::Parity>());
             m_port->setStopBits(m_ui->comboStopBits->currentData().value<QSerialPort::StopBits>());
-            m_port->setFlowControl(QSerialPort::NoFlowControl);
+            m_port->setFlowControl(m_ui->comboFlowControl->currentData().value<QSerialPort::FlowControl>());
 
             m_port->clear(QSerialPort::AllDirections);
 
@@ -267,12 +269,12 @@ void CConsoleTab::onConnectClicked(void)
             m_ui->btnBar->hide();
             m_ui->consoleView->setEnabled(true);
             m_ui->consoleView->setFocus();
-            m_parent->setCurrentTabText(portName);
+            m_parent->setCurrentTabText(sPortName);
 
             m_ui->comboPorts->setEnabled(false);
-            m_ui->btnConnect->setText("&Disconnect");
+            m_ui->btnConnect->setText(tr("&Disconnect"));
 
-            m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(portName), 3000);
+            m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(sPortName), 3000);
 
         }
         else
@@ -319,9 +321,9 @@ void CConsoleTab::onComboChanged(void)
 void CConsoleTab::showAboutDialog(void)
 {
     const QString contents = QString(
-        "<p><font size=6 color=#000080><b>%1</b></font></p>"
-        "<p align=center>Copyright &copy; 2014 Stefan Scheler</p>"
-        "<p align=center>%2</p>").arg(g_sAppFullName).arg(tr("All rights reserved."));
+        "<p><font color=#000080><font size=6><b>%1</b></font> <font size=4>(revision %2)</font></font></p>"
+        "<p align=left>Copyright &copy; 2014 Stefan Scheler. %3</p>"
+        "<p>The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</p>").arg(g_sAppFullName).arg(g_u32revision).arg(tr("All rights reserved."));
 
     QMessageBox::about(this, tr("About superterm"), contents);
 }

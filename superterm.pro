@@ -63,5 +63,13 @@ win32:CONFIG += embed_manifest_exe
 INCLUDEPATH += \
     src
 
+REVISION = $$system(git rev-list --count HEAD)
+
+isEmpty(REVISION){
+    REVISION = 0
+}
+
+DEFINES += REVISION=$${REVISION} 
+
 # EOF <stefan@scheler.com>
 

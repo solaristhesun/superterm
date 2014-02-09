@@ -4,5 +4,6 @@
 extern const QString g_sAppName;
 extern const QString g_sAppVersion;
 extern const QString g_sAppFullName;
+extern const quint32 g_u32revision;
 
 #endif // GLOBALS_H

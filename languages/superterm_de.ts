@@ -46,7 +46,12 @@
         <translation>Markierung</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="320"/>
+        <location filename="../src/ui/consoletab.cpp" line="273"/>
+        <source>&amp;Disconnect</source>
+        <translation>&amp;Trennen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/consoletab.cpp" line="326"/>
         <source>About superterm</source>
         <translation>Über superterm</translation>
     </message>
@@ -116,17 +121,17 @@
         <translation>Hardware</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="273"/>
+        <location filename="../src/ui/consoletab.cpp" line="275"/>
         <source>Successfully connected to %1.</source>
         <translation>Verbindung mit %1 erfolgreicht hergestellt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="281"/>
+        <location filename="../src/ui/consoletab.cpp" line="283"/>
         <source>Error. Failed to open port.</source>
         <translation>Fehler! Verbindung fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="323"/>
+        <location filename="../src/ui/consoletab.cpp" line="324"/>
         <source>All rights reserved.</source>
         <translation>Alle Rechte vorbehalten.</translation>
     </message>
@@ -134,7 +139,7 @@
 <context>
     <name>CConsoleTabWidget</name>
     <message>
-        <location filename="../src/ui/consoletabwidget.cpp" line="50"/>
+        <location filename="../src/ui/consoletabwidget.cpp" line="41"/>
         <source>New tab</source>
         <translation>Neuer Tab</translation>
     </message>

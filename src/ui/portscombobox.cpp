@@ -26,7 +26,7 @@ void CPortsComboBox::refresh()
     }
 
 #if defined(Q_OS_LINUX)
-    addItem("pts5", QVariant("/dev/pts/5"));
+    addItem("pts/5", QVariant("/dev/pts/5"));
 #endif
 }
 
