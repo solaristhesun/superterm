@@ -20,7 +20,6 @@ public:
     explicit CConsoleTab(CConsoleTabWidget *parent = 0);
     ~CConsoleTab();
 
-    void toggleFullScreen(void);
     void hideButton(int index);
 
     void setConsoleFont(const QFont& font);
@@ -38,6 +37,7 @@ public slots:
     void showError(QSerialPort::SerialPortError error);
     void updateHighlighting(void);
     void showAboutDialog(void);
+    void toggleFullScreen(void);
 
 private:
     Ui::CConsoleTab*   m_ui;

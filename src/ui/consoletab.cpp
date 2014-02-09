@@ -13,6 +13,7 @@
 #include <windows.h>
 #endif
 
+#include "globals.h"
 #include "consoletab.h"
 #include "ui_consoletab.h"
 #include "consoletabwidget.h"
@@ -104,6 +105,8 @@ void CConsoleTab::fillComboBoxes(void)
     }
 #endif
     // just use more common baud rates for now
+    combo->clear();
+    combo->addItem(tr("Select baud rate"));
     combo->addItem("9600", QVariant(9600));
     combo->addItem("19200", QVariant(19200));
     combo->addItem("38400", QVariant(38400));
@@ -149,16 +152,18 @@ void CConsoleTab::fillComboBoxes(void)
 
 void CConsoleTab::toggleFullScreen(void)
 {
+    static QString sLastTitle;
     if (!isFullScreen())
     {
         m_lastTabIndex = m_parent->currentIndex();
+        sLastTitle = m_parent->tabText(m_lastTabIndex);
         setParent(0);
         showFullScreen();
     }
     else
     {
         setParent(m_parent);
-        m_parent->insertTab(m_lastTabIndex, this, "foo");
+        m_parent->insertTab(m_lastTabIndex, this, sLastTitle);
         m_parent->setCurrentIndex(m_lastTabIndex);
         m_ui->consoleView->setFocus();
     }
@@ -175,6 +180,8 @@ void CConsoleTab::showContextMenu(const QPoint &pt)
     menu->addAction(m_ui->actionHighlight);
     menu->addSeparator();
     menu->addAction(m_ui->actionClear);
+    menu->addSeparator();
+    menu->addAction(m_ui->actionFullscreen);
     menu->addSeparator();
     menu->addAction(m_ui->actionAbout);
     menu->exec(mapToGlobal(pt));
@@ -309,11 +316,12 @@ void CConsoleTab::onComboChanged(void)
 
 void CConsoleTab::showAboutDialog(void)
 {
-    QMessageBox::about(this,
-        tr("About"),
-        tr("<p><font size=6 color=#000080><b>superterm 2014.2</b></font></p>"
-           "<p align=center>Copyright &copy; 2014 Stefan Scheler</p>"
-           "<p align=center>All rights reserved.</p>"));
+    const QString contents = QString(
+        "<p><font size=6 color=#000080><b>%1</b></font></p>"
+        "<p align=center>Copyright &copy; 2014 Stefan Scheler</p>"
+        "<p align=center>%2</p>").arg(g_sAppFullName).arg(tr("All rights reserved."));
+
+    QMessageBox::about(this, tr("About superterm"), contents);
 }
 
 void CConsoleTab::onDataAvailable(void)

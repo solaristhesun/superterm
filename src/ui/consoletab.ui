@@ -13,9 +13,6 @@
   <property name="contextMenuPolicy">
    <enum>Qt::DefaultContextMenu</enum>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
   <property name="styleSheet">
    <string notr="true"/>
   </property>
@@ -87,16 +84,14 @@
       <item>
        <widget class="QComboBox" name="comboBaudRates">
         <property name="toolTip">
-         <string>Select baudrate</string>
+         <string>Select baud rate</string>
+        </property>
+        <property name="currentText">
+         <string notr="true"/>
         </property>
         <property name="sizeAdjustPolicy">
          <enum>QComboBox::AdjustToContents</enum>
         </property>
-        <item>
-         <property name="text">
-          <string>Select baud rate</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item>
@@ -105,16 +100,11 @@
          <string>Select data bits</string>
         </property>
         <property name="currentText">
-         <string>8</string>
+         <string notr="true"/>
         </property>
         <property name="sizeAdjustPolicy">
          <enum>QComboBox::AdjustToContents</enum>
         </property>
-        <item>
-         <property name="text">
-          <string notr="true">8</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item>
@@ -125,31 +115,6 @@
         <property name="sizeAdjustPolicy">
          <enum>QComboBox::AdjustToContents</enum>
         </property>
-        <item>
-         <property name="text">
-          <string>None</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Even</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Odd</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Mark</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Space</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item>
@@ -160,11 +125,6 @@
         <property name="sizeAdjustPolicy">
          <enum>QComboBox::AdjustToContents</enum>
         </property>
-        <item>
-         <property name="text">
-          <string notr="true">1</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item>
@@ -172,11 +132,9 @@
         <property name="toolTip">
          <string>Select flow control</string>
         </property>
-        <item>
-         <property name="text">
-          <string>None</string>
-         </property>
-        </item>
+        <property name="currentText">
+         <string notr="true"/>
+        </property>
        </widget>
       </item>
       <item>
@@ -259,7 +217,7 @@
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>&amp;About...</string>
+    <string>&amp;About superterm</string>
    </property>
   </action>
   <action name="actionClear">
@@ -270,6 +228,14 @@
   <action name="actionHighlight">
    <property name="text">
     <string>Highlight...</string>
+   </property>
+  </action>
+  <action name="actionFullscreen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Fullscreen</string>
    </property>
   </action>
  </widget>
@@ -497,6 +463,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionFullscreen</sender>
+   <signal>triggered()</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>toggleFullScreen()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>272</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>
@@ -509,5 +491,6 @@
   <slot>showFontDialog()</slot>
   <slot>updateHighlighting()</slot>
   <slot>showAboutDialog()</slot>
+  <slot>toggleFullScreen()</slot>
  </slots>
 </ui>

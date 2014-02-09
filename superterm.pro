@@ -20,7 +20,8 @@ SOURCES += \
     src/ui/consoletabbar.cpp \
     src/ui/statusbarframe.cpp \
     src/ui/portscombobox.cpp \
-    src/ui/highlightsframe.cpp
+    src/ui/highlightsframe.cpp \
+    src/globals.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -30,7 +31,8 @@ HEADERS += \
     src/ui/consoletabbar.h \
     src/ui/statusbarframe.h \
     src/ui/portscombobox.h \
-    src/ui/highlightsframe.h
+    src/ui/highlightsframe.h \
+    src/globals.h
 
 FORMS += \
     src/ui/mainwindow.ui \
@@ -41,6 +43,9 @@ FORMS += \
 
 RESOURCES += \
     superterm.qrc
+
+OTHER_FILES += \
+    superterm.qss
 
 TRANSLATIONS += \
     languages/superterm_de.ts
@@ -55,5 +60,8 @@ win32:INCLUDEPATH += C:\\DUMP\\projects\\superterm
 win32:RC_FILE += superterm.rc
 win32:CONFIG += embed_manifest_exe
 
-OTHER_FILES += \
-    superterm.qss
+INCLUDEPATH += \
+    src
+
+# EOF <stefan@scheler.com>
+

@@ -1,5 +1,6 @@
 #include <QMessageBox>
 
+#include "globals.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -8,6 +9,8 @@ CMainWindow::CMainWindow(QWidget *parent) :
     m_ui(new Ui::CMainWindow)
 {
     m_ui->setupUi(this);
+
+    setWindowTitle(g_sAppFullName);
 }
 
 CMainWindow::~CMainWindow()

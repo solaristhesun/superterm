@@ -3,6 +3,7 @@
 #include <QLibraryInfo>
 #include <QFile>
 
+#include "globals.h"
 #include "ui/mainwindow.h"
 
 int main(int argc, char *argv[])
@@ -22,7 +23,7 @@ int main(int argc, char *argv[])
 
     QApplication::setOrganizationName("SCHELER");
     QApplication::setOrganizationDomain("scheler.com");
-    QApplication::setApplicationName("superterm");
+    QApplication::setApplicationName(g_sAppName);
 
     QTranslator qtTranslator;
     qtTranslator.load("qt_" + QLocale::system().name(),
@@ -30,7 +31,7 @@ int main(int argc, char *argv[])
     a.installTranslator(&qtTranslator);
 
     QTranslator appTranslator;
-    appTranslator.load("superterm_" + QLocale::system().name());
+    appTranslator.load(g_sAppName + "_" + QLocale::system().name());
     a.installTranslator(&appTranslator);
 
     // create main window

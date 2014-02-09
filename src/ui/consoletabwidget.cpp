@@ -49,6 +49,7 @@ void CConsoleTabWidget::addTab(void)
 {
     int index = QTabWidget::addTab(new CConsoleTab(this), tr("New tab"));
     setCurrentIndex(index);
+    m_tabBar->moveButton();
 }
 
 void CConsoleTabWidget::setConsoleFont(const QFont &font)
