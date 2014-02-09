@@ -481,6 +481,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionAbout</sender>
+   <signal>triggered()</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>showAboutDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>272</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>
@@ -492,5 +508,6 @@
   <slot>showConnectBar()</slot>
   <slot>showFontDialog()</slot>
   <slot>updateHighlighting()</slot>
+  <slot>showAboutDialog()</slot>
  </slots>
 </ui>

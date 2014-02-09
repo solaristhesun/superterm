@@ -37,6 +37,7 @@ public slots:
     void showFontDialog(void);
     void showError(QSerialPort::SerialPortError error);
     void updateHighlighting(void);
+    void showAboutDialog(void);
 
 private:
     Ui::CConsoleTab*   m_ui;

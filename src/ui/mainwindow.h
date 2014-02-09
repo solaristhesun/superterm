@@ -15,10 +15,7 @@ public:
     explicit CMainWindow(QWidget *parent = 0);
     ~CMainWindow();
 
-    QSize	sizeHint() const;
-
-public slots:
-    void showAbout(void);
+    QSize sizeHint() const;
 
 private:
     Ui::CMainWindow *m_ui;

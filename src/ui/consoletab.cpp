@@ -307,6 +307,16 @@ void CConsoleTab::onComboChanged(void)
     }
 }
 
+
+void CConsoleTab::showAboutDialog(void)
+{
+    QMessageBox::about(this,
+        tr("About"),
+        tr("<p><font size=6 color=#000080><b>superterm 2014.2</b></font></p>"
+           "<p align=center>Copyright &copy; 2014 Stefan Scheler</p>"
+           "<p align=center>All rights reserved.</p>"));
+}
+
 void CConsoleTab::onDataAvailable(void)
 {
     QByteArray data = m_port->readAll();
