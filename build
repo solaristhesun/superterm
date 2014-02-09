@@ -5,7 +5,9 @@ export PATH=$QTDIR/bin:$PATH
 
 qmake superterm.pro -r -spec linux-g++
 
-make -r -w -j8
+make -r -w -j8 || exit 1
+
+strip release/superterm
 
 # EOF <stefan@scheler.com>
 
