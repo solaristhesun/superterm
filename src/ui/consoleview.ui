@@ -23,7 +23,7 @@
    <enum>Qt::CustomContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">ConsoleView</string>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>

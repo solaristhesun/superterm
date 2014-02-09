@@ -12,11 +12,9 @@ CConsoleTabWidget::CConsoleTabWidget(QWidget *parent) :
     m_tabBar(new CConsoleTabBar(this))
 {
     setTabBar(m_tabBar);
-    onAddButtonClicked();
+    addTab();
 
-    //QTabWidget::addTab(new CConsoleTab(this), "");
-
-    connect(m_tabBar, SIGNAL(addButtonClicked()), this, SLOT(onAddButtonClicked()));
+    connect(m_tabBar, SIGNAL(addButtonClicked()), this, SLOT(addTab()));
 }
 
 CConsoleTabWidget::~CConsoleTabWidget()
@@ -24,7 +22,7 @@ CConsoleTabWidget::~CConsoleTabWidget()
     delete m_tabBar;
 }
 
-void CConsoleTabWidget::onCloseTab(int index)
+void CConsoleTabWidget::closeTab(int index)
 {
     std::cout << "CLOSE" <<std::endl;
 #if 0
@@ -47,14 +45,9 @@ void CConsoleTabWidget::onCloseTab(int index)
     }
 }
 
-void CConsoleTabWidget::addTab(CConsoleTab *tab)
+void CConsoleTabWidget::addTab(void)
 {
-    int index = QTabWidget::addTab(tab, "New tab");
-}
-
-void CConsoleTabWidget::onAddButtonClicked(void)
-{
-    int index = QTabWidget::addTab(new CConsoleTab(this), "New tab");
+    int index = QTabWidget::addTab(new CConsoleTab(this), tr("New tab"));
     setCurrentIndex(index);
 }
 

@@ -13,15 +13,14 @@ public:
     explicit CConsoleTabWidget(QWidget *parent = 0);
     ~CConsoleTabWidget();
 
-    void addTab(CConsoleTab *tab);
     void setCurrentTabText(const QString& test);
     void setConsoleFont(const QFont& font);
 
 signals:
 
 public slots:
-    void onCloseTab(int index);
-    void onAddButtonClicked(void);
+    void closeTab(int index);
+    void addTab(void);
 
 
 private:

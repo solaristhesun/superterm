@@ -271,8 +271,7 @@ void CConsoleTab::onConnectClicked(void)
             qDebug() << m_port->error();
             delete m_port;
             m_port = NULL;
-            m_ui->statusBar->showMessage("Error. Failed to open port.");
-            //QMessageBox::critical(this, "Error", "Failed to open port", QMessageBox::Ok, QMessageBox::NoButton);
+            m_ui->statusBar->showMessage(tr("Error. Failed to open port."));
         }
 
         connect(m_port, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(showError(QSerialPort::SerialPortError)));

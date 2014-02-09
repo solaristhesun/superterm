@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Frame</string>
+   <string notr="true">Frame</string>
   </property>
   <property name="frameShape">
    <enum>QFrame::StyledPanel</enum>
@@ -38,7 +38,7 @@
    <item>
     <widget class="QLabel" name="labelMessage">
      <property name="text">
-      <string>Message</string>
+      <string notr="true">Message</string>
      </property>
     </widget>
    </item>

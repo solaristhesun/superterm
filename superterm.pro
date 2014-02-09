@@ -22,7 +22,6 @@ SOURCES += \
     src/ui/portscombobox.cpp \
     src/ui/highlightsframe.cpp
 
-
 HEADERS += \
     src/ui/mainwindow.h \
     src/ui/consoletabwidget.h \
@@ -45,6 +44,12 @@ RESOURCES += \
 
 TRANSLATIONS += \
     languages/superterm_de.ts
+
+updateqm.input = TRANSLATIONS
+updateqm.output = $$DESTDIR/${QMAKE_FILE_BASE}.qm
+updateqm.commands = lrelease ${QMAKE_FILE_IN} -qm ${QMAKE_FILE_OUT} 
+updateqm.CONFIG += no_link target_predeps
+QMAKE_EXTRA_COMPILERS += updateqm
 
 win32:INCLUDEPATH += C:\\DUMP\\projects\\superterm
 win32:RC_FILE += superterm.rc
