@@ -1,4 +1,6 @@
 #include <QApplication>
+#include <QTranslator>
+#include <QLibraryInfo>
 #include <QFile>
 
 #include "ui/mainwindow.h"
@@ -21,6 +23,15 @@ int main(int argc, char *argv[])
     QApplication::setOrganizationName("SCHELER");
     QApplication::setOrganizationDomain("scheler.com");
     QApplication::setApplicationName("superterm");
+
+    QTranslator qtTranslator;
+    qtTranslator.load("qt_" + QLocale::system().name(),
+            QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    a.installTranslator(&qtTranslator);
+
+    QTranslator appTranslator;
+    appTranslator.load("superterm_" + QLocale::system().name());
+    a.installTranslator(&appTranslator);
 
     // create main window
     CMainWindow w;

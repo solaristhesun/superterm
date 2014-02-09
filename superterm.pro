@@ -5,7 +5,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = superterm
 TEMPLATE = app
 
-DESTDIR = build/release
+DESTDIR = release
 OBJECTS_DIR = $$DESTDIR/.obj
 MOC_DIR = $$DESTDIR/.moc
 UI_DIR  = $$DESTDIR/.ui
@@ -42,6 +42,9 @@ FORMS += \
 
 RESOURCES += \
     superterm.qrc
+
+TRANSLATIONS += \
+    languages/superterm_de.ts
 
 win32:INCLUDEPATH += C:\\DUMP\\projects\\superterm
 win32:RC_FILE += superterm.rc
