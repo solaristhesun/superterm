@@ -64,9 +64,11 @@ void CConsoleView::insertPlainText(const QString &text)
 {
     moveCursor(QTextCursor::End);
     QPlainTextEdit::insertPlainText(text);
+    int iLines = text.count('\n');
 
     foreach (CHighlightsFrame::Highlighting h, m_highlightings)
     {
+        for (int i = 0; i < iLines; i++)
         moveCursor(QTextCursor::Up);
         moveCursor(QTextCursor::StartOfLine);
         while (find(h.pattern))
