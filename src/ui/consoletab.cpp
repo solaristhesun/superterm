@@ -268,12 +268,12 @@ void CConsoleTab::onConnectClicked(void)
             m_ui->btnBar->hide();
             m_ui->consoleView->setEnabled(true);
             m_ui->consoleView->setFocus();
-            m_parent->setCurrentTabText(sPortName);
+            m_parent->setCurrentTabText(sDeviceName);
 
             m_ui->comboPorts->setEnabled(false);
             m_ui->btnConnect->setText(tr("&Disconnect"));
 
-            m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(sPortName), 3000);
+            m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(sDeviceName), 3000);
 
         }
         else
