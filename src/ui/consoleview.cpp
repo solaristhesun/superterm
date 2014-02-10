@@ -2,6 +2,7 @@
 #include <QKeyEvent>
 #include <QFontMetrics>
 #include <QDebug>
+#include <QMouseEvent>
 
 #include "consoleview.h"
 #include "ui_consoleview.h"
@@ -11,7 +12,8 @@
 CConsoleView::CConsoleView(QWidget *parent) :
     QPlainTextEdit(parent),
     m_ui(new Ui::CConsoleView),
-    m_parent(static_cast<CConsoleTab*>(parent))
+    m_parent(static_cast<CConsoleTab*>(parent)),
+    m_bMouseDown(false)
 {
     m_ui->setupUi(this);
 
@@ -27,6 +29,41 @@ CConsoleView::~CConsoleView()
 void CConsoleView::refreshCursor()
 {
     setCursorWidth(fontMetrics().width(' ')-2);
+}
+
+void CConsoleView::mousePressEvent(QMouseEvent * e)
+{
+    if (e->button() == Qt::LeftButton)
+    {
+        m_pos = cursorForPosition(e->pos()).position();
+        m_bMouseDown = true;
+    }
+    QPlainTextEdit::mousePressEvent(e);
+}
+
+void CConsoleView::mouseMoveEvent(QMouseEvent * e)
+{
+    if (e->button() == Qt::LeftButton)
+    {
+        quint32 pos = cursorForPosition(e->pos()).position();
+
+        QTextCursor cursor = textCursor();
+        cursor.setPosition(m_pos, QTextCursor::MoveAnchor);
+        cursor.setPosition(pos,QTextCursor::KeepAnchor);
+        setTextCursor(cursor);
+    }
+    QPlainTextEdit::mousePressEvent(e);
+}
+
+void CConsoleView::mouseReleaseEvent(QMouseEvent * e)
+{
+    if (e->button() == Qt::LeftButton)
+    {
+        copy();
+        m_bMouseDown = false;
+        insertPlainText(m_buffer);
+        m_buffer = "";
+    }
 }
 
 void CConsoleView::keyPressEvent(QKeyEvent *e)
@@ -62,6 +99,12 @@ void CConsoleView::setHighlighting(QList<CHighlightsFrame::Highlighting>& highli
 
 void CConsoleView::insertPlainText(const QString &text)
 {
+    if (m_bMouseDown)
+    {
+        m_buffer += text;
+        return;
+    }
+
     moveCursor(QTextCursor::End);
     QPlainTextEdit::insertPlainText(text);
     int iLines = text.count('\n');

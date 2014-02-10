@@ -3,6 +3,8 @@
 
 #include <QPlainTextEdit>
 
+class QMouseEvent;
+
 #include "highlightsframe.h"
 
 namespace Ui {
@@ -23,6 +25,9 @@ public:
     void scrollDown(void);
     void refreshCursor();
     void setHighlighting(QList<CHighlightsFrame::Highlighting>& highlighting);
+    void mousePressEvent(QMouseEvent * e);
+    void mouseMoveEvent(QMouseEvent * e);
+    void mouseReleaseEvent(QMouseEvent * e);
 
 public slots:
     void clear();
@@ -37,6 +42,9 @@ private:
     QList<QTextEdit::ExtraSelection> m_extras;
     int                              m_cursorPos;
     QList<CHighlightsFrame::Highlighting>                      m_highlightings;
+    bool                              m_bMouseDown;
+    QString                           m_buffer;
+    quint32                           m_pos;
 };
 
 #endif // CONSOLEVIEW

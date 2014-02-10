@@ -38,13 +38,19 @@
    <number>0</number>
   </property>
   <property name="readOnly">
-   <bool>false</bool>
+   <bool>true</bool>
   </property>
   <property name="cursorWidth">
    <number>1</number>
   </property>
+  <property name="textInteractionFlags">
+   <set>Qt::TextSelectableByMouse</set>
+  </property>
   <property name="maximumBlockCount">
    <number>10000</number>
+  </property>
+  <property name="centerOnScroll">
+   <bool>false</bool>
   </property>
  </widget>
  <resources/>
