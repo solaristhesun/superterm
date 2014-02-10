@@ -118,35 +118,34 @@ void CConsoleTab::fillComboBoxes(void)
     // fill data bits
     combo = m_ui->comboDataBits;
     combo->clear();
-    combo->addItem("5", QVariant(QSerialPort::Data5));
-    combo->addItem("6", QVariant(QSerialPort::Data6));
-    combo->addItem("7", QVariant(QSerialPort::Data7));
-    combo->addItem("8", QVariant(QSerialPort::Data8));
+    combo->addItem("5", qVariantFromValue(QSerialPort::Data5));
+    combo->addItem("6", qVariantFromValue(QSerialPort::Data6));
+    combo->addItem("7", qVariantFromValue(QSerialPort::Data7));
+    combo->addItem("8", qVariantFromValue(QSerialPort::Data8));
     combo->setCurrentIndex(3);
 
     // fill parity
     combo = m_ui->comboParity;
     combo->clear();
-    combo->addItem(tr("None"), QVariant(QSerialPort::NoParity));
-    combo->addItem(tr("Even"), QVariant(QSerialPort::EvenParity));
-    combo->addItem(tr("Odd"), QVariant(QSerialPort::OddParity));
-    combo->addItem(tr("Space"), QVariant(QSerialPort::SpaceParity));
-    combo->addItem(tr("Mark"), QVariant(QSerialPort::MarkParity));
+    combo->addItem(tr("None"), qVariantFromValue(QSerialPort::NoParity));
+    combo->addItem(tr("Even"), qVariantFromValue(QSerialPort::OddParity));
+    combo->addItem(tr("Space"), qVariantFromValue(QSerialPort::SpaceParity));
+    combo->addItem(tr("Mark"), qVariantFromValue(QSerialPort::MarkParity));
 
     // fill stop bits
     combo = m_ui->comboStopBits;
     combo->clear();
-    combo->addItem("1", QVariant(QSerialPort::OneStop));
-    combo->addItem("1.5", QVariant(QSerialPort::OneAndHalfStop));
-    combo->addItem("2", QVariant(QSerialPort::TwoStop));
+    combo->addItem("1", qVariantFromValue(QSerialPort::OneStop));
+    combo->addItem("1.5", qVariantFromValue(QSerialPort::OneAndHalfStop));
+    combo->addItem("2", qVariantFromValue(QSerialPort::TwoStop));
     combo->setCurrentIndex(0);
 
     // fill flow control
     combo = m_ui->comboFlowControl;
     combo->clear();
-    combo->addItem(tr("None"), QVariant(QSerialPort::NoFlowControl));
-    combo->addItem(tr("Xon/Xoff"), QVariant(QSerialPort::SoftwareControl));
-    combo->addItem(tr("Hardware"), QVariant(QSerialPort::HardwareControl));
+    combo->addItem(tr("None"), qVariantFromValue(QSerialPort::NoFlowControl));
+    combo->addItem(tr("Xon/Xoff"), qVariantFromValue(QSerialPort::SoftwareControl));
+    combo->addItem(tr("Hardware"), qVariantFromValue(QSerialPort::HardwareControl));
     combo->setCurrentIndex(0);
 }
 
