@@ -28,7 +28,9 @@ CConsoleView::~CConsoleView()
 
 void CConsoleView::refreshCursor()
 {
-    setCursorWidth(fontMetrics().width(' ')-2);
+    const int iWidthSpace = fontMetrics().width(" ");
+    setCursorWidth(iWidthSpace);
+    setTabStopWidth((iWidthSpace+2)*8);
 }
 
 void CConsoleView::mousePressEvent(QMouseEvent * e)

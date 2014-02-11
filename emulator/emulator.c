@@ -20,13 +20,15 @@ int main(void)
         "foo",
         "bar",
         "test test test",
+        "\teins\tzwei\tdrei\tvier\tfuenf",
+        "01234567890123456789012345678901234567890123456789012345678901234567890123456789"
     };
 
     unsigned long c = 0;
 
     while(1)
     {
-        int r = rand() % 3;
+        int r = rand() % 5;
         
         char msg[100];
         sprintf(msg, "%08lx: %s\r\n", c++, str[r]);
