@@ -21,6 +21,7 @@ int main(void)
         "bar",
         "test test test",
         "\teins\tzwei\tdrei\tvier\tfuenf",
+        "\tpeter\t1\t2\thallo\thubert",
         "01234567890123456789012345678901234567890123456789012345678901234567890123456789"
     };
 
@@ -28,7 +29,7 @@ int main(void)
 
     while(1)
     {
-        int r = rand() % 5;
+        int r = rand() % 6;
         
         char msg[100];
         sprintf(msg, "%08lx: %s\r\n", c++, str[r]);

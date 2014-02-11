@@ -21,7 +21,8 @@ SOURCES += \
     src/ui/statusbarframe.cpp \
     src/ui/portscombobox.cpp \
     src/ui/highlightsframe.cpp \
-    src/globals.cpp
+    src/globals.cpp \
+    src/ui/logfilepanel.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -32,14 +33,16 @@ HEADERS += \
     src/ui/statusbarframe.h \
     src/ui/portscombobox.h \
     src/ui/highlightsframe.h \
-    src/globals.h
+    src/globals.h \
+    src/ui/logfilepanel.h
 
 FORMS += \
     src/ui/mainwindow.ui \
     src/ui/consoleview.ui \
     src/ui/consoletab.ui \
     src/ui/statusbarframe.ui \
-    src/ui/highlightsframe.ui
+    src/ui/highlightsframe.ui \
+    src/ui/logfilepanel.ui
 
 RESOURCES += \
     superterm.qrc

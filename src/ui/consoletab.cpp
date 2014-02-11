@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QFontDialog>
 #include <QSettings>
+#include <QFile>
 #if defined(Q_OS_WIN)
 #include <windows.h>
 #endif
@@ -71,6 +72,7 @@ CConsoleTab::CConsoleTab(CConsoleTabWidget *parent) :
     m_ui(new Ui::CConsoleTab),
     m_parent(parent),
     m_port(NULL),
+    m_logFile(NULL),
     m_lastTabIndex(0)
 {
     m_ui->setupUi(this);
@@ -175,6 +177,7 @@ void CConsoleTab::showContextMenu(const QPoint &pt)
     QMenu *menu = new QMenu(this);
     menu->addAction(m_ui->actionConfiguration);
     menu->addAction(m_ui->actionChangeColor);
+    menu->addAction(m_ui->actionLogging);
     menu->addSeparator();
     menu->addAction(m_ui->actionChangeFont);
     menu->addSeparator();
@@ -332,6 +335,10 @@ void CConsoleTab::showAboutDialog(void)
 void CConsoleTab::onDataAvailable(void)
 {
     QByteArray data = m_port->readAll();
+    if (m_logFile)
+    {
+        m_logFile->write(data);
+    }
 #if 0
     for (int p = 0; p < data.size(); p++)
     {
@@ -361,6 +368,25 @@ void CConsoleTab::onKeyPressed(QString text)
     data.append(text.toLatin1());
     printf("KEY [%s] (0x%02x, 0x%02x)\n", text.toLatin1().constData(), text.toLatin1().constData()[0], data.constData()[0]);
     m_port->write(data.constData());
+}
+
+void CConsoleTab::startLogging(void)
+{
+    qDebug() << "LOGGING STARTED";
+    const QString sFileName = m_ui->logPanel->getLogFileName();
+    m_logFile = new QFile(sFileName);
+    if (!m_logFile->open(QIODevice::WriteOnly | QIODevice::Append))
+    {
+        // error
+    }
+
+}
+
+void CConsoleTab::stopLogging(void)
+{
+    m_logFile->close();
+    delete m_logFile;
+    m_logFile = NULL;
 }
 
 // EOF <stefan@scheler.com>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LogfilePanel</class>
+ <widget class="QFrame" name="LogfilePanel">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>447</width>
+    <height>33</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true"/>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::NoFrame</enum>
+  </property>
+  <property name="frameShadow">
+   <enum>QFrame::Plain</enum>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>5</number>
+   </property>
+   <property name="leftMargin">
+    <number>5</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>5</number>
+   </property>
+   <property name="bottomMargin">
+    <number>5</number>
+   </property>
+   <item>
+    <widget class="QLineEdit" name="editFileName"/>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btnSelect">
+     <property name="text">
+      <string>Select file</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btnStart">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>&amp;Start logging</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btnClose">
+     <property name="text">
+      <string>&amp;Close</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>btnSelect</sender>
+   <signal>clicked()</signal>
+   <receiver>LogfilePanel</receiver>
+   <slot>showFileDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>223</x>
+     <y>16</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnClose</sender>
+   <signal>clicked()</signal>
+   <receiver>LogfilePanel</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>401</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>223</x>
+     <y>16</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editFileName</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>LogfilePanel</receiver>
+   <slot>onFileNameChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>92</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>223</x>
+     <y>16</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnStart</sender>
+   <signal>clicked()</signal>
+   <receiver>LogfilePanel</receiver>
+   <slot>onStartButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>313</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>223</x>
+     <y>16</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>showFileDialog()</slot>
+  <slot>onFileNameChanged(QString)</slot>
+  <slot>onStartButtonClicked()</slot>
+ </slots>
+</ui>

@@ -11,6 +11,7 @@ class CConsoleTab;
 
 class QSerialPort;
 class CConsoleTabWidget;
+class QFile;
 
 class CConsoleTab : public QWidget
 {
@@ -38,11 +39,14 @@ public slots:
     void updateHighlighting(void);
     void showAboutDialog(void);
     void toggleFullScreen(void);
+    void startLogging(void);
+    void stopLogging(void);
 
 private:
     Ui::CConsoleTab*   m_ui;
     CConsoleTabWidget* m_parent;
     QSerialPort*      m_port;
+    QFile*            m_logFile;
     int               m_lastTabIndex;
 
     static quint32    m_u32counter;

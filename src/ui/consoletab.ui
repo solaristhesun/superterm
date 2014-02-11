@@ -180,6 +180,16 @@
     </widget>
    </item>
    <item>
+    <widget class="LogfilePanel" name="logPanel">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="CHighlightsFrame" name="highlightsFrame">
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -238,6 +248,11 @@
     <string>&amp;Fullscreen</string>
    </property>
   </action>
+  <action name="actionLogging">
+   <property name="text">
+    <string>Logging...</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -266,6 +281,16 @@
    <container>1</container>
    <slots>
     <signal>highlightingChanged()</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>LogfilePanel</class>
+   <extends>QFrame</extends>
+   <header>src/ui/logfilepanel.h</header>
+   <container>1</container>
+   <slots>
+    <signal>loggingStarted()</signal>
+    <signal>loggingStopped()</signal>
    </slots>
   </customwidget>
  </customwidgets>
@@ -479,6 +504,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionLogging</sender>
+   <signal>triggered()</signal>
+   <receiver>logPanel</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>272</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>logPanel</sender>
+   <signal>loggingStarted()</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>startLogging()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>272</x>
+     <y>187</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>272</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>logPanel</sender>
+   <signal>loggingStopped()</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>stopLogging()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>272</x>
+     <y>187</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>272</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>
@@ -492,5 +565,7 @@
   <slot>updateHighlighting()</slot>
   <slot>showAboutDialog()</slot>
   <slot>toggleFullScreen()</slot>
+  <slot>startLogging()</slot>
+  <slot>stopLogging()</slot>
  </slots>
 </ui>
