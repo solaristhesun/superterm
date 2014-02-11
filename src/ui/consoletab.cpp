@@ -377,8 +377,10 @@ void CConsoleTab::startLogging(void)
     m_logFile = new QFile(sFileName);
     if (!m_logFile->open(QIODevice::WriteOnly | QIODevice::Append))
     {
-        // error
+        m_ui->statusBar->showMessage(tr("Logging to %1 failed.").arg(sFileName));
     }
+
+    m_ui->statusBar->showMessage(tr("Logging to %1 started.").arg(sFileName), 3000);
 
 }
 

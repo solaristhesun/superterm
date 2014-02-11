@@ -1,4 +1,5 @@
 #include <QFileDialog>
+#include <QFileInfo>
 
 #include "logfilepanel.h"
 #include "ui_logfilepanel.h"
@@ -9,6 +10,8 @@ LogfilePanel::LogfilePanel(QWidget *parent) :
     m_bEnabled(false)
 {
     m_ui->setupUi(this);
+
+    hide();
 }
 
 LogfilePanel::~LogfilePanel()
@@ -30,6 +33,8 @@ void LogfilePanel::showFileDialog()
 
 void LogfilePanel::onFileNameChanged(const QString & text)
 {
+    QFileInfo fileInfo(text);
+
     m_ui->btnStart->setEnabled(!text.isEmpty());
 }
 
