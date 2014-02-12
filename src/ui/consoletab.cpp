@@ -67,9 +67,10 @@ void dumpDCB(const char *szFileName)
 #endif
 }
 
-CConsoleTab::CConsoleTab(CConsoleTabWidget *parent) :
+CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent) :
     QWidget(parent),
     m_ui(new Ui::CConsoleTab),
+    m_pe(pe),
     m_parent(parent),
     m_port(NULL),
     m_logFile(NULL),
@@ -97,6 +98,8 @@ CConsoleTab::~CConsoleTab()
 void CConsoleTab::fillComboBoxes(void)
 {
     QComboBox *combo = NULL;
+
+    m_ui->comboPorts->setPortEnumerator(m_pe);
 
     // fill baud rates
     combo = m_ui->comboBaudRates;

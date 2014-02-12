@@ -4,10 +4,12 @@
 #include "consoletabwidget.h"
 #include "consoletabbar.h"
 #include "consoletab.h"
+#include "portenumerator.h"
 
 CConsoleTabWidget::CConsoleTabWidget(QWidget *parent) :
     QTabWidget(parent),
-    m_tabBar(new CConsoleTabBar(this))
+    m_tabBar(new CConsoleTabBar(this)),
+    m_pe(new CPortEnumerator())
 {
     setTabBar(m_tabBar);
     addNewTab();
@@ -38,7 +40,7 @@ void CConsoleTabWidget::closeTab(int index)
 
 void CConsoleTabWidget::addNewTab(void)
 {
-    int index = QTabWidget::addTab(new CConsoleTab(this), tr("New tab"));
+    int index = QTabWidget::addTab(new CConsoleTab(m_pe, this), tr("New tab"));
     setCurrentIndex(index);
     m_tabBar->moveButton();
 }

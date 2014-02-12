@@ -18,7 +18,7 @@ public:
     QSize sizeHint() const;
 
 private:
-    Ui::CMainWindow *m_ui;
+    Ui::CMainWindow* m_ui;
 };
 
 #endif // MAINWINDOW_H

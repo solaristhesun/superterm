@@ -12,13 +12,14 @@ class CConsoleTab;
 class QSerialPort;
 class CConsoleTabWidget;
 class QFile;
+class CPortEnumerator;
 
 class CConsoleTab : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit CConsoleTab(CConsoleTabWidget *parent = 0);
+    explicit CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent = 0);
     ~CConsoleTab();
 
     void hideButton(int index);
@@ -44,6 +45,7 @@ public slots:
 
 private:
     Ui::CConsoleTab*   m_ui;
+    CPortEnumerator*   m_pe;
     CConsoleTabWidget* m_parent;
     QSerialPort*      m_port;
     QFile*            m_logFile;

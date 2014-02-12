@@ -5,6 +5,7 @@
 
 class CConsoleTab;
 class CConsoleTabBar;
+class CPortEnumerator;
 
 class CConsoleTabWidget : public QTabWidget
 {
@@ -24,7 +25,8 @@ public slots:
 
 
 private:
-    CConsoleTabBar* m_tabBar;
+    CConsoleTabBar*  m_tabBar;
+    CPortEnumerator* m_pe;
 };
 
 #endif // CONSOLETABWIDGET_H

@@ -22,7 +22,8 @@ SOURCES += \
     src/ui/portscombobox.cpp \
     src/ui/highlightsframe.cpp \
     src/globals.cpp \
-    src/ui/logfilepanel.cpp
+    src/ui/logfilepanel.cpp \
+    src/portenumerator.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -34,7 +35,8 @@ HEADERS += \
     src/ui/portscombobox.h \
     src/ui/highlightsframe.h \
     src/globals.h \
-    src/ui/logfilepanel.h
+    src/ui/logfilepanel.h \
+    src/portenumerator.h
 
 FORMS += \
     src/ui/mainwindow.ui \

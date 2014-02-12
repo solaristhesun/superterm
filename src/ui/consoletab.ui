@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>546</width>
+    <width>594</width>
     <height>213</height>
    </rect>
   </property>
@@ -70,6 +70,12 @@
       </property>
       <item>
        <widget class="CPortsComboBox" name="comboPorts">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="toolTip">
          <string>Select port</string>
         </property>
