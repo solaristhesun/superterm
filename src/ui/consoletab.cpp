@@ -164,6 +164,7 @@ void CConsoleTab::toggleFullScreen(void)
         m_parent->addNewTab(); // add dummy tab
         setParent(0);
         showFullScreen();
+        m_ui->actionFullscreen->setChecked(true);
     }
     else
     {
@@ -172,6 +173,7 @@ void CConsoleTab::toggleFullScreen(void)
         m_parent->setCurrentIndex(m_lastTabIndex);
         m_parent->closeTab(m_parent->count()-1);
         m_ui->consoleView->setFocus();
+        m_ui->actionFullscreen->setChecked(false);
     }
 }
 
@@ -350,14 +352,7 @@ void CConsoleTab::onDataAvailable(void)
     printf("\n");
 #endif
     QString str = data;
-    //std::cout << "NEW DATA [" << str.toStdString() << "]" << std::endl;
-    str = str.replace("\r\n", "\n");
-    str = str.replace("\r", "\n");
-    //str = str.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-#if 1
-    //highlight.cursor = m_ui->consoleView->textCursor();
-
-#endif
+    str = str.replace("\r", "");
 
     m_ui->consoleView->insertPlainText(str);
 }

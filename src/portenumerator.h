@@ -17,6 +17,9 @@ public:
     QList<QSerialPortInfo> getAvailablePorts(void);
 
     void run(void);
+
+
+
 private:
     QList<QSerialPortInfo> m_listPorts;
     bool                   m_bActive;
