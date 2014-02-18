@@ -27,16 +27,23 @@ int main(void)
 
     unsigned long c = 0;
 
+    int fd_log = open("superterm.log", O_RDONLY);
+    sleep(10);
     while(1)
     {
         int r = rand() % 6;
         
         char msg[100];
-        sprintf(msg, "%08lx: %s\r\n", c++, str[r]);
-
-        write(fd, msg, strlen(msg));
+//        sprintf(msg, "%08lx: %s\r\n", c++, str[r]);
+        if (read(fd_log, msg, 100) != 0)
+        {
+            printf("{%s}\n", msg);
+            write(fd, msg, strlen(msg));
+        }
         usleep(100000);
     }
+
+    close(fd_log);
 }
 
 // EOF <stefan@scheler.com>
