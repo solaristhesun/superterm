@@ -99,6 +99,20 @@ void CConsoleView::setHighlighting(QList<CHighlightsFrame::Highlighting>& highli
     m_highlightings = highlighting;
 }
 
+void CConsoleView::saveCursor()
+{
+   this->cursorPos = this->textCursor().position();
+   qDebug() << "saving position " << cursorPos;
+}
+
+void CConsoleView::restoreCursor()
+{
+   QTextCursor cursor = this->textCursor();
+   qDebug() << "restoring position " << cursorPos;
+   cursor.setPosition(this->cursorPos, QTextCursor::MoveAnchor);
+   this->setTextCursor(cursor);
+}
+
 void CConsoleView::insertPlainText(const QString &text)
 {
     if (m_bMouseDown)
@@ -111,6 +125,8 @@ void CConsoleView::insertPlainText(const QString &text)
     QPlainTextEdit::insertPlainText(text);
     int iLines = text.count('\n');
 
+    qDebug() << "{" << text << "}";
+
     foreach (CHighlightsFrame::Highlighting h, m_highlightings)
     {
         for (int i = 0; i < iLines; i++)
@@ -118,15 +134,21 @@ void CConsoleView::insertPlainText(const QString &text)
         moveCursor(QTextCursor::StartOfLine);
         while (find(h.pattern))
         {
-            textCursor().select(QTextCursor::Document);
+            //textCursor().select(QTextCursor::Document);
             QTextEdit::ExtraSelection extra;
+            saveCursor();
+            moveCursor(QTextCursor::Left); // workaround: why is this needed?
             extra.cursor = textCursor();
+            qDebug() << "POS" << extra.cursor.position();
             extra.cursor.clearSelection();
             extra.format.setProperty(QTextFormat::FullWidthSelection, true);
             extra.format.setBackground( h.color );
+            restoreCursor();
             m_extras << extra;
+
         }
     }
+    qDebug() << "SELECTION " << m_extras.count();
     setExtraSelections( m_extras );
     moveCursor(QTextCursor::End);
 }

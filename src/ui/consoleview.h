@@ -33,6 +33,7 @@ public slots:
     void clear();
     void insertPlainText(const QString &text);
 
+
 signals:
     void keyPressed(QString text);
 
@@ -45,6 +46,10 @@ private:
     bool                              m_bMouseDown;
     QString                           m_buffer;
     quint32                           m_pos;
+    int cursorPos;
+
+    void saveCursor(void);
+    void restoreCursor(void);
 };
 
 #endif // CONSOLEVIEW
