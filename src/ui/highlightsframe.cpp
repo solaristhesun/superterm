@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QColorDialog>
+#include <QKeyEvent>
 
 #include "highlightsframe.h"
 #include "ui_highlightsframe.h"
@@ -34,6 +35,7 @@ void CHighlightsFrame::addHighlighting(void)
         m_ui->filterList->addItem(item);
         m_ui->filterEdit->setText("");
         m_ui->filterEdit->setFocus();
+        m_ui->btnDeleteAll->setEnabled(true);
     }
 
     emit highlightingChanged();
@@ -43,6 +45,16 @@ void CHighlightsFrame::showEvent(QShowEvent * event)
 {
     m_ui->filterEdit->setText("");
     m_ui->filterEdit->setFocus();
+
+    if (m_ui->filterList->count() == 0)
+    {
+        m_ui->btnDeleteAll->setEnabled(false);
+    }
+    else
+    {
+        m_ui->btnDeleteAll->setEnabled(true);
+    }
+
 
     QFrame::showEvent(event);
 }
@@ -80,7 +92,27 @@ void CHighlightsFrame::deleteHighlighting(void)
     QListWidgetItem *item = m_ui->filterList->currentItem();
     delete item;
 
+    if (m_ui->filterList->count() == 0)
+    {
+        m_ui->btnDeleteAll->setEnabled(false);
+    }
+
     emit highlightingChanged();
+}
+
+void CHighlightsFrame::deleteAll(void)
+{
+    m_ui->filterList->clear();
+    m_ui->btnDeleteAll->setEnabled(false);
+}
+
+void CHighlightsFrame::keyPressEvent(QKeyEvent * event)
+{
+    if (event->key() == Qt::Key_Escape)
+    {
+        hide();
+    }
+    QFrame::keyPressEvent(event);
 }
 
 QList<CHighlightsFrame::Highlighting> CHighlightsFrame::getItems(void)

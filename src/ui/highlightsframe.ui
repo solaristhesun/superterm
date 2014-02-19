@@ -95,6 +95,16 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="btnDeleteAll">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Delete All</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="btnClose">
        <property name="text">
         <string>&amp;Close</string>
@@ -232,6 +242,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnDeleteAll</sender>
+   <signal>clicked()</signal>
+   <receiver>CHighlightsFrame</receiver>
+   <slot>deleteAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>313</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>222</x>
+     <y>44</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addHighlighting()</slot>
@@ -239,5 +265,6 @@
   <slot>onTextEdited(QString)</slot>
   <slot>onSelectionChanged()</slot>
   <slot>changeColor()</slot>
+  <slot>deleteAll()</slot>
  </slots>
 </ui>

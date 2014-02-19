@@ -25,6 +25,7 @@ public:
 
     QList<Highlighting> getItems(void);
     void showEvent(QShowEvent * event);
+    void keyPressEvent ( QKeyEvent * event );
 
 public slots:
     void addHighlighting(void);
@@ -32,6 +33,7 @@ public slots:
     void onTextEdited(const QString& text);
     void onSelectionChanged();
     void changeColor(void);
+    void deleteAll(void);
 
 signals:
     void highlightingChanged(void);
