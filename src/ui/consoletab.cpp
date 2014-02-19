@@ -160,6 +160,7 @@ void CConsoleTab::toggleFullScreen(void)
     if (!isFullScreen())
     {
         m_lastTabIndex = m_parent->currentIndex();
+        qDebug() << m_lastTabIndex;
         sLastTitle = m_parent->tabText(m_lastTabIndex);
         m_parent->addNewTab(); // add dummy tab
         setParent(0);
@@ -169,9 +170,10 @@ void CConsoleTab::toggleFullScreen(void)
     else
     {
         setParent(m_parent);
+        qDebug() << m_lastTabIndex;
         m_parent->insertTab(m_lastTabIndex, this, sLastTitle);
-        m_parent->setCurrentIndex(m_lastTabIndex);
         m_parent->closeTab(m_parent->count()-1);
+        m_parent->setCurrentIndex(m_lastTabIndex);
         m_ui->consoleView->setFocus();
         m_ui->actionFullscreen->setChecked(false);
     }

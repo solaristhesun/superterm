@@ -125,8 +125,6 @@ void CConsoleView::insertPlainText(const QString &text)
     QPlainTextEdit::insertPlainText(text);
     int iLines = text.count('\n');
 
-    qDebug() << "{" << text << "}";
-
     foreach (CHighlightsFrame::Highlighting h, m_highlightings)
     {
         for (int i = 0; i < iLines; i++)
@@ -148,7 +146,7 @@ void CConsoleView::insertPlainText(const QString &text)
 
         }
     }
-    qDebug() << "SELECTION " << m_extras.count();
+
     setExtraSelections( m_extras );
     moveCursor(QTextCursor::End);
 }
