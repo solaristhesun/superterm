@@ -38,13 +38,13 @@
    <number>0</number>
   </property>
   <property name="readOnly">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <property name="cursorWidth">
    <number>1</number>
   </property>
   <property name="textInteractionFlags">
-   <set>Qt::TextSelectableByMouse</set>
+   <set>Qt::TextEditorInteraction</set>
   </property>
   <property name="maximumBlockCount">
    <number>10000</number>
