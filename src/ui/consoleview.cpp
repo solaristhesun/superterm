@@ -54,7 +54,7 @@ void CConsoleView::mouseMoveEvent(QMouseEvent * e)
         cursor.setPosition(pos,QTextCursor::KeepAnchor);
         setTextCursor(cursor);
     }
-    QPlainTextEdit::mousePressEvent(e);
+    QPlainTextEdit::mouseMoveEvent(e);
 }
 
 void CConsoleView::mouseReleaseEvent(QMouseEvent * e)
@@ -66,6 +66,7 @@ void CConsoleView::mouseReleaseEvent(QMouseEvent * e)
         insertPlainText(m_buffer);
         m_buffer = "";
     }
+    QPlainTextEdit::mouseReleaseEvent(e);
 }
 
 void CConsoleView::keyPressEvent(QKeyEvent *e)
