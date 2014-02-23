@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>594</width>
+    <width>765</width>
     <height>213</height>
    </rect>
   </property>
@@ -223,7 +223,7 @@
   </action>
   <action name="actionConfiguration">
    <property name="text">
-    <string>Configuration</string>
+    <string>&amp;Configuration...</string>
    </property>
   </action>
   <action name="actionChangeFont">

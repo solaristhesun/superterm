@@ -187,12 +187,11 @@ void CConsoleTab::createContextMenu()
 {
     m_menu = new QMenu(this);
     m_menu->addAction(m_ui->actionConfiguration);
-    m_menu->addAction(m_ui->actionChangeColor);
     m_menu->addAction(m_ui->actionLogging);
-    m_menu->addSeparator();
-    m_menu->addAction(m_ui->actionChangeFont);
-    m_menu->addSeparator();
     m_menu->addAction(m_ui->actionHighlight);
+    m_menu->addSeparator();
+    m_menu->addAction(m_ui->actionChangeColor);
+    m_menu->addAction(m_ui->actionChangeFont);
     m_menu->addSeparator();
     m_menu->addAction(m_ui->actionClear);
     m_menu->addSeparator();
