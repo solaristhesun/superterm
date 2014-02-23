@@ -4,7 +4,7 @@
 #include "consoletabwidget.h"
 #include "consoletabbar.h"
 #include "consoletab.h"
-#include "portenumerator.h"
+#include "enumerator/portenumerator.h"
 
 CConsoleTabWidget::CConsoleTabWidget(QWidget *parent) :
     QTabWidget(parent),

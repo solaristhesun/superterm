@@ -74,6 +74,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent) :
     m_parent(parent),
     m_port(NULL),
     m_logFile(NULL),
+    m_menu(NULL),
     m_lastTabIndex(0)
 {
     m_ui->setupUi(this);
@@ -87,12 +88,15 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent) :
     consoleFont.fromString(settings.value("font").toString());
     setConsoleFont(consoleFont);
     setBackgroundColor(color);
+
+    createContextMenu();
 }
 
 CConsoleTab::~CConsoleTab()
 {
     delete m_ui;
     delete m_port;
+    delete m_menu;
 }
 
 void CConsoleTab::fillComboBoxes(void)
@@ -179,33 +183,34 @@ void CConsoleTab::toggleFullScreen(void)
     }
 }
 
-void CConsoleTab::showContextMenu(const QPoint &pt)
+void CConsoleTab::createContextMenu()
 {
-    QMenu *menu = new QMenu(this);
-    menu->addAction(m_ui->actionConfiguration);
-    menu->addAction(m_ui->actionChangeColor);
-    menu->addAction(m_ui->actionLogging);
-    menu->addSeparator();
-    menu->addAction(m_ui->actionChangeFont);
-    menu->addSeparator();
-    menu->addAction(m_ui->actionHighlight);
-    menu->addSeparator();
-    menu->addAction(m_ui->actionClear);
-    menu->addSeparator();
-    menu->addAction(m_ui->actionFullscreen);
-    menu->addSeparator();
-    menu->addAction(m_ui->actionAbout);
-    menu->exec(mapToGlobal(pt));
-    delete menu;
+    m_menu = new QMenu(this);
+    m_menu->addAction(m_ui->actionConfiguration);
+    m_menu->addAction(m_ui->actionChangeColor);
+    m_menu->addAction(m_ui->actionLogging);
+    m_menu->addSeparator();
+    m_menu->addAction(m_ui->actionChangeFont);
+    m_menu->addSeparator();
+    m_menu->addAction(m_ui->actionHighlight);
+    m_menu->addSeparator();
+    m_menu->addAction(m_ui->actionClear);
+    m_menu->addSeparator();
+    m_menu->addAction(m_ui->actionFullscreen);
+    m_menu->addSeparator();
+    m_menu->addAction(m_ui->actionAbout);
 }
 
+void CConsoleTab::showContextMenu(const QPoint &pt)
+{
+    m_menu->exec(mapToGlobal(pt));
+}
 
 void CConsoleTab::updateHighlighting()
 {
     QList<CHighlightsFrame::Highlighting> h = m_ui->highlightsFrame->getItems();
     m_ui->consoleView->setHighlighting(h);
 }
-
 
 void CConsoleTab::showConnectBar(void)
 {

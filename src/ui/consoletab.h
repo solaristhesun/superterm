@@ -13,6 +13,7 @@ class QSerialPort;
 class CConsoleTabWidget;
 class QFile;
 class CPortEnumerator;
+class QMenu;
 
 class CConsoleTab : public QWidget
 {
@@ -47,14 +48,16 @@ private:
     Ui::CConsoleTab*   m_ui;
     CPortEnumerator*   m_pe;
     CConsoleTabWidget* m_parent;
-    QSerialPort*      m_port;
-    QFile*            m_logFile;
-    int               m_lastTabIndex;
+    QSerialPort*       m_port;
+    QFile*             m_logFile;
+    QMenu*             m_menu;
+    int                m_lastTabIndex;
 
-    static quint32    m_u32counter;
-    QStringList       m_highlightings;
+    static quint32     m_u32counter;
+    QStringList        m_highlightings;
 
     void fillComboBoxes();
+    void createContextMenu();
 };
 
 #endif // CONSOLETAB_H
