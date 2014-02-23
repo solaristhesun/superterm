@@ -1,8 +1,8 @@
-#include <QSerialPortInfo>
 #include <QDebug>
 
 #include "portscombobox.h"
-#include "portenumerator.h"
+#include "enumerator/portenumerator.h"
+#include "enumerator/serialportinfo.h"
 
 CPortsComboBox::CPortsComboBox(QWidget *parent) :
     QComboBox(parent)
@@ -21,16 +21,13 @@ void CPortsComboBox::setPortEnumerator(CPortEnumerator *pe)
     refresh();
 }
 
-
 void CPortsComboBox::showEvent(QShowEvent* event)
 {
-    qDebug() << "SHOW";
     m_pe->startEnumeration();
 }
 
 void CPortsComboBox::hideEvent(QHideEvent* event)
 {
-    qDebug() << "HIDE";
     m_pe->stopEnumeration();
 }
 
@@ -39,15 +36,11 @@ void CPortsComboBox::refresh()
     clear();
     addItem(tr("Select port"));
 
-    foreach (const QSerialPortInfo &info, m_pe->getAvailablePorts())
+    foreach (const CSerialPortInfo &portInfo, m_pe->getAvailablePorts())
     {
-        const QString title = QString("%1 [%2]").arg(info.portName(), info.description());
-        addItem(title, QVariant(info.portName()));
+        const QString title = QString("%1 [%2]").arg(portInfo.getShortName(), portInfo.getDescription());
+        addItem(title, QVariant(portInfo.getPortName()));
     }
-
-#if defined(Q_OS_LINUX)
-    addItem("pts/5", QVariant("/dev/pts/5"));
-#endif
 }
 
 // EOF <stefan@scheler.com>

@@ -23,7 +23,8 @@ SOURCES += \
     src/ui/highlightsframe.cpp \
     src/globals.cpp \
     src/ui/logfilepanel.cpp \
-    src/portenumerator.cpp
+    src/enumerator/portenumerator.cpp \
+    src/enumerator/serialportinfo.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -36,7 +37,8 @@ HEADERS += \
     src/ui/highlightsframe.h \
     src/globals.h \
     src/ui/logfilepanel.h \
-    src/portenumerator.h
+    src/enumerator/portenumerator.h \
+    src/enumerator/serialportinfo.h
 
 FORMS += \
     src/ui/mainwindow.ui \

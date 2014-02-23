@@ -3,7 +3,7 @@
 
 #include <QThread>
 
-class QSerialPortInfo;
+class CSerialPortInfo;
 
 class CPortEnumerator: public QThread
 {
@@ -14,14 +14,12 @@ public:
     void startEnumeration(void);
     void stopEnumeration(void);
 
-    QList<QSerialPortInfo> getAvailablePorts(void);
+    QList<CSerialPortInfo> getAvailablePorts(void);
 
     void run(void);
 
-
-
 private:
-    QList<QSerialPortInfo> m_listPorts;
+    QList<CSerialPortInfo> m_ports;
     bool                   m_bActive;
 };
 

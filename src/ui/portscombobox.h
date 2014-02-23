@@ -14,18 +14,14 @@ public:
 
     void setPortEnumerator(CPortEnumerator *pe);
 
-
     void showEvent(QShowEvent* event);
     void hideEvent(QHideEvent* event);
 
-signals:
-
-public slots:
-
 private:
-    void refresh(void);
 
     CPortEnumerator* m_pe;
+
+    void refresh(void);
 };
 
 #endif // PORTSCOMBOBOX_H
