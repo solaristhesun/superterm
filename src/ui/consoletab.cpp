@@ -280,7 +280,6 @@ void CConsoleTab::onConnectClicked(void)
             connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
 
             m_ui->btnBar->hide();
-            m_ui->consoleView->setEnabled(true);
             m_ui->consoleView->setFocus();
             m_parent->setCurrentTabText(sDeviceName);
 
@@ -307,7 +306,6 @@ void CConsoleTab::onConnectClicked(void)
         m_port = NULL;
         m_ui->comboPorts->setEnabled(true);
         m_ui->btnConnect->setText("&Connect");
-        m_ui->consoleView->setEnabled(false);
     }
 }
 
@@ -371,7 +369,10 @@ void CConsoleTab::onKeyPressed(QString text)
     QByteArray data;
     data.append(text.toLatin1());
     printf("KEY [%s] (0x%02x, 0x%02x)\n", text.toLatin1().constData(), text.toLatin1().constData()[0], data.constData()[0]);
-    m_port->write(data.constData());
+    if (m_port)
+    {
+        m_port->write(data.constData());
+    }
 }
 
 void CConsoleTab::startLogging(void)
