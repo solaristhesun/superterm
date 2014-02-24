@@ -1,4 +1,6 @@
 #include <QSerialPortInfo>
+#include <QDateTime>
+#include <QDebug>
 
 #include "enumerator/portenumerator.h"
 #include "enumerator/serialportinfo.h"
@@ -30,9 +32,17 @@ void CPortEnumerator::run(void)
     {
         if (m_bActive)
         {
+            qint64 t1, t2;
+
+            t1 = QDateTime::currentMSecsSinceEpoch();
+            QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
+            t2 = QDateTime::currentMSecsSinceEpoch();
+
+            qDebug() << "TIME: " << t2 - t1;
+
             m_ports.clear();
 
-            foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
+            foreach (const QSerialPortInfo &info, ports)
             {
                 m_ports << CSerialPortInfo(info);
             }
