@@ -259,6 +259,14 @@
     <string>Logging...</string>
    </property>
   </action>
+  <action name="actionToggleAutoscroll">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Autoscroll</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -558,6 +566,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionToggleAutoscroll</sender>
+   <signal>triggered()</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>toggleAutoScroll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>382</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>
@@ -573,5 +597,6 @@
   <slot>toggleFullScreen()</slot>
   <slot>startLogging()</slot>
   <slot>stopLogging()</slot>
+  <slot>toggleAutoScroll()</slot>
  </slots>
 </ui>

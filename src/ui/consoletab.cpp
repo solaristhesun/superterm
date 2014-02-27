@@ -190,6 +190,8 @@ void CConsoleTab::createContextMenu()
     m_menu->addAction(m_ui->actionLogging);
     m_menu->addAction(m_ui->actionHighlight);
     m_menu->addSeparator();
+    m_menu->addAction(m_ui->actionToggleAutoscroll);
+    m_menu->addSeparator();
     m_menu->addAction(m_ui->actionChangeColor);
     m_menu->addAction(m_ui->actionChangeFont);
     m_menu->addSeparator();
@@ -198,6 +200,7 @@ void CConsoleTab::createContextMenu()
     m_menu->addAction(m_ui->actionFullscreen);
     m_menu->addSeparator();
     m_menu->addAction(m_ui->actionAbout);
+    m_ui->actionToggleAutoscroll->setChecked(true);
 }
 
 void CConsoleTab::showContextMenu(const QPoint &pt)
@@ -238,6 +241,10 @@ void CConsoleTab::showFontDialog(void)
         settings.setValue("font", font.toString());
         setConsoleFont(font);
     }
+}
+
+void CConsoleTab::toggleAutoScroll(void)
+{
 }
 
 void CConsoleTab::setConsoleFont(const QFont &font)

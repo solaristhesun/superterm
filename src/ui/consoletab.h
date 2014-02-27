@@ -41,6 +41,7 @@ public slots:
     void updateHighlighting(void);
     void showAboutDialog(void);
     void toggleFullScreen(void);
+    void toggleAutoScroll(void);
     void startLogging(void);
     void stopLogging(void);
 
