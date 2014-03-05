@@ -13,10 +13,15 @@ CConsoleView::CConsoleView(QWidget *parent) :
     QPlainTextEdit(parent),
     m_ui(new Ui::CConsoleView),
     m_parent(static_cast<CConsoleTab*>(parent)),
-    m_bMouseDown(false)
+    m_bMouseDown(false),
+    m_scrollBar(verticalScrollBar()),
+    m_scrollPos(0),
+    m_bAutoScroll(true)
 {
     m_ui->setupUi(this);
 
+
+    connect(m_scrollBar, SIGNAL(valueChanged(int)), this, SLOT(scrollBarChanged(int)));
     setWordWrapMode(QTextOption::WrapAnywhere);
     refreshCursor();
 }
@@ -89,6 +94,12 @@ void CConsoleView::scrollDown(void)
     sb->setValue(sb->maximum());
 }
 
+void CConsoleView::scrollBarChanged(int pos)
+{
+    qDebug() << "SCROLL " << pos;
+    m_scrollPos = pos;
+}
+
 void CConsoleView::clear(void)
 {
     m_extras.clear();
@@ -150,6 +161,27 @@ void CConsoleView::insertPlainText(const QString &text)
 
     setExtraSelections( m_extras );
     moveCursor(QTextCursor::End);
+
+    if (!m_bAutoScroll)
+    {
+        m_scrollBar->setSliderPosition(m_scrollPos);
+    }
+
+}
+
+void CConsoleView::setAutoScroll(const bool bEnabled)
+{
+    m_bAutoScroll = bEnabled;
+
+    if (m_bAutoScroll)
+    {
+        m_scrollBar->setSliderPosition(m_scrollBar->maximum());
+    }
+    else
+    {
+        m_scrollPos = m_scrollBar->maximum();
+    }
+
 }
 
 // EOF <stefan@scheler.com>

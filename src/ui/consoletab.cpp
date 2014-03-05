@@ -245,6 +245,9 @@ void CConsoleTab::showFontDialog(void)
 
 void CConsoleTab::toggleAutoScroll(void)
 {
+    static bool bEnabled = true;
+    bEnabled = !bEnabled;
+    m_ui->consoleView->setAutoScroll(bEnabled);
 }
 
 void CConsoleTab::setConsoleFont(const QFont &font)

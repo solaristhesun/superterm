@@ -4,6 +4,7 @@
 #include <QPlainTextEdit>
 
 class QMouseEvent;
+class QScrollBar;
 
 #include "highlightsframe.h"
 
@@ -29,9 +30,12 @@ public:
     void mouseMoveEvent(QMouseEvent * e);
     void mouseReleaseEvent(QMouseEvent * e);
 
+    void setAutoScroll(const bool bEnabled);
+
 public slots:
     void clear();
     void insertPlainText(const QString &text);
+    void scrollBarChanged(int pos);
 
 
 signals:
@@ -46,6 +50,9 @@ private:
     bool                              m_bMouseDown;
     QString                           m_buffer;
     quint32                           m_pos;
+    QScrollBar*                       m_scrollBar;
+    int                               m_scrollPos;
+    bool                              m_bAutoScroll;
     int cursorPos;
 
     void saveCursor(void);
