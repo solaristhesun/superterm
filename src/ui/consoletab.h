@@ -31,7 +31,7 @@ public:
 public slots:
     void onConnectClicked(void);
     void onDataAvailable(void);
-    void onKeyPressed(QString text);
+    void onKeyPressed(QKeyEvent* e);
     void onComboChanged(void);
     void showContextMenu(const QPoint &pt);
     void showColorDialog(void);

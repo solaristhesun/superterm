@@ -31,6 +31,8 @@ public:
     void mouseReleaseEvent(QMouseEvent * e);
 
     void setAutoScroll(const bool bEnabled);
+    void insertBackspace(void);
+    void insertNewline(void);
 
 public slots:
     void clear();
@@ -39,7 +41,7 @@ public slots:
 
 
 signals:
-    void keyPressed(QString text);
+    void keyPressed(QKeyEvent *e);
 
 private:
     Ui::CConsoleView*                 m_ui;

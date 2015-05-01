@@ -56,6 +56,7 @@
  <resources/>
  <connections/>
  <slots>
+  <signal>keyPressed(QKeyEvent*)</signal>
   <slot>showContextMenu(QPoint)</slot>
   <slot>showColorDialog()</slot>
  </slots>

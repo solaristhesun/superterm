@@ -274,7 +274,7 @@
    <extends>QTextEdit</extends>
    <header>src/ui/consoleview.h</header>
    <slots>
-    <signal>keyPressed(QString)</signal>
+    <signal>keyPressed(QKeyEvent*)</signal>
    </slots>
   </customwidget>
   <customwidget>
@@ -319,22 +319,6 @@
     <hint type="sourcelabel">
      <x>276</x>
      <y>16</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>83</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>consoleView</sender>
-   <signal>keyPressed(QString)</signal>
-   <receiver>CConsoleTab</receiver>
-   <slot>onKeyPressed(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>199</x>
-     <y>101</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
@@ -582,10 +566,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>consoleView</sender>
+   <signal>keyPressed(QKeyEvent*)</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>onKeyPressed(QKeyEvent*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>382</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>382</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>
-  <slot>onKeyPressed(QString)</slot>
   <slot>onComboChanged()</slot>
   <slot>onContextMenuRequested(QPoint)</slot>
   <slot>showContextMenu(QPoint)</slot>
@@ -598,5 +597,6 @@
   <slot>startLogging()</slot>
   <slot>stopLogging()</slot>
   <slot>toggleAutoScroll()</slot>
+  <slot>onKeyPressed(QKeyEvent*)</slot>
  </slots>
 </ui>

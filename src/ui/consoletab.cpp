@@ -358,30 +358,45 @@ void CConsoleTab::onDataAvailable(void)
     {
         m_logFile->write(data);
     }
-#if 0
+#if 1
     for (int p = 0; p < data.size(); p++)
     {
         printf("0x%02x ", data.at(p));
     }
     printf("\n");
 #endif
-    QString str = data;
-    str = str.replace("\r", "");
 
-    m_ui->consoleView->insertPlainText(str);
+    if (data.at(0) == 0x08)
+    {
+        m_ui->consoleView->insertBackspace();
+    }
+    else
+    {
+        QString str = data;
+        str = str.replace("\r", "");
+
+        m_ui->consoleView->insertPlainText(str);
+    }
 }
 
-void CConsoleTab::onKeyPressed(QString text)
+void CConsoleTab::onKeyPressed(QKeyEvent *e)
 {
-    if (text.isEmpty())
-        return;
+    QString key;
 
-    QByteArray data;
-    data.append(text.toLatin1());
-    printf("KEY [%s] (0x%02x, 0x%02x)\n", text.toLatin1().constData(), text.toLatin1().constData()[0], data.constData()[0]);
+    if (e->key() == Qt::Key_Return)
+    {
+        key = "\r\n";
+    }
+    else
+    {
+        key = e->text();
+    }
+
+    QByteArray b(key.toLatin1());
+
     if (m_port)
     {
-        m_port->write(data.constData());
+        m_port->write(b.constData());
     }
 }
 

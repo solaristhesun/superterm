@@ -48,7 +48,7 @@ void CPortEnumerator::run(void)
             }
 
 #if defined(Q_OS_LINUX)
-            m_ports << CSerialPortInfo("/dev/pts/5", "socat");
+            m_ports << CSerialPortInfo("/dev/COM1", "socat");
 #endif
         }
 

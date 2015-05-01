@@ -82,10 +82,7 @@ void CConsoleView::keyPressEvent(QKeyEvent *e)
         return;
     }
 
-    QByteArray data;
-    data.append(e->text());
-
-    emit keyPressed(e->text());
+    emit keyPressed(e);
 }
 
 void CConsoleView::scrollDown(void)
@@ -167,6 +164,16 @@ void CConsoleView::insertPlainText(const QString &text)
         m_scrollBar->setSliderPosition(m_scrollPos);
     }
 
+}
+
+void CConsoleView::insertBackspace()
+{
+    textCursor().deletePreviousChar();
+}
+
+void CConsoleView::insertNewline()
+{
+    textCursor().deletePreviousChar();
 }
 
 void CConsoleView::setAutoScroll(const bool bEnabled)
