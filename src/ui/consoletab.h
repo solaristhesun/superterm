@@ -33,6 +33,7 @@ public slots:
     void onDataAvailable(void);
     void onKeyPressed(QKeyEvent* e);
     void onComboChanged(void);
+    void onMoreClicked(void);
     void showContextMenu(const QPoint &pt);
     void showColorDialog(void);
     void showConnectBar(void);

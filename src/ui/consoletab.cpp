@@ -90,6 +90,11 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent) :
     setBackgroundColor(color);
 
     createContextMenu();
+
+    m_ui->comboDataBits->hide();
+    m_ui->comboFlowControl->hide();
+    m_ui->comboParity->hide();
+    m_ui->comboStopBits->hide();
 }
 
 CConsoleTab::~CConsoleTab()
@@ -261,6 +266,26 @@ void CConsoleTab::setBackgroundColor(const QColor &color)
     setStyleSheet(QString("QPlainTextEdit { background-color: %1; }").arg(color.name()));
 }
 
+void CConsoleTab::onMoreClicked()
+{
+    if (!m_ui->comboParity->isVisible())
+    {
+        m_ui->comboDataBits->show();
+        m_ui->comboFlowControl->show();
+        m_ui->comboParity->show();
+        m_ui->comboStopBits->show();
+        m_ui->btnMore->setText(tr("<< &Less"));
+    }
+    else
+    {
+        m_ui->comboDataBits->hide();
+        m_ui->comboFlowControl->hide();
+        m_ui->comboParity->hide();
+        m_ui->comboStopBits->hide();
+        m_ui->btnMore->setText(tr("&More >>"));
+    }
+}
+
 void CConsoleTab::onConnectClicked(void)
 {
     const QString sDeviceName = m_ui->comboPorts->currentData().toString();
@@ -343,7 +368,7 @@ void CConsoleTab::showAboutDialog(void)
 {
     const QString contents = QString(
         "<p><font color=#000080><font size=6><b>%1</b></font> <font size=4>(revision %2)</font></font></p>"
-        "<p align=left>Copyright &copy; 2014 Stefan Scheler. %3</p>"
+        "<p align=left>Copyright &copy; 2015 Stefan Scheler. %3</p>"
         "<p><a href=\"%4\">%5</a></p>"
         "<p>The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</p>")
         .arg(g_sAppFullName, QString::number(g_u32revision), tr("All rights reserved."), g_sAppHomepage, tr("Visit superterm website"));

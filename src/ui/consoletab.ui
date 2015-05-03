@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>765</width>
+    <width>855</width>
     <height>213</height>
    </rect>
   </property>
@@ -85,6 +85,9 @@
         <property name="sizeAdjustPolicy">
          <enum>QComboBox::AdjustToContents</enum>
         </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -140,6 +143,16 @@
         </property>
         <property name="currentText">
          <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnMore">
+        <property name="text">
+         <string>&amp;More &gt;&gt;</string>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -582,6 +595,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnMore</sender>
+   <signal>clicked()</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>onMoreClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>807</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>427</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>
@@ -598,5 +627,6 @@
   <slot>stopLogging()</slot>
   <slot>toggleAutoScroll()</slot>
   <slot>onKeyPressed(QKeyEvent*)</slot>
+  <slot>onMoreClicked()</slot>
  </slots>
 </ui>
