@@ -45,6 +45,7 @@ public slots:
     void toggleAutoScroll(void);
     void startLogging(void);
     void stopLogging(void);
+    void showSaveDialog(void);
 
 private:
     Ui::CConsoleTab*   m_ui;

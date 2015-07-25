@@ -8,7 +8,9 @@
 #include <QSerialPortInfo>
 #include <QMessageBox>
 #include <QFontDialog>
+#include <QFileDialog>
 #include <QSettings>
+#include <QXmlStreamWriter>
 #include <QFile>
 #if defined(Q_OS_WIN)
 #include <windows.h>
@@ -222,6 +224,55 @@ void CConsoleTab::updateHighlighting()
 void CConsoleTab::showConnectBar(void)
 {
     m_ui->btnBar->show();
+}
+
+void CConsoleTab::showSaveDialog(void)
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save configuration"),
+                                                     "",
+                                                     tr("superterm configurations (*.xml)"));
+
+    QFile file(fileName);
+    file.open(QIODevice::WriteOnly);
+
+    QXmlStreamWriter xmlWriter(&file);
+    xmlWriter.setAutoFormatting(true);
+    xmlWriter.writeStartDocument();
+
+    xmlWriter.writeStartElement("superterm");
+
+    xmlWriter.writeStartElement("configuration");
+    xmlWriter.writeTextElement("port", m_ui->comboPorts->currentText());
+    xmlWriter.writeTextElement("speed", m_ui->comboBaudRates->currentText());
+    xmlWriter.writeEndElement();
+
+    QList<CHighlightsFrame::Highlighting> h = m_ui->highlightsFrame->getItems();
+
+    if (h.size() > 0)
+    {
+        xmlWriter.writeStartElement("highlighting");
+        for (int i = 0; i < h.size(); ++i)
+        {
+            xmlWriter.writeStartElement("pattern");
+            xmlWriter.writeAttribute("color", h[i].color.name());
+            xmlWriter.writeCharacters(h [i].pattern);
+            xmlWriter.writeEndElement();
+       }
+        xmlWriter.writeEndElement();
+    }
+
+    QString logFileName = m_ui->logPanel->getLogFileName();
+
+    if (!logFileName.isEmpty())
+    {
+        xmlWriter.writeStartElement("logging");
+        xmlWriter.writeTextElement("filename", logFileName);
+        xmlWriter.writeEndElement();
+    }
+
+    xmlWriter.writeEndElement();
+
+    file.close();
 }
 
 void CConsoleTab::showColorDialog(void)

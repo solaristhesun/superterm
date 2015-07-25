@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>855</width>
+    <width>945</width>
     <height>213</height>
    </rect>
   </property>
@@ -169,6 +169,13 @@
         </property>
         <property name="default">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnSave">
+        <property name="text">
+         <string>&amp;Save...</string>
         </property>
        </widget>
       </item>
@@ -611,6 +618,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnSave</sender>
+   <signal>clicked()</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>showSaveDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>807</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>427</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>
@@ -628,5 +651,6 @@
   <slot>toggleAutoScroll()</slot>
   <slot>onKeyPressed(QKeyEvent*)</slot>
   <slot>onMoreClicked()</slot>
+  <slot>showSaveDialog()</slot>
  </slots>
 </ui>
