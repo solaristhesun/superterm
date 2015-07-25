@@ -41,6 +41,11 @@ void CHighlightsFrame::addHighlighting(void)
     emit highlightingChanged();
 }
 
+void CHighlightsFrame::addHighlighting(QListWidgetItem *item)
+{
+    m_ui->filterList->addItem(item);
+}
+
 void CHighlightsFrame::showEvent(QShowEvent * event)
 {
     m_ui->filterEdit->setText("");
@@ -113,6 +118,11 @@ void CHighlightsFrame::keyPressEvent(QKeyEvent * event)
         hide();
     }
     QFrame::keyPressEvent(event);
+}
+
+void CHighlightsFrame::clear()
+{
+    m_ui->filterList->clear();
 }
 
 QList<CHighlightsFrame::Highlighting> CHighlightsFrame::getItems(void)

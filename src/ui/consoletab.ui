@@ -69,6 +69,16 @@
        <number>5</number>
       </property>
       <item>
+       <widget class="QComboBox" name="comboConfigurations">
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="CPortsComboBox" name="comboPorts">
         <property name="minimumSize">
          <size>
@@ -174,6 +184,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnSave">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>&amp;Save...</string>
         </property>
@@ -634,6 +647,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>comboConfigurations</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>onConfigurationChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>79</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>472</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>
@@ -652,5 +681,6 @@
   <slot>onKeyPressed(QKeyEvent*)</slot>
   <slot>onMoreClicked()</slot>
   <slot>showSaveDialog()</slot>
+  <slot>onConfigurationChanged()</slot>
  </slots>
 </ui>

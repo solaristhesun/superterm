@@ -12,6 +12,7 @@
 #include <QSettings>
 #include <QXmlStreamWriter>
 #include <QFile>
+#include <QListWidgetItem>
 #if defined(Q_OS_WIN)
 #include <windows.h>
 #endif
@@ -97,6 +98,18 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent) :
     m_ui->comboFlowControl->hide();
     m_ui->comboParity->hide();
     m_ui->comboStopBits->hide();
+    m_ui->comboConfigurations->hide();
+
+    QDir dir(QCoreApplication::applicationDirPath());
+    QStringList files = dir.entryList(QStringList()<<"*.xml", QDir::Files);
+    m_ui->comboConfigurations->addItems(files);
+
+    if (!files.isEmpty())
+    {
+        m_ui->comboConfigurations->insertItem(0, "Select configuration");
+        m_ui->comboConfigurations->setCurrentIndex(0);
+        m_ui->comboConfigurations->show();
+    }
 }
 
 CConsoleTab::~CConsoleTab()
@@ -226,11 +239,73 @@ void CConsoleTab::showConnectBar(void)
     m_ui->btnBar->show();
 }
 
+void CConsoleTab::onConfigurationChanged(void)
+{
+    if (m_ui->comboConfigurations->currentIndex() == 0)
+        return;
+
+    QString fileName = QDir(QCoreApplication::applicationDirPath()).filePath(m_ui->comboConfigurations->currentText());
+
+    qDebug() << fileName;
+
+    QFile file(fileName);
+    file.open(QIODevice::ReadOnly);
+
+    QXmlStreamReader xml(&file);
+
+    QList<CHighlightsFrame::Highlighting> h;
+    m_ui->highlightsFrame->clear();
+
+    while (!xml.atEnd())
+    {
+        xml.readNext();
+
+        if (xml.isStartElement())
+        {
+            QString token = xml.name().toString();
+
+            if (token == "port")
+            {
+                QString text = xml.readElementText();
+                m_ui->comboPorts->setCurrentText(text);
+                qDebug() << text;
+            }
+            else if (token == "speed")
+            {
+                QString text = xml.readElementText();
+                m_ui->comboBaudRates->setCurrentText(text);
+            }
+            else if (token == "pattern")
+            {
+                QXmlStreamAttributes attr = xml.attributes();
+                CHighlightsFrame::Highlighting hi;
+                hi.pattern = xml.readElementText();
+                hi.color = QColor(attr.value("color").toString());
+                h.append(hi);
+
+                QPixmap pixmap(10, 10);
+                pixmap.fill(hi.color );
+                QIcon icon(pixmap);
+                QListWidgetItem *item = new QListWidgetItem(icon, hi.pattern);
+                item->setData(Qt::UserRole, QVariant(hi.color));
+                m_ui->highlightsFrame->addHighlighting(item);
+            }
+        }
+    }
+
+    m_ui->consoleView->setHighlighting(h);
+}
+
 void CConsoleTab::showSaveDialog(void)
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save configuration"),
                                                      "",
                                                      tr("superterm configurations (*.xml)"));
+
+    if (!fileName.endsWith(".xml"))
+    {
+        fileName += ".xml";
+    }
 
     QFile file(fileName);
     file.open(QIODevice::WriteOnly);
@@ -407,10 +482,12 @@ void CConsoleTab::onComboChanged(void)
     if (m_ui->comboPorts->currentIndex() != 0 && m_ui->comboBaudRates->currentIndex() != 0)
     {
         m_ui->btnConnect->setEnabled(true);
+        m_ui->btnSave->setEnabled(true);
     }
     else
     {
         m_ui->btnConnect->setEnabled(false);
+        m_ui->btnSave->setEnabled(false);
     }
 }
 

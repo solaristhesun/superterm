@@ -8,6 +8,8 @@ namespace Ui {
 class CHighlightsFrame;
 }
 
+class QListWidgetItem;
+
 class CHighlightsFrame : public QFrame
 {
     Q_OBJECT
@@ -28,7 +30,9 @@ public:
     void keyPressEvent ( QKeyEvent * event );
 
 public slots:
+    void clear(void);
     void addHighlighting(void);
+    void addHighlighting(QListWidgetItem *item);
     void deleteHighlighting(void);
     void onTextEdited(const QString& text);
     void onSelectionChanged();
