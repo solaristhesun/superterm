@@ -32,6 +32,8 @@ Q_DECLARE_METATYPE(QSerialPort::FlowControl)
 
 void dumpDCB(const char *szFileName)
 {
+    printf("using port %s\n", szFileName);
+
 #if defined(Q_OS_WIN)
     HANDLE h = CreateFileA(szFileName, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING,  FILE_ATTRIBUTE_NORMAL, 0);
 
@@ -102,12 +104,13 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent) :
 
     QDir dir(QCoreApplication::applicationDirPath());
     QStringList files = dir.entryList(QStringList()<<"*.xml", QDir::Files);
-    m_ui->comboConfigurations->addItems(files);
+    m_ui->comboConfigurations->insertItems(0, files);
 
     if (!files.isEmpty())
     {
         m_ui->comboConfigurations->insertItem(0, "Select configuration");
         m_ui->comboConfigurations->setCurrentIndex(0);
+        qDebug()<< "SELECT";
         m_ui->comboConfigurations->show();
     }
 }
@@ -241,6 +244,8 @@ void CConsoleTab::showConnectBar(void)
 
 void CConsoleTab::onConfigurationChanged(void)
 {
+    qDebug() << "CURRENTINDEX: " << m_ui->comboConfigurations->currentIndex();
+
     if (m_ui->comboConfigurations->currentIndex() == 0)
         return;
 
@@ -268,7 +273,7 @@ void CConsoleTab::onConfigurationChanged(void)
             {
                 QString text = xml.readElementText();
                 m_ui->comboPorts->setCurrentText(text);
-                qDebug() << text;
+                qDebug() << "port: [" << text << "] " << m_ui->comboPorts->findText(text);
             }
             else if (token == "speed")
             {
@@ -429,6 +434,7 @@ void CConsoleTab::onConnectClicked(void)
             // configure serial port
             const QString sPortName = m_ui->comboPorts->currentText();
 
+            qDebug() << "opening port " << sPortName;
 
             m_port->setBaudRate(m_ui->comboBaudRates->currentData().toInt());
             m_port->setDataBits(m_ui->comboDataBits->currentData().value<QSerialPort::DataBits>());
@@ -436,7 +442,7 @@ void CConsoleTab::onConnectClicked(void)
             m_port->setStopBits(m_ui->comboStopBits->currentData().value<QSerialPort::StopBits>());
             m_port->setFlowControl(m_ui->comboFlowControl->currentData().value<QSerialPort::FlowControl>());
 
-            m_port->clear(QSerialPort::AllDirections);
+            //m_port->clear(QSerialPort::AllDirections);
 
             connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
 
@@ -474,7 +480,7 @@ void CConsoleTab::showError(QSerialPort::SerialPortError error)
 {
     qDebug() << "ERROR: " << error;
     m_port->close();
-    m_ui->statusBar->showMessage("ERROR");
+    m_ui->statusBar->showMessage("ERROR: " + QString::number(error) + " opening port " + m_port->portName());
 }
 
 void CConsoleTab::onComboChanged(void)

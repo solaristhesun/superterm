@@ -39,6 +39,7 @@ void CPortsComboBox::refresh()
     foreach (const CSerialPortInfo &portInfo, m_pe->getAvailablePorts())
     {
         const QString title = QString("%1 [%2]").arg(portInfo.getShortName(), portInfo.getDescription());
+        qDebug () << "ADD " << title;
         addItem(title, QVariant(portInfo.getPortName()));
     }
 }

@@ -38,7 +38,7 @@ void CPortEnumerator::run(void)
             QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
             t2 = QDateTime::currentMSecsSinceEpoch();
 
-            qDebug() << "TIME: " << t2 - t1;
+           //qDebug() << "TIME: " << t2 - t1;
 
             m_ports.clear();
 
