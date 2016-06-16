@@ -516,6 +516,7 @@ void CConsoleTab::onDataAvailable(void)
     if (m_logFile)
     {
         m_logFile->write(data);
+        m_logFile->flush();
     }
 #if 1
     for (int p = 0; p < data.size(); p++)

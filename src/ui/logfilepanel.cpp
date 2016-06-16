@@ -23,7 +23,7 @@ void LogfilePanel::showFileDialog()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                QDir::homePath(),
-                               tr("Images (*.png *.xpm *.jpg)"));
+                               tr("Logfiles (*.log)"));
 
     if (!fileName.isEmpty())
     {
