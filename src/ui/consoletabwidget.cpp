@@ -1,5 +1,6 @@
 #include <QTabBar>
 #include <QApplication>
+#include <QDebug>
 
 #include "consoletabwidget.h"
 #include "consoletabbar.h"
@@ -12,9 +13,9 @@ CConsoleTabWidget::CConsoleTabWidget(QWidget *parent) :
     m_pe(new CPortEnumerator())
 {
     setTabBar(m_tabBar);
-    addNewTab();
+    addNewTab(NULL);
 
-    connect(m_tabBar, SIGNAL(addButtonClicked()), this, SLOT(addNewTab()));
+    connect(m_tabBar, SIGNAL(addButtonClicked()), this, SLOT(handleAddButtonClicked()));
 }
 
 CConsoleTabWidget::~CConsoleTabWidget()
@@ -38,10 +39,21 @@ void CConsoleTabWidget::closeTab(int index)
     }
 }
 
-void CConsoleTabWidget::addNewTab(void)
+void CConsoleTabWidget::handleAddButtonClicked(void)
 {
-    int index = QTabWidget::addTab(new CConsoleTab(m_pe, this), tr("New tab"));
+    addNewTab(NULL);
+}
+
+void CConsoleTabWidget::addNewTab(QSerialPort* port)
+{
+    QString tabText = port ? port->portName() : tr("New tab");
+    CConsoleTab* tab = new CConsoleTab(m_pe, this, port);
+    qDebug() << tabText;
+    int index = QTabWidget::addTab(tab, tabText);
     setCurrentIndex(index);
+
+    QObject::connect(this, SIGNAL(appQuits()), tab, SLOT(onAppQuit()));
+
     m_tabBar->moveButton();
 }
 
@@ -60,6 +72,11 @@ void CConsoleTabWidget::setCurrentTabText(const QString &text)
     const int curIndex = currentIndex();
     setTabText(curIndex, text);
     m_tabBar->moveButton();
+}
+
+void CConsoleTabWidget::aboutToQuit(void)
+{
+    emit appQuits();
 }
 
 // EOF <stefan@scheler.com>

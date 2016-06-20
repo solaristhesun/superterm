@@ -20,7 +20,7 @@ class CConsoleTab : public QWidget
     Q_OBJECT
 
 public:
-    explicit CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent = 0);
+    explicit CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent = 0, QSerialPort *port = NULL);
     ~CConsoleTab();
 
     void hideButton(int index);
@@ -47,6 +47,7 @@ public slots:
     void startLogging(void);
     void stopLogging(void);
     void showSaveDialog(void);
+    void onAppQuit(void);
 
 private:
     Ui::CConsoleTab*   m_ui;
@@ -62,6 +63,7 @@ private:
 
     void fillComboBoxes();
     void createContextMenu();
+    void openPort(bool bOpenFromFile, const QString &sDeviceName);
 };
 
 #endif // CONSOLETAB_H

@@ -6,6 +6,7 @@
 class CConsoleTab;
 class CConsoleTabBar;
 class CPortEnumerator;
+class QSerialPort;
 
 class CConsoleTabWidget : public QTabWidget
 {
@@ -17,12 +18,15 @@ public:
     void setCurrentTabText(const QString& test);
     void setConsoleFont(const QFont& font);
 
+    void aboutToQuit(void);
+
 signals:
+    void appQuits(void);
 
 public slots:
     void closeTab(int index);
-    void addNewTab(void);
-
+    void handleAddButtonClicked(void);
+    void addNewTab(QSerialPort* port);
 
 private:
     CConsoleTabBar*  m_tabBar;

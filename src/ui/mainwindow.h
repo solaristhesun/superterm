@@ -17,8 +17,17 @@ public:
 
     QSize sizeHint() const;
 
+public slots:
+    void aboutToQuit();
+
+signals:
+    void willQuit();
+
 private:
     Ui::CMainWindow* m_ui;
+
+    void addExistingTabsFromFile(void);
+    void removeTabFiles(void);
 };
 
 #endif // MAINWINDOW_H

@@ -13,6 +13,7 @@
 #include <QXmlStreamWriter>
 #include <QFile>
 #include <QListWidgetItem>
+#include <QMetaProperty>
 #if defined(Q_OS_WIN)
 #include <windows.h>
 #endif
@@ -22,6 +23,7 @@
 #include "ui_consoletab.h"
 #include "consoletabwidget.h"
 #include "highlightsframe.h"
+#include "com/serialconnection.h"
 
 quint32   CConsoleTab::m_u32counter = 1;
 
@@ -30,6 +32,7 @@ Q_DECLARE_METATYPE(QSerialPort::StopBits)
 Q_DECLARE_METATYPE(QSerialPort::Parity)
 Q_DECLARE_METATYPE(QSerialPort::FlowControl)
 
+#if 0
 void dumpDCB(const char *szFileName)
 {
     printf("using port %s\n", szFileName);
@@ -71,13 +74,14 @@ void dumpDCB(const char *szFileName)
     CloseHandle(h);
 #endif
 }
+#endif
 
-CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent) :
+CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, QSerialPort* port) :
     QWidget(parent),
     m_ui(new Ui::CConsoleTab),
     m_pe(pe),
     m_parent(parent),
-    m_port(NULL),
+    m_port(port),
     m_logFile(NULL),
     m_menu(NULL),
     m_lastTabIndex(0)
@@ -112,6 +116,11 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent) :
         m_ui->comboConfigurations->setCurrentIndex(0);
         qDebug()<< "SELECT";
         m_ui->comboConfigurations->show();
+    }
+
+    if(m_port)
+    {
+        openPort(true, m_port->portName());
     }
 }
 
@@ -189,7 +198,7 @@ void CConsoleTab::toggleFullScreen(void)
         m_lastTabIndex = m_parent->currentIndex();
         qDebug() << m_lastTabIndex;
         sLastTitle = m_parent->tabText(m_lastTabIndex);
-        m_parent->addNewTab(); // add dummy tab
+        m_parent->addNewTab(NULL); // add dummy tab
         setParent(0);
         showFullScreen();
         m_ui->actionFullscreen->setChecked(true);
@@ -425,46 +434,7 @@ void CConsoleTab::onConnectClicked(void)
     {
         m_port = new QSerialPort(sDeviceName);
 
-        m_port->setSettingsRestoredOnClose(false);
-
-        dumpDCB(sDeviceName.toStdString().c_str());
-
-        if (m_port->open(QIODevice::ReadWrite))
-        {
-            // configure serial port
-            const QString sPortName = m_ui->comboPorts->currentText();
-
-            qDebug() << "opening port " << sPortName;
-
-            m_port->setBaudRate(m_ui->comboBaudRates->currentData().toInt());
-            m_port->setDataBits(m_ui->comboDataBits->currentData().value<QSerialPort::DataBits>());
-            m_port->setParity(m_ui->comboParity->currentData().value<QSerialPort::Parity>());
-            m_port->setStopBits(m_ui->comboStopBits->currentData().value<QSerialPort::StopBits>());
-            m_port->setFlowControl(m_ui->comboFlowControl->currentData().value<QSerialPort::FlowControl>());
-
-            //m_port->clear(QSerialPort::AllDirections);
-
-            connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
-
-            m_ui->btnBar->hide();
-            m_ui->consoleView->setFocus();
-            m_parent->setCurrentTabText(sDeviceName);
-
-            m_ui->comboPorts->setEnabled(false);
-            m_ui->btnConnect->setText(tr("&Disconnect"));
-
-            m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(sDeviceName), 3000);
-
-        }
-        else
-        {
-            qDebug() << m_port->error();
-            delete m_port;
-            m_port = NULL;
-            m_ui->statusBar->showMessage(tr("Error. Failed to open port."));
-        }
-
-        connect(m_port, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(showError(QSerialPort::SerialPortError)));
+        openPort(false, sDeviceName);
     }
     else
     {
@@ -518,7 +488,7 @@ void CConsoleTab::onDataAvailable(void)
         m_logFile->write(data);
         m_logFile->flush();
     }
-#if 1
+#if 0
     for (int p = 0; p < data.size(); p++)
     {
         printf("0x%02x ", data.at(p));
@@ -579,6 +549,83 @@ void CConsoleTab::stopLogging(void)
     m_logFile->close();
     delete m_logFile;
     m_logFile = NULL;
+}
+
+void CConsoleTab::onAppQuit(void)
+{
+    if(m_port)
+    {
+        CSerialConnection con(*m_port);
+
+        QString portName = con.getName();
+        qDebug() << portName;
+
+        QString fileName = QCoreApplication::applicationDirPath() + "/my" + portName + ".con";
+        qDebug() << fileName;
+
+        QFile file(fileName);
+
+        if(!file.open(QIODevice::WriteOnly))
+        {
+           qDebug() << file.errorString();
+        }
+        else
+        {
+            qDebug() << "Writing";
+            QDataStream out(&file);
+            out << con;
+        }
+
+        file.close();
+    }
+}
+
+void CConsoleTab::openPort(bool bOpenFromFile, const QString &sDeviceName)
+{
+    m_port->setSettingsRestoredOnClose(false);
+
+    //dumpDCB(sDeviceName.toStdString().c_str());
+
+    if (m_port->open(QIODevice::ReadWrite))
+    {
+        // configure serial port
+        const QString sPortName = m_ui->comboPorts->currentText();
+
+        qDebug() << "opening port " << sPortName;
+
+        if(!bOpenFromFile)
+        {
+            m_port->setBaudRate(m_ui->comboBaudRates->currentData().toInt());
+            m_port->setDataBits(m_ui->comboDataBits->currentData().value<QSerialPort::DataBits>());
+            m_port->setParity(m_ui->comboParity->currentData().value<QSerialPort::Parity>());
+            m_port->setStopBits(m_ui->comboStopBits->currentData().value<QSerialPort::StopBits>());
+            m_port->setFlowControl(m_ui->comboFlowControl->currentData().value<QSerialPort::FlowControl>());
+        }
+
+        //m_port->clear(QSerialPort::AllDirections);
+
+        connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
+
+        m_ui->btnBar->hide();
+        m_ui->consoleView->setFocus();
+
+        if(!bOpenFromFile) m_parent->setCurrentTabText(sDeviceName);
+
+        m_ui->comboPorts->setEnabled(false);
+        m_ui->btnConnect->setText(tr("&Disconnect"));
+
+        m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(sDeviceName), 3000);
+
+    }
+    else
+    {
+        qDebug() << m_port->error();
+        delete m_port;
+        m_port = NULL;
+        m_ui->statusBar->showMessage(tr("Error. Failed to open port."));
+    }
+
+    connect(m_port, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(showError(QSerialPort::SerialPortError)));
 }
 
 // EOF <stefan@scheler.com>
