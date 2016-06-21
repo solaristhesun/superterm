@@ -1,4 +1,4 @@
-QT       += core gui serialport
+QT       += core gui serialport network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,7 +27,10 @@ SOURCES += \
     src/enumerator/serialportinfo.cpp \
     src/com/connection.cpp \
     src/com/serialconnection.cpp \
-    src/obj/seriazableobject.cpp
+    src/obj/seriazableobject.cpp \
+    src/port/portendpoint.cpp \
+    src/port/portapplication.cpp \
+    src/obj/session.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -44,7 +47,10 @@ HEADERS += \
     src/enumerator/serialportinfo.h \
     src/com/connection.h \
     src/com/serialconnection.h \
-    src/obj/seriazableobject.h
+    src/obj/seriazableobject.h \
+    src/port/portendpoint.h \
+    src/port/portapplication.h \
+    src/obj/session.h
 
 FORMS += \
     src/ui/mainwindow.ui \

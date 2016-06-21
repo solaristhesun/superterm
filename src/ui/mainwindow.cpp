@@ -6,6 +6,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "com/serialconnection.h"
+#include "obj/session.h"
 
 CMainWindow::CMainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -43,15 +44,15 @@ void CMainWindow::addExistingTabsFromFile(void)
         m_ui->tabWidget->clear();
         foreach(const QString &str, files)
         {
-            qDebug() << str;
+            qDebug() << "FILENAME:" << str;
             QFile file(QCoreApplication::applicationDirPath() + "/" + str);
             file.open(QIODevice::ReadOnly);
             QDataStream in(&file);
-            CSerialConnection con;
-            in >> con;
-            qDebug() << con.getName();
+            CSession* session = new CSession();
+            in >> *session;
+            qDebug() << "adding tab " << session->getDeviceName();
 
-            m_ui->tabWidget->addNewTab(con.createSerialPort());
+            m_ui->tabWidget->addNewTab(session);
 
             file.close();
         }

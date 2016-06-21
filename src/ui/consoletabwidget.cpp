@@ -6,6 +6,7 @@
 #include "consoletabbar.h"
 #include "consoletab.h"
 #include "enumerator/portenumerator.h"
+#include "obj/session.h"
 
 CConsoleTabWidget::CConsoleTabWidget(QWidget *parent) :
     QTabWidget(parent),
@@ -44,10 +45,10 @@ void CConsoleTabWidget::handleAddButtonClicked(void)
     addNewTab(NULL);
 }
 
-void CConsoleTabWidget::addNewTab(QSerialPort* port)
+void CConsoleTabWidget::addNewTab(CSession* session)
 {
-    QString tabText = port ? port->portName() : tr("New tab");
-    CConsoleTab* tab = new CConsoleTab(m_pe, this, port);
+    QString tabText = session ? session->getDeviceName() : tr("New tab");
+    CConsoleTab* tab = new CConsoleTab(m_pe, this, session);
     qDebug() << tabText;
     int index = QTabWidget::addTab(tab, tabText);
     setCurrentIndex(index);

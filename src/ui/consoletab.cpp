@@ -24,6 +24,8 @@
 #include "consoletabwidget.h"
 #include "highlightsframe.h"
 #include "com/serialconnection.h"
+#include "obj/session.h"
+#include "port/portendpoint.h"
 
 quint32   CConsoleTab::m_u32counter = 1;
 
@@ -32,59 +34,16 @@ Q_DECLARE_METATYPE(QSerialPort::StopBits)
 Q_DECLARE_METATYPE(QSerialPort::Parity)
 Q_DECLARE_METATYPE(QSerialPort::FlowControl)
 
-#if 0
-void dumpDCB(const char *szFileName)
-{
-    printf("using port %s\n", szFileName);
-
-#if defined(Q_OS_WIN)
-    HANDLE h = CreateFileA(szFileName, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING,  FILE_ATTRIBUTE_NORMAL, 0);
-
-    DCB dcb;
-
-    GetCommState(h, &dcb);
-
-    printf("dcb.DCBlength:         0x%08x\n", dcb.DCBlength);
-    printf("dcb.BaudRate:          0x%08x (%lu)\n", dcb.BaudRate, dcb.BaudRate);
-    printf("dcb.fBinary:           0x%08x\n", dcb.fBinary);
-    printf("dcb.fParity:           0x%08x\n", dcb.fParity);
-    printf("dcb.fOutxCtsFlow:      0x%08x\n", dcb.fOutxCtsFlow);
-    printf("dcb.fOutxDsrFlow:      0x%08x\n", dcb.fOutxDsrFlow);
-    printf("dcb.fDtrControl:       0x%08x\n", dcb.fDtrControl);
-    printf("dcb.fDsrSensitivity:   0x%08x\n", dcb.fDsrSensitivity);
-    printf("dcb.fTXContinueOnXoff: 0x%08x\n", dcb.fTXContinueOnXoff);
-    printf("dcb.fOutX:             0x%08x\n", dcb.fOutX);
-    printf("dcb.fInX:              0x%08x\n", dcb.fInX);
-    printf("dcb.fErrorChar:        0x%08x\n", dcb.fErrorChar);
-    printf("dcb.fNull:             0x%08x\n", dcb.fNull);
-    printf("dcb.fRtsControl:       0x%08x\n", dcb.fRtsControl);
-    printf("dcb.fAbortOnError:     0x%08x\n", dcb.fAbortOnError);
-    printf("dcb.XonLim:            0x%04x\n", dcb.XonLim);
-    printf("dcb.XoffLim:           0x%04x\n", dcb.XoffLim);
-    printf("dcb.ByteSize:          0x%02x\n", dcb.ByteSize);
-    printf("dcb.Parity:            0x%02x\n", dcb.Parity);
-    printf("dcb.StopBits:          0x%02x\n", dcb.StopBits);
-
-    printf("dcb.XonChar:           0x%02x\n", dcb.XonChar);
-    printf("dcb.XoffChar:          0x%02x\n", dcb.XoffChar);
-    printf("dcb.ErrorChar:         0x%02x\n", dcb.ErrorChar);
-    printf("dcb.EofChar:           0x%02x\n", dcb.EofChar);
-    printf("dcb.EvtChar:           0x%02x\n", dcb.EvtChar);
-
-    CloseHandle(h);
-#endif
-}
-#endif
-
-CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, QSerialPort* port) :
-    QWidget(parent),
-    m_ui(new Ui::CConsoleTab),
-    m_pe(pe),
-    m_parent(parent),
-    m_port(port),
-    m_logFile(NULL),
-    m_menu(NULL),
-    m_lastTabIndex(0)
+CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, CSession* session)
+    : QWidget(parent)
+    , m_ui(new Ui::CConsoleTab)
+    , m_portEndpoint(new CPortEndpoint(this))
+    , m_pe(pe)
+    , m_parent(parent)
+    , m_session(session)
+    , m_logFile(NULL)
+    , m_menu(NULL)
+    , m_lastTabIndex(0)
 {
     m_ui->setupUi(this);
 
@@ -118,16 +77,23 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, QSerial
         m_ui->comboConfigurations->show();
     }
 
-    if(m_port)
+    connect(m_portEndpoint, SIGNAL(readyRead()), this, SLOT(onEndpointData()));
+    connect(m_portEndpoint, SIGNAL(connected()), this, SLOT(onEndpointConnected()));
+    connect(m_portEndpoint, SIGNAL(disconnected()), this, SLOT(onEndpointDisconnected()));
+
+    if (m_session)
     {
-        openPort(true, m_port->portName());
+        m_portEndpoint->setBaudRate(session->getBaudRate());
+        m_portEndpoint->connectEndpoint(session->getDeviceName());
+
+        m_ui->comboPorts->setCurrentText(session->getDeviceDesc());
+        m_ui->comboBaudRates->setCurrentText(QString::number(session->getBaudRate()));
     }
 }
 
 CConsoleTab::~CConsoleTab()
 {
     delete m_ui;
-    delete m_port;
     delete m_menu;
 }
 
@@ -450,63 +416,10 @@ void CConsoleTab::onMoreClicked()
     }
 }
 
-void CConsoleTab::onConnectClicked(void)
+void CConsoleTab::onEndpointData()
 {
-    const QString sDeviceName = m_ui->comboPorts->currentData().toString();
+    QByteArray data = m_portEndpoint->readAll();
 
-    if (!m_port)
-    {
-        m_port = new QSerialPort(sDeviceName);
-
-        openPort(false, sDeviceName);
-    }
-    else
-    {
-        m_port->disconnect();
-        delete m_port;
-        m_port = NULL;
-        m_ui->comboPorts->setEnabled(true);
-        m_ui->btnConnect->setText("&Connect");
-    }
-}
-
-void CConsoleTab::showError(QSerialPort::SerialPortError error)
-{
-    qDebug() << "ERROR: " << error;
-    m_port->close();
-    m_ui->statusBar->showMessage("ERROR: " + QString::number(error) + " opening port " + m_port->portName());
-}
-
-void CConsoleTab::onComboChanged(void)
-{
-    if (m_ui->comboPorts->currentIndex() != 0 && m_ui->comboBaudRates->currentIndex() != 0)
-    {
-        m_ui->btnConnect->setEnabled(true);
-        m_ui->btnSave->setEnabled(true);
-    }
-    else
-    {
-        m_ui->btnConnect->setEnabled(false);
-        m_ui->btnSave->setEnabled(false);
-    }
-}
-
-
-void CConsoleTab::showAboutDialog(void)
-{
-    const QString contents = QString(
-        "<p><font color=#000080><font size=6><b>%1</b></font> <font size=4>(revision %2)</font></font></p>"
-        "<p align=left>Copyright &copy; 2015 Stefan Scheler. %3</p>"
-        "<p><a href=\"%4\">%5</a></p>"
-        "<p>The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</p>")
-        .arg(g_sAppFullName, QString::number(g_u32revision), tr("All rights reserved."), g_sAppHomepage, tr("Visit superterm website"));
-
-    QMessageBox::about(this, tr("About superterm"), contents);
-}
-
-void CConsoleTab::onDataAvailable(void)
-{
-    QByteArray data = m_port->readAll();
     if (m_logFile)
     {
         m_logFile->write(data);
@@ -533,6 +446,75 @@ void CConsoleTab::onDataAvailable(void)
     }
 }
 
+void CConsoleTab::onConnectClicked(void)
+{
+    const QString sDeviceName = m_ui->comboPorts->currentData().toString();
+
+    if (!m_portEndpoint->isConnected())
+    {
+        if (!m_session)
+        {
+            m_session = new CSession();
+        }
+
+        m_session->setBaudRate(m_ui->comboBaudRates->currentText().toUInt());
+        m_session->setDeviceName(sDeviceName);
+        m_session->setDeviceDesc(m_ui->comboPorts->currentText());
+
+        m_portEndpoint->setBaudRate(m_ui->comboBaudRates->currentText().toUInt());
+        m_portEndpoint->connectEndpoint(sDeviceName);
+    }
+    else
+    {
+        m_portEndpoint->disconnectEndpoint();
+    }
+}
+
+void CConsoleTab::onEndpointDisconnected()
+{
+    m_ui->comboPorts->setEnabled(true);
+    m_ui->btnConnect->setText("&Connect");
+
+    m_ui->btnBar->show();
+    m_ui->consoleView->setFocus();
+/*
+    m_parent->setCurrentTabText(sDeviceName);
+
+    m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(sDeviceName), 3000);    */
+}
+
+void CConsoleTab::showError(QSerialPort::SerialPortError error)
+{
+    qDebug() << "ERROR: " << error;
+    m_ui->statusBar->showMessage("ERROR: " + QString::number(error) + " opening port " );
+}
+
+void CConsoleTab::onComboChanged(void)
+{
+    if (m_ui->comboPorts->currentIndex() != 0 && m_ui->comboBaudRates->currentIndex() != 0)
+    {
+        m_ui->btnConnect->setEnabled(true);
+        m_ui->btnSave->setEnabled(true);
+    }
+    else
+    {
+        m_ui->btnConnect->setEnabled(false);
+        m_ui->btnSave->setEnabled(false);
+    }
+}
+
+void CConsoleTab::showAboutDialog(void)
+{
+    const QString contents = QString(
+        "<p><font color=#000080><font size=6><b>%1</b></font> <font size=4>(revision %2)</font></font></p>"
+        "<p align=left>Copyright &copy; 2015 Stefan Scheler. %3</p>"
+        "<p><a href=\"%4\">%5</a></p>"
+        "<p>The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</p>")
+        .arg(g_sAppFullName, QString::number(g_u32revision), tr("All rights reserved."), g_sAppHomepage, tr("Visit superterm website"));
+
+    QMessageBox::about(this, tr("About superterm"), contents);
+}
+
 void CConsoleTab::onKeyPressed(QKeyEvent *e)
 {
     QString key;
@@ -548,9 +530,9 @@ void CConsoleTab::onKeyPressed(QKeyEvent *e)
 
     QByteArray b(key.toLatin1());
 
-    if (m_port)
+    if (m_portEndpoint->isConnected())
     {
-        m_port->write(b.constData());
+        m_portEndpoint->write(b);
     }
 }
 
@@ -565,7 +547,6 @@ void CConsoleTab::startLogging(void)
     }
 
     m_ui->statusBar->showMessage(tr("Logging to %1 started.").arg(sFileName), 3000);
-
 }
 
 void CConsoleTab::stopLogging(void)
@@ -577,69 +558,26 @@ void CConsoleTab::stopLogging(void)
 
 void CConsoleTab::onAppQuit(void)
 {
-    if(m_port)
+    if (m_session)
     {
-        CSerialConnection con(*m_port);
-
-        QString portName = con.getName();
-        qDebug() << portName;
-
-        QString fileName = QCoreApplication::applicationDirPath() + "/my" + portName + ".con";
-        qDebug() << fileName;
-
-        QFile file(fileName);
-
-        if(!file.open(QIODevice::WriteOnly))
-        {
-           qDebug() << file.errorString();
-        }
-        else
-        {
-            qDebug() << "Writing";
-            QDataStream out(&file);
-            out << con;
-        }
-
-        file.close();
+        m_session->saveToFile();
     }
 }
 
-void CConsoleTab::openPort(bool bOpenFromFile, const QString &sDeviceName)
+void CConsoleTab::onEndpointConnected()
 {
-    m_port->setSettingsRestoredOnClose(false);
+    const QString sDeviceName = m_session->getDeviceName();
 
-    //dumpDCB(sDeviceName.toStdString().c_str());
+    m_ui->btnBar->hide();
+    m_ui->consoleView->setFocus();
 
-    if (m_port->open(QIODevice::ReadWrite))
-    {
-        // configure serial port
-        const QString sPortName = m_ui->comboPorts->currentText();
+    m_parent->setCurrentTabText(sDeviceName);
 
-        qDebug() << "opening port " << sPortName;
+    m_ui->comboPorts->setEnabled(false);
+    m_ui->btnConnect->setText(tr("&Disconnect"));
 
-        if(!bOpenFromFile)
-        {
-            m_port->setBaudRate(m_ui->comboBaudRates->currentData().toInt());
-            m_port->setDataBits(m_ui->comboDataBits->currentData().value<QSerialPort::DataBits>());
-            m_port->setParity(m_ui->comboParity->currentData().value<QSerialPort::Parity>());
-            m_port->setStopBits(m_ui->comboStopBits->currentData().value<QSerialPort::StopBits>());
-            m_port->setFlowControl(m_ui->comboFlowControl->currentData().value<QSerialPort::FlowControl>());
-        }
-
-        //m_port->clear(QSerialPort::AllDirections);
-
-        connect(m_port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
-
-        m_ui->btnBar->hide();
-        m_ui->consoleView->setFocus();
-
-        if(!bOpenFromFile) m_parent->setCurrentTabText(sDeviceName);
-
-        m_ui->comboPorts->setEnabled(false);
-        m_ui->btnConnect->setText(tr("&Disconnect"));
-
-        m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(sDeviceName), 3000);
-
+    m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(sDeviceName), 3000);
+#if 0
     }
     else
     {
@@ -650,6 +588,7 @@ void CConsoleTab::openPort(bool bOpenFromFile, const QString &sDeviceName)
     }
 
     connect(m_port, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(showError(QSerialPort::SerialPortError)));
+#endif
 }
 
 // EOF <stefan@scheler.com>

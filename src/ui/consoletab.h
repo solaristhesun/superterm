@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QSerialPort>
 #include <QTextEdit>
+#include <QProcess>
 
 namespace Ui {
 class CConsoleTab;
@@ -14,13 +15,15 @@ class CConsoleTabWidget;
 class QFile;
 class CPortEnumerator;
 class QMenu;
+class CPortEndpoint;
+class CSession;
 
 class CConsoleTab : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent = 0, QSerialPort *port = NULL);
+    explicit CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent = 0, CSession* session = NULL);
     ~CConsoleTab();
 
     void hideButton(int index);
@@ -30,7 +33,6 @@ public:
 
 public slots:
     void onConnectClicked(void);
-    void onDataAvailable(void);
     void onKeyPressed(QKeyEvent* e);
     void onConfigurationChanged(void);
     void onComboChanged(void);
@@ -48,12 +50,16 @@ public slots:
     void stopLogging(void);
     void showSaveDialog(void);
     void onAppQuit(void);
+    void onEndpointData();
+    void onEndpointConnected();
+    void onEndpointDisconnected();
 
 private:
     Ui::CConsoleTab*   m_ui;
+    CPortEndpoint*     m_portEndpoint;
     CPortEnumerator*   m_pe;
     CConsoleTabWidget* m_parent;
-    QSerialPort*       m_port;
+    CSession*          m_session;
     QFile*             m_logFile;
     QMenu*             m_menu;
     int                m_lastTabIndex;
@@ -63,7 +69,6 @@ private:
 
     void fillComboBoxes();
     void createContextMenu();
-    void openPort(bool bOpenFromFile, const QString &sDeviceName);
 };
 
 #endif // CONSOLETAB_H

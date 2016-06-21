@@ -6,7 +6,7 @@
 class CConsoleTab;
 class CConsoleTabBar;
 class CPortEnumerator;
-class QSerialPort;
+class CSession;
 
 class CConsoleTabWidget : public QTabWidget
 {
@@ -26,7 +26,7 @@ signals:
 public slots:
     void closeTab(int index);
     void handleAddButtonClicked(void);
-    void addNewTab(QSerialPort* port);
+    void addNewTab(CSession* session);
 
 private:
     CConsoleTabBar*  m_tabBar;
