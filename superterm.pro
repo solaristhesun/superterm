@@ -30,7 +30,8 @@ SOURCES += \
     src/obj/seriazableobject.cpp \
     src/port/portendpoint.cpp \
     src/port/portapplication.cpp \
-    src/obj/session.cpp
+    src/obj/session.cpp \
+    src/ui/consoleviewex.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -50,7 +51,8 @@ HEADERS += \
     src/obj/seriazableobject.h \
     src/port/portendpoint.h \
     src/port/portapplication.h \
-    src/obj/session.h
+    src/obj/session.h \
+    src/ui/consoleviewex.h
 
 FORMS += \
     src/ui/mainwindow.ui \

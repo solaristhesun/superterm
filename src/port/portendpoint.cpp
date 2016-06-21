@@ -104,7 +104,15 @@ void CPortEndpoint::connectEndpoint(const QString& sDeviceName)
     connect(m_process, SIGNAL(finished(int)), this, SLOT(onProcessFinished(int)));
     connect(m_server, SIGNAL(newConnection()), this, SLOT(onSocketConnection()));
 
-    m_server->listen("serial:" + sDeviceName);
+    qDebug() << "LISTEN" << "serial:" + sDeviceName;
+
+    QString socketName = sDeviceName;
+    socketName = socketName.replace("/", "_");
+
+    if (!m_server->listen("serial:" + socketName))
+    {
+        qDebug() << "ERROR LISTEN"<< m_server->errorString();
+    }
 
     QStringList args;
     args << sDeviceName << QString::number(m_u32BaudRate);

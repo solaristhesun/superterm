@@ -91,6 +91,15 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, CSessio
 
         m_ui->btnConnect->setEnabled(true); // FIXME: unsauber
     }
+
+#if 0
+    // beta code
+    m_ui->consoleView->hide();
+    m_ui->consoleViewEx->show();
+#else
+    m_ui->consoleViewEx->hide();
+    m_ui->scrollArea->hide();
+#endif
 }
 
 CConsoleTab::~CConsoleTab()

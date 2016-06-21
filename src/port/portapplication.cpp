@@ -72,19 +72,24 @@ void CPortApplication::connectSocket(void)
 
     if (m_port->open(QIODevice::ReadWrite))
     {
+        QTextStream(stdout) << "open" << portName << endl;
         m_port->setBaudRate(baudRate);
         m_port->setFlowControl(QSerialPort::NoFlowControl);
         m_port->setParity(QSerialPort::NoParity);
         m_port->setStopBits(QSerialPort::OneStop);
         m_port->setDataBits(QSerialPort::Data8);
     }
+    else
+    {
+        QTextStream(stdout) << "error:" << m_port->errorString();
+    }
 
     connect(m_port, SIGNAL(readyRead()), this, SLOT(onSerialDataAvailable()));
 
     m_socket->abort();
-    m_socket->connectToServer("serial:" + portName);
+    m_socket->connectToServer("serial:" + portName.replace("/", "_"));
 
-    QTextStream(stdout) << "started" << endl;
+    QTextStream(stdout) << "started" << portName << endl;
 }
 
 void CPortApplication::onSerialDataAvailable()

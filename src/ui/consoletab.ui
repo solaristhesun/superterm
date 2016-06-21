@@ -219,6 +219,51 @@
     </widget>
    </item>
    <item>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="widgetResizable">
+      <bool>false</bool>
+     </property>
+     <widget class="CConsoleViewEx" name="consoleViewEx">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1085</width>
+        <height>1000</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <zorder>logPanel</zorder>
+     </widget>
+    </widget>
+   </item>
+   <item>
     <widget class="LogfilePanel" name="logPanel">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -339,6 +384,12 @@
     <signal>loggingStarted()</signal>
     <signal>loggingStopped()</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>CConsoleViewEx</class>
+   <extends>QWidget</extends>
+   <header>src/ui/consoleviewex.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
