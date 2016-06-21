@@ -17,28 +17,23 @@ CPortEndpoint::CPortEndpoint(QObject *parent)
 
 void CPortEndpoint::onProcessFinished(int)
 {
-    qDebug() << "PROCESS FINISHED";
+    qDebug() << "[slot] onProcessFinished";
     disconnectEndpoint();
-}
-
-void CPortEndpoint::onStandardErrorData()
-{
-    qDebug() << "[subprocess] " << m_process->readAllStandardOutput();
 }
 
 void CPortEndpoint::onProcessStarted()
 {
-    qDebug() << "process started\n";
+    qDebug() << "[slot] onProcessStarted";
 }
 
 void CPortEndpoint::onProcessError(QProcess::ProcessError error)
 {
-    qDebug() << "error " << error << "\n";
+    qDebug() << "[slot] onProcessError:" << error;
 }
 
 void CPortEndpoint::onSocketConnection()
 {
-    qDebug() << "INCOMING\n";
+    qDebug() << "[slot] onSocketConnection";
     m_socket = m_server->nextPendingConnection();
 
     if (m_socket)
@@ -57,7 +52,7 @@ void CPortEndpoint::onSocketData()
 
 void CPortEndpoint::onSocketError(QLocalSocket::LocalSocketError error)
 {
-    qDebug() << error;
+    qDebug() << "[slot] onSocketError:" << error;
 }
 
 QByteArray CPortEndpoint::readAll()
@@ -104,7 +99,6 @@ void CPortEndpoint::connectEndpoint(const QString& sDeviceName)
     m_process = new QProcess(this);
     m_server  = new QLocalServer(this);
 
-    connect(m_process, SIGNAL(readyReadStandardOutput()), this, SLOT(onStandardErrorData()));
     connect(m_process, SIGNAL(started()), this, SLOT(onProcessStarted()));
     connect(m_process, SIGNAL(errorOccurred(QProcess::ProcessError)), this, SLOT(onProcessError(QProcess::ProcessError)));
     connect(m_process, SIGNAL(finished(int)), this, SLOT(onProcessFinished(int)));
@@ -115,6 +109,7 @@ void CPortEndpoint::connectEndpoint(const QString& sDeviceName)
     QStringList args;
     args << sDeviceName << QString::number(m_u32BaudRate);
 
+    m_process->setProcessChannelMode(QProcess::ForwardedChannels);
     m_process->start(QCoreApplication::applicationFilePath(), args);
 }
 

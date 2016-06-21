@@ -27,7 +27,6 @@ signals:
     void connected();
 
 public slots:
-    void onStandardErrorData();
     void onProcessStarted();
     void onProcessError(QProcess::ProcessError error);
     void onProcessFinished(int);

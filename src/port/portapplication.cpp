@@ -106,6 +106,7 @@ void CPortApplication::onSocketDisconnected()
 
 void CPortApplication::onSocketConnected(void)
 {
+    qDebug() << "[sub]" << "CONNECTEd" << flush;
     QTextStream(stdout) << "connected" << endl;
 }
 

@@ -88,6 +88,8 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, CSessio
 
         m_ui->comboPorts->setCurrentText(session->getDeviceDesc());
         m_ui->comboBaudRates->setCurrentText(QString::number(session->getBaudRate()));
+
+        m_ui->btnConnect->setEnabled(true); // FIXME: unsauber
     }
 }
 
@@ -439,9 +441,18 @@ void CConsoleTab::onEndpointData()
     }
     else
     {
+#if 0
+        for (int p = 0; p < data.size(); p++)
+        {
+            if (data.at(p) < 30)
+            {
+                data[p] = '.';
+            }
+        }
+#endif
+
         QString str = data;
         str = str.replace("\r", "");
-
         m_ui->consoleView->insertPlainText(str);
     }
 }
@@ -472,6 +483,8 @@ void CConsoleTab::onConnectClicked(void)
 
 void CConsoleTab::onEndpointDisconnected()
 {
+    qDebug() << "[slot] onEndpointDisconnected";
+
     m_ui->comboPorts->setEnabled(true);
     m_ui->btnConnect->setText("&Connect");
 
@@ -558,14 +571,19 @@ void CConsoleTab::stopLogging(void)
 
 void CConsoleTab::onAppQuit(void)
 {
+    qDebug() << "[slot] onAppQuit";
+
     if (m_session)
     {
+        //m_session->setList(static_cast<QList<uint32_t>>(m_ui->highlightsFrame->getItems()));
         m_session->saveToFile();
     }
 }
 
 void CConsoleTab::onEndpointConnected()
 {
+    qDebug() << "[slot] onEndpointConnected";
+
     const QString sDeviceName = m_session->getDeviceName();
 
     m_ui->btnBar->hide();
