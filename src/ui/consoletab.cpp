@@ -289,6 +289,26 @@ void CConsoleTab::onConfigurationChanged(void)
                 QString text = xml.readElementText();
                 m_ui->comboBaudRates->setCurrentText(text);
             }
+            else if (token == "databits")
+            {
+                QString text = xml.readElementText();
+                m_ui->comboDataBits->setCurrentText(text);
+            }
+            else if (token == "parity")
+            {
+                QString text = xml.readElementText();
+                m_ui->comboParity->setCurrentText(text);
+            }
+            else if (token == "stopbits")
+            {
+                QString text = xml.readElementText();
+                m_ui->comboStopBits->setCurrentText(text);
+            }
+            else if (token == "flowcontrol")
+            {
+                QString text = xml.readElementText();
+                m_ui->comboFlowControl->setCurrentText(text);
+            }
             else if (token == "pattern")
             {
                 QXmlStreamAttributes attr = xml.attributes();
@@ -333,6 +353,10 @@ void CConsoleTab::showSaveDialog(void)
     xmlWriter.writeStartElement("configuration");
     xmlWriter.writeTextElement("port", m_ui->comboPorts->currentText());
     xmlWriter.writeTextElement("speed", m_ui->comboBaudRates->currentText());
+    xmlWriter.writeTextElement("databits", m_ui->comboDataBits->currentText());
+    xmlWriter.writeTextElement("parity", m_ui->comboParity->currentText());
+    xmlWriter.writeTextElement("stopbits", m_ui->comboStopBits->currentText());
+    xmlWriter.writeTextElement("flowcontrol", m_ui->comboFlowControl->currentText());
     xmlWriter.writeEndElement();
 
     QList<CHighlightsFrame::Highlighting> h = m_ui->highlightsFrame->getItems();
