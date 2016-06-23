@@ -40,6 +40,7 @@ public slots:
     void showContextMenu(const QPoint &pt);
     void showColorDialog(void);
     void showConnectBar(void);
+    void hideConnectBar(void);
     void showFontDialog(void);
     void showError(QSerialPort::SerialPortError error);
     void updateHighlighting(void);

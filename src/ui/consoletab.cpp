@@ -257,6 +257,11 @@ void CConsoleTab::showConnectBar(void)
     m_ui->btnBar->show();
 }
 
+void CConsoleTab::hideConnectBar(void)
+{
+    m_ui->btnBar->hide();
+}
+
 void CConsoleTab::onConfigurationChanged(void)
 {
     qDebug() << "CURRENTINDEX: " << m_ui->comboConfigurations->currentIndex();
@@ -534,7 +539,7 @@ void CConsoleTab::onEndpointDisconnected()
     m_ui->comboPorts->setEnabled(true);
     m_ui->btnConnect->setText("&Connect");
 
-    m_ui->btnBar->show();
+    showConnectBar();
     m_ui->consoleView->setFocus();
 /*
     m_parent->setCurrentTabText(sDeviceName);
@@ -632,7 +637,7 @@ void CConsoleTab::onEndpointConnected()
 
     const QString sDeviceName = m_session->getDeviceName();
 
-    m_ui->btnBar->hide();
+    hideConnectBar();
     m_ui->consoleView->setFocus();
 
     m_parent->setCurrentTabText(sDeviceName);
