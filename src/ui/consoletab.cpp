@@ -88,9 +88,15 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, CSessio
         m_ui->comboPorts->setCurrentText(session->getDeviceDesc());
         m_ui->comboBaudRates->setCurrentText(QString::number(session->getBaudRate()));
         m_ui->comboDataBits->setCurrentText(QString::number(session->getDataBits()));
-        //m_ui->comboParity->setCurrentText(session->getParity());
-        //m_ui->comboStopBits->setCurrentText(QString::number(session->getStopBits()));
-        //m_ui->comboFlowControl->setCurrentText(session->getFlowControl());
+
+        QSerialPort::Parity parity = static_cast<QSerialPort::Parity>(session->getParity());
+        m_ui->comboParity->setCurrentText(g_ParityNameMap.value(parity));
+
+        QSerialPort::StopBits stopBits = static_cast<QSerialPort::StopBits>(session->getStopBits());
+        m_ui->comboStopBits->setCurrentText(g_StopBitsNameMap.value(stopBits));
+
+        QSerialPort::FlowControl flowControl = static_cast<QSerialPort::FlowControl>(session->getFlowControl());
+        m_ui->comboFlowControl->setCurrentText(g_FlowControlNameMap.value(flowControl));
 
         QList<CHighlightsFrame::Highlighting> highlights;
 
@@ -500,6 +506,9 @@ void CConsoleTab::onConnectClicked(void)
         m_session->setDeviceName(sDeviceName);
         m_session->setDeviceDesc(m_ui->comboPorts->currentText());
         m_session->setDataBits(m_ui->comboDataBits->currentText().toInt());
+        m_session->setParity(g_ParityNameMap.key(m_ui->comboParity->currentText()));
+        m_session->setStopBits(g_StopBitsNameMap.key(m_ui->comboStopBits->currentText()));
+        m_session->setFlowControl(g_FlowControlNameMap.key(m_ui->comboFlowControl->currentText()));
 
         m_portEndpoint->setBaudRate(m_ui->comboBaudRates->currentText().toUInt());
         m_portEndpoint->connectEndpoint(sDeviceName);
