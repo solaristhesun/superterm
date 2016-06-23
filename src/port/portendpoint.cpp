@@ -115,7 +115,8 @@ void CPortEndpoint::connectEndpoint(const QString& sDeviceName)
     }
 
     QStringList args;
-    args << sDeviceName << QString::number(m_u32BaudRate);
+    args << sDeviceName << QString::number(m_u32BaudRate) << QString::number(m_i32DataBits);
+    args << QString::number(m_i32Parity) << QString::number(m_i32StopBits) << QString::number(m_i32FlowControl);
 
     m_process->setProcessChannelMode(QProcess::ForwardedChannels);
     m_process->start(QCoreApplication::applicationFilePath(), args);
@@ -129,6 +130,26 @@ bool CPortEndpoint::isConnected()
 void CPortEndpoint::setBaudRate(const quint32 u32BaudRate)
 {
     m_u32BaudRate = u32BaudRate;
+}
+
+void CPortEndpoint::setDataBits(const qint32 i32DataBits)
+{
+    m_i32DataBits = i32DataBits;
+}
+
+void CPortEndpoint::setParity(const qint32 i32Parity)
+{
+    m_i32Parity = i32Parity;
+}
+
+void CPortEndpoint::setStopBits(const qint32 i32StopBits)
+{
+    m_i32StopBits = i32StopBits;
+}
+
+void CPortEndpoint::setFlowControl(const qint32 i32FlowControl)
+{
+    m_i32FlowControl = i32FlowControl;
 }
 
 // EOF <stefan@scheler.com>

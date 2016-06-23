@@ -83,6 +83,10 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, CSessio
     if (m_session)
     {
         m_portEndpoint->setBaudRate(session->getBaudRate());
+        m_portEndpoint->setDataBits(session->getDataBits());
+        m_portEndpoint->setParity(session->getParity());
+        m_portEndpoint->setStopBits(session->getStopBits());
+        m_portEndpoint->setFlowControl(session->getFlowControl());
         m_portEndpoint->connectEndpoint(session->getDeviceName());
 
         m_ui->comboPorts->setCurrentText(session->getDeviceDesc());
@@ -511,6 +515,10 @@ void CConsoleTab::onConnectClicked(void)
         m_session->setFlowControl(g_FlowControlNameMap.key(m_ui->comboFlowControl->currentText()));
 
         m_portEndpoint->setBaudRate(m_ui->comboBaudRates->currentText().toUInt());
+        m_portEndpoint->setDataBits(m_ui->comboDataBits->currentText().toInt());
+        m_portEndpoint->setParity(m_ui->comboParity->currentText().toInt());
+        m_portEndpoint->setStopBits(m_ui->comboStopBits->currentText().toInt());
+        m_portEndpoint->setFlowControl(m_ui->comboFlowControl->currentText().toInt());
         m_portEndpoint->connectEndpoint(sDeviceName);
     }
     else

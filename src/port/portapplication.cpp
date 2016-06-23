@@ -62,6 +62,11 @@ void CPortApplication::connectSocket(void)
 {
     QString portName = arguments().at(1);
     quint32 baudRate = arguments().at(2).toUInt();
+    QSerialPort::DataBits dataBits = static_cast<QSerialPort::DataBits>(arguments().at(3).toInt());
+    QSerialPort::Parity parity = static_cast<QSerialPort::Parity>(arguments().at(4).toInt());
+    QSerialPort::StopBits stopBits = static_cast<QSerialPort::StopBits>(arguments().at(5).toInt());
+    QSerialPort::FlowControl flowControl = static_cast<QSerialPort::FlowControl>(arguments().at(6).toInt());
+
 
     connect(m_socket, SIGNAL(connected()), this, SLOT(onSocketConnected()));
     connect(m_socket, SIGNAL(disconnected()), this, SLOT(onSocketDisconnected()));
@@ -74,10 +79,10 @@ void CPortApplication::connectSocket(void)
     {
         QTextStream(stdout) << "open" << portName << endl;
         m_port->setBaudRate(baudRate);
-        m_port->setFlowControl(QSerialPort::NoFlowControl);
-        m_port->setParity(QSerialPort::NoParity);
-        m_port->setStopBits(QSerialPort::OneStop);
-        m_port->setDataBits(QSerialPort::Data8);
+        m_port->setFlowControl(flowControl);
+        m_port->setParity(parity);
+        m_port->setStopBits(stopBits);
+        m_port->setDataBits(dataBits);
     }
     else
     {

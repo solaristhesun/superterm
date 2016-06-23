@@ -15,6 +15,11 @@ public:
     explicit CPortEndpoint(QObject *parent = 0);
 
     void setBaudRate(const quint32 u32BaudRate);
+    void setDataBits(const qint32 i32DataBits);
+    void setParity(const qint32 i32Parity);
+    void setStopBits(const qint32 i32StopBits);
+    void setFlowControl(const qint32 i32FlowControl);
+
     void connectEndpoint(const QString& sDeviceName);
     void disconnectEndpoint();
     bool isConnected();
@@ -39,6 +44,10 @@ private:
     QLocalServer*      m_server;
     QLocalSocket*      m_socket;
     quint32            m_u32BaudRate;
+    qint32             m_i32DataBits;
+    qint32             m_i32Parity;
+    qint32             m_i32StopBits;
+    qint32             m_i32FlowControl;
 };
 
 #endif // CPORTENDPOINT_H

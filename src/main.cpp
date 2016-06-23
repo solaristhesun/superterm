@@ -10,7 +10,7 @@
 
 int main(int argc, char *argv[])
 {
-    if (argc == 3)
+    if (argc == 7)
     {
         CPortApplication a(argc, argv);
         a.connectSocket();
