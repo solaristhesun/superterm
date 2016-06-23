@@ -5,7 +5,6 @@
 #include "globals.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "com/serialconnection.h"
 #include "obj/session.h"
 
 CMainWindow::CMainWindow(QWidget *parent) :
@@ -48,6 +47,7 @@ void CMainWindow::addExistingTabsFromFile(void)
             QFile file(QCoreApplication::applicationDirPath() + "/" + str);
             file.open(QIODevice::ReadOnly);
             QDataStream in(&file);
+
             CSession* session = new CSession();
             in >> *session;
             qDebug() << "adding tab " << session->getDeviceName();

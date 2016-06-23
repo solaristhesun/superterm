@@ -26,6 +26,7 @@ public:
     void scrollDown(void);
     void refreshCursor();
     void setHighlighting(QList<CHighlightsFrame::Highlighting>& highlighting);
+    QList<CHighlightsFrame::Highlighting>& getHighlighting(void);
     void mousePressEvent(QMouseEvent * e);
     void mouseMoveEvent(QMouseEvent * e);
     void mouseReleaseEvent(QMouseEvent * e);

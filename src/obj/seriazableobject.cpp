@@ -11,7 +11,8 @@ CSeriazableObject::CSeriazableObject(QObject *parent) : QObject(parent)
 QDataStream &operator<<(QDataStream &ds, const CSeriazableObject &obj) {
     for(int i=0; i<obj.metaObject()->propertyCount(); ++i) {
         if(obj.metaObject()->property(i).isStored(&obj)) {
-            ds << obj.metaObject()->property(i).read(&obj);
+            QVariant var = obj.metaObject()->property(i).read(&obj);
+            ds << var;
         }
     }
     return ds;

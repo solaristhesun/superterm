@@ -23,7 +23,6 @@
 #include "ui_consoletab.h"
 #include "consoletabwidget.h"
 #include "highlightsframe.h"
-#include "com/serialconnection.h"
 #include "obj/session.h"
 #include "port/portendpoint.h"
 
@@ -88,6 +87,26 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, CSessio
 
         m_ui->comboPorts->setCurrentText(session->getDeviceDesc());
         m_ui->comboBaudRates->setCurrentText(QString::number(session->getBaudRate()));
+        m_ui->comboDataBits->setCurrentText(QString::number(session->getDataBits()));
+        //m_ui->comboParity->setCurrentText(session->getParity());
+        //m_ui->comboStopBits->setCurrentText(QString::number(session->getStopBits()));
+        //m_ui->comboFlowControl->setCurrentText(session->getFlowControl());
+
+        QList<CHighlightsFrame::Highlighting> highlights;
+
+        foreach(const QVariant& h, m_session->getHighlights())
+        {
+            CHighlightsFrame::Highlighting hi = h.value<CHighlightsFrame::Highlighting>();
+            QPixmap pixmap(10, 10);
+            pixmap.fill(hi.color);
+            QIcon icon(pixmap);
+            QListWidgetItem *item = new QListWidgetItem(icon, hi.pattern);
+            item->setData(Qt::UserRole, QVariant(hi.color));
+            m_ui->highlightsFrame->addHighlighting(item);
+            highlights.append(hi);
+        }
+
+        m_ui->consoleView->setHighlighting(highlights);
 
         m_ui->btnConnect->setEnabled(true); // FIXME: unsauber
     }
@@ -480,6 +499,7 @@ void CConsoleTab::onConnectClicked(void)
         m_session->setBaudRate(m_ui->comboBaudRates->currentText().toUInt());
         m_session->setDeviceName(sDeviceName);
         m_session->setDeviceDesc(m_ui->comboPorts->currentText());
+        m_session->setDataBits(m_ui->comboDataBits->currentText().toInt());
 
         m_portEndpoint->setBaudRate(m_ui->comboBaudRates->currentText().toUInt());
         m_portEndpoint->connectEndpoint(sDeviceName);
@@ -584,7 +604,7 @@ void CConsoleTab::onAppQuit(void)
 
     if (m_session)
     {
-        //m_session->setList(static_cast<QList<uint32_t>>(m_ui->highlightsFrame->getItems()));
+        m_session->setHighlights(CSeriazableObject::convertToQVariantList(m_ui->highlightsFrame->getItems()));
         m_session->saveToFile();
     }
 }

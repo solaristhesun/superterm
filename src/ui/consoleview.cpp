@@ -107,6 +107,11 @@ void CConsoleView::setHighlighting(QList<CHighlightsFrame::Highlighting>& highli
     m_highlightings = highlighting;
 }
 
+QList<CHighlightsFrame::Highlighting>& CConsoleView::getHighlighting(void)
+{
+    return m_highlightings;
+}
+
 void CConsoleView::saveCursor()
 {
    this->cursorPos = this->textCursor().position();

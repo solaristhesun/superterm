@@ -1,6 +1,7 @@
 #include <QDebug>
 #include <QColorDialog>
 #include <QKeyEvent>
+#include <QDataStream>
 
 #include "highlightsframe.h"
 #include "ui_highlightsframe.h"
@@ -11,9 +12,10 @@ CHighlightsFrame::CHighlightsFrame(QWidget *parent) :
     m_color(QColor(Qt::red))
 {
     m_ui->setupUi(this);
-
     hide();
     refreshColorButton();
+
+    qRegisterMetaTypeStreamOperators<Highlighting>("Highlighting");
 }
 
 CHighlightsFrame::~CHighlightsFrame()
@@ -138,6 +140,17 @@ QList<CHighlightsFrame::Highlighting> CHighlightsFrame::getItems(void)
         list.append(h);
     }
     return list;
+}
+
+QDataStream& operator<<(QDataStream& out, const CHighlightsFrame::Highlighting& v) {
+    out << v.pattern << v.color;
+    return out;
+}
+
+QDataStream& operator>>(QDataStream& in, CHighlightsFrame::Highlighting& v) {
+    in >> v.pattern;
+    in >> v.color;
+    return in;
 }
 
 // EOF <stefan@scheler.com>

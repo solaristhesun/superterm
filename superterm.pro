@@ -25,8 +25,6 @@ SOURCES += \
     src/ui/logfilepanel.cpp \
     src/enumerator/portenumerator.cpp \
     src/enumerator/serialportinfo.cpp \
-    src/com/connection.cpp \
-    src/com/serialconnection.cpp \
     src/obj/seriazableobject.cpp \
     src/port/portendpoint.cpp \
     src/port/portapplication.cpp \
@@ -46,8 +44,6 @@ HEADERS += \
     src/ui/logfilepanel.h \
     src/enumerator/portenumerator.h \
     src/enumerator/serialportinfo.h \
-    src/com/connection.h \
-    src/com/serialconnection.h \
     src/obj/seriazableobject.h \
     src/port/portendpoint.h \
     src/port/portapplication.h \

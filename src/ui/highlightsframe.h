@@ -21,7 +21,6 @@ public:
         QColor color;
     };
 
-
     explicit CHighlightsFrame(QWidget *parent = 0);
     ~CHighlightsFrame();
 
@@ -48,5 +47,7 @@ private:
 
     void refreshColorButton();
 };
+
+Q_DECLARE_METATYPE(CHighlightsFrame::Highlighting)
 
 #endif // HIGHLIGHTSFRAME_H
