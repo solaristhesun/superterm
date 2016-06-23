@@ -23,6 +23,8 @@
 #include "ui_consoletab.h"
 #include "consoletabwidget.h"
 #include "highlightsframe.h"
+#include "enumerator/portenumerator.h"
+#include "enumerator/serialportinfo.h"
 #include "obj/session.h"
 #include "port/portendpoint.h"
 
@@ -140,6 +142,9 @@ CConsoleTab::~CConsoleTab()
 void CConsoleTab::fillComboBoxes(void)
 {
     QComboBox *combo = NULL;
+
+    /** FIXME: DO THIS IN A MORE ELEGANT WAY! */
+    while(m_pe->getAvailablePorts().count() == 0) { QThread::msleep(20); }
 
     m_ui->comboPorts->setPortEnumerator(m_pe);
 
@@ -262,14 +267,14 @@ void CConsoleTab::hideConnectBar(void)
     m_ui->btnBar->hide();
 }
 
-void CConsoleTab::onConfigurationChanged(void)
+void CConsoleTab::onConfigurationChanged(const QString &text)
 {
     qDebug() << "CURRENTINDEX: " << m_ui->comboConfigurations->currentIndex();
 
     if (m_ui->comboConfigurations->currentIndex() == 0)
         return;
 
-    QString fileName = QDir(QCoreApplication::applicationDirPath()).filePath(m_ui->comboConfigurations->currentText());
+    QString fileName = QDir(QCoreApplication::applicationDirPath()).filePath(text);
 
     qDebug() << fileName;
 

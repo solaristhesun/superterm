@@ -48,6 +48,7 @@ void CConsoleTabWidget::handleAddButtonClicked(void)
 void CConsoleTabWidget::addNewTab(CSession* session)
 {
     QString tabText = session ? session->getDeviceName() : tr("New tab");
+    m_pe->startEnumeration();
     CConsoleTab* tab = new CConsoleTab(m_pe, this, session);
     qDebug() << tabText;
     int index = QTabWidget::addTab(tab, tabText);

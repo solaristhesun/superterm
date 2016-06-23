@@ -717,22 +717,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>comboConfigurations</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>CConsoleTab</receiver>
-   <slot>onConfigurationChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>79</x>
-     <y>18</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>472</x>
-     <y>106</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>btnClose</sender>
    <signal>clicked()</signal>
    <receiver>CConsoleTab</receiver>
@@ -740,6 +724,22 @@
    <hints>
     <hint type="sourcelabel">
      <x>1084</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>549</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboConfigurations</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>onConfigurationChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>79</x>
      <y>16</y>
     </hint>
     <hint type="destinationlabel">
@@ -766,7 +766,7 @@
   <slot>onKeyPressed(QKeyEvent*)</slot>
   <slot>onMoreClicked()</slot>
   <slot>showSaveDialog()</slot>
-  <slot>onConfigurationChanged()</slot>
   <slot>hideConnectBar()</slot>
+  <slot>onConfigurationChanged(QString)</slot>
  </slots>
 </ui>
