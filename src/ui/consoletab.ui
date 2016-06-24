@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1099</width>
+    <width>1164</width>
     <height>213</height>
    </rect>
   </property>
@@ -63,7 +63,7 @@
        <number>5</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="bottomMargin">
        <number>5</number>
@@ -226,11 +226,11 @@
     </widget>
    </item>
    <item>
-    <widget class="CConsoleView" name="consoleView">
+    <widget class="CConsoleView" name="consoleView" native="true">
      <property name="styleSheet">
       <string notr="true"/>
      </property>
-     <property name="tabChangesFocus">
+     <property name="tabChangesFocus" stdset="0">
       <bool>false</bool>
      </property>
     </widget>
@@ -364,14 +364,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CConsoleView</class>
-   <extends>QTextEdit</extends>
-   <header>src/ui/consoleview.h</header>
-   <slots>
-    <signal>keyPressed(QKeyEvent*)</signal>
-   </slots>
-  </customwidget>
-  <customwidget>
    <class>CStatusBarFrame</class>
    <extends>QFrame</extends>
    <header>src/ui/statusbarframe.h</header>
@@ -399,6 +391,16 @@
    <slots>
     <signal>loggingStarted()</signal>
     <signal>loggingStopped()</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>CConsoleView</class>
+   <extends>QWidget</extends>
+   <header>src/ui/consoleview.h</header>
+   <container>1</container>
+   <slots>
+    <signal>keyPressed(QKeyEvent*)</signal>
+    <slot>clear()</slot>
    </slots>
   </customwidget>
   <customwidget>
