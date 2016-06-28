@@ -16,6 +16,10 @@ public:
     ~CMainWindow();
 
     QSize sizeHint() const;
+    void addTab(QWidget* widget, QString& tabText);
+
+protected:
+    void moveEvent(QMoveEvent * event);
 
 public slots:
     void aboutToQuit();

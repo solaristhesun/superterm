@@ -4,6 +4,7 @@
 #include <QTabBar>
 
 class QPushButton;
+class CMainWindow;
 
 class CConsoleTabBar : public QTabBar
 {
@@ -22,9 +23,14 @@ public:
     void	tabInserted(int index);
     void tabRemoved(int index);
     void moveButton(void);
+    CMainWindow* getNewMainWindow() const { return mNewMainWindow; }
 
 signals:
     void addButtonClicked(void);
+    void tabDetached(int index);
+
+protected:
+    void dragEnterEvent(QDragEnterEvent * event);
 
 public slots:
 
@@ -32,6 +38,8 @@ private:
     QPushButton *m_btn;
     int m_selectedIndex;
     int m_prevIndex;
+    CMainWindow* mNewMainWindow;
+    QPoint mOffset;
 };
 
 #endif // CONSOLETABBAR_H

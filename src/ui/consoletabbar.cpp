@@ -3,6 +3,8 @@
 #include <QShowEvent>
 #include <QPushButton>
 #include <QRect>
+#include <QApplication>
+#include "mainwindow.h"
 
 #include "consoletabbar.h"
 
@@ -10,7 +12,8 @@ CConsoleTabBar::CConsoleTabBar(QWidget *parent) :
     QTabBar(parent),
     m_btn(new QPushButton(this)),
     m_selectedIndex(-1),
-    m_prevIndex(-1)
+    m_prevIndex(-1),
+    mNewMainWindow(NULL)
 {
     setFocusPolicy(Qt::NoFocus);
     setMovable(false);
@@ -22,16 +25,27 @@ CConsoleTabBar::CConsoleTabBar(QWidget *parent) :
     // add empty tab
     //addTab("");
     moveButton();
+    setMovable(false);
 }
 
 
 void	CConsoleTabBar::tabInserted(int index)
 {
+    if (count() > 1)
+    {
+        qDebug() << "SETMOVABLE";
+        //setMovable(true);
+    }
     moveButton();
 }
 
 void	CConsoleTabBar::tabRemoved(int index)
 {
+    if (count() < 2)
+    {
+        qDebug() << "SETMOVABLE FALSE";
+        //setMovable(false);
+    }
     moveButton();
 }
 
@@ -56,16 +70,57 @@ void CConsoleTabBar::showEvent(QShowEvent *event)
 void CConsoleTabBar::mouseReleaseEvent(QMouseEvent * event)
 {
      QTabBar::mouseReleaseEvent(event);
+     mNewMainWindow = NULL;
 }
 
 void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
 {
+    QPoint pos = event->pos();
+
+    if (!mNewMainWindow)
+    {
+        if (count() > 1)
+        {
+            if (pos.x() < 0 || pos.x() > this->rect().width())
+            {
+                qDebug() << "DETACH " << pos;
+
+                mNewMainWindow = new CMainWindow(NULL);
+                mNewMainWindow->setGeometry(static_cast<QWidget*>(this->parent())->geometry()); // FIXME: bad coding
+                mNewMainWindow->move(event->globalPos()- mOffset);
+                mNewMainWindow->show();
+
+                emit tabDetached(currentIndex());
+            }
+        }
+    }
+    else
+    {
+        mNewMainWindow->move(event->globalPos() - mOffset);
+    }
+
     QTabBar::mouseMoveEvent(event);
 }
 
 void  CConsoleTabBar::mousePressEvent(QMouseEvent * event)
 {
+    QRect rect = tabRect(currentIndex());
+
+    mOffset.setX(event->pos().x() - rect.x());
+    mOffset.setY(event->pos().y() - rect.y());
+
+    QMainWindow *mainWindow = static_cast<CMainWindow*>(QApplication::activeWindow());
+    QSize decorationSize = mainWindow->frameSize()- mainWindow->size();
+
+    mOffset.setX(mOffset.x() + decorationSize.width()/2);
+    mOffset.setY(mOffset.y() + mainWindow->geometry().y()- mainWindow->frameGeometry().y());
+
     QTabBar::mousePressEvent(event);
+}
+
+void CConsoleTabBar::dragEnterEvent(QDragEnterEvent * event)
+{
+    qDebug() << "dragEnterEvent";
 }
 
 // EOF <stefan@scheler.com>

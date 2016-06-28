@@ -20,6 +20,7 @@
 
 #include "globals.h"
 #include "consoletab.h"
+#include "mainwindow.h"
 #include "ui_consoletab.h"
 #include "consoletabwidget.h"
 #include "highlightsframe.h"

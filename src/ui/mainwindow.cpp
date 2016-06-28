@@ -15,6 +15,7 @@ CMainWindow::CMainWindow(QWidget *parent) :
     addExistingTabsFromFile();
 
     setWindowTitle(g_sAppFullName);
+    setMouseTracking(true);
 }
 
 CMainWindow::~CMainWindow()
@@ -71,6 +72,17 @@ void CMainWindow::removeTabFiles(void)
             dir.remove(str);
         }
     }
+}
+
+void CMainWindow::addTab(QWidget* widget, QString& tabText)
+{
+    m_ui->tabWidget->clear();
+    m_ui->tabWidget->addTab(widget, tabText);
+}
+
+void CMainWindow::moveEvent(QMoveEvent * event)
+{
+    // FIXME: check if mainwindow is dropped in other mainwindow's tab bar
 }
 
 // EOF <stefan@scheler.com>

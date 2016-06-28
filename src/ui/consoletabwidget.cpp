@@ -5,18 +5,20 @@
 #include "consoletabwidget.h"
 #include "consoletabbar.h"
 #include "consoletab.h"
+#include "mainwindow.h"
 #include "enumerator/portenumerator.h"
 #include "obj/session.h"
 
-CConsoleTabWidget::CConsoleTabWidget(QWidget *parent) :
-    QTabWidget(parent),
-    m_tabBar(new CConsoleTabBar(this)),
-    m_pe(new CPortEnumerator())
+CConsoleTabWidget::CConsoleTabWidget(QWidget *parent)
+    : QTabWidget(parent)
+    , m_tabBar(new CConsoleTabBar(this))
+    , m_pe(new CPortEnumerator())
 {
     setTabBar(m_tabBar);
     addNewTab(NULL);
 
-    connect(m_tabBar, SIGNAL(addButtonClicked()), this, SLOT(handleAddButtonClicked()));
+    connect(m_tabBar, &CConsoleTabBar::addButtonClicked, this, &CConsoleTabWidget::handleAddButtonClicked);
+    connect(m_tabBar, &CConsoleTabBar::tabDetached, this, &CConsoleTabWidget::onTabDetached);
 }
 
 CConsoleTabWidget::~CConsoleTabWidget()
@@ -37,6 +39,21 @@ void CConsoleTabWidget::closeTab(int index)
     else
     {
         QApplication::quit();
+    }
+}
+
+void CConsoleTabWidget::onTabDetached(int index)
+{
+    qDebug() << "[slot] onTabDetached";
+
+    if (count() > 1)
+    {
+        QWidget* tab = QTabWidget::widget(index);
+        QString tabText = QTabWidget::tabText(index);
+        removeTab(index);
+
+        CMainWindow *newWin = m_tabBar->getNewMainWindow();
+        newWin->addTab(tab, tabText);
     }
 }
 

@@ -7,6 +7,7 @@ class CConsoleTab;
 class CConsoleTabBar;
 class CPortEnumerator;
 class CSession;
+class CMainWindow;
 
 class CConsoleTabWidget : public QTabWidget
 {
@@ -27,6 +28,7 @@ public slots:
     void closeTab(int index);
     void handleAddButtonClicked(void);
     void addNewTab(CSession* session);
+    void onTabDetached(int index);
 
 private:
     CConsoleTabBar*  m_tabBar;
