@@ -20,7 +20,6 @@ SOURCES += \
     src/ui/consoletabbar.cpp \
     src/ui/statusbarframe.cpp \
     src/ui/portscombobox.cpp \
-    src/ui/highlightsframe.cpp \
     src/globals.cpp \
     src/ui/logfilepanel.cpp \
     src/enumerator/portenumerator.cpp \
@@ -29,7 +28,7 @@ SOURCES += \
     src/port/portendpoint.cpp \
     src/port/portapplication.cpp \
     src/obj/session.cpp \
-    src/ui/consoleviewex.cpp
+    src/ui/highlightsframe.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -47,8 +46,7 @@ HEADERS += \
     src/obj/seriazableobject.h \
     src/port/portendpoint.h \
     src/port/portapplication.h \
-    src/obj/session.h \
-    src/ui/consoleviewex.h
+    src/obj/session.h
 
 FORMS += \
     src/ui/mainwindow.ui \

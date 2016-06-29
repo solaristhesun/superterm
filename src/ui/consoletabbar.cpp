@@ -8,12 +8,12 @@
 
 #include "consoletabbar.h"
 
-CConsoleTabBar::CConsoleTabBar(QWidget *parent) :
-    QTabBar(parent),
-    m_btn(new QPushButton(this)),
-    m_selectedIndex(-1),
-    m_prevIndex(-1),
-    mNewMainWindow(NULL)
+CConsoleTabBar::CConsoleTabBar(QWidget* parent)
+    : QTabBar(parent)
+    , m_btn(new QPushButton(this))
+    , m_selectedIndex(-1)
+    , m_prevIndex(-1)
+    , mNewMainWindow(NULL)
 {
     setFocusPolicy(Qt::NoFocus);
     setMovable(false);
@@ -21,35 +21,26 @@ CConsoleTabBar::CConsoleTabBar(QWidget *parent) :
     m_btn->setGeometry(QRect(0, 200, 27, 27 ));
     m_btn->setFocusPolicy(Qt::NoFocus);
     m_btn->setIcon(QIcon(":/icons/application_add_16x16.png"));
-    connect(m_btn, SIGNAL(clicked()), this, SIGNAL(addButtonClicked()));
+
+    connect(m_btn, &QPushButton::clicked, this, &CConsoleTabBar::addButtonClicked);
+
     // add empty tab
     //addTab("");
     moveButton();
     setMovable(false);
 }
 
-
-void	CConsoleTabBar::tabInserted(int index)
+void CConsoleTabBar::tabInserted(int)
 {
-    if (count() > 1)
-    {
-        qDebug() << "SETMOVABLE";
-        //setMovable(true);
-    }
     moveButton();
 }
 
-void	CConsoleTabBar::tabRemoved(int index)
+void CConsoleTabBar::tabRemoved(int)
 {
-    if (count() < 2)
-    {
-        qDebug() << "SETMOVABLE FALSE";
-        //setMovable(false);
-    }
     moveButton();
 }
 
-void CConsoleTabBar::moveButton(void)
+void CConsoleTabBar::moveButton()
 {
     const int iLastTabIndex = count() - 1;
 
@@ -67,27 +58,33 @@ void CConsoleTabBar::showEvent(QShowEvent *event)
     QTabBar::showEvent(event);
 }
 
-void CConsoleTabBar::mouseReleaseEvent(QMouseEvent * event)
+void CConsoleTabBar::mouseReleaseEvent(QMouseEvent* event)
 {
-     QTabBar::mouseReleaseEvent(event);
-     mNewMainWindow = NULL;
+    QTabBar::mouseReleaseEvent(event);
+    mNewMainWindow = NULL;
 }
 
 void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
 {
     QPoint pos = event->pos();
 
+    // dragging single tab moves window
+    if (QTabBar::count() == 1)
+    {
+        CMainWindow *mainWindow = static_cast<CMainWindow*>(QApplication::activeWindow());
+        mainWindow->move(event->globalPos() - mOffset);
+        return;
+    }
+
     if (!mNewMainWindow)
     {
         if (count() > 1)
         {
-            if (pos.x() < 0 || pos.x() > this->rect().width())
+            if (pos.x() < 0 || pos.x() > QTabBar::rect().width())
             {
-                qDebug() << "DETACH " << pos;
-
                 mNewMainWindow = new CMainWindow(NULL);
-                mNewMainWindow->setGeometry(static_cast<QWidget*>(this->parent())->geometry()); // FIXME: bad coding
-                mNewMainWindow->move(event->globalPos()- mOffset);
+                mNewMainWindow->setGeometry(static_cast<QWidget*>(QTabBar::parent())->geometry()); // FIXME: bad coding
+                mNewMainWindow->move(event->globalPos() - mOffset);
                 mNewMainWindow->show();
 
                 emit tabDetached(currentIndex());
@@ -102,7 +99,7 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
     QTabBar::mouseMoveEvent(event);
 }
 
-void  CConsoleTabBar::mousePressEvent(QMouseEvent * event)
+void  CConsoleTabBar::mousePressEvent(QMouseEvent* event)
 {
     QRect rect = tabRect(currentIndex());
 
@@ -118,7 +115,7 @@ void  CConsoleTabBar::mousePressEvent(QMouseEvent * event)
     QTabBar::mousePressEvent(event);
 }
 
-void CConsoleTabBar::dragEnterEvent(QDragEnterEvent * event)
+void CConsoleTabBar::dragEnterEvent(QDragEnterEvent* event)
 {
     qDebug() << "dragEnterEvent";
 }

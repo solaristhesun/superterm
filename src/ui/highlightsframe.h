@@ -24,22 +24,22 @@ public:
     explicit CHighlightsFrame(QWidget *parent = 0);
     ~CHighlightsFrame();
 
-    QList<Highlighting> getItems(void);
+    QList<Highlighting> getItems();
     void showEvent(QShowEvent * event);
     void keyPressEvent ( QKeyEvent * event );
 
 public slots:
-    void clear(void);
-    void addHighlighting(void);
+    void clear();
+    void addHighlighting();
     void addHighlighting(QListWidgetItem *item);
-    void deleteHighlighting(void);
+    void deleteHighlighting();
     void onTextEdited(const QString& text);
     void onSelectionChanged();
-    void changeColor(void);
-    void deleteAll(void);
+    void changeColor();
+    void deleteAll();
 
 signals:
-    void highlightingChanged(void);
+    void highlightingChanged();
 
 private:
     Ui::CHighlightsFrame* m_ui;

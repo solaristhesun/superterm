@@ -3,9 +3,9 @@
 #include "statusbarframe.h"
 #include "ui_statusbarframe.h"
 
-CStatusBarFrame::CStatusBarFrame(QWidget *parent) :
-    QFrame(parent),
-    m_ui(new Ui::CStatusBarFrame)
+CStatusBarFrame::CStatusBarFrame(QWidget *parent)
+    : QFrame(parent)
+    , m_ui(new Ui::CStatusBarFrame)
 {
     m_ui->setupUi(this);
 

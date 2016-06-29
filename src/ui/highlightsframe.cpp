@@ -23,7 +23,7 @@ CHighlightsFrame::~CHighlightsFrame()
     delete m_ui;
 }
 
-void CHighlightsFrame::addHighlighting(void)
+void CHighlightsFrame::addHighlighting()
 {
     const QString str = m_ui->filterEdit->text();
 
@@ -43,12 +43,12 @@ void CHighlightsFrame::addHighlighting(void)
     emit highlightingChanged();
 }
 
-void CHighlightsFrame::addHighlighting(QListWidgetItem *item)
+void CHighlightsFrame::addHighlighting(QListWidgetItem* item)
 {
     m_ui->filterList->addItem(item);
 }
 
-void CHighlightsFrame::showEvent(QShowEvent * event)
+void CHighlightsFrame::showEvent(QShowEvent* event)
 {
     m_ui->filterEdit->setText("");
     m_ui->filterEdit->setFocus();
@@ -61,7 +61,6 @@ void CHighlightsFrame::showEvent(QShowEvent * event)
     {
         m_ui->btnDeleteAll->setEnabled(true);
     }
-
 
     QFrame::showEvent(event);
 }
@@ -93,7 +92,7 @@ void CHighlightsFrame::refreshColorButton()
     m_ui->btnColor->setStyleSheet(QString("background-color: %1;").arg(m_color.name()));
 }
 
-void CHighlightsFrame::deleteHighlighting(void)
+void CHighlightsFrame::deleteHighlighting()
 {
     qDebug() << "DELETE";
     QListWidgetItem *item = m_ui->filterList->currentItem();
@@ -107,18 +106,19 @@ void CHighlightsFrame::deleteHighlighting(void)
     emit highlightingChanged();
 }
 
-void CHighlightsFrame::deleteAll(void)
+void CHighlightsFrame::deleteAll()
 {
     m_ui->filterList->clear();
     m_ui->btnDeleteAll->setEnabled(false);
 }
 
-void CHighlightsFrame::keyPressEvent(QKeyEvent * event)
+void CHighlightsFrame::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Escape)
     {
         hide();
     }
+
     QFrame::keyPressEvent(event);
 }
 
@@ -127,7 +127,7 @@ void CHighlightsFrame::clear()
     m_ui->filterList->clear();
 }
 
-QList<CHighlightsFrame::Highlighting> CHighlightsFrame::getItems(void)
+QList<CHighlightsFrame::Highlighting> CHighlightsFrame::getItems()
 {
     QList<QListWidgetItem *> items = m_ui->filterList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
     QList<Highlighting> list;
@@ -142,12 +142,14 @@ QList<CHighlightsFrame::Highlighting> CHighlightsFrame::getItems(void)
     return list;
 }
 
-QDataStream& operator<<(QDataStream& out, const CHighlightsFrame::Highlighting& v) {
+QDataStream& operator<<(QDataStream& out, const CHighlightsFrame::Highlighting& v)
+{
     out << v.pattern << v.color;
     return out;
 }
 
-QDataStream& operator>>(QDataStream& in, CHighlightsFrame::Highlighting& v) {
+QDataStream& operator>>(QDataStream& in, CHighlightsFrame::Highlighting& v)
+{
     in >> v.pattern;
     in >> v.color;
     return in;

@@ -24,6 +24,7 @@ public:
     void tabRemoved(int index);
     void moveButton(void);
     CMainWindow* getNewMainWindow() const { return mNewMainWindow; }
+    QPoint getClickOffset() const { return mOffset; }
 
 signals:
     void addButtonClicked(void);

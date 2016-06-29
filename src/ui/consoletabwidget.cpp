@@ -17,24 +17,33 @@ CConsoleTabWidget::CConsoleTabWidget(QWidget *parent)
     setTabBar(m_tabBar);
     addNewTab(NULL);
 
-    connect(m_tabBar, &CConsoleTabBar::addButtonClicked, this, &CConsoleTabWidget::handleAddButtonClicked);
+    connect(m_tabBar, &CConsoleTabBar::addButtonClicked, this, &CConsoleTabWidget::onAddButtonClicked);
     connect(m_tabBar, &CConsoleTabBar::tabDetached, this, &CConsoleTabWidget::onTabDetached);
 }
 
 CConsoleTabWidget::~CConsoleTabWidget()
 {
     delete m_tabBar;
+    delete m_pe;
 }
 
 void CConsoleTabWidget::closeTab(int index)
 {
-    QWidget *wdgt = widget( index );
-    removeTab(  index );
-    if( wdgt )
-      delete wdgt;
-    if (count() > 0)
+    QWidget* tab = QTabWidget::widget(index);
+
+    // remove tab from widget
+    QTabWidget::removeTab(index);
+
+    // delete tab
+    if (tab)
     {
-        setCurrentIndex(index-1);
+        delete tab;
+    }
+
+    // select next tab or quit
+    if (QTabWidget::count() > 0)
+    {
+        QTabWidget::setCurrentIndex(index-1);
     }
     else
     {
@@ -50,15 +59,18 @@ void CConsoleTabWidget::onTabDetached(int index)
     {
         QWidget* tab = QTabWidget::widget(index);
         QString tabText = QTabWidget::tabText(index);
-        removeTab(index);
+
+        QTabWidget::removeTab(index);
 
         CMainWindow *newWin = m_tabBar->getNewMainWindow();
         newWin->addTab(tab, tabText);
     }
 }
 
-void CConsoleTabWidget::handleAddButtonClicked(void)
+void CConsoleTabWidget::onAddButtonClicked(void)
 {
+    qDebug() << "[slot] onAddButtonClicked";
+
     addNewTab(NULL);
 }
 
@@ -79,9 +91,9 @@ void CConsoleTabWidget::addNewTab(CSession* session)
 void CConsoleTabWidget::setConsoleFont(const QFont &font)
 {
     // set font on all tabs
-    for (int i = 0; i < count(); i++)
+    for (int i = 0; i < QTabWidget::count(); i++)
     {
-        CConsoleTab *tab = static_cast<CConsoleTab*>(widget(i));
+        CConsoleTab *tab = static_cast<CConsoleTab*>(QTabWidget::widget(i));
         tab->setConsoleFont(font);
     }
 }

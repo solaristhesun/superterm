@@ -79,9 +79,9 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, CSessio
         m_ui->comboConfigurations->show();
     }
 
-    connect(m_portEndpoint, SIGNAL(readyRead()), this, SLOT(onEndpointData()));
-    connect(m_portEndpoint, SIGNAL(connected()), this, SLOT(onEndpointConnected()));
-    connect(m_portEndpoint, SIGNAL(disconnected()), this, SLOT(onEndpointDisconnected()));
+    connect(m_portEndpoint, &CPortEndpoint::readyRead, this, &CConsoleTab::onEndpointData);
+    connect(m_portEndpoint, &CPortEndpoint::connected, this, &CConsoleTab::onEndpointConnected);
+    connect(m_portEndpoint, &CPortEndpoint::disconnected, this, &CConsoleTab::onEndpointDisconnected);
 
     if (m_session)
     {
@@ -123,15 +123,6 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, CSessio
 
         m_ui->btnConnect->setEnabled(true); // FIXME: unsauber
     }
-
-#if 0
-    // beta code
-    m_ui->consoleView->hide();
-    m_ui->consoleViewEx->show();
-#else
-    m_ui->consoleViewEx->hide();
-    m_ui->scrollArea->hide();
-#endif
 }
 
 CConsoleTab::~CConsoleTab()

@@ -4,9 +4,10 @@
 #include "enumerator/portenumerator.h"
 #include "enumerator/serialportinfo.h"
 
-CPortsComboBox::CPortsComboBox(QWidget *parent) :
-    QComboBox(parent)
+CPortsComboBox::CPortsComboBox(QWidget *parent)
+    : QComboBox(parent)
 {
+    // currently nothing
 }
 
 void CPortsComboBox::showPopup()

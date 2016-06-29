@@ -26,7 +26,8 @@ int main(int argc, char *argv[])
 
         // load styles from file
         QFile style(":/styles/superterm.qss");
-        if(style.open(QIODevice::ReadOnly | QIODevice::Text))
+
+        if (style.open(QIODevice::ReadOnly | QIODevice::Text))
         {
             a.setStyleSheet(style.readAll());
             style.close();
@@ -49,8 +50,7 @@ int main(int argc, char *argv[])
         CMainWindow w;
         w.resize(800, 600);
         w.show();
-
-        QObject::connect(&a, SIGNAL(aboutToQuit()), &w, SLOT(aboutToQuit()));
+        QObject::connect(&a, &QApplication::aboutToQuit, &w, &CMainWindow::aboutToQuit);
 
         return a.exec();
     }

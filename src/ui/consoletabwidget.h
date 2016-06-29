@@ -26,7 +26,7 @@ signals:
 
 public slots:
     void closeTab(int index);
-    void handleAddButtonClicked(void);
+    void onAddButtonClicked(void);
     void addNewTab(CSession* session);
     void onTabDetached(int index);
 

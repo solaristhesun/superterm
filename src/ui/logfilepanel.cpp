@@ -4,10 +4,10 @@
 #include "logfilepanel.h"
 #include "ui_logfilepanel.h"
 
-LogfilePanel::LogfilePanel(QWidget *parent) :
-    QFrame(parent),
-    m_ui(new Ui::LogfilePanel),
-    m_bEnabled(false)
+LogfilePanel::LogfilePanel(QWidget *parent)
+    : QFrame(parent)
+    , m_ui(new Ui::LogfilePanel)
+    , m_bEnabled(false)
 {
     m_ui->setupUi(this);
 
@@ -64,4 +64,4 @@ QString LogfilePanel::getLogFileName(void) const
     return m_ui->editFileName->text();
 }
 
-// EOF <stefan.scheler@bbraun.com>
+// EOF <stefan@scheler.com>
