@@ -83,7 +83,6 @@ void CMainWindow::addTab(QWidget* widget, QString& tabText)
 
 void CMainWindow::moveEvent(QMoveEvent * event)
 {
-#if 0
     // check if mainwindow is dropped in other mainwindow's tab bar
     foreach (QWidget *widget, QApplication::topLevelWidgets())
     {
@@ -113,7 +112,6 @@ void CMainWindow::moveEvent(QMoveEvent * event)
         }
 
     }
-#endif
 }
 
 // EOF <stefan@scheler.com>

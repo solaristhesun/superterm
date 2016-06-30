@@ -30,10 +30,6 @@ signals:
     void addButtonClicked(void);
     void tabDetached(int index);
 
-protected:
-    void dragEnterEvent(QDragEnterEvent * event);
-    void paintEvent(QPaintEvent *);
-
 public slots:
 
 private:

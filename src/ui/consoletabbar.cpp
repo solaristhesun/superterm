@@ -51,12 +51,6 @@ void CConsoleTabBar::moveButton()
     }
 }
 
-void CConsoleTabBar::paintEvent(QPaintEvent *event)
-{
-    qDebug() << "CConsoleTabBar::paintEvent()" << count();
-    QTabBar::paintEvent(event);
-}
-
 void CConsoleTabBar::showEvent(QShowEvent *event)
 {
     moveButton();
@@ -72,7 +66,7 @@ void CConsoleTabBar::mouseReleaseEvent(QMouseEvent* event)
 void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
 {
     QPoint pos = event->pos();
-#if 0
+
     // dragging single tab moves window
     if (QTabBar::count() == 1)
     {
@@ -80,7 +74,7 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
         mainWindow->move(event->globalPos() - mOffset);
         return;
     }
-#endif
+
     if (!mNewMainWindow)
     {
         if (count() > 1)
@@ -94,6 +88,14 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
 
                 emit tabDetached(currentIndex());
             }
+            else
+            {
+                QTabBar::mouseMoveEvent(event);
+            }
+        }
+        else
+        {
+            QTabBar::mouseMoveEvent(event);
         }
     }
     else
@@ -101,7 +103,7 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
         mNewMainWindow->move(event->globalPos() - mOffset);
     }
 
-    QTabBar::mouseMoveEvent(event);
+    //QTabBar::mouseMoveEvent(event);
 }
 
 void  CConsoleTabBar::mousePressEvent(QMouseEvent* event)
@@ -118,11 +120,6 @@ void  CConsoleTabBar::mousePressEvent(QMouseEvent* event)
     mOffset.setY(mOffset.y() + mainWindow->geometry().y()- mainWindow->frameGeometry().y());
 
     QTabBar::mousePressEvent(event);
-}
-
-void CConsoleTabBar::dragEnterEvent(QDragEnterEvent*)
-{
-    qDebug() << "dragEnterEvent";
 }
 
 // EOF <stefan@scheler.com>
