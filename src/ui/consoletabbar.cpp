@@ -27,7 +27,6 @@ CConsoleTabBar::CConsoleTabBar(QWidget* parent)
     // add empty tab
     //addTab("");
     moveButton();
-    setMovable(false);
 }
 
 void CConsoleTabBar::tabInserted(int)
@@ -52,6 +51,12 @@ void CConsoleTabBar::moveButton()
     }
 }
 
+void CConsoleTabBar::paintEvent(QPaintEvent *event)
+{
+    qDebug() << "CConsoleTabBar::paintEvent()" << count();
+    QTabBar::paintEvent(event);
+}
+
 void CConsoleTabBar::showEvent(QShowEvent *event)
 {
     moveButton();
@@ -67,7 +72,7 @@ void CConsoleTabBar::mouseReleaseEvent(QMouseEvent* event)
 void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
 {
     QPoint pos = event->pos();
-
+#if 0
     // dragging single tab moves window
     if (QTabBar::count() == 1)
     {
@@ -75,7 +80,7 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
         mainWindow->move(event->globalPos() - mOffset);
         return;
     }
-
+#endif
     if (!mNewMainWindow)
     {
         if (count() > 1)
@@ -115,7 +120,7 @@ void  CConsoleTabBar::mousePressEvent(QMouseEvent* event)
     QTabBar::mousePressEvent(event);
 }
 
-void CConsoleTabBar::dragEnterEvent(QDragEnterEvent* event)
+void CConsoleTabBar::dragEnterEvent(QDragEnterEvent*)
 {
     qDebug() << "dragEnterEvent";
 }

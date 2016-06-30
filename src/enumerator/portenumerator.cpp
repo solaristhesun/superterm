@@ -32,13 +32,13 @@ void CPortEnumerator::run(void)
     {
         if (m_bActive)
         {
-            qint64 t1, t2;
+            //qint64 t1, t2;
 
-            t1 = QDateTime::currentMSecsSinceEpoch();
+            //t1 = QDateTime::currentMSecsSinceEpoch();
             QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
-            t2 = QDateTime::currentMSecsSinceEpoch();
+            //t2 = QDateTime::currentMSecsSinceEpoch();
 
-           //qDebug() << "TIME: " << t2 - t1;
+            //qDebug() << "TIME: " << t2 - t1;
 
             m_ports.clear();
 

@@ -10,17 +10,17 @@ class CConsoleTabBar : public QTabBar
 {
     Q_OBJECT
 public:
-    explicit CConsoleTabBar(QWidget *parent = 0);
+    explicit CConsoleTabBar(QWidget *parent = nullptr);
 
     void mouseReleaseEvent(QMouseEvent * event);
     void mousePressEvent(QMouseEvent * event);
     void mouseMoveEvent(QMouseEvent* event);
     void showEvent(QShowEvent *event);
 
-    void	moveTab(int from, int to);
+    void moveTab(int from, int to);
 
 
-    void	tabInserted(int index);
+    void tabInserted(int index);
     void tabRemoved(int index);
     void moveButton(void);
     CMainWindow* getNewMainWindow() const { return mNewMainWindow; }
@@ -32,6 +32,7 @@ signals:
 
 protected:
     void dragEnterEvent(QDragEnterEvent * event);
+    void paintEvent(QPaintEvent *);
 
 public slots:
 

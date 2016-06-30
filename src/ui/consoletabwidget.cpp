@@ -14,6 +14,8 @@ CConsoleTabWidget::CConsoleTabWidget(QWidget *parent)
     , m_tabBar(new CConsoleTabBar(this))
     , m_pe(new CPortEnumerator())
 {
+    qDebug() << "CConsoleTabWidget::CConsoleTabWidget()";
+
     setTabBar(m_tabBar);
     addNewTab(NULL);
 
@@ -23,11 +25,12 @@ CConsoleTabWidget::CConsoleTabWidget(QWidget *parent)
 
 CConsoleTabWidget::~CConsoleTabWidget()
 {
+    qDebug() << "CConsoleTabWidget::~CConsoleTabWidget()";
     delete m_tabBar;
     delete m_pe;
 }
 
-void CConsoleTabWidget::closeTab(int index)
+void CConsoleTabWidget::destroyTab(int index)
 {
     QWidget* tab = QTabWidget::widget(index);
 
@@ -39,6 +42,11 @@ void CConsoleTabWidget::closeTab(int index)
     {
         delete tab;
     }
+}
+
+void CConsoleTabWidget::closeTab(int index)
+{
+    destroyTab(index);
 
     // select next tab or quit
     if (QTabWidget::count() > 0)

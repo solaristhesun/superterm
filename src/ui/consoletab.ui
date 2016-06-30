@@ -40,9 +40,6 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -104,6 +101,9 @@
        <widget class="QComboBox" name="comboBaudRates">
         <property name="toolTip">
          <string>Select baud rate</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
         </property>
         <property name="currentText">
          <string notr="true"/>
@@ -219,6 +219,12 @@
         <property name="icon">
          <iconset resource="../../superterm.qrc">
           <normaloff>:/icons/close-menu_16x16.png</normaloff>:/icons/close-menu_16x16.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
        </widget>
       </item>

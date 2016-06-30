@@ -17,7 +17,6 @@ CMainWindow::CMainWindow(QWidget *parent)
 {
     m_ui->setupUi(this);
 
-    addExistingTabsFromFile();
     setWindowTitle(g_sAppFullName);
 }
 
@@ -44,17 +43,16 @@ void CMainWindow::addExistingTabsFromFile(void)
 
     if (!files.isEmpty())
     {
-        m_ui->tabWidget->clear();
+        m_ui->tabWidget->clear(); // FIXME: incorrect, does not destroy initial tab
         foreach(const QString &str, files)
         {
-            qDebug() << "FILENAME:" << str;
             QFile file(QCoreApplication::applicationDirPath() + "/" + str);
             file.open(QIODevice::ReadOnly);
             QDataStream in(&file);
 
             CSession* session = new CSession();
             in >> *session;
-            qDebug() << "adding tab " << session->getDeviceName();
+            qDebug() << "adding tab" << session->getDeviceName();
 
             m_ui->tabWidget->addNewTab(session);
 
@@ -79,12 +77,13 @@ void CMainWindow::removeTabFiles(void)
 
 void CMainWindow::addTab(QWidget* widget, QString& tabText)
 {
-    m_ui->tabWidget->clear();
+    m_ui->tabWidget->destroyTab(0); // FIXME: bad design, why add tab in the first place?
     m_ui->tabWidget->addTab(widget, tabText);
 }
 
 void CMainWindow::moveEvent(QMoveEvent * event)
 {
+#if 0
     // check if mainwindow is dropped in other mainwindow's tab bar
     foreach (QWidget *widget, QApplication::topLevelWidgets())
     {
@@ -114,6 +113,7 @@ void CMainWindow::moveEvent(QMoveEvent * event)
         }
 
     }
+#endif
 }
 
 // EOF <stefan@scheler.com>

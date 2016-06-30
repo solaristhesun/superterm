@@ -22,12 +22,12 @@ void CPortsComboBox::setPortEnumerator(CPortEnumerator *pe)
     refresh();
 }
 
-void CPortsComboBox::showEvent(QShowEvent* event)
+void CPortsComboBox::showEvent(QShowEvent*)
 {
     m_pe->startEnumeration();
 }
 
-void CPortsComboBox::hideEvent(QHideEvent* event)
+void CPortsComboBox::hideEvent(QHideEvent*)
 {
     m_pe->stopEnumeration();
 }

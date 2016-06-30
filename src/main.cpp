@@ -49,7 +49,9 @@ int main(int argc, char *argv[])
         // create main window
         CMainWindow w;
         w.resize(800, 600);
+        w.addExistingTabsFromFile();
         w.show();
+
         QObject::connect(&a, &QApplication::aboutToQuit, &w, &CMainWindow::aboutToQuit);
 
         return a.exec();

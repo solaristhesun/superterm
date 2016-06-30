@@ -47,6 +47,8 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, CSessio
     , m_menu(NULL)
     , m_lastTabIndex(0)
 {
+    qDebug() << "CConsoleTab::CConsoleTab()";
+
     m_ui->setupUi(this);
 
     fillComboBoxes();
@@ -75,7 +77,6 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, CSessio
     {
         m_ui->comboConfigurations->insertItem(0, "Select configuration");
         m_ui->comboConfigurations->setCurrentIndex(0);
-        qDebug()<< "SELECT";
         m_ui->comboConfigurations->show();
     }
 
@@ -127,6 +128,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, CSessio
 
 CConsoleTab::~CConsoleTab()
 {
+    qDebug() << "CConsoleTab::~CConsoleTab()";
     delete m_ui;
     delete m_menu;
 }
@@ -136,7 +138,7 @@ void CConsoleTab::fillComboBoxes(void)
     QComboBox *combo = NULL;
 
     /** FIXME: DO THIS IN A MORE ELEGANT WAY! */
-    while(m_pe->getAvailablePorts().count() == 0) { QThread::msleep(20); }
+    //while(m_pe->getAvailablePorts().count() == 0) { QThread::msleep(20); }
 
     m_ui->comboPorts->setPortEnumerator(m_pe);
 
@@ -157,7 +159,6 @@ void CConsoleTab::fillComboBoxes(void)
     combo->addItem("57600", QVariant(57600));
     combo->addItem("115200", QVariant(115200));
     combo->addItem("custom", QVariant(0));
-
 
     // fill data bits
     combo = m_ui->comboDataBits;

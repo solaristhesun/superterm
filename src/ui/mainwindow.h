@@ -17,6 +17,7 @@ public:
 
     QSize sizeHint() const;
     void addTab(QWidget* widget, QString& tabText);
+    void addExistingTabsFromFile(void);
 
 protected:
     void moveEvent(QMoveEvent * event);
@@ -30,7 +31,6 @@ signals:
 private:
     Ui::CMainWindow* m_ui;
 
-    void addExistingTabsFromFile(void);
     void removeTabFiles(void);
 };
 

@@ -18,8 +18,8 @@ public:
 
     void setCurrentTabText(const QString& test);
     void setConsoleFont(const QFont& font);
-
     void aboutToQuit(void);
+    void destroyTab(int index);
 
 signals:
     void appQuits(void);
