@@ -73,6 +73,11 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
 
     CMainWindow* currentWindow = static_cast<CMainWindow*>(QApplication::activeWindow());
 
+    if (!currentWindow)
+    {
+        return;
+    }
+
     // dragging single tab moves window
     if (currentWindow->getTabCount() == 1)
     {
