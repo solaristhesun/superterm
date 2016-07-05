@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export QTDIR=/home/sts/Qt5.2.0/5.2.0/gcc
+export QTDIR=/home/sts/qt/5.7/gcc_64
 export PATH=$QTDIR/bin:$PATH
 
 qmake superterm.pro -r -spec linux-g++
