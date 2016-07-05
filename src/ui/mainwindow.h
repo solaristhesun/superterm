@@ -18,13 +18,11 @@ public:
     ~CMainWindow();
 
     QSize sizeHint() const;
-    void addTab(CConsoleTab* tab);
+    void attachTab(CConsoleTab* tab);
     void addExistingTabsFromFile(void);
     CConsoleTab* detachTab();
     int getTabCount() const;
-
-protected:
-    void moveEvent(QMoveEvent * event);
+    QRect getTabBarRect() const;
 
 public slots:
     void aboutToQuit();
@@ -32,10 +30,9 @@ public slots:
 signals:
     void willQuit();
 
-public:
-    Ui::CMainWindow* m_ui; // FIXME: private
-
 private:
+    Ui::CMainWindow* m_ui;
+
     void removeTabFiles(void);
 };
 

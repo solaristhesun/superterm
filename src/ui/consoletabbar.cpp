@@ -8,7 +8,6 @@
 
 #include "consoletab.h"
 #include "consoletabbar.h"
-#include "ui_mainwindow.h"
 
 CConsoleTabBar::CConsoleTabBar(QWidget* parent)
     : QTabBar(parent)
@@ -67,95 +66,69 @@ void CConsoleTabBar::mouseReleaseEvent(QMouseEvent* event)
     mNewMainWindow = NULL;
 }
 
-void CConsoleTabBar::setDetachCompleted()
-{
-   /*mNewMainWindow = nullptr;
-   QMouseEvent event(QEvent::MouseButtonRelease, QPointF(),Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-   QTabBar::mouseReleaseEvent(&event);*/
-}
-
 void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
 {
     QPoint pos = event->pos();
+    QPoint globalPos = event->globalPos() - mOffset;
 
     CMainWindow* currentWindow = static_cast<CMainWindow*>(QApplication::activeWindow());
 
     // dragging single tab moves window
     if (currentWindow->getTabCount() == 1)
     {
-        currentWindow->move(event->globalPos() - mOffset);
+        currentWindow->move(globalPos);
 
-        qDebug() << "MOVING" << currentWindow;
-
-        int c = 0;
-        foreach (QWidget *widget, QApplication::topLevelWidgets())
+        // check if tab is over tabbar of other mainwindow
+        foreach (QWidget* widget, QApplication::topLevelWidgets())
         {
             if (widget->objectName() == "CMainWindow" && widget != currentWindow)
             {
-                qDebug() << c++ << widget;
-                CMainWindow *w = static_cast<CMainWindow*>(widget);
-                CConsoleTabBar *tabBar = static_cast<CConsoleTabBar*>(w->m_ui->tabWidget->tabBar());
-                QRect globalWidgetsRect = QRect(tabBar->mapToGlobal(QPoint(0,0)), tabBar->size());
+                CMainWindow* otherWindow = static_cast<CMainWindow*>(widget);
+                QRect tabBarRect = otherWindow->getTabBarRect();
 
-                if (globalWidgetsRect.contains(event->globalPos() - tabBar->getClickOffset()))
+                // check if mouse is in tabbar rect
+                if (tabBarRect.contains(globalPos))
                 {
-                    qDebug() << "IN DROP ZONE" << globalWidgetsRect << event->globalPos();
-
-                    // remove tab from current mainwindow
-                    CConsoleTab *tab = currentWindow->detachTab();
-
-                    qDebug() << "attaching tab" << tab->getLabel() << "from" << currentWindow << "to" << w;
-
                     // move tab to other mainwindow
-                    w->addTab(tab);
-                    w->activateWindow();
+                    otherWindow->attachTab(currentWindow->detachTab());
+                    otherWindow->activateWindow();
 
                     // destroy current main window
                     currentWindow->hide();
                     currentWindow->deleteLater();
 
-                    break;
+                    // FIXME: maybe emit(tabAttached) and move code to CTabWidget
+
+                    break; // foreach
                 }
             }
         }
-        return;
     }
     else
     {
         if (!mNewMainWindow)
         {
-            if (count() > 1)
-            {
-                if (pos.x() < - 25 || pos.x() > QTabBar::rect().width() + 25)
-                {
-                    mNewMainWindow = new CMainWindow;
-                    mNewMainWindow->hide();
-                    mNewMainWindow->setGeometry(QApplication::activeWindow()->geometry());
-                    mNewMainWindow->show();
-                    mNewMainWindow->move(event->globalPos() - mOffset);
+            const int iThreshold = 25;
 
-                    emit tabDetached(currentIndex());
-                }
-                else
-                {
-                    QTabBar::mouseMoveEvent(event);
-                }
+            if (pos.x() < - iThreshold || pos.x() > QTabBar::rect().width() + iThreshold)
+            {
+                mNewMainWindow = new CMainWindow;
+                mNewMainWindow->hide();
+                mNewMainWindow->setGeometry(QApplication::activeWindow()->geometry());
+                mNewMainWindow->show();
+                mNewMainWindow->move(globalPos);
+
+                emit tabDetached(currentIndex());
             }
             else
             {
                 QTabBar::mouseMoveEvent(event);
             }
         }
-        else
-        {
-            qDebug() << "NOT MOVING";
-            //mNewMainWindow->move(event->globalPos() - mOffset);
-        }
     }
-    //QTabBar::mouseMoveEvent(event);
 }
 
-void  CConsoleTabBar::mousePressEvent(QMouseEvent* event)
+void CConsoleTabBar::mousePressEvent(QMouseEvent* event)
 {
     QRect rect = tabRect(currentIndex());
 

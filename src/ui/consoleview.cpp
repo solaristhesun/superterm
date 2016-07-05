@@ -209,24 +209,23 @@ void CConsoleView::wrapText(QString textToWrap, const int width)
 
         QString elidedText = textToWrap.left(availableNrOfChars);
 
-        if(elidedText != textToWrap)
+        moveCursor(QTextCursor::End);
+
+        if (elidedText != textToWrap)
         {
-            if(elidedText != "")
+            if (!elidedText.isEmpty())
             {
-                moveCursor(QTextCursor::End);
                 QPlainTextEdit::insertPlainText(elidedText);
             }
 
-            moveCursor(QTextCursor::End);
             QPlainTextEdit::insertPlainText("\n");
         }
         else
         {
-            moveCursor(QTextCursor::End);
             QPlainTextEdit::insertPlainText(textToWrap);
         }
 
-        textToWrap.remove(elidedText);
+        textToWrap.remove(0, elidedText.length());
     }
 }
 

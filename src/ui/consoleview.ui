@@ -40,6 +40,12 @@
   <property name="verticalScrollBarPolicy">
    <enum>Qt::ScrollBarAlwaysOn</enum>
   </property>
+  <property name="horizontalScrollBarPolicy">
+   <enum>Qt::ScrollBarAlwaysOff</enum>
+  </property>
+  <property name="lineWrapMode">
+   <enum>QPlainTextEdit::NoWrap</enum>
+  </property>
   <property name="readOnly">
    <bool>false</bool>
   </property>

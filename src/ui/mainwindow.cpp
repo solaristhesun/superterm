@@ -82,8 +82,10 @@ void CMainWindow::removeTabFiles()
     }
 }
 
-void CMainWindow::addTab(CConsoleTab* tab)
+void CMainWindow::attachTab(CConsoleTab* tab)
 {
+    qDebug() << "attaching tab" << tab->getLabel() << "to" << this;
+
     m_ui->tabWidget->addTab(tab);
 }
 
@@ -94,6 +96,8 @@ CConsoleTab* CMainWindow::detachTab()
     CConsoleTab *tab = m_ui->tabWidget->widget(curIndex);
     m_ui->tabWidget->removeTab(curIndex);
 
+    qDebug() << "detaching tab" << tab->getLabel() << "from" << this;
+
     return tab;
 }
 
@@ -102,38 +106,10 @@ int CMainWindow::getTabCount() const
     return m_ui->tabWidget->count();
 }
 
-void CMainWindow::moveEvent(QMoveEvent* event)
+QRect CMainWindow::getTabBarRect() const
 {
-#if 0
-    qDebug() << "CMainWindow::moveEvent()" << event->pos();
-    // check if mainwindow is dropped in other mainwindow's tab bar
-    foreach (QWidget *widget, QApplication::topLevelWidgets())
-    {
-        if (widget->objectName() == "CMainWindow" && widget != this)
-        {
-            CMainWindow *w = static_cast<CMainWindow*>(widget);
-            CConsoleTabBar *tabBar = static_cast<CConsoleTabBar*>(w->m_ui->tabWidget->tabBar());
-            QRect globalWidgetsRect = QRect(tabBar->mapToGlobal(QPoint(0,0)), tabBar->size());
-
-            if (globalWidgetsRect.contains(event->pos() + tabBar->getClickOffset()))
-            {
-                qDebug() << "DROPBABLE" << globalWidgetsRect << event->pos();
-
-                // remove tab from current mainwindow
-                CConsoleTab *tab = m_ui->tabWidget->currentWidget();
-                m_ui->tabWidget->removeTab(m_ui->tabWidget->currentIndex());
-
-                // move tab to other mainwindow
-                w->m_ui->tabWidget->addTab(tab);
-                w->m_ui->tabWidget->setCurrentWidget(tab);
-
-                // destroy current main window
-                hide();
-                //deleteLater(); // FIXME: correct?
-            }
-        }
-    }
-#endif
+    CConsoleTabBar *tabBar = static_cast<CConsoleTabBar*>(m_ui->tabWidget->tabBar());
+    return QRect(tabBar->mapToGlobal(QPoint(0,0)), tabBar->size());
 }
 
 // EOF <stefan@scheler.com>

@@ -72,10 +72,10 @@ void CConsoleTabWidget::onTabDetached(int index)
 {
     qDebug() << "[slot] onTabDetached";
 
-    if (QTabWidget::count() > 1)
-    {
-        CConsoleTab* tab = widget(index);
+    CConsoleTab* tab = widget(index);
 
+    if (tab)
+    {
         QTabWidget::removeTab(index);
 
         QObject::disconnect(this, &CConsoleTabWidget::appQuits, tab, &CConsoleTab::onAppQuit);
@@ -83,8 +83,7 @@ void CConsoleTabWidget::onTabDetached(int index)
 
         // add tab to new window
         CMainWindow *newWin = m_tabBar->getNewMainWindow();
-        newWin->addTab(tab);
-        m_tabBar->setDetachCompleted();
+        newWin->attachTab(tab);
     }
 }
 
