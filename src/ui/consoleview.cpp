@@ -200,12 +200,14 @@ void CConsoleView::wrapText(QString textToWrap, const int width)
 {
     QFontMetrics fm(font());
 
-    while (textToWrap.length() != 0)
-    {
-        int availableSpace = width - fm.width(document()->lastBlock().text()) - fm.averageCharWidth();
+    int maxNrOfChars = width / fm.averageCharWidth();
 
-        // remove horizontal ellipses …
-        QString elidedText = fm.elidedText(textToWrap, Qt::ElideRight, availableSpace).remove("\xE2\x80\xA6");
+    while (textToWrap.size() != 0)
+    {
+        int nrOfCharsInBlock = document()->lastBlock().length();
+        int availableNrOfChars = maxNrOfChars - nrOfCharsInBlock;
+
+        QString elidedText = textToWrap.left(availableNrOfChars);
 
         if(elidedText != textToWrap)
         {

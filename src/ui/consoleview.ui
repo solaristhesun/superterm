@@ -37,6 +37,9 @@
   <property name="lineWidth">
    <number>0</number>
   </property>
+  <property name="verticalScrollBarPolicy">
+   <enum>Qt::ScrollBarAlwaysOn</enum>
+  </property>
   <property name="readOnly">
    <bool>false</bool>
   </property>

@@ -423,7 +423,7 @@ void CConsoleTab::showColorDialog(void)
 void CConsoleTab::showFontDialog(void)
 {
     bool ok;
-    QFont font = QFontDialog::getFont(&ok, m_ui->consoleView->font(), this);
+    QFont font = QFontDialog::getFont(&ok, m_ui->consoleView->font(), this, QString(), QFontDialog::MonospacedFonts);
     if (ok)
     {
         QSettings settings;
