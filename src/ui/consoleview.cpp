@@ -3,6 +3,7 @@
 #include <QFontMetrics>
 #include <QDebug>
 #include <QMouseEvent>
+#include <QTextBlock>
 
 #include "consoleview.h"
 #include "ui_consoleview.h"
@@ -134,8 +135,8 @@ void CConsoleView::insertPlainText(const QString &text)
         return;
     }
 
-    moveCursor(QTextCursor::End);
-    QPlainTextEdit::insertPlainText(text);
+    wrapText(text, viewport()->width());
+
     int iLines = text.count('\n');
 
     foreach (CHighlightsFrame::Highlighting h, m_highlightings)
@@ -193,6 +194,38 @@ void CConsoleView::setAutoScroll(const bool bEnabled)
         m_scrollPos = m_scrollBar->maximum();
     }
 
+}
+
+void CConsoleView::wrapText(QString textToWrap, const int width)
+{
+    QFontMetrics fm(font());
+
+    while (textToWrap.length() != 0)
+    {
+        int availableSpace = width - fm.width(document()->lastBlock().text()) - fm.averageCharWidth();
+
+        // remove horizontal ellipses …
+        QString elidedText = fm.elidedText(textToWrap, Qt::ElideRight, availableSpace).remove("\xE2\x80\xA6");
+
+        if(elidedText != textToWrap)
+        {
+            if(elidedText != "")
+            {
+                moveCursor(QTextCursor::End);
+                QPlainTextEdit::insertPlainText(elidedText);
+            }
+
+            moveCursor(QTextCursor::End);
+            QPlainTextEdit::insertPlainText("\n");
+        }
+        else
+        {
+            moveCursor(QTextCursor::End);
+            QPlainTextEdit::insertPlainText(textToWrap);
+        }
+
+        textToWrap.remove(elidedText);
+    }
 }
 
 // EOF <stefan@scheler.com>

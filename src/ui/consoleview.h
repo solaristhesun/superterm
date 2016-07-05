@@ -60,6 +60,7 @@ private:
 
     void saveCursor(void);
     void restoreCursor(void);
+    void wrapText(QString textToWrap, const int width);
 };
 
 #endif // CONSOLEVIEW
