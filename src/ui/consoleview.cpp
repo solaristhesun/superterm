@@ -205,7 +205,7 @@ void CConsoleView::wrapText(QString textToWrap, const int width)
     while (textToWrap.size() != 0)
     {
         int nrOfCharsInBlock = document()->lastBlock().length();
-        int availableNrOfChars = maxNrOfChars - nrOfCharsInBlock;
+        int availableNrOfChars = qMax((maxNrOfChars - nrOfCharsInBlock), 0);
 
         QString elidedText = textToWrap.left(availableNrOfChars);
 
