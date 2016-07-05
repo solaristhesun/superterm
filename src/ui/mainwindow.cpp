@@ -10,11 +10,13 @@
 #include "obj/session.h"
 #include "consoletab.h"
 #include "consoletabbar.h"
+#include "consoletabfactory.h"
 
 CMainWindow::CMainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_ui(new Ui::CMainWindow)
 {
+    qDebug() << "CMainWindow::CMainWindow()";
     m_ui->setupUi(this);
 
     setWindowTitle(g_sAppFullName);
@@ -22,6 +24,7 @@ CMainWindow::CMainWindow(QWidget *parent)
 
 CMainWindow::~CMainWindow()
 {
+    qDebug() << "CMainWindow::~CMainWindow()" << this;
     delete m_ui;
 }
 
@@ -54,14 +57,18 @@ void CMainWindow::addExistingTabsFromFile(void)
             in >> *session;
             qDebug() << "adding tab" << session->getDeviceName();
 
-            m_ui->tabWidget->addNewTab(session);
+            m_ui->tabWidget->addTab(CConsoleTabFactory::createTabFromSession(session));
 
             file.close();
         }
     }
+    else
+    {
+        m_ui->tabWidget->addTab(CConsoleTabFactory::createTab());
+    }
 }
 
-void CMainWindow::removeTabFiles(void)
+void CMainWindow::removeTabFiles()
 {
     QDir dir(QCoreApplication::applicationDirPath());
     QStringList files = dir.entryList(QStringList()<<"*.con", QDir::Files);
@@ -75,14 +82,30 @@ void CMainWindow::removeTabFiles(void)
     }
 }
 
-void CMainWindow::addTab(QWidget* widget, QString& tabText)
+void CMainWindow::addTab(CConsoleTab* tab)
 {
-    m_ui->tabWidget->destroyTab(0); // FIXME: bad design, why add tab in the first place?
-    m_ui->tabWidget->addTab(widget, tabText);
+    m_ui->tabWidget->addTab(tab);
 }
 
-void CMainWindow::moveEvent(QMoveEvent * event)
+CConsoleTab* CMainWindow::detachTab()
 {
+    int curIndex = m_ui->tabWidget->currentIndex();
+
+    CConsoleTab *tab = m_ui->tabWidget->widget(curIndex);
+    m_ui->tabWidget->removeTab(curIndex);
+
+    return tab;
+}
+
+int CMainWindow::getTabCount() const
+{
+    return m_ui->tabWidget->count();
+}
+
+void CMainWindow::moveEvent(QMoveEvent* event)
+{
+#if 0
+    qDebug() << "CMainWindow::moveEvent()" << event->pos();
     // check if mainwindow is dropped in other mainwindow's tab bar
     foreach (QWidget *widget, QApplication::topLevelWidgets())
     {
@@ -94,15 +117,14 @@ void CMainWindow::moveEvent(QMoveEvent * event)
 
             if (globalWidgetsRect.contains(event->pos() + tabBar->getClickOffset()))
             {
-                qDebug() << "DROPBABLE";
+                qDebug() << "DROPBABLE" << globalWidgetsRect << event->pos();
 
                 // remove tab from current mainwindow
-                CConsoleTab *tab = static_cast<CConsoleTab*>(m_ui->tabWidget->currentWidget());
-                QString tabText = m_ui->tabWidget->tabText(m_ui->tabWidget->currentIndex());
+                CConsoleTab *tab = m_ui->tabWidget->currentWidget();
                 m_ui->tabWidget->removeTab(m_ui->tabWidget->currentIndex());
 
                 // move tab to other mainwindow
-                w->m_ui->tabWidget->addTab(tab, tabText);
+                w->m_ui->tabWidget->addTab(tab);
                 w->m_ui->tabWidget->setCurrentWidget(tab);
 
                 // destroy current main window
@@ -110,8 +132,8 @@ void CMainWindow::moveEvent(QMoveEvent * event)
                 //deleteLater(); // FIXME: correct?
             }
         }
-
     }
+#endif
 }
 
 // EOF <stefan@scheler.com>

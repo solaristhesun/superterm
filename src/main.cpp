@@ -7,6 +7,8 @@
 #include "globals.h"
 #include "ui/mainwindow.h"
 #include "port/portapplication.h"
+#include "enumerator/portenumerator.h"
+#include "ui/consoletabfactory.h"
 
 int main(int argc, char *argv[])
 {
@@ -45,6 +47,9 @@ int main(int argc, char *argv[])
         QTranslator appTranslator;
         appTranslator.load(g_sAppName + "_" + QLocale::system().name());
         a.installTranslator(&appTranslator);
+
+        CPortEnumerator portEnumerator;
+        CConsoleTabFactory::setPortEnumerator(&portEnumerator);
 
         // create main window
         CMainWindow w;

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+class CConsoleTab;
+
 namespace Ui {
     class CMainWindow;
 }
@@ -16,8 +18,10 @@ public:
     ~CMainWindow();
 
     QSize sizeHint() const;
-    void addTab(QWidget* widget, QString& tabText);
+    void addTab(CConsoleTab* tab);
     void addExistingTabsFromFile(void);
+    CConsoleTab* detachTab();
+    int getTabCount() const;
 
 protected:
     void moveEvent(QMoveEvent * event);
@@ -28,9 +32,10 @@ public slots:
 signals:
     void willQuit();
 
-private:
-    Ui::CMainWindow* m_ui;
+public:
+    Ui::CMainWindow* m_ui; // FIXME: private
 
+private:
     void removeTabFiles(void);
 };
 

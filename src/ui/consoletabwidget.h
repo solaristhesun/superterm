@@ -16,10 +16,13 @@ public:
     explicit CConsoleTabWidget(QWidget *parent = 0);
     ~CConsoleTabWidget();
 
+    void addTab(CConsoleTab* tab);
     void setCurrentTabText(const QString& test);
     void setConsoleFont(const QFont& font);
     void aboutToQuit(void);
     void destroyTab(int index);
+    CConsoleTab* currentWidget() const;
+    CConsoleTab* widget(int index) const;
 
 signals:
     void appQuits(void);
@@ -27,12 +30,10 @@ signals:
 public slots:
     void closeTab(int index);
     void onAddButtonClicked(void);
-    void addNewTab(CSession* session);
     void onTabDetached(int index);
 
 private:
-    CConsoleTabBar*  m_tabBar;
-    CPortEnumerator* m_pe;
+    CConsoleTabBar* m_tabBar;
 };
 
 #endif // CONSOLETABWIDGET_H

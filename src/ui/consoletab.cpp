@@ -36,12 +36,12 @@ Q_DECLARE_METATYPE(QSerialPort::StopBits)
 Q_DECLARE_METATYPE(QSerialPort::Parity)
 Q_DECLARE_METATYPE(QSerialPort::FlowControl)
 
-CConsoleTab::CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent, CSession* session)
-    : QWidget(parent)
+CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
+    : QWidget(Q_NULLPTR)
     , m_ui(new Ui::CConsoleTab)
+    , mTabLabel(tr("New tab"))
     , m_portEndpoint(new CPortEndpoint(this))
     , m_pe(pe)
-    , m_parent(parent)
     , m_session(session)
     , m_logFile(NULL)
     , m_menu(NULL)
@@ -133,6 +133,18 @@ CConsoleTab::~CConsoleTab()
     delete m_menu;
 }
 
+QString CConsoleTab::getLabel() const
+{
+    return mTabLabel;
+}
+
+void CConsoleTab::setLabel(const QString& label)
+{
+    mTabLabel = label;
+
+    emit labelChanged(label);
+}
+
 void CConsoleTab::fillComboBoxes(void)
 {
     QComboBox *combo = NULL;
@@ -196,6 +208,7 @@ void CConsoleTab::fillComboBoxes(void)
 
 void CConsoleTab::toggleFullScreen(void)
 {
+#if 0
     static QString sLastTitle;
     if (!isFullScreen())
     {
@@ -217,6 +230,7 @@ void CConsoleTab::toggleFullScreen(void)
         m_ui->consoleView->setFocus();
         m_ui->actionFullscreen->setChecked(false);
     }
+#endif
 }
 
 void CConsoleTab::createContextMenu()
@@ -262,8 +276,6 @@ void CConsoleTab::hideConnectBar(void)
 
 void CConsoleTab::onConfigurationChanged(const QString &text)
 {
-    qDebug() << "CURRENTINDEX: " << m_ui->comboConfigurations->currentIndex();
-
     if (m_ui->comboConfigurations->currentIndex() == 0)
         return;
 
@@ -291,7 +303,6 @@ void CConsoleTab::onConfigurationChanged(const QString &text)
             {
                 QString text = xml.readElementText();
                 m_ui->comboPorts->setCurrentText(text);
-                qDebug() << "port: [" << text << "] " << m_ui->comboPorts->findText(text);
             }
             else if (token == "speed")
             {
@@ -638,7 +649,7 @@ void CConsoleTab::onEndpointConnected()
     hideConnectBar();
     m_ui->consoleView->setFocus();
 
-    m_parent->setCurrentTabText(sDeviceName);
+    setLabel(sDeviceName);
 
     m_ui->comboPorts->setEnabled(false);
     m_ui->btnConnect->setText(tr("&Disconnect"));

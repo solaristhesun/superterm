@@ -11,6 +11,7 @@ class CConsoleTabBar : public QTabBar
     Q_OBJECT
 public:
     explicit CConsoleTabBar(QWidget *parent = nullptr);
+    ~CConsoleTabBar();
 
     void mouseReleaseEvent(QMouseEvent * event);
     void mousePressEvent(QMouseEvent * event);
@@ -19,11 +20,11 @@ public:
 
     void moveTab(int from, int to);
 
-
     void tabInserted(int index);
     void tabRemoved(int index);
     void moveButton(void);
     CMainWindow* getNewMainWindow() const { return mNewMainWindow; }
+    void setDetachCompleted();
     QPoint getClickOffset() const { return mOffset; }
 
 signals:

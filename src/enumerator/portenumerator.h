@@ -2,6 +2,7 @@
 #define PORTENUMERATOR_H
 
 #include <QThread>
+#include <QMutex>
 
 class CSerialPortInfo;
 
@@ -19,6 +20,7 @@ public:
     void run(void);
 
 private:
+    QMutex                 m_mutex;
     QList<CSerialPortInfo> m_ports;
     bool                   m_bActive;
 };

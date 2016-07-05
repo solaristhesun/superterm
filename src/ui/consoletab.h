@@ -23,13 +23,15 @@ class CConsoleTab : public QWidget
     Q_OBJECT
 
 public:
-    explicit CConsoleTab(CPortEnumerator* pe, CConsoleTabWidget *parent = 0, CSession* session = NULL);
+    CConsoleTab(CPortEnumerator* pe, CSession* session = NULL);
     ~CConsoleTab();
 
     void hideButton(int index);
 
     void setConsoleFont(const QFont& font);
     void setBackgroundColor(const QColor& color);
+    QString getLabel() const;
+    void setLabel(const QString& label);
 
 public slots:
     void onConnectClicked(void);
@@ -55,11 +57,14 @@ public slots:
     void onEndpointConnected();
     void onEndpointDisconnected();
 
+signals:
+    void labelChanged(const QString&);
+
 private:
     Ui::CConsoleTab*   m_ui;
+    QString            mTabLabel;
     CPortEndpoint*     m_portEndpoint;
     CPortEnumerator*   m_pe;
-    CConsoleTabWidget* m_parent;
     CSession*          m_session;
     QFile*             m_logFile;
     QMenu*             m_menu;

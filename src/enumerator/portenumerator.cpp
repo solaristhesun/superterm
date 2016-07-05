@@ -1,6 +1,7 @@
 #include <QSerialPortInfo>
 #include <QDateTime>
 #include <QDebug>
+#include <QList>
 
 #include "enumerator/portenumerator.h"
 #include "enumerator/serialportinfo.h"
@@ -8,11 +9,13 @@
 CPortEnumerator::CPortEnumerator():
     m_bActive(false)
 {
+    qDebug() << "CPortEnumerator::CPortEnumerator()";
     QThread::start();
 }
 
 CPortEnumerator::~CPortEnumerator()
 {
+    qDebug() << "CPortEnumerator::~CPortEnumerator()";
     QThread::exit(0);
 }
 
@@ -40,12 +43,14 @@ void CPortEnumerator::run(void)
 
             //qDebug() << "TIME: " << t2 - t1;
 
+            m_mutex.lock();
             m_ports.clear();
 
             foreach (const QSerialPortInfo &info, ports)
             {
                 m_ports << CSerialPortInfo(info);
             }
+            m_mutex.unlock();
 
 #if defined(Q_OS_LINUX)
             m_ports << CSerialPortInfo("/dev/COM1", "socat");
@@ -58,7 +63,13 @@ void CPortEnumerator::run(void)
 
 QList<CSerialPortInfo> CPortEnumerator::getAvailablePorts(void)
 {
-    return m_ports;
+    QList<CSerialPortInfo> list;
+
+    m_mutex.lock();
+    list = m_ports;
+    m_mutex.unlock();
+
+    return list;
 }
 
 // EOF <stefan@scheler.com>
