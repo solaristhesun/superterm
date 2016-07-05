@@ -493,10 +493,10 @@ void CConsoleTab::onEndpointData()
     }
     else
     {
-#if 0
+#if 1
         for (int p = 0; p < data.size(); p++)
         {
-            if (data.at(p) < 30)
+            if (data.at(p) < 30 && data.at(p) != '\n')
             {
                 data[p] = '.';
             }
