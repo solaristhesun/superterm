@@ -39,6 +39,7 @@ Q_DECLARE_METATYPE(QSerialPort::FlowControl)
 CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     : QWidget(Q_NULLPTR)
     , m_ui(new Ui::CConsoleTab)
+    , mMainWindow(Q_NULLPTR)
     , mTabLabel(tr("New tab"))
     , m_portEndpoint(new CPortEndpoint(this))
     , m_pe(pe)
@@ -208,29 +209,23 @@ void CConsoleTab::fillComboBoxes(void)
 
 void CConsoleTab::toggleFullScreen(void)
 {
-#if 0
-    static QString sLastTitle;
-    if (!isFullScreen())
+    if (!QWidget::isFullScreen())
     {
-        m_lastTabIndex = m_parent->currentIndex();
-        qDebug() << m_lastTabIndex;
-        sLastTitle = m_parent->tabText(m_lastTabIndex);
-        m_parent->addNewTab(NULL); // add dummy tab
-        setParent(0);
-        showFullScreen();
+        mMainWindow = static_cast<CMainWindow*>(QApplication::activeWindow());
+        QWidget::setParent(0);
+        QWidget::showFullScreen();
         m_ui->actionFullscreen->setChecked(true);
     }
     else
     {
-        setParent(m_parent);
-        qDebug() << m_lastTabIndex;
-        m_parent->insertTab(m_lastTabIndex, this, sLastTitle);
-        m_parent->closeTab(m_parent->count()-1);
-        m_parent->setCurrentIndex(m_lastTabIndex);
-        m_ui->consoleView->setFocus();
-        m_ui->actionFullscreen->setChecked(false);
+        if (mMainWindow)
+        {
+            mMainWindow->attachTab(this);
+            QWidget::showNormal();
+            m_ui->consoleView->setFocus();
+            m_ui->actionFullscreen->setChecked(false);
+        }
     }
-#endif
 }
 
 void CConsoleTab::createContextMenu()

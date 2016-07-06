@@ -17,6 +17,7 @@ class CPortEnumerator;
 class QMenu;
 class CPortEndpoint;
 class CSession;
+class CMainWindow;
 
 class CConsoleTab : public QWidget
 {
@@ -62,6 +63,7 @@ signals:
 
 private:
     Ui::CConsoleTab*   m_ui;
+    CMainWindow*       mMainWindow;
     QString            mTabLabel;
     CPortEndpoint*     m_portEndpoint;
     CPortEnumerator*   m_pe;
