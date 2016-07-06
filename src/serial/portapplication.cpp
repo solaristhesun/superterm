@@ -4,7 +4,7 @@
 #include <QTimer>
 #include <QSerialPort>
 
-#include "portapplication.h"
+#include "serial/portapplication.h"
 
 #if 0
 void dumpDCB(const char *szFileName)

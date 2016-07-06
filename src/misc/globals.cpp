@@ -2,7 +2,7 @@
 #include <QSerialPort>
 #include <QMap>
 
-#include "globals.h"
+#include "misc/globals.h"
 
 const QString g_sAppName     = "superterm";
 const QString g_sAppVersion  = "2016.7";

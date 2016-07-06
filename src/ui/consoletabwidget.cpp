@@ -2,14 +2,14 @@
 #include <QApplication>
 #include <QDebug>
 
-#include "consoletabwidget.h"
-#include "consoletabbar.h"
-#include "consoletab.h"
+#include "ui/consoletabwidget.h"
+#include "ui/consoletabbar.h"
+#include "ui/consoletab.h"
 #include "ui/consoletabfactory.h"
-#include "consoletab.h"
-#include "mainwindow.h"
-#include "enumerator/portenumerator.h"
-#include "obj/session.h"
+#include "ui/consoletab.h"
+#include "ui/mainwindow.h"
+#include "serial/portenumerator.h"
+#include "session/session.h"
 
 CConsoleTabWidget::CConsoleTabWidget(QWidget *parent)
     : QTabWidget(parent)

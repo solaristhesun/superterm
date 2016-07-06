@@ -1,10 +1,10 @@
 #include <QSerialPortInfo>
 
-#include "enumerator/serialportinfo.h"
+#include "serial/serialportinfo.h"
 
-CSerialPortInfo::CSerialPortInfo(const QString strPortName, const QString strPortDesc):
-    m_strPortName(strPortName),
-    m_strPortDesc(strPortDesc)
+CSerialPortInfo::CSerialPortInfo(const QString strPortName, const QString strPortDesc)
+    : m_strPortName(strPortName)
+    , m_strPortDesc(strPortDesc)
 {
     // currently nothing
 }

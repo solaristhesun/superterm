@@ -20,16 +20,16 @@ SOURCES += \
     src/ui/consoletabbar.cpp \
     src/ui/statusbarframe.cpp \
     src/ui/portscombobox.cpp \
-    src/globals.cpp \
-    src/ui/logfilepanel.cpp \
-    src/enumerator/portenumerator.cpp \
-    src/enumerator/serialportinfo.cpp \
-    src/port/portendpoint.cpp \
-    src/port/portapplication.cpp \
-    src/obj/session.cpp \
     src/ui/highlightsframe.cpp \
     src/ui/consoletabfactory.cpp \
-    src/obj/serializableobject.cpp
+    src/ui/logfilepanel.cpp \
+    src/misc/globals.cpp \
+    src/serial/portenumerator.cpp \
+    src/serial/serialportinfo.cpp \
+    src/serial/portendpoint.cpp \
+    src/serial/portapplication.cpp \
+    src/session/session.cpp \
+    src/session/serializableobject.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -40,15 +40,15 @@ HEADERS += \
     src/ui/statusbarframe.h \
     src/ui/portscombobox.h \
     src/ui/highlightsframe.h \
-    src/globals.h \
-    src/ui/logfilepanel.h \
-    src/enumerator/portenumerator.h \
-    src/enumerator/serialportinfo.h \
-    src/port/portendpoint.h \
-    src/port/portapplication.h \
-    src/obj/session.h \
     src/ui/consoletabfactory.h \
-    src/obj/serializableobject.h
+    src/ui/logfilepanel.h \
+    src/misc/globals.h \
+    src/serial/portenumerator.h \
+    src/serial/serialportinfo.h \
+    src/serial/portendpoint.h \
+    src/serial/portapplication.h \
+    src/session/session.h \
+    src/session/serializableobject.h
 
 FORMS += \
     src/ui/mainwindow.ui \

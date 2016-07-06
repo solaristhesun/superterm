@@ -3,7 +3,7 @@
 
 #include <QVariantList>
 
-#include "obj/serializableobject.h"
+#include "session/serializableobject.h"
 
 class CSession : public CSerializableObject
 {

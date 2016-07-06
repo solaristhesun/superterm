@@ -1,8 +1,8 @@
 #include <QFileDialog>
 #include <QFileInfo>
 
-#include "logfilepanel.h"
 #include "ui_logfilepanel.h"
+#include "ui/logfilepanel.h"
 
 LogfilePanel::LogfilePanel(QWidget *parent)
     : QFrame(parent)

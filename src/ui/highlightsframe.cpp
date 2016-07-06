@@ -3,8 +3,8 @@
 #include <QKeyEvent>
 #include <QDataStream>
 
-#include "highlightsframe.h"
 #include "ui_highlightsframe.h"
+#include "ui/highlightsframe.h"
 
 CHighlightsFrame::CHighlightsFrame(QWidget *parent) :
     QFrame(parent),

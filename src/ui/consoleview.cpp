@@ -5,10 +5,9 @@
 #include <QMouseEvent>
 #include <QTextBlock>
 
-#include "consoleview.h"
 #include "ui_consoleview.h"
-
-#include "consoletab.h"
+#include "ui/consoleview.h"
+#include "ui/consoletab.h"
 
 CConsoleView::CConsoleView(QWidget *parent) :
     QPlainTextEdit(parent),

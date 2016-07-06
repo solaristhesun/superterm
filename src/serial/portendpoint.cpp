@@ -3,7 +3,7 @@
 #include <QLocalSocket>
 #include <QCoreApplication>
 
-#include "portendpoint.h"
+#include "serial/portendpoint.h"
 
 CPortEndpoint::CPortEndpoint(QObject *parent)
     : QObject(parent)

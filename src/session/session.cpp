@@ -3,7 +3,7 @@
 #include <QDataStream>
 #include <QDebug>
 
-#include "session.h"
+#include "session/session.h"
 
 CSession::CSession()
 {

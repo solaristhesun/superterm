@@ -3,8 +3,8 @@
 #include <QDebug>
 #include <QList>
 
-#include "enumerator/portenumerator.h"
-#include "enumerator/serialportinfo.h"
+#include "serial/portenumerator.h"
+#include "serial/serialportinfo.h"
 
 CPortEnumerator::CPortEnumerator():
     m_bActive(false)
@@ -57,7 +57,7 @@ void CPortEnumerator::run(void)
 #endif
         }
 
-        QThread::sleep(1);
+        QThread::sleep(1); // seconds
     }
 }
 

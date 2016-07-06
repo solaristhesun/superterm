@@ -1,7 +1,7 @@
-#include "consoletabfactory.h"
-#include "enumerator/portenumerator.h"
-#include "consoletab.h"
-#include "obj/session.h"
+#include "ui/consoletabfactory.h"
+#include "ui/consoletab.h"
+#include "serial/portenumerator.h"
+#include "session/session.h"
 
 CPortEnumerator* CConsoleTabFactory::sPortEnumerator = NULL;
 

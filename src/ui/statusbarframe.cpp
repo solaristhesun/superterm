@@ -1,7 +1,7 @@
 #include <QTimer>
 
-#include "statusbarframe.h"
 #include "ui_statusbarframe.h"
+#include "ui/statusbarframe.h"
 
 CStatusBarFrame::CStatusBarFrame(QWidget *parent)
     : QFrame(parent)

@@ -6,8 +6,8 @@
 #include <QApplication>
 #include "mainwindow.h"
 
-#include "consoletab.h"
-#include "consoletabbar.h"
+#include "ui/consoletab.h"
+#include "ui/consoletabbar.h"
 
 CConsoleTabBar::CConsoleTabBar(QWidget* parent)
     : QTabBar(parent)

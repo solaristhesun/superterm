@@ -4,13 +4,13 @@
 #include <QDebug>
 #include <QRect>
 
-#include "globals.h"
-#include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "obj/session.h"
-#include "consoletab.h"
-#include "consoletabbar.h"
-#include "consoletabfactory.h"
+#include "ui/mainwindow.h"
+#include "ui/consoletab.h"
+#include "ui/consoletabbar.h"
+#include "ui/consoletabfactory.h"
+#include "misc/globals.h"
+#include "session/session.h"
 
 CMainWindow::CMainWindow(QWidget *parent)
     : QMainWindow(parent)

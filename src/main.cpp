@@ -4,11 +4,11 @@
 #include <QFile>
 #include <QDebug>
 
-#include "globals.h"
+#include "misc/globals.h"
 #include "ui/mainwindow.h"
-#include "port/portapplication.h"
-#include "enumerator/portenumerator.h"
 #include "ui/consoletabfactory.h"
+#include "serial/portapplication.h"
+#include "serial/portenumerator.h"
 
 int main(int argc, char *argv[])
 {
@@ -40,8 +40,7 @@ int main(int argc, char *argv[])
         QApplication::setApplicationName(g_sAppName);
 
         QTranslator qtTranslator;
-        qtTranslator.load("qt_" + QLocale::system().name(),
-                QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+        qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
         a.installTranslator(&qtTranslator);
 
         QTranslator appTranslator;

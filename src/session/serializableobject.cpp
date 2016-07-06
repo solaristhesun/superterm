@@ -1,7 +1,7 @@
 #include <QMetaProperty>
 #include <QVariant>
 
-#include "seriazableobject.h"
+#include "session/serializableobject.h"
 
 CSerializableObject::CSerializableObject(QObject *parent)
     : QObject(parent)

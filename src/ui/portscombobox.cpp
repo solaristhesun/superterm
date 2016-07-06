@@ -1,8 +1,8 @@
 #include <QDebug>
 
-#include "portscombobox.h"
-#include "enumerator/portenumerator.h"
-#include "enumerator/serialportinfo.h"
+#include "ui/portscombobox.h"
+#include "serial/portenumerator.h"
+#include "serial/serialportinfo.h"
 
 CPortsComboBox::CPortsComboBox(QWidget *parent)
     : QComboBox(parent)

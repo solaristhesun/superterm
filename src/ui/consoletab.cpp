@@ -18,16 +18,16 @@
 #include <windows.h>
 #endif
 
-#include "globals.h"
-#include "consoletab.h"
-#include "mainwindow.h"
 #include "ui_consoletab.h"
-#include "consoletabwidget.h"
-#include "highlightsframe.h"
-#include "enumerator/portenumerator.h"
-#include "enumerator/serialportinfo.h"
-#include "obj/session.h"
-#include "port/portendpoint.h"
+#include "misc/globals.h"
+#include "ui/consoletab.h"
+#include "ui/mainwindow.h"
+#include "ui/consoletabwidget.h"
+#include "ui/highlightsframe.h"
+#include "serial/portenumerator.h"
+#include "serial/serialportinfo.h"
+#include "serial/portendpoint.h"
+#include "session/session.h"
 
 quint32   CConsoleTab::m_u32counter = 1;
 
@@ -635,7 +635,7 @@ void CConsoleTab::onAppQuit(void)
 
     if (m_session)
     {
-        m_session->setHighlights(CSeriazableObject::convertToQVariantList(m_ui->highlightsFrame->getItems()));
+        m_session->setHighlights(CSerializableObject::convertToQVariantList(m_ui->highlightsFrame->getItems()));
         m_session->saveToFile();
     }
 }
