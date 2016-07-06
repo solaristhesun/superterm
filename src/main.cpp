@@ -57,6 +57,8 @@ int main(int argc, char *argv[])
         w->addExistingTabsFromFile();
         w->show();
 
+        QObject::connect(qApp, &QApplication::aboutToQuit, w, &CMainWindow::deleteLater);
+
         return a.exec();
     }
 }
