@@ -19,6 +19,8 @@ CMainWindow::CMainWindow(QWidget *parent)
     qDebug() << "CMainWindow::CMainWindow()";
     m_ui->setupUi(this);
 
+    QObject::connect(qApp, &QApplication::aboutToQuit, this, &CMainWindow::aboutToQuit);
+
     setWindowTitle(g_sAppFullName);
 }
 

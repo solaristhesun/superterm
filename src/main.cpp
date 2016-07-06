@@ -45,19 +45,17 @@ int main(int argc, char *argv[])
         a.installTranslator(&qtTranslator);
 
         QTranslator appTranslator;
-        appTranslator.load(g_sAppName + "_" + QLocale::system().name());
+        appTranslator.load(QCoreApplication::applicationDirPath() + "/" + g_sAppName + "_" + QLocale::system().name());
         a.installTranslator(&appTranslator);
 
         CPortEnumerator portEnumerator;
         CConsoleTabFactory::setPortEnumerator(&portEnumerator);
 
-        // create main window
-        CMainWindow w;
-        w.resize(800, 600);
-        w.addExistingTabsFromFile();
-        w.show();
-
-        QObject::connect(&a, &QApplication::aboutToQuit, &w, &CMainWindow::aboutToQuit);
+        // create main window on heap!
+        CMainWindow* w = new CMainWindow;
+        w->resize(800, 600);
+        w->addExistingTabsFromFile();
+        w->show();
 
         return a.exec();
     }
