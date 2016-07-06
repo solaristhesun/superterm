@@ -3,9 +3,9 @@
 
 #include <QVariantList>
 
-#include "obj/seriazableobject.h"
+#include "obj/serializableobject.h"
 
-class CSession : public CSeriazableObject
+class CSession : public CSerializableObject
 {
     Q_OBJECT
 public:

@@ -1,14 +1,14 @@
-#ifndef CSERIAZABLEOBJECT_H
-#define CSERIAZABLEOBJECT_H
+#ifndef SERIALIZABLEOBJECT_H
+#define SERIALIZABLEOBJECT_H
 
 #include <QObject>
 #include <QVariantList>
 
-class CSeriazableObject : public QObject
+class CSerializableObject : public QObject
 {
     Q_OBJECT
 public:
-    explicit CSeriazableObject(QObject *parent = 0);
+    explicit CSerializableObject(QObject *parent = 0);
 
     template<typename T>
     static QVariantList convertToQVariantList(QList<T> types)
@@ -28,7 +28,7 @@ signals:
 public slots:
 };
 
-QDataStream &operator<<(QDataStream &ds, const CSeriazableObject &obj);
-QDataStream &operator>>(QDataStream &ds, CSeriazableObject &obj) ;
+QDataStream &operator<<(QDataStream &ds, const CSerializableObject &obj);
+QDataStream &operator>>(QDataStream &ds, CSerializableObject &obj) ;
 
-#endif // CSERIAZABLEOBJECT_H
+#endif // SERIALIZABLEOBJECT_H

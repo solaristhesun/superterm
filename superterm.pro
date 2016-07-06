@@ -24,12 +24,12 @@ SOURCES += \
     src/ui/logfilepanel.cpp \
     src/enumerator/portenumerator.cpp \
     src/enumerator/serialportinfo.cpp \
-    src/obj/seriazableobject.cpp \
     src/port/portendpoint.cpp \
     src/port/portapplication.cpp \
     src/obj/session.cpp \
     src/ui/highlightsframe.cpp \
-    src/ui/consoletabfactory.cpp
+    src/ui/consoletabfactory.cpp \
+    src/obj/serializableobject.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -44,11 +44,11 @@ HEADERS += \
     src/ui/logfilepanel.h \
     src/enumerator/portenumerator.h \
     src/enumerator/serialportinfo.h \
-    src/obj/seriazableobject.h \
     src/port/portendpoint.h \
     src/port/portapplication.h \
     src/obj/session.h \
-    src/ui/consoletabfactory.h
+    src/ui/consoletabfactory.h \
+    src/obj/serializableobject.h
 
 FORMS += \
     src/ui/mainwindow.ui \
