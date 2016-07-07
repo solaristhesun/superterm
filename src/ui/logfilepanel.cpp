@@ -47,7 +47,7 @@ void LogfilePanel::onStartButtonClicked(void)
         emit loggingStarted();
         m_ui->btnSelect->setEnabled(false);
         m_ui->editFileName->setEnabled(false);
-        m_ui->btnStart->setText(tr("Stop logging"));
+        m_ui->btnStart->setText(tr("&Stop logging"));
         hide();
     }
     else
@@ -55,7 +55,7 @@ void LogfilePanel::onStartButtonClicked(void)
         emit loggingStopped();
         m_ui->btnSelect->setEnabled(true);
         m_ui->editFileName->setEnabled(true);
-        m_ui->btnStart->setText(tr("Start logging"));
+        m_ui->btnStart->setText(tr("&Start logging"));
     }
 }
 

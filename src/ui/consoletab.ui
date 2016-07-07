@@ -274,17 +274,20 @@
   </layout>
   <action name="actionChangeColor">
    <property name="text">
-    <string>Change Color</string>
+    <string>Change Color...</string>
    </property>
   </action>
-  <action name="actionConfiguration">
+  <action name="actionConnection">
    <property name="text">
-    <string>&amp;Configuration...</string>
+    <string>&amp;Connection...</string>
+   </property>
+   <property name="toolTip">
+    <string>Connection</string>
    </property>
   </action>
   <action name="actionChangeFont">
    <property name="text">
-    <string>Change Font</string>
+    <string>Change Font...</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -451,7 +454,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionConfiguration</sender>
+   <sender>actionConnection</sender>
    <signal>triggered()</signal>
    <receiver>CConsoleTab</receiver>
    <slot>showConnectBar()</slot>

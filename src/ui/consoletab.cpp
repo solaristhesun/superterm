@@ -76,7 +76,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
 
     if (!files.isEmpty())
     {
-        m_ui->comboConfigurations->insertItem(0, "Select configuration");
+        m_ui->comboConfigurations->insertItem(0, tr("Select configuration"));
         m_ui->comboConfigurations->setCurrentIndex(0);
         m_ui->comboConfigurations->show();
     }
@@ -186,7 +186,8 @@ void CConsoleTab::fillComboBoxes(void)
     combo = m_ui->comboParity;
     combo->clear();
     combo->addItem(tr("None"), qVariantFromValue(QSerialPort::NoParity));
-    combo->addItem(tr("Even"), qVariantFromValue(QSerialPort::OddParity));
+    combo->addItem(tr("Even"), qVariantFromValue(QSerialPort::EvenParity));
+    combo->addItem(tr("Odd"), qVariantFromValue(QSerialPort::OddParity));
     combo->addItem(tr("Space"), qVariantFromValue(QSerialPort::SpaceParity));
     combo->addItem(tr("Mark"), qVariantFromValue(QSerialPort::MarkParity));
 
@@ -231,7 +232,7 @@ void CConsoleTab::toggleFullScreen(void)
 void CConsoleTab::createContextMenu()
 {
     m_menu = new QMenu(this);
-    m_menu->addAction(m_ui->actionConfiguration);
+    m_menu->addAction(m_ui->actionConnection );
     m_menu->addAction(m_ui->actionLogging);
     m_menu->addAction(m_ui->actionHighlight);
     m_menu->addSeparator();
