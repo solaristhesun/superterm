@@ -32,7 +32,8 @@ SOURCES += \
     src/session/serializableobject.cpp \
     src/ipc/message.cpp \
     src/ipc/messagecodec.cpp \
-    src/serial/portobserver.cpp
+    src/serial/portobserver.cpp \
+    src/ui/connectionbar.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -54,15 +55,17 @@ HEADERS += \
     src/session/serializableobject.h \
     src/ipc/message.h \
     src/ipc/messagecodec.h \
-    src/serial/portobserver.h
+    src/serial/portobserver.h \
+    src/ui/connectionbar.h
 
 FORMS += \
     src/ui/mainwindow.ui \
     src/ui/consoleview.ui \
-    src/ui/consoletab.ui \
     src/ui/statusbarframe.ui \
     src/ui/highlightsframe.ui \
-    src/ui/logfilepanel.ui
+    src/ui/logfilepanel.ui \
+    src/ui/connectionbar.ui \
+    src/ui/consoletab.ui
 
 RESOURCES += \
     superterm.qrc

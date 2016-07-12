@@ -38,13 +38,8 @@ public:
 public slots:
     void onConnectClicked();
     void onKeyPressed(QKeyEvent* e);
-    void onConfigurationChanged(const QString& text);
-    void onComboChanged();
-    void onMoreClicked();
     void showContextMenu(const QPoint& pt);
     void showColorDialog();
-    void showConnectBar();
-    void hideConnectBar();
     void showFontDialog();
     void showError(QSerialPort::SerialPortError error);
     void updateHighlighting();
@@ -60,6 +55,7 @@ public slots:
     void onEndpointDisconnected();
     void onReconnectionSignal(const CMessage& message);
     void onReconnectionCancel();
+    void onConfigurationChanged(const QString& config);
 
 signals:
     void labelChanged(const QString&);
@@ -69,7 +65,6 @@ private:
     CMainWindow*     mMainWindow;
     QString          mTabLabel;
     CPortEndpoint*   m_portEndpoint;
-    CPortEnumerator* m_pe;
     CSession*        m_session;
     QFile*           m_logFile;
     QMenu*           m_menu;

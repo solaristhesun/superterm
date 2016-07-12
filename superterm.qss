@@ -29,7 +29,7 @@ QPlainTextEdit
     border: 1px solid white;
 }
 
-QFrame#btnBar
+QFrame#connectionBar
 {
     border-left: 1px solid white;
     border-right: 1px solid white;

@@ -43,7 +43,6 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     , mMainWindow(Q_NULLPTR)
     , mTabLabel(tr("New tab"))
     , m_portEndpoint(new CPortEndpoint(this))
-    , m_pe(pe)
     , m_session(session)
     , m_logFile(NULL)
     , m_menu(NULL)
@@ -52,8 +51,6 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     qDebug() << "CConsoleTab::CConsoleTab()";
 
     m_ui->setupUi(this);
-
-    fillComboBoxes();
 
     // load font from settings
     QSettings settings;
@@ -65,28 +62,13 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
 
     createContextMenu();
 
-    m_ui->comboDataBits->hide();
-    m_ui->comboFlowControl->hide();
-    m_ui->comboParity->hide();
-    m_ui->comboStopBits->hide();
-    m_ui->comboConfigurations->hide();
-
-    QDir        dir(QCoreApplication::applicationDirPath());
-    QStringList files = dir.entryList(QStringList() << "*.xml", QDir::Files);
-    m_ui->comboConfigurations->insertItems(0, files);
-
-    if (!files.isEmpty())
-    {
-        m_ui->comboConfigurations->insertItem(0, tr("Select configuration"));
-        m_ui->comboConfigurations->setCurrentIndex(0);
-        m_ui->comboConfigurations->show();
-    }
-
     connect(m_portEndpoint, &CPortEndpoint::readyRead, this, &CConsoleTab::onEndpointData);
     connect(m_portEndpoint, &CPortEndpoint::connected, this, &CConsoleTab::onEndpointConnected);
     connect(m_portEndpoint, &CPortEndpoint::disconnected, this, &CConsoleTab::onEndpointDisconnected);
     connect(m_portEndpoint, &CPortEndpoint::readyRead, this, &CConsoleTab::onReconnectionSignal);
     connect(m_ui->statusBar, &CStatusBarFrame::cancelReconnection, this, &CConsoleTab::onReconnectionCancel);
+
+    m_ui->connectionBar->setPortEnumerator(pe);
 
     if (m_session)
     {
@@ -97,18 +79,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
         m_portEndpoint->setFlowControl(session->getFlowControl());
         m_portEndpoint->connectEndpoint(session->getDeviceName());
 
-        m_ui->comboPorts->setCurrentText(session->getDeviceDesc());
-        m_ui->comboBaudRates->setCurrentText(QString::number(session->getBaudRate()));
-        m_ui->comboDataBits->setCurrentText(QString::number(session->getDataBits()));
-
-        QSerialPort::Parity parity = static_cast<QSerialPort::Parity>(session->getParity());
-        m_ui->comboParity->setCurrentText(g_ParityNameMap.value(parity));
-
-        QSerialPort::StopBits stopBits = static_cast<QSerialPort::StopBits>(session->getStopBits());
-        m_ui->comboStopBits->setCurrentText(g_StopBitsNameMap.value(stopBits));
-
-        QSerialPort::FlowControl flowControl = static_cast<QSerialPort::FlowControl>(session->getFlowControl());
-        m_ui->comboFlowControl->setCurrentText(g_FlowControlNameMap.value(flowControl));
+        m_ui->connectionBar->loadFromSession(session);
 
         QList<CHighlightsFrame::Highlighting> highlights;
 
@@ -125,8 +96,6 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
         }
 
         m_ui->consoleView->setHighlighting(highlights);
-
-        m_ui->btnConnect->setEnabled(true); // FIXME: unsauber
     }
 }
 
@@ -149,73 +118,12 @@ void CConsoleTab::setLabel(const QString& label)
     emit labelChanged(label);
 }
 
-void CConsoleTab::fillComboBoxes()
-{
-    QComboBox* combo = NULL;
-
-    /** FIXME: DO THIS IN A MORE ELEGANT WAY! */
-    //while(m_pe->getAvailablePorts().count() == 0) { QThread::msleep(20); }
-
-    m_ui->comboPorts->setPortEnumerator(m_pe);
-
-    // fill baud rates
-    combo = m_ui->comboBaudRates;
-#if 0
-    for (const qint32 baudrate: QSerialPortInfo::standardBaudRates())
-    {
-        combo->addItem(QString::number(baudrate), QVariant(baudrate));
-    }
-#endif
-    // just use more common baud rates for now
-    combo->clear();
-    combo->addItem(tr("Select baud rate"));
-    combo->addItem("9600", QVariant(9600));
-    combo->addItem("19200", QVariant(19200));
-    combo->addItem("38400", QVariant(38400));
-    combo->addItem("57600", QVariant(57600));
-    combo->addItem("115200", QVariant(115200));
-    combo->addItem("custom", QVariant(0));
-
-    // fill data bits
-    combo = m_ui->comboDataBits;
-    combo->clear();
-    combo->addItem("5", qVariantFromValue(QSerialPort::Data5));
-    combo->addItem("6", qVariantFromValue(QSerialPort::Data6));
-    combo->addItem("7", qVariantFromValue(QSerialPort::Data7));
-    combo->addItem("8", qVariantFromValue(QSerialPort::Data8));
-    combo->setCurrentIndex(3);
-
-    // fill parity
-    combo = m_ui->comboParity;
-    combo->clear();
-    combo->addItem(tr("None"), qVariantFromValue(QSerialPort::NoParity));
-    combo->addItem(tr("Even"), qVariantFromValue(QSerialPort::EvenParity));
-    combo->addItem(tr("Odd"), qVariantFromValue(QSerialPort::OddParity));
-    combo->addItem(tr("Space"), qVariantFromValue(QSerialPort::SpaceParity));
-    combo->addItem(tr("Mark"), qVariantFromValue(QSerialPort::MarkParity));
-
-    // fill stop bits
-    combo = m_ui->comboStopBits;
-    combo->clear();
-    combo->addItem("1", qVariantFromValue(QSerialPort::OneStop));
-    combo->addItem("1.5", qVariantFromValue(QSerialPort::OneAndHalfStop));
-    combo->addItem("2", qVariantFromValue(QSerialPort::TwoStop));
-    combo->setCurrentIndex(0);
-
-    // fill flow control
-    combo = m_ui->comboFlowControl;
-    combo->clear();
-    combo->addItem(tr("None"), qVariantFromValue(QSerialPort::NoFlowControl));
-    combo->addItem(tr("Xon/Xoff"), qVariantFromValue(QSerialPort::SoftwareControl));
-    combo->addItem(tr("Hardware"), qVariantFromValue(QSerialPort::HardwareControl));
-    combo->setCurrentIndex(0);
-}
-
 void CConsoleTab::toggleFullScreen()
 {
     if (!QWidget::isFullScreen())
     {
         mMainWindow = static_cast<CMainWindow*>(QApplication::activeWindow());
+        mMainWindow->hide();
         QWidget::setParent(0);
         QWidget::showFullScreen();
         m_ui->actionFullscreen->setChecked(true);
@@ -228,6 +136,7 @@ void CConsoleTab::toggleFullScreen()
             QWidget::showNormal();
             m_ui->consoleView->setFocus();
             m_ui->actionFullscreen->setChecked(false);
+            mMainWindow->show();
         }
     }
 }
@@ -263,24 +172,16 @@ void CConsoleTab::updateHighlighting()
     m_ui->consoleView->setHighlighting(h);
 }
 
-void CConsoleTab::showConnectBar()
+void CConsoleTab::onConfigurationChanged(const QString& config)
 {
-    m_ui->btnBar->show();
-}
-
-void CConsoleTab::hideConnectBar()
-{
-    m_ui->btnBar->hide();
-}
-
-void CConsoleTab::onConfigurationChanged(const QString& text)
-{
-    if (m_ui->comboConfigurations->currentIndex() == 0)
+    if (!config.endsWith(".xml"))
     {
         return;
     }
 
-    QString fileName = QDir(QCoreApplication::applicationDirPath()).filePath(text);
+    qDebug() << "[slot] onConfigurationChanged" << config;
+
+    QString fileName = QDir(QCoreApplication::applicationDirPath()).filePath(config);
 
     qDebug() << fileName;
 
@@ -302,33 +203,27 @@ void CConsoleTab::onConfigurationChanged(const QString& text)
 
             if (token == "port")
             {
-                QString text = xml.readElementText();
-                m_ui->comboPorts->setCurrentText(text);
+                m_ui->connectionBar->setDeviceName(xml.readElementText());
             }
             else if (token == "speed")
             {
-                QString text = xml.readElementText();
-                m_ui->comboBaudRates->setCurrentText(text);
+                m_ui->connectionBar->setBaudRate(xml.readElementText());
             }
             else if (token == "databits")
             {
-                QString text = xml.readElementText();
-                m_ui->comboDataBits->setCurrentText(text);
+                m_ui->connectionBar->setDataBits(xml.readElementText());
             }
             else if (token == "parity")
             {
-                QString text = xml.readElementText();
-                m_ui->comboParity->setCurrentText(text);
+                m_ui->connectionBar->setParity(xml.readElementText());
             }
             else if (token == "stopbits")
             {
-                QString text = xml.readElementText();
-                m_ui->comboStopBits->setCurrentText(text);
+                m_ui->connectionBar->setStopBits(xml.readElementText());
             }
             else if (token == "flowcontrol")
             {
-                QString text = xml.readElementText();
-                m_ui->comboFlowControl->setCurrentText(text);
+                m_ui->connectionBar->setFlowControl(xml.readElementText());
             }
             else if (token == "pattern")
             {
@@ -372,12 +267,12 @@ void CConsoleTab::showSaveDialog()
     xmlWriter.writeStartElement("superterm");
 
     xmlWriter.writeStartElement("configuration");
-    xmlWriter.writeTextElement("port", m_ui->comboPorts->currentText());
-    xmlWriter.writeTextElement("speed", m_ui->comboBaudRates->currentText());
-    xmlWriter.writeTextElement("databits", m_ui->comboDataBits->currentText());
-    xmlWriter.writeTextElement("parity", m_ui->comboParity->currentText());
-    xmlWriter.writeTextElement("stopbits", m_ui->comboStopBits->currentText());
-    xmlWriter.writeTextElement("flowcontrol", m_ui->comboFlowControl->currentText());
+    xmlWriter.writeTextElement("port", m_ui->connectionBar->getDeviceName());
+    xmlWriter.writeTextElement("speed", m_ui->connectionBar->getBaudRate());
+    xmlWriter.writeTextElement("databits", m_ui->connectionBar->getDataBits());
+    xmlWriter.writeTextElement("parity", m_ui->connectionBar->getParity());
+    xmlWriter.writeTextElement("stopbits", m_ui->connectionBar->getStopBits());
+    xmlWriter.writeTextElement("flowcontrol", m_ui->connectionBar->getFlowControl());
     xmlWriter.writeEndElement();
 
     QList<CHighlightsFrame::Highlighting> h = m_ui->highlightsFrame->getItems();
@@ -451,26 +346,6 @@ void CConsoleTab::setBackgroundColor(const QColor& color)
     setStyleSheet(QString("QPlainTextEdit { background-color: %1; }").arg(color.name()));
 }
 
-void CConsoleTab::onMoreClicked()
-{
-    if (!m_ui->comboParity->isVisible())
-    {
-        m_ui->comboDataBits->show();
-        m_ui->comboFlowControl->show();
-        m_ui->comboParity->show();
-        m_ui->comboStopBits->show();
-        m_ui->btnMore->setText(tr("<< &Less"));
-    }
-    else
-    {
-        m_ui->comboDataBits->hide();
-        m_ui->comboFlowControl->hide();
-        m_ui->comboParity->hide();
-        m_ui->comboStopBits->hide();
-        m_ui->btnMore->setText(tr("&More >>"));
-    }
-}
-
 void CConsoleTab::onEndpointData(const CMessage& message)
 {
     if (message.isCmd(CMessage::DataCmd))
@@ -482,13 +357,6 @@ void CConsoleTab::onEndpointData(const CMessage& message)
             m_logFile->write(data);
             m_logFile->flush();
         }
-#if 0
-        for (int p = 0; p < data.size(); p++)
-        {
-            printf("0x%02x ", data.at(p));
-        }
-        printf("\n");
-#endif
 
         if (data.at(0) == 0x08)
         {
@@ -496,7 +364,6 @@ void CConsoleTab::onEndpointData(const CMessage& message)
         }
         else
         {
-#if 1
             for (int p = 0; p < data.size(); p++)
             {
                 if (data.at(p) < 30 && data.at(p) != '\n' && data.at(p) != '\r')
@@ -504,7 +371,6 @@ void CConsoleTab::onEndpointData(const CMessage& message)
                     data[p] = '.';
                 }
             }
-#endif
 
             QString str = data;
             str = str.replace("\r", "");
@@ -515,8 +381,6 @@ void CConsoleTab::onEndpointData(const CMessage& message)
 
 void CConsoleTab::onConnectClicked()
 {
-    const QString sDeviceName = m_ui->comboPorts->currentData().toString();
-
     if (!m_portEndpoint->isConnected())
     {
         if (!m_session)
@@ -524,20 +388,20 @@ void CConsoleTab::onConnectClicked()
             m_session = new CSession();
         }
 
-        m_session->setBaudRate(m_ui->comboBaudRates->currentText().toUInt());
-        m_session->setDeviceName(sDeviceName);
-        m_session->setDeviceDesc(m_ui->comboPorts->currentText());
-        m_session->setDataBits(m_ui->comboDataBits->currentText().toInt());
-        m_session->setParity(g_ParityNameMap.key(m_ui->comboParity->currentText()));
-        m_session->setStopBits(g_StopBitsNameMap.key(m_ui->comboStopBits->currentText()));
-        m_session->setFlowControl(g_FlowControlNameMap.key(m_ui->comboFlowControl->currentText()));
+        m_session->setDeviceName(m_ui->connectionBar->getDeviceName());
+        m_session->setDeviceDesc(m_ui->connectionBar->getDeviceDesc());
+        m_session->setBaudRate(m_ui->connectionBar->getBaudRate().toUInt());
+        m_session->setDataBits(m_ui->connectionBar->getDataBits().toInt());
+        m_session->setParity(g_ParityNameMap.key(m_ui->connectionBar->getParity()));
+        m_session->setStopBits(g_StopBitsNameMap.key(m_ui->connectionBar->getStopBits()));
+        m_session->setFlowControl(g_FlowControlNameMap.key(m_ui->connectionBar->getFlowControl()));
 
-        m_portEndpoint->setBaudRate(m_ui->comboBaudRates->currentText().toUInt());
-        m_portEndpoint->setDataBits(m_ui->comboDataBits->currentText().toInt());
-        m_portEndpoint->setParity(m_ui->comboParity->currentText().toInt());
-        m_portEndpoint->setStopBits(m_ui->comboStopBits->currentText().toInt());
-        m_portEndpoint->setFlowControl(m_ui->comboFlowControl->currentText().toInt());
-        m_portEndpoint->connectEndpoint(sDeviceName);
+        m_portEndpoint->connectEndpoint(m_ui->connectionBar->getDeviceName());
+        m_portEndpoint->setBaudRate(m_ui->connectionBar->getBaudRate().toUInt());
+        m_portEndpoint->setDataBits(m_ui->connectionBar->getDataBits().toInt());
+        m_portEndpoint->setParity(m_ui->connectionBar->getParity().toInt());
+        m_portEndpoint->setStopBits(m_ui->connectionBar->getStopBits().toInt());
+        m_portEndpoint->setFlowControl(m_ui->connectionBar->getFlowControl().toInt());
     }
     else
     {
@@ -549,35 +413,14 @@ void CConsoleTab::onEndpointDisconnected()
 {
     qDebug() << "[slot] onEndpointDisconnected";
 
-    m_ui->comboPorts->setEnabled(true);
-    m_ui->btnConnect->setText("&Connect");
-
-    showConnectBar();
+    m_ui->connectionBar->onDisconnected();
     m_ui->consoleView->setFocus();
-/*
-    m_parent->setCurrentTabText(sDeviceName);
-
-    m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(sDeviceName), 3000);    */
 }
 
 void CConsoleTab::showError(QSerialPort::SerialPortError error)
 {
     qDebug() << "ERROR: " << error;
     m_ui->statusBar->showMessage("ERROR: " + QString::number(error) + " opening port " );
-}
-
-void CConsoleTab::onComboChanged()
-{
-    if (m_ui->comboPorts->currentIndex() != 0 && m_ui->comboBaudRates->currentIndex() != 0)
-    {
-        m_ui->btnConnect->setEnabled(true);
-        m_ui->btnSave->setEnabled(true);
-    }
-    else
-    {
-        m_ui->btnConnect->setEnabled(false);
-        m_ui->btnSave->setEnabled(false);
-    }
 }
 
 void CConsoleTab::showAboutDialog()
@@ -650,13 +493,10 @@ void CConsoleTab::onEndpointConnected()
 
     const QString sDeviceName = m_session->getDeviceName();
 
-    hideConnectBar();
+    m_ui->connectionBar->onConnected();
     m_ui->consoleView->setFocus();
 
     setLabel(sDeviceName);
-
-    m_ui->comboPorts->setEnabled(false);
-    m_ui->btnConnect->setText(tr("&Disconnect"));
 
     m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(sDeviceName), 3000);
 }
