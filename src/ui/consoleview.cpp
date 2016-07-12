@@ -203,8 +203,6 @@ void CConsoleView::wrapText(QString textToWrap, const int width)
 
     while (textToWrap.size() != 0)
     {
-        qDebug() << "Text to wrap: " << textToWrap;
-
         int nrOfCharsInBlock = document()->lastBlock().length();
         int availableNrOfChars = qMax((maxNrOfChars - nrOfCharsInBlock), 0);
 
