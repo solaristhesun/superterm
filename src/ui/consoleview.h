@@ -61,6 +61,7 @@ private:
     void saveCursor(void);
     void restoreCursor(void);
     void wrapText(QString textToWrap, const int width);
+    QString elideText(const QString& text, int availableNrOfChars);
 };
 
 #endif // CONSOLEVIEW

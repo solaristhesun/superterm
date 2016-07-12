@@ -203,10 +203,12 @@ void CConsoleView::wrapText(QString textToWrap, const int width)
 
     while (textToWrap.size() != 0)
     {
+        qDebug() << "Text to wrap: " << textToWrap;
+
         int nrOfCharsInBlock = document()->lastBlock().length();
         int availableNrOfChars = qMax((maxNrOfChars - nrOfCharsInBlock), 0);
 
-        QString elidedText = textToWrap.left(availableNrOfChars);
+        QString elidedText = elideText(textToWrap, availableNrOfChars);
 
         moveCursor(QTextCursor::End);
 
@@ -217,7 +219,8 @@ void CConsoleView::wrapText(QString textToWrap, const int width)
                 QPlainTextEdit::insertPlainText(elidedText);
             }
 
-            QPlainTextEdit::insertPlainText("\n");
+            // only add a \n if string does not already contain one
+            if(!elidedText.contains('\n')) QPlainTextEdit::insertPlainText("\n");
         }
         else
         {
@@ -226,6 +229,20 @@ void CConsoleView::wrapText(QString textToWrap, const int width)
 
         textToWrap.remove(0, elidedText.length());
     }
+}
+
+QString CConsoleView::elideText(const QString& text, int availableNrOfChars)
+{
+    QString elidedText = text.left(availableNrOfChars);
+
+    /* if \n is inside of string (char 0 ... length-1) get its index
+     * and add 1 to include it into the substring. this is important so that we
+     * do not add an additional \n later on. if no \n is found, take the original
+     * string. */
+    int index = (elidedText.indexOf('\n') >= 0) ? elidedText.indexOf('\n')+1 : elidedText.length();
+    elidedText = elidedText.left(index);
+
+    return elidedText;
 }
 
 // EOF <stefan@scheler.com>
