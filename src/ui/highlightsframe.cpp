@@ -7,9 +7,9 @@
 #include "ui/highlightsframe.h"
 
 CHighlightsFrame::CHighlightsFrame(QWidget* parent)
-    : QFrame(parent),
-    m_ui(new Ui::CHighlightsFrame),
-    m_color(QColor(Qt::red))
+    : QFrame(parent)
+    , m_ui(new Ui::CHighlightsFrame)
+    , m_color(QColor(Qt::red))
 {
     m_ui->setupUi(this);
     hide();

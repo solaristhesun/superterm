@@ -10,13 +10,13 @@
 #include "ui/consoletab.h"
 
 CConsoleView::CConsoleView(QWidget* parent)
-    : QPlainTextEdit(parent),
-    m_ui(new Ui::CConsoleView),
-    m_parent(static_cast<CConsoleTab*>(parent)),
-    m_bMouseDown(false),
-    m_scrollBar(verticalScrollBar()),
-    m_scrollPos(0),
-    m_bAutoScroll(true)
+    : QPlainTextEdit(parent)
+    , m_ui(new Ui::CConsoleView)
+    , m_parent(static_cast<CConsoleTab*>(parent))
+    , m_bMouseDown(false)
+    , m_scrollBar(verticalScrollBar())
+    , m_scrollPos(0)
+    , m_bAutoScroll(true)
 {
     m_ui->setupUi(this);
 
@@ -55,7 +55,7 @@ void CConsoleView::mouseMoveEvent(QMouseEvent* e)
 
         QTextCursor cursor = textCursor();
         cursor.setPosition(m_pos, QTextCursor::MoveAnchor);
-        cursor.setPosition(pos,QTextCursor::KeepAnchor);
+        cursor.setPosition(pos, QTextCursor::KeepAnchor);
         setTextCursor(cursor);
     }
     QPlainTextEdit::mouseMoveEvent(e);

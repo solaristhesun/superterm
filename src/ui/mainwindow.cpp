@@ -111,7 +111,7 @@ int CMainWindow::getTabCount() const
 QRect CMainWindow::getTabBarRect() const
 {
     CConsoleTabBar* tabBar = static_cast<CConsoleTabBar*>(m_ui->tabWidget->tabBar());
-    return QRect(tabBar->mapToGlobal(QPoint(0,0)), tabBar->size());
+    return QRect(tabBar->mapToGlobal(QPoint(0, 0)), tabBar->size());
 }
 
 // EOF <stefan@scheler.com>
