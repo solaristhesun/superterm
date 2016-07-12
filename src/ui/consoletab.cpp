@@ -28,6 +28,7 @@
 #include "serial/serialportinfo.h"
 #include "serial/portendpoint.h"
 #include "session/session.h"
+#include "ipc/message.h"
 
 quint32   CConsoleTab::m_u32counter = 1;
 
@@ -84,6 +85,8 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     connect(m_portEndpoint, &CPortEndpoint::readyRead, this, &CConsoleTab::onEndpointData);
     connect(m_portEndpoint, &CPortEndpoint::connected, this, &CConsoleTab::onEndpointConnected);
     connect(m_portEndpoint, &CPortEndpoint::disconnected, this, &CConsoleTab::onEndpointDisconnected);
+    connect(m_portEndpoint, &CPortEndpoint::readyRead, this, &CConsoleTab::onReconnectionSignal);
+    connect(m_ui->statusBar, &CStatusBarFrame::cancelReconnection, this, &CConsoleTab::onReconnectionCancel);
 
     if (m_session)
     {
@@ -466,42 +469,45 @@ void CConsoleTab::onMoreClicked()
     }
 }
 
-void CConsoleTab::onEndpointData()
+void CConsoleTab::onEndpointData(const CMessage& message)
 {
-    QByteArray data = m_portEndpoint->readAll();
-
-    if (m_logFile)
+    if (message.isCmd(CMessage::DataCmd))
     {
-        m_logFile->write(data);
-        m_logFile->flush();
-    }
+        QByteArray data = message.getPayload();
+
+        if (m_logFile)
+        {
+            m_logFile->write(data);
+            m_logFile->flush();
+        }
 #if 0
-    for (int p = 0; p < data.size(); p++)
-    {
-        printf("0x%02x ", data.at(p));
-    }
-    printf("\n");
-#endif
-
-    if (data.at(0) == 0x08)
-    {
-        m_ui->consoleView->insertBackspace();
-    }
-    else
-    {
-#if 1
         for (int p = 0; p < data.size(); p++)
         {
-            if (data.at(p) < 30 && data.at(p) != '\n' && data.at(p) != '\r')
-            {
-                data[p] = '.';
-            }
+            printf("0x%02x ", data.at(p));
         }
+        printf("\n");
 #endif
 
-        QString str = data;
-        str = str.replace("\r", "");
-        m_ui->consoleView->insertPlainText(str);
+        if (data.at(0) == 0x08)
+        {
+            m_ui->consoleView->insertBackspace();
+        }
+        else
+        {
+#if 1
+            for (int p = 0; p < data.size(); p++)
+            {
+                if (data.at(p) < 30 && data.at(p) != '\n' && data.at(p) != '\r')
+                {
+                    data[p] = '.';
+                }
+            }
+#endif
+
+            QString str = data;
+            str = str.replace("\r", "");
+            m_ui->consoleView->insertPlainText(str);
+        }
     }
 }
 
@@ -601,7 +607,7 @@ void CConsoleTab::onKeyPressed(QKeyEvent *e)
 
     if (m_portEndpoint->isConnected())
     {
-        m_portEndpoint->write(b);
+        m_portEndpoint->writeData(b);
     }
 }
 
@@ -663,6 +669,38 @@ void CConsoleTab::onEndpointConnected()
 
     connect(m_port, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(showError(QSerialPort::SerialPortError)));
 #endif
+}
+
+void CConsoleTab::onReconnectionSignal(const CMessage& message)
+{
+    const QString sDeviceName = m_session->getDeviceName();
+
+    if (message.isCmd(CMessage::SigCmd))
+    {
+        CMessage::Signal sig = message.getSignal();
+        qDebug() << "[slot] onReconnectionSignal(" << sig << ")";
+
+        if (sig == CMessage::IsConSig)
+        {
+            if (!m_ui->statusBar->isVisible())
+            {
+                m_ui->statusBar->showProgressMessage(tr("Trying to reconnect to %1.").arg(sDeviceName));
+            }
+        }
+        else if (sig == CMessage::DoneConSig)
+        {
+            if (m_ui->statusBar->isVisible())
+            {
+                m_ui->statusBar->hideProgressMessage();
+                m_ui->statusBar->showMessage(tr("Successfully reconnected to %1.").arg(sDeviceName), 3000);
+            }
+        }
+    }
+}
+
+void CConsoleTab::onReconnectionCancel()
+{
+    m_portEndpoint->writeSignal(CMessage::CancelConSig);
 }
 
 // EOF <stefan@scheler.com>

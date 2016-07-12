@@ -16,6 +16,11 @@ public:
     ~CStatusBarFrame();
 
     void showMessage(const QString & message, const int timeout = 0);
+    void showProgressMessage(const QString& message);
+    void hideProgressMessage();
+
+signals:
+    void cancelReconnection();
 
 private:
     Ui::CStatusBarFrame *m_ui;

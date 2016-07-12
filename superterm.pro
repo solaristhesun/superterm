@@ -29,7 +29,10 @@ SOURCES += \
     src/serial/portendpoint.cpp \
     src/serial/portapplication.cpp \
     src/session/session.cpp \
-    src/session/serializableobject.cpp
+    src/session/serializableobject.cpp \
+    src/ipc/message.cpp \
+    src/ipc/messagecodec.cpp \
+    src/serial/portobserver.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -48,7 +51,10 @@ HEADERS += \
     src/serial/portendpoint.h \
     src/serial/portapplication.h \
     src/session/session.h \
-    src/session/serializableobject.h
+    src/session/serializableobject.h \
+    src/ipc/message.h \
+    src/ipc/messagecodec.h \
+    src/serial/portobserver.h
 
 FORMS += \
     src/ui/mainwindow.ui \

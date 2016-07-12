@@ -5,6 +5,8 @@
 #include <QProcess>
 #include <QLocalSocket>
 
+#include "ipc/message.h"
+
 class QLocalServer;
 class QLocalSocket;
 
@@ -23,13 +25,16 @@ public:
     void connectEndpoint(const QString& sDeviceName);
     void disconnectEndpoint();
     bool isConnected();
-    QByteArray readAll();
-    quint64 write(const QByteArray &byteArray);
+    quint64 writeData(const QByteArray& byteArray);
+    quint64 writeSignal(const CMessage::Signal& signal);
+    quint64 write(const QByteArray& byteArray);
 
 signals:
-    void readyRead();
+    void readyRead(const CMessage& message);
     void disconnected();
     void connected();
+    void showStatusBar();
+    void hideStatusBar();
 
 public slots:
     void onProcessStarted();

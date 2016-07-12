@@ -10,6 +10,8 @@ CStatusBarFrame::CStatusBarFrame(QWidget *parent)
     m_ui->setupUi(this);
 
     hide();
+
+    connect(m_ui->btnCancel, &QPushButton::pressed, this, &CStatusBarFrame::cancelReconnection);
 }
 
 CStatusBarFrame::~CStatusBarFrame()
@@ -24,16 +26,37 @@ void CStatusBarFrame::showMessage(const QString& message, const int timeout)
     if (timeout == 0)
     {
         setStyleProperty("error", true);
+        m_ui->progressBar->hide();
+        m_ui->btnCancel->hide();
         m_ui->btnClose->show();
     }
     else
     {
         setStyleProperty("error", false);
+        m_ui->progressBar->hide();
+        m_ui->btnCancel->hide();
         m_ui->btnClose->hide();
-        QTimer::singleShot(3000, this, SLOT(hide()));
+        QTimer::singleShot(timeout, this, SLOT(hide()));
     }
 
     show();
+}
+
+void CStatusBarFrame::showProgressMessage(const QString& message)
+{
+    m_ui->labelMessage->setText(message);
+
+    setStyleProperty("error", false);
+    m_ui->btnClose->hide();
+    m_ui->btnCancel->show();
+    m_ui->progressBar->show();
+
+    show();
+}
+
+void CStatusBarFrame::hideProgressMessage()
+{
+    hide();
 }
 
 void CStatusBarFrame::setStyleProperty(const char* name, const QVariant& variant)

@@ -3,6 +3,7 @@
 #include <QLocalSocket>
 #include <QCoreApplication>
 
+#include "ipc/messagecodec.h"
 #include "serial/portendpoint.h"
 
 CPortEndpoint::CPortEndpoint(QObject *parent)
@@ -34,6 +35,7 @@ void CPortEndpoint::onProcessError(QProcess::ProcessError error)
 void CPortEndpoint::onSocketConnection()
 {
     qDebug() << "[slot] onSocketConnection";
+
     m_socket = m_server->nextPendingConnection();
 
     if (m_socket)
@@ -41,13 +43,14 @@ void CPortEndpoint::onSocketConnection()
         connect(m_socket, SIGNAL(disconnected()), m_socket, SLOT(deleteLater()));
         connect(m_socket, SIGNAL(readyRead()), this, SLOT(onSocketData()));
         connect(m_socket, SIGNAL(error(QLocalSocket::LocalSocketError)), this, SLOT(onSocketError(QLocalSocket::LocalSocketError)));
+
         emit connected();
     }
 }
 
 void CPortEndpoint::onSocketData()
 {
-    emit readyRead();
+    emit readyRead(MessageCodec::decode(m_socket->readAll()));
 }
 
 void CPortEndpoint::onSocketError(QLocalSocket::LocalSocketError error)
@@ -55,12 +58,17 @@ void CPortEndpoint::onSocketError(QLocalSocket::LocalSocketError error)
     qDebug() << "[slot] onSocketError:" << error;
 }
 
-QByteArray CPortEndpoint::readAll()
+quint64 CPortEndpoint::writeData(const QByteArray& byteArray)
 {
-    return m_socket->readAll();
+    return write(MessageCodec::encodeData(byteArray));
 }
 
-quint64 CPortEndpoint::write(const QByteArray &byteArray)
+quint64 CPortEndpoint::writeSignal(const CMessage::Signal& signal)
+{
+    return write(MessageCodec::encodeSignal(signal));
+}
+
+quint64 CPortEndpoint::write(const QByteArray& byteArray)
 {
     quint64 u64ret = 0;
 

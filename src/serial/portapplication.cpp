@@ -4,6 +4,9 @@
 #include <QTimer>
 #include <QSerialPort>
 
+#include "ipc/message.h"
+#include "ipc/messagecodec.h"
+#include "serial/portobserver.h"
 #include "serial/portapplication.h"
 
 #if 0
@@ -54,6 +57,8 @@ CPortApplication::CPortApplication(int &argc, char **argv)
     : QCoreApplication(argc, argv)
     , m_socket(new QLocalSocket(this))
     , m_port(NULL)
+    , m_observer(new CPortObserver())
+    , m_bHasSendReconSignal(false)
 {
     // currently nothing
 }
@@ -67,11 +72,11 @@ void CPortApplication::connectSocket(void)
     QSerialPort::StopBits stopBits = static_cast<QSerialPort::StopBits>(arguments().at(5).toInt());
     QSerialPort::FlowControl flowControl = static_cast<QSerialPort::FlowControl>(arguments().at(6).toInt());
 
-
     connect(m_socket, SIGNAL(connected()), this, SLOT(onSocketConnected()));
     connect(m_socket, SIGNAL(disconnected()), this, SLOT(onSocketDisconnected()));
     connect(m_socket, SIGNAL(readyRead()), this, SLOT(onSocketData()));
     connect(m_socket, SIGNAL(error(QLocalSocket::LocalSocketError)), this, SLOT(onSocketError(QLocalSocket::LocalSocketError)));
+    connect(m_observer, SIGNAL(disconnected()), this, SLOT(onPortDisconnected()));
 
     m_port = new QSerialPort(portName);
 
@@ -99,30 +104,74 @@ void CPortApplication::connectSocket(void)
 
 void CPortApplication::onSerialDataAvailable()
 {
-    m_socket->write(m_port->readAll());
+    m_socket->write(MessageCodec::encodeData(m_port->readAll()));
 }
 
 
 void CPortApplication::onSocketData()
 {
-    m_port->write(m_socket->readAll());
+    QTextStream(stdout) << "onSocketData()" << endl;
+    CMessage message = MessageCodec::decode(m_socket->readAll());
+
+    if (message.isCmd(CMessage::DataCmd)) m_port->write(message.getPayload());
+    else if (message.isCmd(CMessage::SigCmd))
+    {
+        if (message.getSignal() == CMessage::CancelConSig)
+        {
+            m_observer->setActive(false);
+        }
+    }
 }
 
 void CPortApplication::onSocketDisconnected()
 {
     QTextStream(stdout) << "disconnected" << endl;
+    m_observer->setActive(false);
     QCoreApplication::quit();
 }
 
 void CPortApplication::onSocketConnected(void)
 {
     QTextStream(stdout) << "connected" << endl;
+    m_observer->setPort(m_port);
+    m_observer->setActive(true);
 }
 
 void CPortApplication::onSocketError(QLocalSocket::LocalSocketError error)
 {
     QTextStream(stdout) << error << endl;
     QCoreApplication::quit();
+}
+
+void CPortApplication::onPortDisconnected()
+{
+    QString portName = m_port->portName();
+    quint32 baudRate = m_port->baudRate();
+    QSerialPort::DataBits dataBits = m_port->dataBits();
+    QSerialPort::Parity parity = m_port->parity();
+    QSerialPort::StopBits stopBits = m_port->stopBits();
+    QSerialPort::FlowControl flowControl = m_port->flowControl();
+
+    m_port->close();
+
+    if (!m_bHasSendReconSignal)
+    {
+        m_socket->write(MessageCodec::encodeSignal(CMessage::IsConSig));
+        m_bHasSendReconSignal = true;
+    }
+
+    if (m_port->open(QIODevice::ReadWrite))
+    {
+        m_port->setPortName(portName);
+        m_port->setBaudRate(baudRate);
+        m_port->setFlowControl(flowControl);
+        m_port->setParity(parity);
+        m_port->setStopBits(stopBits);
+        m_port->setDataBits(dataBits);
+
+        m_socket->write(MessageCodec::encodeSignal(CMessage::DoneConSig));
+        m_bHasSendReconSignal = false;
+    }
 }
 
 // EOF <stefan@scheler.com>

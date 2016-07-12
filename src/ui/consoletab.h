@@ -18,6 +18,7 @@ class QMenu;
 class CPortEndpoint;
 class CSession;
 class CMainWindow;
+class CMessage;
 
 class CConsoleTab : public QWidget
 {
@@ -54,9 +55,11 @@ public slots:
     void stopLogging(void);
     void showSaveDialog(void);
     void onAppQuit(void);
-    void onEndpointData();
+    void onEndpointData(const CMessage& message);
     void onEndpointConnected();
     void onEndpointDisconnected();
+    void onReconnectionSignal(const CMessage& message);
+    void onReconnectionCancel();
 
 signals:
     void labelChanged(const QString&);
