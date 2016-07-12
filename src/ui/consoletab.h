@@ -36,25 +36,25 @@ public:
     void setLabel(const QString& label);
 
 public slots:
-    void onConnectClicked(void);
+    void onConnectClicked();
     void onKeyPressed(QKeyEvent* e);
-    void onConfigurationChanged(const QString &text);
-    void onComboChanged(void);
-    void onMoreClicked(void);
-    void showContextMenu(const QPoint &pt);
-    void showColorDialog(void);
-    void showConnectBar(void);
-    void hideConnectBar(void);
-    void showFontDialog(void);
+    void onConfigurationChanged(const QString& text);
+    void onComboChanged();
+    void onMoreClicked();
+    void showContextMenu(const QPoint& pt);
+    void showColorDialog();
+    void showConnectBar();
+    void hideConnectBar();
+    void showFontDialog();
     void showError(QSerialPort::SerialPortError error);
-    void updateHighlighting(void);
-    void showAboutDialog(void);
-    void toggleFullScreen(void);
-    void toggleAutoScroll(void);
-    void startLogging(void);
-    void stopLogging(void);
-    void showSaveDialog(void);
-    void onAppQuit(void);
+    void updateHighlighting();
+    void showAboutDialog();
+    void toggleFullScreen();
+    void toggleAutoScroll();
+    void startLogging();
+    void stopLogging();
+    void showSaveDialog();
+    void onAppQuit();
     void onEndpointData(const CMessage& message);
     void onEndpointConnected();
     void onEndpointDisconnected();
@@ -65,18 +65,18 @@ signals:
     void labelChanged(const QString&);
 
 private:
-    Ui::CConsoleTab*   m_ui;
-    CMainWindow*       mMainWindow;
-    QString            mTabLabel;
-    CPortEndpoint*     m_portEndpoint;
-    CPortEnumerator*   m_pe;
-    CSession*          m_session;
-    QFile*             m_logFile;
-    QMenu*             m_menu;
-    int                m_lastTabIndex;
+    Ui::CConsoleTab* m_ui;
+    CMainWindow*     mMainWindow;
+    QString          mTabLabel;
+    CPortEndpoint*   m_portEndpoint;
+    CPortEnumerator* m_pe;
+    CSession*        m_session;
+    QFile*           m_logFile;
+    QMenu*           m_menu;
+    int              m_lastTabIndex;
 
-    static quint32     m_u32counter;
-    QStringList        m_highlightings;
+    static quint32 m_u32counter;
+    QStringList    m_highlightings;
 
     void fillComboBoxes();
     void createContextMenu();

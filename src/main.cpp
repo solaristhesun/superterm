@@ -10,7 +10,7 @@
 #include "serial/portapplication.h"
 #include "serial/portenumerator.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     if (argc == 7)
     {

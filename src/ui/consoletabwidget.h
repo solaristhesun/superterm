@@ -13,23 +13,23 @@ class CConsoleTabWidget : public QTabWidget
 {
     Q_OBJECT
 public:
-    explicit CConsoleTabWidget(QWidget *parent = 0);
+    explicit CConsoleTabWidget(QWidget* parent = 0);
     ~CConsoleTabWidget();
 
     void addTab(CConsoleTab* tab);
     void setCurrentTabText(const QString& test);
     void setConsoleFont(const QFont& font);
-    void aboutToQuit(void);
+    void aboutToQuit();
     void destroyTab(int index);
     CConsoleTab* currentWidget() const;
     CConsoleTab* widget(int index) const;
 
 signals:
-    void appQuits(void);
+    void appQuits();
 
 public slots:
     void closeTab(int index);
-    void onAddButtonClicked(void);
+    void onAddButtonClicked();
     void onTabDetached(int index);
 
 private:

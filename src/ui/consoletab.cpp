@@ -30,7 +30,7 @@
 #include "session/session.h"
 #include "ipc/message.h"
 
-quint32   CConsoleTab::m_u32counter = 1;
+quint32 CConsoleTab::m_u32counter = 1;
 
 Q_DECLARE_METATYPE(QSerialPort::DataBits)
 Q_DECLARE_METATYPE(QSerialPort::StopBits)
@@ -57,8 +57,8 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
 
     // load font from settings
     QSettings settings;
-    QFont consoleFont;
-    QColor color = QColor(settings.value("background").toString());
+    QFont     consoleFont;
+    QColor    color = QColor(settings.value("background").toString());
     consoleFont.fromString(settings.value("font").toString());
     setConsoleFont(consoleFont);
     setBackgroundColor(color);
@@ -71,7 +71,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     m_ui->comboStopBits->hide();
     m_ui->comboConfigurations->hide();
 
-    QDir dir(QCoreApplication::applicationDirPath());
+    QDir        dir(QCoreApplication::applicationDirPath());
     QStringList files = dir.entryList(QStringList()<<"*.xml", QDir::Files);
     m_ui->comboConfigurations->insertItems(0, files);
 
@@ -112,13 +112,13 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
 
         QList<CHighlightsFrame::Highlighting> highlights;
 
-        foreach(const QVariant& h, m_session->getHighlights())
+        foreach(const QVariant &h, m_session->getHighlights())
         {
             CHighlightsFrame::Highlighting hi = h.value<CHighlightsFrame::Highlighting>();
-            QPixmap pixmap(10, 10);
+            QPixmap                        pixmap(10, 10);
             pixmap.fill(hi.color);
-            QIcon icon(pixmap);
-            QListWidgetItem *item = new QListWidgetItem(icon, hi.pattern);
+            QIcon            icon(pixmap);
+            QListWidgetItem* item = new QListWidgetItem(icon, hi.pattern);
             item->setData(Qt::UserRole, QVariant(hi.color));
             m_ui->highlightsFrame->addHighlighting(item);
             highlights.append(hi);
@@ -149,9 +149,9 @@ void CConsoleTab::setLabel(const QString& label)
     emit labelChanged(label);
 }
 
-void CConsoleTab::fillComboBoxes(void)
+void CConsoleTab::fillComboBoxes()
 {
-    QComboBox *combo = NULL;
+    QComboBox* combo = NULL;
 
     /** FIXME: DO THIS IN A MORE ELEGANT WAY! */
     //while(m_pe->getAvailablePorts().count() == 0) { QThread::msleep(20); }
@@ -211,7 +211,7 @@ void CConsoleTab::fillComboBoxes(void)
     combo->setCurrentIndex(0);
 }
 
-void CConsoleTab::toggleFullScreen(void)
+void CConsoleTab::toggleFullScreen()
 {
     if (!QWidget::isFullScreen())
     {
@@ -252,7 +252,7 @@ void CConsoleTab::createContextMenu()
     m_ui->actionToggleAutoscroll->setChecked(true);
 }
 
-void CConsoleTab::showContextMenu(const QPoint &pt)
+void CConsoleTab::showContextMenu(const QPoint& pt)
 {
     m_menu->exec(mapToGlobal(pt));
 }
@@ -263,20 +263,22 @@ void CConsoleTab::updateHighlighting()
     m_ui->consoleView->setHighlighting(h);
 }
 
-void CConsoleTab::showConnectBar(void)
+void CConsoleTab::showConnectBar()
 {
     m_ui->btnBar->show();
 }
 
-void CConsoleTab::hideConnectBar(void)
+void CConsoleTab::hideConnectBar()
 {
     m_ui->btnBar->hide();
 }
 
-void CConsoleTab::onConfigurationChanged(const QString &text)
+void CConsoleTab::onConfigurationChanged(const QString& text)
 {
     if (m_ui->comboConfigurations->currentIndex() == 0)
+    {
         return;
+    }
 
     QString fileName = QDir(QCoreApplication::applicationDirPath()).filePath(text);
 
@@ -330,7 +332,7 @@ void CConsoleTab::onConfigurationChanged(const QString &text)
             }
             else if (token == "pattern")
             {
-                QXmlStreamAttributes attr = xml.attributes();
+                QXmlStreamAttributes           attr = xml.attributes();
                 CHighlightsFrame::Highlighting hi;
                 hi.pattern = xml.readElementText();
                 hi.color = QColor(attr.value("color").toString());
@@ -338,8 +340,8 @@ void CConsoleTab::onConfigurationChanged(const QString &text)
 
                 QPixmap pixmap(10, 10);
                 pixmap.fill(hi.color );
-                QIcon icon(pixmap);
-                QListWidgetItem *item = new QListWidgetItem(icon, hi.pattern);
+                QIcon            icon(pixmap);
+                QListWidgetItem* item = new QListWidgetItem(icon, hi.pattern);
                 item->setData(Qt::UserRole, QVariant(hi.color));
                 m_ui->highlightsFrame->addHighlighting(item);
             }
@@ -349,11 +351,11 @@ void CConsoleTab::onConfigurationChanged(const QString &text)
     m_ui->consoleView->setHighlighting(h);
 }
 
-void CConsoleTab::showSaveDialog(void)
+void CConsoleTab::showSaveDialog()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save configuration"),
-                                                     "",
-                                                     tr("superterm configurations (*.xml)"));
+                                                    "",
+                                                    tr("superterm configurations (*.xml)"));
 
     if (!fileName.endsWith(".xml"))
     {
@@ -389,7 +391,7 @@ void CConsoleTab::showSaveDialog(void)
             xmlWriter.writeAttribute("color", h[i].color.name());
             xmlWriter.writeCharacters(h [i].pattern);
             xmlWriter.writeEndElement();
-       }
+        }
         xmlWriter.writeEndElement();
     }
 
@@ -407,11 +409,11 @@ void CConsoleTab::showSaveDialog(void)
     file.close();
 }
 
-void CConsoleTab::showColorDialog(void)
+void CConsoleTab::showColorDialog()
 {
     QSettings settings;
-    QColor initial(settings.value("background").toString());
-    QColor rgb = QColorDialog::getColor(initial, this);
+    QColor    initial(settings.value("background").toString());
+    QColor    rgb = QColorDialog::getColor(initial, this);
     if (rgb.isValid())
     {
         setBackgroundColor(rgb);
@@ -419,9 +421,9 @@ void CConsoleTab::showColorDialog(void)
     }
 }
 
-void CConsoleTab::showFontDialog(void)
+void CConsoleTab::showFontDialog()
 {
-    bool ok;
+    bool  ok;
     QFont font = QFontDialog::getFont(&ok, m_ui->consoleView->font(), this, QString(), QFontDialog::MonospacedFonts);
     if (ok)
     {
@@ -431,20 +433,20 @@ void CConsoleTab::showFontDialog(void)
     }
 }
 
-void CConsoleTab::toggleAutoScroll(void)
+void CConsoleTab::toggleAutoScroll()
 {
     static bool bEnabled = true;
     bEnabled = !bEnabled;
     m_ui->consoleView->setAutoScroll(bEnabled);
 }
 
-void CConsoleTab::setConsoleFont(const QFont &font)
+void CConsoleTab::setConsoleFont(const QFont& font)
 {
     m_ui->consoleView->setFont(font);
     m_ui->consoleView->refreshCursor();
 }
 
-void CConsoleTab::setBackgroundColor(const QColor &color)
+void CConsoleTab::setBackgroundColor(const QColor& color)
 {
     setStyleSheet(QString("QPlainTextEdit { background-color: %1; }").arg(color.name()));
 }
@@ -511,7 +513,7 @@ void CConsoleTab::onEndpointData(const CMessage& message)
     }
 }
 
-void CConsoleTab::onConnectClicked(void)
+void CConsoleTab::onConnectClicked()
 {
     const QString sDeviceName = m_ui->comboPorts->currentData().toString();
 
@@ -564,7 +566,7 @@ void CConsoleTab::showError(QSerialPort::SerialPortError error)
     m_ui->statusBar->showMessage("ERROR: " + QString::number(error) + " opening port " );
 }
 
-void CConsoleTab::onComboChanged(void)
+void CConsoleTab::onComboChanged()
 {
     if (m_ui->comboPorts->currentIndex() != 0 && m_ui->comboBaudRates->currentIndex() != 0)
     {
@@ -578,19 +580,19 @@ void CConsoleTab::onComboChanged(void)
     }
 }
 
-void CConsoleTab::showAboutDialog(void)
+void CConsoleTab::showAboutDialog()
 {
     const QString contents = QString(
         "<p><font color=#000080><font size=6><b>%1</b></font> <font size=4>(revision %2)</font></font></p>"
         "<p align=left>Copyright &copy; 2015-2016 Stefan Scheler. %3</p>"
         "<p><a href=\"%4\">%5</a></p>"
         "<p>The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</p>")
-        .arg(g_sAppFullName, QString::number(g_u32revision), tr("All rights reserved."), g_sAppHomepage, tr("Visit superterm website"));
+                             .arg(g_sAppFullName, QString::number(g_u32revision), tr("All rights reserved."), g_sAppHomepage, tr("Visit superterm website"));
 
     QMessageBox::about(this, tr("About superterm"), contents);
 }
 
-void CConsoleTab::onKeyPressed(QKeyEvent *e)
+void CConsoleTab::onKeyPressed(QKeyEvent* e)
 {
     QString key;
 
@@ -611,7 +613,7 @@ void CConsoleTab::onKeyPressed(QKeyEvent *e)
     }
 }
 
-void CConsoleTab::startLogging(void)
+void CConsoleTab::startLogging()
 {
     qDebug() << "LOGGING STARTED";
     const QString sFileName = m_ui->logPanel->getLogFileName();
@@ -624,14 +626,14 @@ void CConsoleTab::startLogging(void)
     m_ui->statusBar->showMessage(tr("Logging to %1 started.").arg(sFileName), 3000);
 }
 
-void CConsoleTab::stopLogging(void)
+void CConsoleTab::stopLogging()
 {
     m_logFile->close();
     delete m_logFile;
     m_logFile = NULL;
 }
 
-void CConsoleTab::onAppQuit(void)
+void CConsoleTab::onAppQuit()
 {
     qDebug() << "[slot] onAppQuit";
 
@@ -657,18 +659,6 @@ void CConsoleTab::onEndpointConnected()
     m_ui->btnConnect->setText(tr("&Disconnect"));
 
     m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(sDeviceName), 3000);
-#if 0
-    }
-    else
-    {
-        qDebug() << m_port->error();
-        delete m_port;
-        m_port = NULL;
-        m_ui->statusBar->showMessage(tr("Error. Failed to open port."));
-    }
-
-    connect(m_port, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(showError(QSerialPort::SerialPortError)));
-#endif
 }
 
 void CConsoleTab::onReconnectionSignal(const CMessage& message)

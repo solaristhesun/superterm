@@ -4,7 +4,7 @@
 #include "ui_logfilepanel.h"
 #include "ui/logfilepanel.h"
 
-LogfilePanel::LogfilePanel(QWidget *parent)
+LogfilePanel::LogfilePanel(QWidget* parent)
     : QFrame(parent)
     , m_ui(new Ui::LogfilePanel)
     , m_bEnabled(false)
@@ -22,8 +22,8 @@ LogfilePanel::~LogfilePanel()
 void LogfilePanel::showFileDialog()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                               QDir::homePath(),
-                               tr("Logfiles (*.log)"));
+                                                    QDir::homePath(),
+                                                    tr("Logfiles (*.log)"));
 
     if (!fileName.isEmpty())
     {
@@ -31,14 +31,14 @@ void LogfilePanel::showFileDialog()
     }
 }
 
-void LogfilePanel::onFileNameChanged(const QString & text)
+void LogfilePanel::onFileNameChanged(const QString& text)
 {
     QFileInfo fileInfo(text);
 
     m_ui->btnStart->setEnabled(!text.isEmpty());
 }
 
-void LogfilePanel::onStartButtonClicked(void)
+void LogfilePanel::onStartButtonClicked()
 {
     m_bEnabled = !m_bEnabled;
 
@@ -59,7 +59,7 @@ void LogfilePanel::onStartButtonClicked(void)
     }
 }
 
-QString LogfilePanel::getLogFileName(void) const
+QString LogfilePanel::getLogFileName() const
 {
     return m_ui->editFileName->text();
 }

@@ -7,7 +7,6 @@
 
 CSession::CSession()
 {
-
 }
 
 void CSession::saveToFile()
@@ -19,9 +18,9 @@ void CSession::saveToFile()
 
     QFile file(fileName);
 
-    if(!file.open(QIODevice::WriteOnly))
+    if (!file.open(QIODevice::WriteOnly))
     {
-       qDebug() << file.errorString();
+        qDebug() << file.errorString();
     }
     else
     {

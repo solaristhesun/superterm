@@ -5,12 +5,10 @@
 #include "ipc/message.h"
 #include "ipc/messagecodec.h"
 
-
-
 CMessage MessageCodec::decode(const QByteArray& message)
 {
     CMessage::Cmd cmd = (CMessage::Cmd) message.at(0);
-    QByteArray payload = message.mid(1);
+    QByteArray    payload = message.mid(1);
 
     return CMessage(cmd, payload);
 }

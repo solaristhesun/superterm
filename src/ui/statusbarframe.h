@@ -12,10 +12,10 @@ class CStatusBarFrame : public QFrame
     Q_OBJECT
 
 public:
-    explicit CStatusBarFrame(QWidget *parent = 0);
+    explicit CStatusBarFrame(QWidget* parent = 0);
     ~CStatusBarFrame();
 
-    void showMessage(const QString & message, const int timeout = 0);
+    void showMessage(const QString& message, const int timeout = 0);
     void showProgressMessage(const QString& message);
     void hideProgressMessage();
 
@@ -23,7 +23,7 @@ signals:
     void cancelReconnection();
 
 private:
-    Ui::CStatusBarFrame *m_ui;
+    Ui::CStatusBarFrame* m_ui;
 
     void setStyleProperty(const char* name, const QVariant& variant);
 };

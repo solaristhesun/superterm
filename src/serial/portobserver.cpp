@@ -3,9 +3,9 @@
 
 #include "portobserver.h"
 
-CPortObserver::CPortObserver():
-    m_bActive(false)
-  , m_port(NULL)
+CPortObserver::CPortObserver()
+    : m_bActive(false)
+    , m_port(NULL)
 {
     QThread::start();
 }

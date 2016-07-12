@@ -4,7 +4,7 @@
 #include "serial/portenumerator.h"
 #include "serial/serialportinfo.h"
 
-CPortsComboBox::CPortsComboBox(QWidget *parent)
+CPortsComboBox::CPortsComboBox(QWidget* parent)
     : QComboBox(parent)
 {
     // currently nothing
@@ -16,7 +16,7 @@ void CPortsComboBox::showPopup()
     QComboBox::showPopup();
 }
 
-void CPortsComboBox::setPortEnumerator(CPortEnumerator *pe)
+void CPortsComboBox::setPortEnumerator(CPortEnumerator* pe)
 {
     m_pe = pe;
     refresh();

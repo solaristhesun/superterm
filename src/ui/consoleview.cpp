@@ -9,8 +9,8 @@
 #include "ui/consoleview.h"
 #include "ui/consoletab.h"
 
-CConsoleView::CConsoleView(QWidget *parent) :
-    QPlainTextEdit(parent),
+CConsoleView::CConsoleView(QWidget* parent)
+    : QPlainTextEdit(parent),
     m_ui(new Ui::CConsoleView),
     m_parent(static_cast<CConsoleTab*>(parent)),
     m_bMouseDown(false),
@@ -37,7 +37,7 @@ void CConsoleView::refreshCursor()
     setTabStopWidth(fontMetrics().width("01234567"));
 }
 
-void CConsoleView::mousePressEvent(QMouseEvent * e)
+void CConsoleView::mousePressEvent(QMouseEvent* e)
 {
     if (e->button() == Qt::LeftButton)
     {
@@ -47,7 +47,7 @@ void CConsoleView::mousePressEvent(QMouseEvent * e)
     QPlainTextEdit::mousePressEvent(e);
 }
 
-void CConsoleView::mouseMoveEvent(QMouseEvent * e)
+void CConsoleView::mouseMoveEvent(QMouseEvent* e)
 {
     if (e->button() == Qt::LeftButton)
     {
@@ -61,7 +61,7 @@ void CConsoleView::mouseMoveEvent(QMouseEvent * e)
     QPlainTextEdit::mouseMoveEvent(e);
 }
 
-void CConsoleView::mouseReleaseEvent(QMouseEvent * e)
+void CConsoleView::mouseReleaseEvent(QMouseEvent* e)
 {
     if (e->button() == Qt::LeftButton)
     {
@@ -73,7 +73,7 @@ void CConsoleView::mouseReleaseEvent(QMouseEvent * e)
     QPlainTextEdit::mouseReleaseEvent(e);
 }
 
-void CConsoleView::keyPressEvent(QKeyEvent *e)
+void CConsoleView::keyPressEvent(QKeyEvent* e)
 {
     if ((e->key()==Qt::Key_Return) && (e->modifiers()==Qt::AltModifier))
     {
@@ -84,9 +84,9 @@ void CConsoleView::keyPressEvent(QKeyEvent *e)
     emit keyPressed(e);
 }
 
-void CConsoleView::scrollDown(void)
+void CConsoleView::scrollDown()
 {
-    QScrollBar *sb = verticalScrollBar();
+    QScrollBar* sb = verticalScrollBar();
     sb->setValue(sb->maximum());
 }
 
@@ -96,7 +96,7 @@ void CConsoleView::scrollBarChanged(int pos)
     m_scrollPos = pos;
 }
 
-void CConsoleView::clear(void)
+void CConsoleView::clear()
 {
     m_extras.clear();
     QPlainTextEdit::clear();
@@ -107,26 +107,26 @@ void CConsoleView::setHighlighting(QList<CHighlightsFrame::Highlighting>& highli
     m_highlightings = highlighting;
 }
 
-QList<CHighlightsFrame::Highlighting>& CConsoleView::getHighlighting(void)
+QList<CHighlightsFrame::Highlighting>& CConsoleView::getHighlighting()
 {
     return m_highlightings;
 }
 
 void CConsoleView::saveCursor()
 {
-   this->cursorPos = this->textCursor().position();
-   qDebug() << "saving position " << cursorPos;
+    this->cursorPos = this->textCursor().position();
+    qDebug() << "saving position " << cursorPos;
 }
 
 void CConsoleView::restoreCursor()
 {
-   QTextCursor cursor = this->textCursor();
-   qDebug() << "restoring position " << cursorPos;
-   cursor.setPosition(this->cursorPos, QTextCursor::MoveAnchor);
-   this->setTextCursor(cursor);
+    QTextCursor cursor = this->textCursor();
+    qDebug() << "restoring position " << cursorPos;
+    cursor.setPosition(this->cursorPos, QTextCursor::MoveAnchor);
+    this->setTextCursor(cursor);
 }
 
-void CConsoleView::insertPlainText(const QString &text)
+void CConsoleView::insertPlainText(const QString& text)
 {
     if (m_bMouseDown)
     {
@@ -141,7 +141,9 @@ void CConsoleView::insertPlainText(const QString &text)
     foreach (CHighlightsFrame::Highlighting h, m_highlightings)
     {
         for (int i = 0; i < iLines; i++)
-        moveCursor(QTextCursor::Up);
+        {
+            moveCursor(QTextCursor::Up);
+        }
         moveCursor(QTextCursor::StartOfLine);
         while (find(h.pattern))
         {
@@ -156,7 +158,6 @@ void CConsoleView::insertPlainText(const QString &text)
             extra.format.setBackground( h.color );
             restoreCursor();
             m_extras << extra;
-
         }
     }
 
@@ -167,7 +168,6 @@ void CConsoleView::insertPlainText(const QString &text)
     {
         m_scrollBar->setSliderPosition(m_scrollPos);
     }
-
 }
 
 void CConsoleView::insertBackspace()
@@ -192,7 +192,6 @@ void CConsoleView::setAutoScroll(const bool bEnabled)
     {
         m_scrollPos = m_scrollBar->maximum();
     }
-
 }
 
 void CConsoleView::wrapText(QString textToWrap, const int width)
@@ -218,7 +217,10 @@ void CConsoleView::wrapText(QString textToWrap, const int width)
             }
 
             // only add a \n if string does not already contain one
-            if(!elidedText.contains('\n')) QPlainTextEdit::insertPlainText("\n");
+            if (!elidedText.contains('\n'))
+            {
+                QPlainTextEdit::insertPlainText("\n");
+            }
         }
         else
         {

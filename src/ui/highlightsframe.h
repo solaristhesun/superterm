@@ -21,17 +21,17 @@ public:
         QColor color;
     };
 
-    explicit CHighlightsFrame(QWidget *parent = 0);
+    explicit CHighlightsFrame(QWidget* parent = 0);
     ~CHighlightsFrame();
 
     QList<Highlighting> getItems();
-    void showEvent(QShowEvent * event);
-    void keyPressEvent ( QKeyEvent * event );
+    void showEvent(QShowEvent* event);
+    void keyPressEvent ( QKeyEvent* event );
 
 public slots:
     void clear();
     void addHighlighting();
-    void addHighlighting(QListWidgetItem *item);
+    void addHighlighting(QListWidgetItem* item);
     void deleteHighlighting();
     void onTextEdited(const QString& text);
     void onSelectionChanged();

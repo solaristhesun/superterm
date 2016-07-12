@@ -10,34 +10,40 @@ class CConsoleTabBar : public QTabBar
 {
     Q_OBJECT
 public:
-    explicit CConsoleTabBar(QWidget *parent = nullptr);
+    explicit CConsoleTabBar(QWidget* parent = nullptr);
     ~CConsoleTabBar();
 
-    void mouseReleaseEvent(QMouseEvent * event);
-    void mousePressEvent(QMouseEvent * event);
+    void mouseReleaseEvent(QMouseEvent* event);
+    void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
-    void showEvent(QShowEvent *event);
+    void showEvent(QShowEvent* event);
 
     void moveTab(int from, int to);
 
     void tabInserted(int index);
     void tabRemoved(int index);
-    void moveButton(void);
-    CMainWindow* getNewMainWindow() const { return mNewMainWindow; }
-    QPoint getClickOffset() const { return mOffset; }
+    void moveButton();
+    CMainWindow* getNewMainWindow() const
+    {
+        return mNewMainWindow;
+    }
+    QPoint getClickOffset() const
+    {
+        return mOffset;
+    }
 
 signals:
-    void addButtonClicked(void);
+    void addButtonClicked();
     void tabDetached(int index);
 
 public slots:
 
 private:
-    QPushButton *m_btn;
-    int m_selectedIndex;
-    int m_prevIndex;
+    QPushButton* m_btn;
+    int          m_selectedIndex;
+    int          m_prevIndex;
     CMainWindow* mNewMainWindow;
-    QPoint mOffset;
+    QPoint       mOffset;
 };
 
 #endif // CONSOLETABBAR_H

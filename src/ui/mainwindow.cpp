@@ -12,7 +12,7 @@
 #include "misc/globals.h"
 #include "session/session.h"
 
-CMainWindow::CMainWindow(QWidget *parent)
+CMainWindow::CMainWindow(QWidget* parent)
     : QMainWindow(parent)
     , m_ui(new Ui::CMainWindow)
 {
@@ -35,15 +35,15 @@ QSize CMainWindow::sizeHint() const
     return QSize(800, 600);
 }
 
-void CMainWindow::aboutToQuit(void)
+void CMainWindow::aboutToQuit()
 {
     removeTabFiles();
     m_ui->tabWidget->aboutToQuit();
 }
 
-void CMainWindow::addExistingTabsFromFile(void)
+void CMainWindow::addExistingTabsFromFile()
 {
-    QDir dir(QCoreApplication::applicationDirPath());
+    QDir        dir(QCoreApplication::applicationDirPath());
     QStringList files = dir.entryList(QStringList()<<"*.con", QDir::Files);
 
     if (!files.isEmpty())
@@ -72,7 +72,7 @@ void CMainWindow::addExistingTabsFromFile(void)
 
 void CMainWindow::removeTabFiles()
 {
-    QDir dir(QCoreApplication::applicationDirPath());
+    QDir        dir(QCoreApplication::applicationDirPath());
     QStringList files = dir.entryList(QStringList()<<"*.con", QDir::Files);
 
     if (!files.isEmpty())
@@ -95,7 +95,7 @@ CConsoleTab* CMainWindow::detachTab()
 {
     int curIndex = m_ui->tabWidget->currentIndex();
 
-    CConsoleTab *tab = m_ui->tabWidget->widget(curIndex);
+    CConsoleTab* tab = m_ui->tabWidget->widget(curIndex);
     m_ui->tabWidget->removeTab(curIndex);
 
     qDebug() << "detaching tab" << tab->getLabel() << "from" << this;
@@ -110,7 +110,7 @@ int CMainWindow::getTabCount() const
 
 QRect CMainWindow::getTabBarRect() const
 {
-    CConsoleTabBar *tabBar = static_cast<CConsoleTabBar*>(m_ui->tabWidget->tabBar());
+    CConsoleTabBar* tabBar = static_cast<CConsoleTabBar*>(m_ui->tabWidget->tabBar());
     return QRect(tabBar->mapToGlobal(QPoint(0,0)), tabBar->size());
 }
 

@@ -6,18 +6,18 @@
 
 class CSerialPortInfo;
 
-class CPortEnumerator: public QThread
+class CPortEnumerator : public QThread
 {
 public:
     CPortEnumerator();
     ~CPortEnumerator();
 
-    void startEnumeration(void);
-    void stopEnumeration(void);
+    void startEnumeration();
+    void stopEnumeration();
 
-    QList<CSerialPortInfo> getAvailablePorts(void);
+    QList<CSerialPortInfo> getAvailablePorts();
 
-    void run(void);
+    void run();
 
 private:
     QMutex                 m_mutex;

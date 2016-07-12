@@ -3,7 +3,7 @@
 #include "ui_statusbarframe.h"
 #include "ui/statusbarframe.h"
 
-CStatusBarFrame::CStatusBarFrame(QWidget *parent)
+CStatusBarFrame::CStatusBarFrame(QWidget* parent)
     : QFrame(parent)
     , m_ui(new Ui::CStatusBarFrame)
 {

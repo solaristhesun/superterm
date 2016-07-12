@@ -8,12 +8,10 @@
 
 CMessage::CMessage()
 {
-
 }
 
 CMessage::~CMessage()
 {
-
 }
 
 CMessage::CMessage(const QByteArray& byteArray)

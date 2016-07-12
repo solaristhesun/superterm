@@ -14,7 +14,7 @@ class CPortEndpoint : public QObject
 {
     Q_OBJECT
 public:
-    explicit CPortEndpoint(QObject *parent = 0);
+    explicit CPortEndpoint(QObject* parent = 0);
 
     void setBaudRate(const quint32 u32BaudRate);
     void setDataBits(const qint32 i32DataBits);
@@ -45,14 +45,14 @@ public slots:
     void onSocketError(QLocalSocket::LocalSocketError error);
 
 private:
-    QProcess*          m_process;
-    QLocalServer*      m_server;
-    QLocalSocket*      m_socket;
-    quint32            m_u32BaudRate;
-    qint32             m_i32DataBits;
-    qint32             m_i32Parity;
-    qint32             m_i32StopBits;
-    qint32             m_i32FlowControl;
+    QProcess*     m_process;
+    QLocalServer* m_server;
+    QLocalSocket* m_socket;
+    quint32       m_u32BaudRate;
+    qint32        m_i32DataBits;
+    qint32        m_i32Parity;
+    qint32        m_i32StopBits;
+    qint32        m_i32FlowControl;
 };
 
 #endif // CPORTENDPOINT_H

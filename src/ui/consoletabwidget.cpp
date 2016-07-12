@@ -11,7 +11,7 @@
 #include "serial/portenumerator.h"
 #include "session/session.h"
 
-CConsoleTabWidget::CConsoleTabWidget(QWidget *parent)
+CConsoleTabWidget::CConsoleTabWidget(QWidget* parent)
     : QTabWidget(parent)
     , m_tabBar(new CConsoleTabBar(this))
 {
@@ -82,12 +82,12 @@ void CConsoleTabWidget::onTabDetached(int index)
         QObject::disconnect(tab, &CConsoleTab::labelChanged, this, &CConsoleTabWidget::setCurrentTabText);
 
         // add tab to new window
-        CMainWindow *newWin = m_tabBar->getNewMainWindow();
+        CMainWindow* newWin = m_tabBar->getNewMainWindow();
         newWin->attachTab(tab);
     }
 }
 
-void CConsoleTabWidget::onAddButtonClicked(void)
+void CConsoleTabWidget::onAddButtonClicked()
 {
     qDebug() << "[slot] onAddButtonClicked";
 
@@ -105,24 +105,24 @@ void CConsoleTabWidget::addTab(CConsoleTab* tab)
     m_tabBar->moveButton();
 }
 
-void CConsoleTabWidget::setConsoleFont(const QFont &font)
+void CConsoleTabWidget::setConsoleFont(const QFont& font)
 {
     // set font on all tabs
     for (int i = 0; i < QTabWidget::count(); i++)
     {
-        CConsoleTab *tab = widget(i);
+        CConsoleTab* tab = widget(i);
         tab->setConsoleFont(font);
     }
 }
 
-void CConsoleTabWidget::setCurrentTabText(const QString &text)
+void CConsoleTabWidget::setCurrentTabText(const QString& text)
 {
     const int curIndex = currentIndex();
     setTabText(curIndex, text);
     m_tabBar->moveButton();
 }
 
-void CConsoleTabWidget::aboutToQuit(void)
+void CConsoleTabWidget::aboutToQuit()
 {
     emit appQuits();
 }

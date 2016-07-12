@@ -11,9 +11,9 @@ class CPortApplication : public QCoreApplication
 {
     Q_OBJECT
 public:
-    CPortApplication(int &argc, char **argv);
+    CPortApplication(int& argc, char** argv);
 
-    void connectSocket(void);
+    void connectSocket();
 
 public slots:
     void onSocketConnected();

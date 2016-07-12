@@ -9,7 +9,7 @@ CSerialPortInfo::CSerialPortInfo(const QString strPortName, const QString strPor
     // currently nothing
 }
 
-CSerialPortInfo::CSerialPortInfo(const QSerialPortInfo &info)
+CSerialPortInfo::CSerialPortInfo(const QSerialPortInfo& info)
 {
     m_strPortName = info.portName();
     m_strPortDesc = info.description();

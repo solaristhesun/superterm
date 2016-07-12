@@ -6,8 +6,8 @@
 #include "ui_highlightsframe.h"
 #include "ui/highlightsframe.h"
 
-CHighlightsFrame::CHighlightsFrame(QWidget *parent) :
-    QFrame(parent),
+CHighlightsFrame::CHighlightsFrame(QWidget* parent)
+    : QFrame(parent),
     m_ui(new Ui::CHighlightsFrame),
     m_color(QColor(Qt::red))
 {
@@ -31,8 +31,8 @@ void CHighlightsFrame::addHighlighting()
     {
         QPixmap pixmap(10, 10);
         pixmap.fill(m_color);
-        QIcon icon(pixmap);
-        QListWidgetItem *item = new QListWidgetItem(icon, str);
+        QIcon            icon(pixmap);
+        QListWidgetItem* item = new QListWidgetItem(icon, str);
         item->setData(Qt::UserRole, QVariant(m_color));
         m_ui->filterList->addItem(item);
         m_ui->filterEdit->setText("");
@@ -72,7 +72,7 @@ void CHighlightsFrame::onTextEdited(const QString& text)
 
 void CHighlightsFrame::onSelectionChanged()
 {
-    QList<QListWidgetItem *> items = m_ui->filterList->selectedItems();
+    QList<QListWidgetItem*> items = m_ui->filterList->selectedItems();
     qDebug() << "COUNT " << items.count();
     m_ui->btnDelete->setEnabled(!items.isEmpty());
 }
@@ -95,7 +95,7 @@ void CHighlightsFrame::refreshColorButton()
 void CHighlightsFrame::deleteHighlighting()
 {
     qDebug() << "DELETE";
-    QListWidgetItem *item = m_ui->filterList->currentItem();
+    QListWidgetItem* item = m_ui->filterList->currentItem();
     delete item;
 
     if (m_ui->filterList->count() == 0)
@@ -129,8 +129,8 @@ void CHighlightsFrame::clear()
 
 QList<CHighlightsFrame::Highlighting> CHighlightsFrame::getItems()
 {
-    QList<QListWidgetItem *> items = m_ui->filterList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
-    QList<Highlighting> list;
+    QList<QListWidgetItem*> items = m_ui->filterList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    QList<Highlighting>     list;
 
     foreach(QListWidgetItem *item, items)
     {

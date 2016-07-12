@@ -49,12 +49,12 @@ void CConsoleTabBar::moveButton()
     if (iLastTabIndex != -1)
     {
         QRect rect = tabRect(iLastTabIndex);
-        int y = rect.bottom();
+        int   y = rect.bottom();
         m_btn->move(rect.bottomRight().x()-28+3, y);
     }
 }
 
-void CConsoleTabBar::showEvent(QShowEvent *event)
+void CConsoleTabBar::showEvent(QShowEvent* event)
 {
     moveButton();
     QTabBar::showEvent(event);
@@ -89,7 +89,7 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
             if (widget->objectName() == "CMainWindow" && widget != currentWindow)
             {
                 CMainWindow* otherWindow = static_cast<CMainWindow*>(widget);
-                QRect tabBarRect = otherWindow->getTabBarRect();
+                QRect        tabBarRect = otherWindow->getTabBarRect();
 
                 // check if mouse is in tabbar rect
                 if (tabBarRect.contains(globalPos))
@@ -115,7 +115,7 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
         {
             const int iThreshold = 25;
 
-            if (pos.x() < - iThreshold || pos.x() > QTabBar::rect().width() + iThreshold)
+            if (pos.x() < -iThreshold || pos.x() > QTabBar::rect().width() + iThreshold)
             {
                 mNewMainWindow = new CMainWindow;
                 mNewMainWindow->hide();
@@ -140,8 +140,8 @@ void CConsoleTabBar::mousePressEvent(QMouseEvent* event)
     mOffset.setX(event->pos().x() - rect.x());
     mOffset.setY(event->pos().y() - rect.y());
 
-    QMainWindow *mainWindow = static_cast<CMainWindow*>(QApplication::activeWindow());
-    QSize decorationSize = mainWindow->frameSize()- mainWindow->size();
+    QMainWindow* mainWindow = static_cast<CMainWindow*>(QApplication::activeWindow());
+    QSize        decorationSize = mainWindow->frameSize()- mainWindow->size();
 
     mOffset.setX(mOffset.x() + decorationSize.width()/2);
     mOffset.setY(mOffset.y() + mainWindow->geometry().y()- mainWindow->frameGeometry().y());

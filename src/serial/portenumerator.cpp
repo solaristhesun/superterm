@@ -6,8 +6,8 @@
 #include "serial/portenumerator.h"
 #include "serial/serialportinfo.h"
 
-CPortEnumerator::CPortEnumerator():
-    m_bActive(false)
+CPortEnumerator::CPortEnumerator()
+    : m_bActive(false)
 {
     qDebug() << "CPortEnumerator::CPortEnumerator()";
     QThread::start();
@@ -19,17 +19,17 @@ CPortEnumerator::~CPortEnumerator()
     QThread::exit(0);
 }
 
-void CPortEnumerator::startEnumeration(void)
+void CPortEnumerator::startEnumeration()
 {
     m_bActive = true;
 }
 
-void CPortEnumerator::stopEnumeration(void)
+void CPortEnumerator::stopEnumeration()
 {
     m_bActive = false;
 }
 
-void CPortEnumerator::run(void)
+void CPortEnumerator::run()
 {
     while (true)
     {
@@ -61,7 +61,7 @@ void CPortEnumerator::run(void)
     }
 }
 
-QList<CSerialPortInfo> CPortEnumerator::getAvailablePorts(void)
+QList<CSerialPortInfo> CPortEnumerator::getAvailablePorts()
 {
     QList<CSerialPortInfo> list;
 

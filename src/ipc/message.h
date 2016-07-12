@@ -8,13 +8,15 @@ class CMessage
 {
 public:
 
-    enum Cmd {
+    enum Cmd
+    {
         DataCmd    = 0, // Message contains data
         SigCmd     = 1, // Message contains signal
         UnknownCmd = -1
     };
 
-    enum Signal {
+    enum Signal
+    {
         IsConSig     = 0, // Reconnection mechanism was started
         DoneConSig   = 1, // Reconnection mechanism finished
         CancelConSig = 2, // Reconnection mechanism should be cancelled

@@ -6,7 +6,7 @@
 #include "ipc/messagecodec.h"
 #include "serial/portendpoint.h"
 
-CPortEndpoint::CPortEndpoint(QObject *parent)
+CPortEndpoint::CPortEndpoint(QObject* parent)
     : QObject(parent)
     , m_process(NULL)
     , m_server(NULL)

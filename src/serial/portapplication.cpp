@@ -10,7 +10,7 @@
 #include "serial/portapplication.h"
 
 #if 0
-void dumpDCB(const char *szFileName)
+void dumpDCB(const char* szFileName)
 {
     printf("using port %s\n", szFileName);
 
@@ -53,7 +53,7 @@ void dumpDCB(const char *szFileName)
 }
 #endif
 
-CPortApplication::CPortApplication(int &argc, char **argv)
+CPortApplication::CPortApplication(int& argc, char** argv)
     : QCoreApplication(argc, argv)
     , m_socket(new QLocalSocket(this))
     , m_port(NULL)
@@ -63,13 +63,13 @@ CPortApplication::CPortApplication(int &argc, char **argv)
     // currently nothing
 }
 
-void CPortApplication::connectSocket(void)
+void CPortApplication::connectSocket()
 {
-    QString portName = arguments().at(1);
-    quint32 baudRate = arguments().at(2).toUInt();
-    QSerialPort::DataBits dataBits = static_cast<QSerialPort::DataBits>(arguments().at(3).toInt());
-    QSerialPort::Parity parity = static_cast<QSerialPort::Parity>(arguments().at(4).toInt());
-    QSerialPort::StopBits stopBits = static_cast<QSerialPort::StopBits>(arguments().at(5).toInt());
+    QString                  portName = arguments().at(1);
+    quint32                  baudRate = arguments().at(2).toUInt();
+    QSerialPort::DataBits    dataBits = static_cast<QSerialPort::DataBits>(arguments().at(3).toInt());
+    QSerialPort::Parity      parity = static_cast<QSerialPort::Parity>(arguments().at(4).toInt());
+    QSerialPort::StopBits    stopBits = static_cast<QSerialPort::StopBits>(arguments().at(5).toInt());
     QSerialPort::FlowControl flowControl = static_cast<QSerialPort::FlowControl>(arguments().at(6).toInt());
 
     connect(m_socket, SIGNAL(connected()), this, SLOT(onSocketConnected()));
@@ -107,13 +107,15 @@ void CPortApplication::onSerialDataAvailable()
     m_socket->write(MessageCodec::encodeData(m_port->readAll()));
 }
 
-
 void CPortApplication::onSocketData()
 {
     QTextStream(stdout) << "onSocketData()" << endl;
     CMessage message = MessageCodec::decode(m_socket->readAll());
 
-    if (message.isCmd(CMessage::DataCmd)) m_port->write(message.getPayload());
+    if (message.isCmd(CMessage::DataCmd))
+    {
+        m_port->write(message.getPayload());
+    }
     else if (message.isCmd(CMessage::SigCmd))
     {
         if (message.getSignal() == CMessage::CancelConSig)
@@ -130,7 +132,7 @@ void CPortApplication::onSocketDisconnected()
     QCoreApplication::quit();
 }
 
-void CPortApplication::onSocketConnected(void)
+void CPortApplication::onSocketConnected()
 {
     QTextStream(stdout) << "connected" << endl;
     m_observer->setPort(m_port);
@@ -145,11 +147,11 @@ void CPortApplication::onSocketError(QLocalSocket::LocalSocketError error)
 
 void CPortApplication::onPortDisconnected()
 {
-    QString portName = m_port->portName();
-    quint32 baudRate = m_port->baudRate();
-    QSerialPort::DataBits dataBits = m_port->dataBits();
-    QSerialPort::Parity parity = m_port->parity();
-    QSerialPort::StopBits stopBits = m_port->stopBits();
+    QString                  portName = m_port->portName();
+    quint32                  baudRate = m_port->baudRate();
+    QSerialPort::DataBits    dataBits = m_port->dataBits();
+    QSerialPort::Parity      parity = m_port->parity();
+    QSerialPort::StopBits    stopBits = m_port->stopBits();
     QSerialPort::FlowControl flowControl = m_port->flowControl();
 
     m_port->close();

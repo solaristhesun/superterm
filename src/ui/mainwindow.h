@@ -6,20 +6,20 @@
 class CConsoleTab;
 
 namespace Ui {
-    class CMainWindow;
+class CMainWindow;
 }
 
 class CMainWindow : public QMainWindow
 {
     Q_OBJECT
-    
+
 public:
-    explicit CMainWindow(QWidget *parent = 0);
+    explicit CMainWindow(QWidget* parent = 0);
     ~CMainWindow();
 
     QSize sizeHint() const;
     void attachTab(CConsoleTab* tab);
-    void addExistingTabsFromFile(void);
+    void addExistingTabsFromFile();
     CConsoleTab* detachTab();
     int getTabCount() const;
     QRect getTabBarRect() const;
@@ -33,7 +33,7 @@ signals:
 private:
     Ui::CMainWindow* m_ui;
 
-    void removeTabFiles(void);
+    void removeTabFiles();
 };
 
 #endif // MAINWINDOW_H
