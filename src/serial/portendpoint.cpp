@@ -119,7 +119,7 @@ void CPortEndpoint::connectEndpoint(const QString& sDeviceName)
 
     if (!m_server->listen("serial:" + socketName))
     {
-        qDebug() << "ERROR LISTEN"<< m_server->errorString();
+        qDebug() << "ERROR LISTEN" << m_server->errorString();
     }
 
     QStringList args;

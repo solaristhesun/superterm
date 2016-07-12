@@ -44,12 +44,12 @@ void CMainWindow::aboutToQuit()
 void CMainWindow::addExistingTabsFromFile()
 {
     QDir        dir(QCoreApplication::applicationDirPath());
-    QStringList files = dir.entryList(QStringList()<<"*.con", QDir::Files);
+    QStringList files = dir.entryList(QStringList() << "*.con", QDir::Files);
 
     if (!files.isEmpty())
     {
         m_ui->tabWidget->clear(); // FIXME: incorrect, does not destroy initial tab
-        foreach(const QString &str, files)
+        for (const QString& str: files)
         {
             QFile file(QCoreApplication::applicationDirPath() + "/" + str);
             file.open(QIODevice::ReadOnly);
@@ -73,11 +73,11 @@ void CMainWindow::addExistingTabsFromFile()
 void CMainWindow::removeTabFiles()
 {
     QDir        dir(QCoreApplication::applicationDirPath());
-    QStringList files = dir.entryList(QStringList()<<"*.con", QDir::Files);
+    QStringList files = dir.entryList(QStringList() << "*.con", QDir::Files);
 
     if (!files.isEmpty())
     {
-        foreach(const QString &str, files)
+        for (const QString& str: files)
         {
             dir.remove(str);
         }

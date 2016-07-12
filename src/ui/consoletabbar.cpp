@@ -50,7 +50,7 @@ void CConsoleTabBar::moveButton()
     {
         QRect rect = tabRect(iLastTabIndex);
         int   y = rect.bottom();
-        m_btn->move(rect.bottomRight().x()-28+3, y);
+        m_btn->move(rect.bottomRight().x() - 28 + 3, y);
     }
 }
 
@@ -84,7 +84,7 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
         currentWindow->move(globalPos);
 
         // check if tab is over tabbar of other mainwindow
-        foreach (QWidget* widget, QApplication::topLevelWidgets())
+        for (QWidget* widget: QApplication::topLevelWidgets())
         {
             if (widget->objectName() == "CMainWindow" && widget != currentWindow)
             {
@@ -104,7 +104,7 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
 
                     // FIXME: maybe emit(tabAttached) and move code to CTabWidget
 
-                    break; // foreach
+                    break; // for
                 }
             }
         }
@@ -141,10 +141,10 @@ void CConsoleTabBar::mousePressEvent(QMouseEvent* event)
     mOffset.setY(event->pos().y() - rect.y());
 
     QMainWindow* mainWindow = static_cast<CMainWindow*>(QApplication::activeWindow());
-    QSize        decorationSize = mainWindow->frameSize()- mainWindow->size();
+    QSize        decorationSize = mainWindow->frameSize() - mainWindow->size();
 
-    mOffset.setX(mOffset.x() + decorationSize.width()/2);
-    mOffset.setY(mOffset.y() + mainWindow->geometry().y()- mainWindow->frameGeometry().y());
+    mOffset.setX(mOffset.x() + decorationSize.width() / 2);
+    mOffset.setY(mOffset.y() + mainWindow->geometry().y() - mainWindow->frameGeometry().y());
 
     QTabBar::mousePressEvent(event);
 }

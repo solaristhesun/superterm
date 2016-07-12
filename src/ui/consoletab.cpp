@@ -72,7 +72,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     m_ui->comboConfigurations->hide();
 
     QDir        dir(QCoreApplication::applicationDirPath());
-    QStringList files = dir.entryList(QStringList()<<"*.xml", QDir::Files);
+    QStringList files = dir.entryList(QStringList() << "*.xml", QDir::Files);
     m_ui->comboConfigurations->insertItems(0, files);
 
     if (!files.isEmpty())
@@ -112,7 +112,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
 
         QList<CHighlightsFrame::Highlighting> highlights;
 
-        foreach(const QVariant &h, m_session->getHighlights())
+        for (const QVariant& h: m_session->getHighlights())
         {
             CHighlightsFrame::Highlighting hi = h.value<CHighlightsFrame::Highlighting>();
             QPixmap                        pixmap(10, 10);
@@ -161,7 +161,7 @@ void CConsoleTab::fillComboBoxes()
     // fill baud rates
     combo = m_ui->comboBaudRates;
 #if 0
-    foreach (const qint32 baudrate, QSerialPortInfo::standardBaudRates())
+    for (const qint32 baudrate: QSerialPortInfo::standardBaudRates())
     {
         combo->addItem(QString::number(baudrate), QVariant(baudrate));
     }

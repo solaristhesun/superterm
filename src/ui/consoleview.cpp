@@ -138,7 +138,7 @@ void CConsoleView::insertPlainText(const QString& text)
 
     int iLines = text.count('\n');
 
-    foreach (CHighlightsFrame::Highlighting h, m_highlightings)
+    for (CHighlightsFrame::Highlighting h: m_highlightings)
     {
         for (int i = 0; i < iLines; i++)
         {
@@ -239,7 +239,7 @@ QString CConsoleView::elideText(const QString& text, int availableNrOfChars)
      * and add 1 to include it into the substring. this is important so that we
      * do not add an additional \n later on. if no \n is found, take the original
      * string. */
-    int index = (elidedText.indexOf('\n') >= 0) ? elidedText.indexOf('\n')+1 : elidedText.length();
+    int index = (elidedText.indexOf('\n') >= 0) ? elidedText.indexOf('\n') + 1 : elidedText.length();
     elidedText = elidedText.left(index);
 
     return elidedText;

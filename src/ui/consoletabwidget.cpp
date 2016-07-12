@@ -60,7 +60,7 @@ void CConsoleTabWidget::closeTab(int index)
     // select next tab or close window
     if (QTabWidget::count() > 0)
     {
-        QTabWidget::setCurrentIndex(index-1);
+        QTabWidget::setCurrentIndex(index - 1);
     }
     else
     {
