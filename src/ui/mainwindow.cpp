@@ -123,7 +123,7 @@ bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long* 
     bool bEventHandled = false;
 
 #if defined(Q_OS_WIN)
-    if(eventType == "windows_generic_MSG")
+    if (eventType == "windows_generic_MSG")
     {
         MSG* msg = static_cast< MSG* >( message );
 
@@ -139,6 +139,12 @@ bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long* 
         default:
             break;
         }
+    }
+#elif defined(Q_OS_LINUX)
+    if (eventType == "xcb_generic_event_t")
+    {
+        Q_UNUSED(message);
+        Q_UNUSED(result);
     }
 #else
     Q_UNUSED(eventType)
