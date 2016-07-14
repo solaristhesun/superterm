@@ -9,6 +9,8 @@ CStatusBarFrame::CStatusBarFrame(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+    setupWaitingSpinner();
+
     hide();
 
     connect(m_ui->btnCancel, &QPushButton::pressed, this, &CStatusBarFrame::cancelReconnection);
@@ -26,14 +28,14 @@ void CStatusBarFrame::showMessage(const QString& message, const int timeout)
     if (timeout == 0)
     {
         setStyleProperty("error", true);
-        m_ui->progressBar->hide();
+        m_ui->waitingSpinner->stop();
         m_ui->btnCancel->hide();
         m_ui->btnClose->show();
     }
     else
     {
         setStyleProperty("error", false);
-        m_ui->progressBar->hide();
+        m_ui->waitingSpinner->stop();
         m_ui->btnCancel->hide();
         m_ui->btnClose->hide();
         QTimer::singleShot(timeout, this, SLOT(hide()));
@@ -49,13 +51,14 @@ void CStatusBarFrame::showProgressMessage(const QString& message)
     setStyleProperty("error", false);
     m_ui->btnClose->hide();
     m_ui->btnCancel->show();
-    m_ui->progressBar->show();
+    m_ui->waitingSpinner->start();
 
     show();
 }
 
 void CStatusBarFrame::hideProgressMessage()
 {
+    m_ui->waitingSpinner->stop();
     hide();
 }
 
@@ -65,6 +68,17 @@ void CStatusBarFrame::setStyleProperty(const char* name, const QVariant& variant
     style()->unpolish(this);
     style()->polish(this);
     update();
+}
+
+void CStatusBarFrame::setupWaitingSpinner()
+{
+    m_ui->waitingSpinner->setRoundness(70.0);
+    m_ui->waitingSpinner->setMinimumTrailOpacity(15.0);
+    m_ui->waitingSpinner->setTrailFadePercentage(70.0);
+    m_ui->waitingSpinner->setNumberOfLines(8);
+    m_ui->waitingSpinner->setLineLength(5);
+    m_ui->waitingSpinner->setLineWidth(5);
+    m_ui->waitingSpinner->setInnerRadius(5);
 }
 
 // EOF <stefan@scheler.com>

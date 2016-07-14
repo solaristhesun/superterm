@@ -26,6 +26,7 @@ private:
     Ui::CStatusBarFrame* m_ui;
 
     void setStyleProperty(const char* name, const QVariant& variant);
+    void setupWaitingSpinner();
 };
 
 #endif // STATUSBARFRAME_H

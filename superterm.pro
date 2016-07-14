@@ -33,7 +33,8 @@ SOURCES += \
     src/ipc/message.cpp \
     src/ipc/messagecodec.cpp \
     src/serial/portobserver.cpp \
-    src/ui/connectionbar.cpp
+    src/ui/connectionbar.cpp \
+    src/ui/waitingspinnerwidget.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -56,7 +57,8 @@ HEADERS += \
     src/ipc/message.h \
     src/ipc/messagecodec.h \
     src/serial/portobserver.h \
-    src/ui/connectionbar.h
+    src/ui/connectionbar.h \
+    src/ui/waitingspinnerwidget.h
 
 FORMS += \
     src/ui/mainwindow.ui \

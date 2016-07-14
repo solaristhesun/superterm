@@ -36,6 +36,9 @@
     <number>5</number>
    </property>
    <item>
+    <widget class="WaitingSpinnerWidget" name="waitingSpinner" native="true"/>
+   </item>
+   <item>
     <widget class="QLabel" name="labelMessage">
      <property name="text">
       <string notr="true">Message</string>
@@ -56,28 +59,6 @@
     </spacer>
    </item>
    <item>
-    <widget class="QProgressBar" name="progressBar">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>0</number>
-     </property>
-     <property name="value">
-      <number>0</number>
-     </property>
-     <property name="textVisible">
-      <bool>false</bool>
-     </property>
-     <property name="invertedAppearance">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QPushButton" name="btnClose">
      <property name="text">
       <string>&amp;OK</string>
@@ -93,6 +74,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WaitingSpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header>ui/waitingspinnerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

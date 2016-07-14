@@ -512,18 +512,12 @@ void CConsoleTab::onReconnectionSignal(const CMessage& message)
 
         if (sig == CMessage::IsConSig)
         {
-            if (!m_ui->statusBar->isVisible())
-            {
-                m_ui->statusBar->showProgressMessage(tr("Trying to reconnect to %1.").arg(sDeviceName));
-            }
+            m_ui->statusBar->showProgressMessage(tr("Trying to reconnect to %1.").arg(sDeviceName));
         }
         else if (sig == CMessage::DoneConSig)
         {
-            if (m_ui->statusBar->isVisible())
-            {
-                m_ui->statusBar->hideProgressMessage();
-                m_ui->statusBar->showMessage(tr("Successfully reconnected to %1.").arg(sDeviceName), 3000);
-            }
+            m_ui->statusBar->hideProgressMessage();
+            m_ui->statusBar->showMessage(tr("Successfully reconnected to %1.").arg(sDeviceName), 3000);
         }
     }
 }
