@@ -512,7 +512,7 @@ void CConsoleTab::onReconnectionSignal(const CMessage& message)
 
         if (sig == CMessage::IsConSig)
         {
-            m_ui->statusBar->showProgressMessage(tr("Trying to reconnect to %1.").arg(sDeviceName));
+            m_ui->statusBar->showProgressMessage(tr("Trying to reconnect to %1...").arg(sDeviceName));
         }
         else if (sig == CMessage::DoneConSig)
         {

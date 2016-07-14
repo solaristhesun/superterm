@@ -27,14 +27,14 @@ void CStatusBarFrame::showMessage(const QString& message, const int timeout)
 
     if (timeout == 0)
     {
-        setStyleProperty("error", true);
+        setStyleProperty("theme", "error");
         m_ui->waitingSpinner->stop();
         m_ui->btnCancel->hide();
         m_ui->btnClose->show();
     }
     else
     {
-        setStyleProperty("error", false);
+        setStyleProperty("theme", "default");
         m_ui->waitingSpinner->stop();
         m_ui->btnCancel->hide();
         m_ui->btnClose->hide();
@@ -48,7 +48,7 @@ void CStatusBarFrame::showProgressMessage(const QString& message)
 {
     m_ui->labelMessage->setText(message);
 
-    setStyleProperty("error", false);
+    setStyleProperty("theme", "warning");
     m_ui->btnClose->hide();
     m_ui->btnCancel->show();
     m_ui->waitingSpinner->start();

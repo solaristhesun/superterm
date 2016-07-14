@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de_DE">
+<TS version="2.0" language="de_DE">
 <context>
     <name>CConnectionBar</name>
     <message>
@@ -15,7 +15,7 @@
     </message>
     <message>
         <location filename="../src/ui/connectionbar.ui" line="73"/>
-        <location filename="../src/ui/connectionbar.cpp" line="114"/>
+        <location filename="../src/ui/connectionbar.cpp" line="151"/>
         <source>Select baud rate</source>
         <translation type="unfinished">Baudrate wählen</translation>
     </message>
@@ -41,7 +41,7 @@
     </message>
     <message>
         <location filename="../src/ui/connectionbar.ui" line="132"/>
-        <location filename="../src/ui/connectionbar.cpp" line="173"/>
+        <location filename="../src/ui/connectionbar.cpp" line="210"/>
         <source>&amp;More &gt;&gt;</source>
         <translation type="unfinished">&amp;Mehr &gt;&gt;</translation>
     </message>
@@ -56,53 +56,53 @@
         <translation type="unfinished">&amp;Speichern...</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="33"/>
+        <location filename="../src/ui/connectionbar.cpp" line="43"/>
         <source>Select configuration</source>
         <translation type="unfinished">Konfiguration wählen</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="134"/>
-        <location filename="../src/ui/connectionbar.cpp" line="151"/>
+        <location filename="../src/ui/connectionbar.cpp" line="171"/>
+        <location filename="../src/ui/connectionbar.cpp" line="188"/>
         <source>None</source>
         <translation type="unfinished">Keine</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="135"/>
+        <location filename="../src/ui/connectionbar.cpp" line="172"/>
         <source>Even</source>
         <translation type="unfinished">Gerade</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="136"/>
+        <location filename="../src/ui/connectionbar.cpp" line="173"/>
         <source>Odd</source>
         <translation type="unfinished">Ungerade</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="137"/>
+        <location filename="../src/ui/connectionbar.cpp" line="174"/>
         <source>Space</source>
         <translation type="unfinished">Leerzeichen</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="138"/>
+        <location filename="../src/ui/connectionbar.cpp" line="175"/>
         <source>Mark</source>
         <translation type="unfinished">Markierung</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="152"/>
+        <location filename="../src/ui/connectionbar.cpp" line="189"/>
         <source>Xon/Xoff</source>
         <translation type="unfinished">Xon/Xoff</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="153"/>
+        <location filename="../src/ui/connectionbar.cpp" line="190"/>
         <source>Hardware</source>
         <translation type="unfinished">Hardware</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="165"/>
+        <location filename="../src/ui/connectionbar.cpp" line="202"/>
         <source>&lt;&lt; &amp;Less</source>
         <translation type="unfinished">&lt;&lt; &amp;Weniger</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="222"/>
+        <location filename="../src/ui/connectionbar.cpp" line="255"/>
         <source>&amp;Disconnect</source>
         <translation type="unfinished">&amp;Trennen</translation>
     </message>
@@ -111,42 +111,42 @@
     <name>CConsoleTab</name>
     <message>
         <source>Select port</source>
-        <translation type="vanished">Port wählen</translation>
+        <translation>Port wählen</translation>
     </message>
     <message>
         <source>Select baud rate</source>
-        <translation type="vanished">Baudrate wählen</translation>
+        <translation>Baudrate wählen</translation>
     </message>
     <message>
         <source>Select data bits</source>
-        <translation type="vanished">Datenbits wählen</translation>
+        <translation>Datenbits wählen</translation>
     </message>
     <message>
         <source>Select parity</source>
-        <translation type="vanished">Parität wählen</translation>
+        <translation>Parität wählen</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="vanished">Keine</translation>
+        <translation>Keine</translation>
     </message>
     <message>
         <source>Even</source>
-        <translation type="vanished">Gerade</translation>
+        <translation>Gerade</translation>
     </message>
     <message>
         <source>Odd</source>
-        <translation type="vanished">Ungerade</translation>
+        <translation>Ungerade</translation>
     </message>
     <message>
         <source>Mark</source>
-        <translation type="vanished">Markierung</translation>
+        <translation>Markierung</translation>
     </message>
     <message>
         <source>&amp;Disconnect</source>
-        <translation type="vanished">&amp;Trennen</translation>
+        <translation>&amp;Trennen</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="437"/>
+        <location filename="../src/ui/consoletab.cpp" line="433"/>
         <source>Visit superterm website</source>
         <translation>Webseite von superterm besuchen</translation>
     </message>
@@ -157,136 +157,136 @@
     </message>
     <message>
         <source>Select configuration</source>
-        <translation type="vanished">Konfiguration wählen</translation>
+        <translation>Konfiguration wählen</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="255"/>
+        <location filename="../src/ui/consoletab.cpp" line="251"/>
         <source>Save configuration</source>
         <translation>Konfiguration speichern</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="257"/>
+        <location filename="../src/ui/consoletab.cpp" line="253"/>
         <source>superterm configurations (*.xml)</source>
         <translation>superterm Konfigurationsdateien (*.xml)</translation>
     </message>
     <message>
         <source>&lt;&lt; &amp;Less</source>
-        <translation type="vanished">&lt;&lt; &amp;Weniger</translation>
+        <translation>&lt;&lt; &amp;Weniger</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="439"/>
+        <location filename="../src/ui/consoletab.cpp" line="435"/>
         <source>About superterm</source>
         <translation>Über superterm</translation>
     </message>
     <message>
         <source>Space</source>
-        <translation type="vanished">Leerzeichen</translation>
+        <translation>Leerzeichen</translation>
     </message>
     <message>
         <source>Select stop bits</source>
-        <translation type="vanished">Stoppbits wählen</translation>
+        <translation>Stoppbits wählen</translation>
     </message>
     <message>
         <source>Select flow control</source>
-        <translation type="vanished">Flussteuerung wählen</translation>
+        <translation>Flussteuerung wählen</translation>
     </message>
     <message>
         <source>&amp;More &gt;&gt;</source>
-        <translation type="vanished">&amp;Mehr &gt;&gt;</translation>
+        <translation>&amp;Mehr &gt;&gt;</translation>
     </message>
     <message>
         <source>&amp;Connect</source>
-        <translation type="vanished">&amp;Verbinden</translation>
+        <translation>&amp;Verbinden</translation>
     </message>
     <message>
         <source>&amp;Save...</source>
-        <translation type="vanished">&amp;Speichern...</translation>
+        <translation>&amp;Speichern...</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="114"/>
+        <location filename="../src/ui/consoletab.ui" line="97"/>
         <source>Change Color...</source>
         <translation>Hintergrundfarbe...</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="119"/>
+        <location filename="../src/ui/consoletab.ui" line="102"/>
         <source>&amp;Connection...</source>
         <translation>&amp;Verbindung...</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="122"/>
+        <location filename="../src/ui/consoletab.ui" line="105"/>
         <source>Connection</source>
         <translation>Verbindung</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="127"/>
+        <location filename="../src/ui/consoletab.ui" line="110"/>
         <source>Change Font...</source>
         <translation>Schriftart...</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="155"/>
+        <location filename="../src/ui/consoletab.ui" line="138"/>
         <source>Logging...</source>
         <translation>Protokollierung...</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="163"/>
+        <location filename="../src/ui/consoletab.ui" line="146"/>
         <source>&amp;Autoscroll</source>
         <translation>&amp;Autoscroll</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="132"/>
+        <location filename="../src/ui/consoletab.ui" line="115"/>
         <source>&amp;About superterm</source>
         <translation>Über &amp;superterm</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="150"/>
+        <location filename="../src/ui/consoletab.ui" line="133"/>
         <source>&amp;Fullscreen</source>
         <translation>&amp;Vollbildmodus</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="137"/>
+        <location filename="../src/ui/consoletab.ui" line="120"/>
         <source>Clear</source>
         <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="142"/>
+        <location filename="../src/ui/consoletab.ui" line="125"/>
         <source>Highlight...</source>
         <translation>Hervorheben...</translation>
     </message>
     <message>
         <source>Xon/Xoff</source>
-        <translation type="vanished">Xon/Xoff</translation>
+        <translation>Xon/Xoff</translation>
     </message>
     <message>
         <source>Hardware</source>
-        <translation type="vanished">Hardware</translation>
+        <translation>Hardware</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="470"/>
+        <location filename="../src/ui/consoletab.cpp" line="466"/>
         <source>Logging to %1 failed.</source>
         <translation>Protokollierung nach %1 fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="473"/>
+        <location filename="../src/ui/consoletab.cpp" line="469"/>
         <source>Logging to %1 started.</source>
         <translation>Protokollierung nach %1 gestartet.</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="505"/>
+        <location filename="../src/ui/consoletab.cpp" line="501"/>
         <source>Successfully connected to %1.</source>
-        <translation>Verbindung mit %1 erfolgreicht hergestellt.</translation>
+        <translation type="unfinished">Verbindung mit %1 erfolgreich hergestellt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="521"/>
-        <source>Trying to reconnect to %1.</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/ui/consoletab.cpp" line="515"/>
+        <source>Trying to reconnect to %1...</source>
+        <translation type="unfinished">Versuche Verbindung mit %1 wiederherzustellen...</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="529"/>
+        <location filename="../src/ui/consoletab.cpp" line="520"/>
         <source>Successfully reconnected to %1.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verbindung mit %1 erfolgreich wiederhergestellt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="437"/>
+        <location filename="../src/ui/consoletab.cpp" line="433"/>
         <source>All rights reserved.</source>
         <translation>Alle Rechte vorbehalten.</translation>
     </message>
@@ -330,14 +330,14 @@
 <context>
     <name>CStatusBarFrame</name>
     <message>
-        <location filename="../src/ui/statusbarframe.ui" line="83"/>
+        <location filename="../src/ui/statusbarframe.ui" line="80"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
     <message>
-        <location filename="../src/ui/statusbarframe.ui" line="90"/>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/ui/statusbarframe.ui" line="87"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Abbrechen</translation>
     </message>
 </context>
 <context>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>38</height>
+    <height>40</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,6 +39,22 @@
     <widget class="WaitingSpinnerWidget" name="waitingSpinner" native="true"/>
    </item>
    <item>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>4</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
     <widget class="QLabel" name="labelMessage">
      <property name="text">
       <string notr="true">Message</string>
@@ -68,7 +84,7 @@
    <item>
     <widget class="QPushButton" name="btnCancel">
      <property name="text">
-      <string>Cancel</string>
+      <string>&amp;Cancel</string>
      </property>
     </widget>
    </item>
