@@ -4,6 +4,10 @@
 #include <QDebug>
 #include <QRect>
 
+#if defined(Q_OS_WIN)
+#include "windows.h"
+#endif
+
 #include "ui_mainwindow.h"
 #include "ui/mainwindow.h"
 #include "ui/consoletab.h"
@@ -101,6 +105,48 @@ CConsoleTab* CMainWindow::detachTab()
     qDebug() << "detaching tab" << tab->getLabel() << "from" << this;
 
     return tab;
+}
+
+void CMainWindow::resizeEvent(QResizeEvent* event)
+{
+    QSize newSize = event->size();
+
+    newSize.setWidth(floor(newSize.width() / 50) * 50);
+
+    //resize(event->oldSize());
+
+    //QMainWindow::resizeEvent(event);
+}
+
+bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long* result)
+{
+    bool bEventHandled = false;
+
+#if defined(Q_OS_WIN)
+    if(eventType == "windows_generic_MSG")
+    {
+        MSG* msg = static_cast< MSG* >( message );
+
+        switch ( msg->message )
+        {
+        case WM_SIZING:
+            {
+                RECT* r = (RECT*)msg->lParam;
+                //qDebug() << "BAM" << r->left << r->right;
+                //r->right = r->right / 20 * 20 + 20;
+            }
+            break;
+        default:
+            break;
+        }
+    }
+#else
+    Q_UNUSED(eventType)
+    Q_UNUSED(message);
+    Q_UNUSED(result);
+#endif
+
+    return bEventHandled;
 }
 
 int CMainWindow::getTabCount() const
