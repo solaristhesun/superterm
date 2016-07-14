@@ -84,7 +84,7 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
         currentWindow->move(globalPos);
 
         // check if tab is over tabbar of other mainwindow
-        for (QWidget* widget: QApplication::topLevelWidgets())
+        for (QWidget* widget : QApplication::topLevelWidgets())
         {
             if (widget->objectName() == "CMainWindow" && widget != currentWindow)
             {

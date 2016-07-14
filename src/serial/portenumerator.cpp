@@ -46,7 +46,7 @@ void CPortEnumerator::run()
             m_mutex.lock();
             m_ports.clear();
 
-            for (const QSerialPortInfo& info: ports)
+            for (const QSerialPortInfo& info : ports)
             {
                 m_ports << CSerialPortInfo(info);
             }

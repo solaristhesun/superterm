@@ -138,7 +138,7 @@ void CConsoleView::insertPlainText(const QString& text)
 
     int iLines = text.count('\n');
 
-    for (CHighlightsFrame::Highlighting h: m_highlightings)
+    for (CHighlightsFrame::Highlighting h : m_highlightings)
     {
         for (int i = 0; i < iLines; i++)
         {

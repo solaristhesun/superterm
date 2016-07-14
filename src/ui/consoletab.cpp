@@ -70,20 +70,15 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
 
     m_ui->connectionBar->setPortEnumerator(pe);
 
-    if (m_session)
+    if (session)
     {
-        m_portEndpoint->setBaudRate(session->getBaudRate());
-        m_portEndpoint->setDataBits(session->getDataBits());
-        m_portEndpoint->setParity(session->getParity());
-        m_portEndpoint->setStopBits(session->getStopBits());
-        m_portEndpoint->setFlowControl(session->getFlowControl());
-        m_portEndpoint->connectEndpoint(session->getDeviceName());
+        m_portEndpoint->connectEndpoint(session);
 
         m_ui->connectionBar->loadFromSession(session);
 
         QList<CHighlightsFrame::Highlighting> highlights;
 
-        for (const QVariant& h: m_session->getHighlights())
+        for (const QVariant& h : session->getHighlights())
         {
             CHighlightsFrame::Highlighting hi = h.value<CHighlightsFrame::Highlighting>();
             QPixmap                        pixmap(10, 10);
@@ -396,12 +391,7 @@ void CConsoleTab::onConnectClicked()
         m_session->setStopBits(g_StopBitsNameMap.key(m_ui->connectionBar->getStopBits()));
         m_session->setFlowControl(g_FlowControlNameMap.key(m_ui->connectionBar->getFlowControl()));
 
-        m_portEndpoint->setBaudRate(m_ui->connectionBar->getBaudRate().toUInt());
-        m_portEndpoint->setDataBits(m_ui->connectionBar->getDataBits().toInt());
-        m_portEndpoint->setParity(m_ui->connectionBar->getParity().toInt());
-        m_portEndpoint->setStopBits(m_ui->connectionBar->getStopBits().toInt());
-        m_portEndpoint->setFlowControl(m_ui->connectionBar->getFlowControl().toInt());
-        m_portEndpoint->connectEndpoint(m_ui->connectionBar->getDeviceName());
+        m_portEndpoint->connectEndpoint(m_session);
     }
     else
     {
@@ -409,12 +399,23 @@ void CConsoleTab::onConnectClicked()
     }
 }
 
-void CConsoleTab::onEndpointDisconnected()
+void CConsoleTab::onEndpointDisconnected(int returnCode)
 {
-    qDebug() << "[slot] onEndpointDisconnected";
+    qDebug() << "[slot] onEndpointDisconnected" << returnCode;
 
     m_ui->connectionBar->onDisconnected();
     m_ui->consoleView->setFocus();
+
+    switch (returnCode)
+    {
+    case 1:
+    {
+        m_ui->statusBar->showMessage(tr("Error connecting to port %1.").arg(m_session->getDeviceName()));
+    }
+    break;
+    default:
+        break;
+    }
 }
 
 void CConsoleTab::showError(QSerialPort::SerialPortError error)

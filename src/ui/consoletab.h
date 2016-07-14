@@ -52,7 +52,7 @@ public slots:
     void onAppQuit();
     void onEndpointData(const CMessage& message);
     void onEndpointConnected();
-    void onEndpointDisconnected();
+    void onEndpointDisconnected(int returnCode);
     void onReconnectionSignal(const CMessage& message);
     void onReconnectionCancel();
     void onConfigurationChanged(const QString& config);

@@ -62,7 +62,7 @@ CPortApplication::CPortApplication(int& argc, char** argv)
     // currently nothing
 }
 
-void CPortApplication::connectSocket()
+int CPortApplication::exec()
 {
     QString                  portName = arguments().at(1);
     quint32                  baudRate = arguments().at(2).toUInt();
@@ -91,6 +91,7 @@ void CPortApplication::connectSocket()
     else
     {
         QTextStream(stdout) << "error:" << m_port->errorString();
+        return 1;
     }
 
     connect(m_port, SIGNAL(readyRead()), this, SLOT(onSerialDataAvailable()));
@@ -99,6 +100,8 @@ void CPortApplication::connectSocket()
     m_socket->connectToServer("serial:" + portName.replace("/", "_"));
 
     QTextStream(stdout) << "started" << portName << endl;
+
+    return QCoreApplication::exec();
 }
 
 void CPortApplication::onSerialDataAvailable()

@@ -15,7 +15,7 @@ public:
     {
         QVariantList varList;
 
-        for (const T& type: types)
+        for (const T& type : types)
         {
             varList.append(QVariant::fromValue(type));
         }

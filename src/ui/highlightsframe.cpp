@@ -132,7 +132,7 @@ QList<CHighlightsFrame::Highlighting> CHighlightsFrame::getItems()
     QList<QListWidgetItem*> items = m_ui->filterList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
     QList<Highlighting>     list;
 
-    for (QListWidgetItem* item: items)
+    for (QListWidgetItem* item : items)
     {
         Highlighting h;
         h.pattern = item->text();

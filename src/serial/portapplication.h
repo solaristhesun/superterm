@@ -13,7 +13,7 @@ class CPortApplication : public QCoreApplication
 public:
     CPortApplication(int& argc, char** argv);
 
-    void connectSocket();
+    int exec();
 
 public slots:
     void onSocketConnected();

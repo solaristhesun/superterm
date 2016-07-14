@@ -20,7 +20,7 @@ public:
     void hideProgressMessage();
 
 public slots:
-    void hide();
+    void hideOnTimeout();
 
 signals:
     void cancelReconnection();

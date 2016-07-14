@@ -39,13 +39,13 @@ void CStatusBarFrame::showMessage(const QString& message, const int timeout)
         m_ui->waitingSpinner->stop();
         m_ui->btnCancel->hide();
         m_ui->btnClose->hide();
-        QTimer::singleShot(timeout, this, SLOT(hide()));
+        QTimer::singleShot(timeout, this, &CStatusBarFrame::hideOnTimeout);
     }
 
     show();
 }
 
-void CStatusBarFrame::hide()
+void CStatusBarFrame::hideOnTimeout()
 {
     if (QObject::property("theme") == "default")
     {
