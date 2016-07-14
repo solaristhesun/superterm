@@ -273,17 +273,17 @@
     <message>
         <location filename="../src/ui/consoletab.cpp" line="501"/>
         <source>Successfully connected to %1.</source>
-        <translation type="unfinished">Verbindung mit %1 erfolgreich hergestellt.</translation>
+        <translation>Verbindung mit %1 erfolgreich hergestellt.</translation>
     </message>
     <message>
         <location filename="../src/ui/consoletab.cpp" line="515"/>
         <source>Trying to reconnect to %1...</source>
-        <translation type="unfinished">Versuche Verbindung mit %1 wiederherzustellen...</translation>
+        <translation>Versuche Verbindung mit %1 wiederherzustellen...</translation>
     </message>
     <message>
         <location filename="../src/ui/consoletab.cpp" line="520"/>
         <source>Successfully reconnected to %1.</source>
-        <translation type="unfinished">Verbindung mit %1 erfolgreich wiederhergestellt.</translation>
+        <translation>Verbindung mit %1 erfolgreich wiederhergestellt.</translation>
     </message>
     <message>
         <location filename="../src/ui/consoletab.cpp" line="433"/>
