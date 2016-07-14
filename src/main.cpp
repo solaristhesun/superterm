@@ -9,19 +9,22 @@
 #include "ui/consoletabfactory.h"
 #include "serial/portapplication.h"
 #include "serial/portenumerator.h"
+#include "singleapplication/singleapplication.h"
 
 int main(int argc, char* argv[])
 {
     if (argc == 7)
     {
         CPortApplication a(argc, argv);
-        a.connectSocket();
-
         return a.exec();
     }
     else
     {
-        QApplication a(argc, argv);
+        QApplication::setOrganizationName("SCHELER");
+        QApplication::setOrganizationDomain("scheler.com");
+        QApplication::setApplicationName(g_sAppName);
+
+        SingleApplication a(argc, argv);
 
         // set application icon
         a.setWindowIcon(QIcon(":/icons/terminal_32x32.png"));
@@ -34,10 +37,6 @@ int main(int argc, char* argv[])
             a.setStyleSheet(style.readAll());
             style.close();
         }
-
-        QApplication::setOrganizationName("SCHELER");
-        QApplication::setOrganizationDomain("scheler.com");
-        QApplication::setApplicationName(g_sAppName);
 
         QTranslator qtTranslator;
         qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
@@ -52,11 +51,11 @@ int main(int argc, char* argv[])
 
         // create main window on heap!
         CMainWindow* w = new CMainWindow;
-        w->resize(800, 600);
         w->addExistingTabsFromFile();
         w->show();
 
-        QObject::connect(qApp, &QApplication::aboutToQuit, w, &CMainWindow::deleteLater);
+        QObject::connect(&a, &QApplication::aboutToQuit, w, &CMainWindow::deleteLater);
+        QObject::connect(&a, &SingleApplication::showUp, w, &CMainWindow::onSecondaryInstanceLaunched);
 
         return a.exec();
     }

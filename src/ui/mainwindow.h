@@ -23,13 +23,13 @@ public:
     CConsoleTab* detachTab();
     int getTabCount() const;
     QRect getTabBarRect() const;
-    void resizeEvent(QResizeEvent* event);
 
 private:
     bool nativeEvent(const QByteArray& eventType, void* message, long* result);
 
 public slots:
     void aboutToQuit();
+    void onSecondaryInstanceLaunched();
 
 signals:
     void willQuit();

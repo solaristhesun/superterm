@@ -22,6 +22,7 @@ CMainWindow::CMainWindow(QWidget* parent)
 {
     qDebug() << "CMainWindow::CMainWindow()";
     m_ui->setupUi(this);
+    QWidget::resize(800, 600);
 
     QObject::connect(qApp, &QApplication::aboutToQuit, this, &CMainWindow::aboutToQuit);
 
@@ -53,7 +54,7 @@ void CMainWindow::addExistingTabsFromFile()
     if (!files.isEmpty())
     {
         m_ui->tabWidget->clear(); // FIXME: incorrect, does not destroy initial tab
-        for (const QString& str: files)
+        for (const QString& str : files)
         {
             QFile file(QCoreApplication::applicationDirPath() + "/" + str);
             file.open(QIODevice::ReadOnly);
@@ -81,7 +82,7 @@ void CMainWindow::removeTabFiles()
 
     if (!files.isEmpty())
     {
-        for (const QString& str: files)
+        for (const QString& str : files)
         {
             dir.remove(str);
         }
@@ -107,15 +108,14 @@ CConsoleTab* CMainWindow::detachTab()
     return tab;
 }
 
-void CMainWindow::resizeEvent(QResizeEvent* event)
+void CMainWindow::onSecondaryInstanceLaunched()
 {
-    QSize newSize = event->size();
+    qDebug() << "[slot] onSecondaryInstanceLaunched";
 
-    newSize.setWidth(floor(newSize.width() / 50) * 50);
+    CMainWindow* mainWindow = new CMainWindow;
 
-    //resize(event->oldSize());
-
-    //QMainWindow::resizeEvent(event);
+    mainWindow->show();
+    mainWindow->attachTab(CConsoleTabFactory::createTab());
 }
 
 bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long* result)
@@ -130,12 +130,12 @@ bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long* 
         switch ( msg->message )
         {
         case WM_SIZING:
-            {
-                RECT* r = (RECT*)msg->lParam;
-                //qDebug() << "BAM" << r->left << r->right;
-                //r->right = r->right / 20 * 20 + 20;
-            }
-            break;
+        {
+            RECT* r = (RECT*)msg->lParam;
+            //qDebug() << "BAM" << r->left << r->right;
+            //r->right = r->right / 20 * 20 + 20;
+        }
+        break;
         default:
             break;
         }
