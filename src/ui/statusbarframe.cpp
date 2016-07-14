@@ -44,6 +44,14 @@ void CStatusBarFrame::showMessage(const QString& message, const int timeout)
     show();
 }
 
+void CStatusBarFrame::hide()
+{
+    if (QObject::property("theme") == "default")
+    {
+        QWidget::hide();
+    }
+}
+
 void CStatusBarFrame::showProgressMessage(const QString& message)
 {
     m_ui->labelMessage->setText(message);

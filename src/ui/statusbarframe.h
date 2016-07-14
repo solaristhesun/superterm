@@ -19,6 +19,9 @@ public:
     void showProgressMessage(const QString& message);
     void hideProgressMessage();
 
+public slots:
+    void hide();
+
 signals:
     void cancelReconnection();
 
