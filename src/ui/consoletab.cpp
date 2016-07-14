@@ -396,12 +396,12 @@ void CConsoleTab::onConnectClicked()
         m_session->setStopBits(g_StopBitsNameMap.key(m_ui->connectionBar->getStopBits()));
         m_session->setFlowControl(g_FlowControlNameMap.key(m_ui->connectionBar->getFlowControl()));
 
-        m_portEndpoint->connectEndpoint(m_ui->connectionBar->getDeviceName());
         m_portEndpoint->setBaudRate(m_ui->connectionBar->getBaudRate().toUInt());
         m_portEndpoint->setDataBits(m_ui->connectionBar->getDataBits().toInt());
         m_portEndpoint->setParity(m_ui->connectionBar->getParity().toInt());
         m_portEndpoint->setStopBits(m_ui->connectionBar->getStopBits().toInt());
         m_portEndpoint->setFlowControl(m_ui->connectionBar->getFlowControl().toInt());
+        m_portEndpoint->connectEndpoint(m_ui->connectionBar->getDeviceName());
     }
     else
     {
