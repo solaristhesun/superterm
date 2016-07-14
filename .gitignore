@@ -4,3 +4,4 @@ emulator/emulator
 Makefile
 *.user
 *.qm
+.*
