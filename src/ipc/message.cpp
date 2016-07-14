@@ -78,22 +78,26 @@ bool CMessage::isCmd(const Cmd& cmd) const
 
 int CMessage::getSize() const
 {
-    return (sizeof(Cmd) + sizeof(qint8) + m_payload.size());
+    /* Total message size is 4 bytes for command + 4 bytes for payload size
+     *  + number of bytes in payload */
+    return (sizeof(Cmd) + sizeof(qint32) + m_payload.size());
 }
 
 QDataStream& operator<<(QDataStream& ds, const CMessage& message)
 {
-    ds << (qint8)message.getCmd();
+    ds << (qint32)message.getCmd();
+    // 4 Bytes size are written too
     ds << message.getPayload();
     return ds;
 }
 
 QDataStream& operator>>(QDataStream& ds, CMessage& message)
 {
-    qint8      cmd;
+    qint32     cmd;
     QByteArray payload;
 
     ds >> cmd;
+    // 4 Bytes size are read too
     ds >> payload;
 
     message = CMessage((CMessage::Cmd)cmd, payload);

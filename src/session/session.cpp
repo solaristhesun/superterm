@@ -6,6 +6,7 @@
 #include "session/session.h"
 
 CSession::CSession()
+    : m_bPortConnected(true)
 {
 }
 
@@ -30,4 +31,14 @@ void CSession::saveToFile()
     }
 
     file.close();
+}
+
+void CSession::setPortConnected(bool bPortConnected)
+{
+    m_bPortConnected = bPortConnected;
+}
+
+bool CSession::isPortConnected() const
+{
+    return m_bPortConnected;
 }

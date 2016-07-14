@@ -480,7 +480,7 @@ void CConsoleTab::onAppQuit()
 {
     qDebug() << "[slot] onAppQuit";
 
-    if (m_session)
+    if (m_session && m_session->isPortConnected())
     {
         m_session->setHighlights(CSerializableObject::convertToQVariantList(m_ui->highlightsFrame->getItems()));
         m_session->saveToFile();
@@ -512,10 +512,20 @@ void CConsoleTab::onReconnectionSignal(const CMessage& message)
 
         if (sig == CMessage::IsConSig)
         {
+            if (m_session)
+            {
+                m_session->setPortConnected(false);
+            }
+
             m_ui->statusBar->showProgressMessage(tr("Trying to reconnect to %1...").arg(sDeviceName));
         }
         else if (sig == CMessage::DoneConSig)
         {
+            if (m_session)
+            {
+                m_session->setPortConnected(true);
+            }
+
             m_ui->statusBar->hideProgressMessage();
             m_ui->statusBar->showMessage(tr("Successfully reconnected to %1.").arg(sDeviceName), 3000);
         }

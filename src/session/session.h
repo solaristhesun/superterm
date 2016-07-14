@@ -89,6 +89,9 @@ public:
 
     void saveToFile();
 
+    void setPortConnected(bool bPortConnected);
+    bool isPortConnected() const;
+
 private:
     QString m_deviceDesc;
     QString m_deviceName;
@@ -99,6 +102,8 @@ private:
     qint32  m_i32FlowControl;
 
     QVariantList m_highlights;
+
+    bool m_bPortConnected;
 };
 
 #endif // SESSION_H
