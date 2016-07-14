@@ -9,6 +9,7 @@ CStatusBarFrame::CStatusBarFrame(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+    setProperty("theme", "default");
     setupWaitingSpinner();
 
     hide();
