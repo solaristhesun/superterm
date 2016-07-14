@@ -1,44 +1,47 @@
 #include <QtGlobal>
 #include <QByteArray>
 #include <QString>
+#include <QDataStream>
 
 #include "ipc/message.h"
 #include "ipc/messagecodec.h"
 
-CMessage MessageCodec::decode(const QByteArray& message)
+CMessage MessageCodec::decode(QByteArray& message)
 {
-    CMessage::Cmd cmd = (CMessage::Cmd) message.at(0);
-    QByteArray    payload = message.mid(1);
+    QDataStream ds(message);
 
-    return CMessage(cmd, payload);
-}
+    CMessage decodedMessage;
+    ds >> decodedMessage;
+    message.remove(0, decodedMessage.getSize());
 
-QByteArray MessageCodec::encode(const CMessage& message)
-{
-    return encode(message.getCmd(), message.getPayload());
+    return decodedMessage;
 }
 
 QByteArray MessageCodec::encodeData(const QByteArray& payload)
 {
-    return encode(CMessage::DataCmd, payload);
+    return encode(CMessage(CMessage::DataCmd, payload));
 }
 
 QByteArray MessageCodec::encodeStringData(const QString& string)
 {
-    return encode(CMessage::DataCmd, string.toLatin1());
+    return encode(CMessage(CMessage::DataCmd, string));
 }
 
 QByteArray MessageCodec::encodeSignal(const CMessage::Signal& signal)
 {
-    return encode(CMessage::SigCmd, QByteArray().append(signal));
+    return encode(CMessage(CMessage::SigCmd, signal));
 }
 
 QByteArray MessageCodec::encode(const CMessage::Cmd& cmd, const QByteArray& payload)
 {
-    QByteArray encodedMessage;
+    return encode(CMessage(cmd, payload));
+}
 
-    encodedMessage.append((qint8)cmd);
-    encodedMessage.append(payload);
+QByteArray MessageCodec::encode(const CMessage& message)
+{
+    QByteArray  encodedMessage;
+    QDataStream ds(&encodedMessage, QIODevice::WriteOnly);
+    ds << message;
 
     return encodedMessage;
 }

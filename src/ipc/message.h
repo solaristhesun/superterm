@@ -26,7 +26,6 @@ public:
     CMessage();
     ~CMessage();
 
-    CMessage(const QByteArray& byteArray);
     CMessage(const Cmd& cmd, const QByteArray& payload);
     CMessage(const Cmd& cmd, const QString& stringData);
     CMessage(const Cmd& cmd, const Signal& signal);
@@ -44,10 +43,14 @@ public:
     Signal getSignal() const;
 
     bool isCmd(const Cmd& cmd) const;
+    int getSize() const;
 
 private:
     Cmd        m_cmd;
     QByteArray m_payload;
 };
+
+QDataStream& operator<<(QDataStream& ds, const CMessage& obj);
+QDataStream& operator>>(QDataStream& ds, CMessage& obj);
 
 #endif // MESSAGE_H

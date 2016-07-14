@@ -2,7 +2,6 @@
 #include <QByteArray>
 #include <QString>
 #include <QDataStream>
-#include <QTextStream>
 
 #include "ipc/message.h"
 
@@ -12,12 +11,6 @@ CMessage::CMessage()
 
 CMessage::~CMessage()
 {
-}
-
-CMessage::CMessage(const QByteArray& byteArray)
-{
-    setCmd((Cmd)byteArray.at(0));
-    setPayload(byteArray.mid(1));
 }
 
 CMessage::CMessage(const Cmd& cmd, const QByteArray& payload)
@@ -81,4 +74,29 @@ CMessage::Signal CMessage::getSignal() const
 bool CMessage::isCmd(const Cmd& cmd) const
 {
     return m_cmd == cmd;
+}
+
+int CMessage::getSize() const
+{
+    return (sizeof(Cmd) + sizeof(qint8) + m_payload.size());
+}
+
+QDataStream& operator<<(QDataStream& ds, const CMessage& message)
+{
+    ds << (qint8)message.getCmd();
+    ds << message.getPayload();
+    return ds;
+}
+
+QDataStream& operator>>(QDataStream& ds, CMessage& message)
+{
+    qint8      cmd;
+    QByteArray payload;
+
+    ds >> cmd;
+    ds >> payload;
+
+    message = CMessage((CMessage::Cmd)cmd, payload);
+
+    return ds;
 }

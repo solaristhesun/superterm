@@ -1,6 +1,5 @@
 #include <QCoreApplication>
 #include <QLocalSocket>
-#include <QDebug>
 #include <QTimer>
 #include <QSerialPort>
 
@@ -109,18 +108,22 @@ void CPortApplication::onSerialDataAvailable()
 
 void CPortApplication::onSocketData()
 {
-    QTextStream(stdout) << "onSocketData()" << endl;
-    CMessage message = MessageCodec::decode(m_socket->readAll());
+    QByteArray array = m_socket->readAll();
 
-    if (message.isCmd(CMessage::DataCmd))
+    while (array.size() > 0)
     {
-        m_port->write(message.getPayload());
-    }
-    else if (message.isCmd(CMessage::SigCmd))
-    {
-        if (message.getSignal() == CMessage::CancelConSig)
+        const CMessage& message = MessageCodec::decode(array);
+
+        if (message.isCmd(CMessage::DataCmd))
         {
-            m_observer->setActive(false);
+            m_port->write(message.getPayload());
+        }
+        else if (message.isCmd(CMessage::SigCmd))
+        {
+            if (message.getSignal() == CMessage::CancelConSig)
+            {
+                m_observer->setActive(false);
+            }
         }
     }
 }

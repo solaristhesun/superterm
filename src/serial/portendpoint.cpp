@@ -50,7 +50,11 @@ void CPortEndpoint::onSocketConnection()
 
 void CPortEndpoint::onSocketData()
 {
-    emit readyRead(MessageCodec::decode(m_socket->readAll()));
+    QByteArray array = m_socket->readAll();
+    while (array.size() > 0)
+    {
+        emit readyRead(MessageCodec::decode(array));
+    }
 }
 
 void CPortEndpoint::onSocketError(QLocalSocket::LocalSocketError error)
