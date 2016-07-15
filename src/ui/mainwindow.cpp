@@ -136,6 +136,7 @@ bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long*)
                     long widthWindow = r->right - r->left;
                     long heightWindow = r->bottom - r->top;
 
+                    qDebug() << widthWindow << heightWindow;
                     CConsoleTab* tab = m_ui->tabWidget->widget(0); // FIXME: ugly
 
                     QSize decorationSize = QWidget::frameSize() - QWidget::size();
@@ -144,8 +145,8 @@ bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long*)
                     int tabBarWidth = QWidget::width() - tab->getViewPortSize().width();
 
                     // calculate adjusted view dimensions
-                    int adjustedViewWidth = (widthWindow - decorationSize.width() - tabBarWidth) / charSize.width() * charSize.width() - 3;
-                    int adjustedViewHeight = (heightWindow - decorationSize.height()) / charSize.height() * charSize.height() + 3;
+                    int adjustedViewWidth = floor((widthWindow - decorationSize.width() - tabBarWidth) / charSize.width()) * charSize.width() + 3;
+                    int adjustedViewHeight = floor((heightWindow - decorationSize.height()) / charSize.height()) * charSize.height() + 3;
 
                     // manipulate event
                     r->right = r->left + decorationSize.width() + tabBarWidth + adjustedViewWidth;
