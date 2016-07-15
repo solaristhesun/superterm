@@ -194,6 +194,12 @@ void CConsoleView::setAutoScroll(const bool bEnabled)
     }
 }
 
+QSize CConsoleView::getCharSize() const
+{
+    QFontMetrics fm(font());
+    return QSize(fm.averageCharWidth(), fm.height());
+}
+
 void CConsoleView::wrapText(QString textToWrap, const int width)
 {
     QFontMetrics fm(font());

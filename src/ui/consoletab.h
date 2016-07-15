@@ -34,6 +34,8 @@ public:
     void setBackgroundColor(const QColor& color);
     QString getLabel() const;
     void setLabel(const QString& label);
+    QSize getViewPortSize() const;
+    QSize getCharSize() const;
 
 public slots:
     void onConnectClicked();

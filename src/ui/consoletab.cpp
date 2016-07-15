@@ -538,4 +538,14 @@ void CConsoleTab::onReconnectionCancel()
     m_portEndpoint->writeSignal(CMessage::CancelConSig);
 }
 
+QSize CConsoleTab::getViewPortSize() const
+{
+    return m_ui->consoleView->viewport()->size();
+}
+
+QSize CConsoleTab::getCharSize() const
+{
+    return m_ui->consoleView->getCharSize();
+}
+
 // EOF <stefan@scheler.com>

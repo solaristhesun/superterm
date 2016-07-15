@@ -118,7 +118,7 @@ void CMainWindow::onSecondaryInstanceLaunched()
     mainWindow->attachTab(CConsoleTabFactory::createTab());
 }
 
-bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long* result)
+bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long*)
 {
     bool bEventHandled = false;
 
@@ -131,9 +131,25 @@ bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long* 
         {
             case WM_SIZING:
                 {
-                    RECT* r = (RECT*)msg->lParam;
-                    //qDebug() << "BAM" << r->left << r->right;
-                    //r->right = r->right / 20 * 20 + 20;
+                    RECT* r = reinterpret_cast<RECT*>(msg->lParam);
+
+                    long widthWindow = r->right - r->left;
+                    long heightWindow = r->bottom - r->top;
+
+                    CConsoleTab* tab = m_ui->tabWidget->widget(0); // FIXME: ugly
+
+                    QSize decorationSize = QWidget::frameSize() - QWidget::size();
+                    QSize charSize = tab->getCharSize();
+
+                    int tabBarWidth = QWidget::width() - tab->getViewPortSize().width();
+
+                    // calculate adjusted view dimensions
+                    int adjustedViewWidth = (widthWindow - decorationSize.width() - tabBarWidth) / charSize.width() * charSize.width() - 3;
+                    int adjustedViewHeight = (heightWindow - decorationSize.height()) / charSize.height() * charSize.height() + 3;
+
+                    // manipulate event
+                    r->right = r->left + decorationSize.width() + tabBarWidth + adjustedViewWidth;
+                    r->bottom = r->top + decorationSize.height() + adjustedViewHeight;
                 }
                 break;
             default:
@@ -144,12 +160,10 @@ bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long* 
     if (eventType == "xcb_generic_event_t")
     {
         Q_UNUSED(message);
-        Q_UNUSED(result);
     }
 #else
     Q_UNUSED(eventType)
     Q_UNUSED(message);
-    Q_UNUSED(result);
 #endif
 
     return bEventHandled;

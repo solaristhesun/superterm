@@ -34,6 +34,7 @@ public:
     void setAutoScroll(const bool bEnabled);
     void insertBackspace();
     void insertNewline();
+    QSize getCharSize() const;
 
 public slots:
     void clear();
