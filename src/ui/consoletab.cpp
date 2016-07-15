@@ -408,13 +408,13 @@ void CConsoleTab::onEndpointDisconnected(int returnCode)
 
     switch (returnCode)
     {
-    case 1:
-    {
-        m_ui->statusBar->showMessage(tr("Error connecting to port %1.").arg(m_session->getDeviceName()));
-    }
-    break;
-    default:
-        break;
+        case 1:
+            {
+                m_ui->statusBar->showMessage(tr("Error connecting to port %1.").arg(m_session->getDeviceName()));
+            }
+            break;
+        default:
+            break;
     }
 }
 

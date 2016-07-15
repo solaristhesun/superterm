@@ -129,15 +129,15 @@ bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long* 
 
         switch ( msg->message )
         {
-        case WM_SIZING:
-        {
-            RECT* r = (RECT*)msg->lParam;
-            //qDebug() << "BAM" << r->left << r->right;
-            //r->right = r->right / 20 * 20 + 20;
-        }
-        break;
-        default:
-            break;
+            case WM_SIZING:
+                {
+                    RECT* r = (RECT*)msg->lParam;
+                    //qDebug() << "BAM" << r->left << r->right;
+                    //r->right = r->right / 20 * 20 + 20;
+                }
+                break;
+            default:
+                break;
         }
     }
 #elif defined(Q_OS_LINUX)
