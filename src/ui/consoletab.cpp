@@ -361,7 +361,7 @@ void CConsoleTab::onEndpointData(const CMessage& message)
         {
             for (int p = 0; p < data.size(); p++)
             {
-                if (data.at(p) < 30 && data.at(p) != '\n' && data.at(p) != '\r')
+                if (data.at(p) < 32 && !QChar::isSpace(data.at(p)))
                 {
                     data[p] = '.';
                 }
