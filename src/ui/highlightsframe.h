@@ -50,4 +50,7 @@ private:
 
 Q_DECLARE_METATYPE(CHighlightsFrame::Highlighting)
 
+QDataStream & operator<<(QDataStream & out, const CHighlightsFrame::Highlighting & v);
+QDataStream& operator>>(QDataStream& in, CHighlightsFrame::Highlighting& v);
+
 #endif // HIGHLIGHTSFRAME_H

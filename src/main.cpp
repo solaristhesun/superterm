@@ -7,6 +7,7 @@
 #include "misc/globals.h"
 #include "ui/mainwindow.h"
 #include "ui/consoletabfactory.h"
+#include "ui/highlightsframe.h"
 #include "serial/portapplication.h"
 #include "serial/portenumerator.h"
 #include "singleapplication/singleapplication.h"
@@ -48,6 +49,8 @@ int main(int argc, char* argv[])
 
         CPortEnumerator portEnumerator;
         CConsoleTabFactory::setPortEnumerator(&portEnumerator);
+
+        qRegisterMetaTypeStreamOperators<CHighlightsFrame::Highlighting>("CHighlightsFrame::Highlighting");
 
         // create main window on heap!
         CMainWindow* w = new CMainWindow;

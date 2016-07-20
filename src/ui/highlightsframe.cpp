@@ -14,8 +14,6 @@ CHighlightsFrame::CHighlightsFrame(QWidget* parent)
     m_ui->setupUi(this);
     hide();
     refreshColorButton();
-
-    qRegisterMetaTypeStreamOperators<Highlighting>("Highlighting");
 }
 
 CHighlightsFrame::~CHighlightsFrame()
