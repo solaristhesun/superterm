@@ -31,7 +31,7 @@ public:
     void hideButton(int index);
 
     void setConsoleFont(const QFont& font);
-    void setBackgroundColor(const QColor& color);
+    void setColor(const QColor& backGroundColor, const QColor& foreGroundColor);
     QString getLabel() const;
     void setLabel(const QString& label);
     QSize getViewPortSize() const;
@@ -43,6 +43,7 @@ public slots:
     void showContextMenu(const QPoint& pt);
     void showColorDialog();
     void showFontDialog();
+    void showFontColorDialog();
     void showError(QSerialPort::SerialPortError error);
     void updateHighlighting();
     void showAboutDialog();

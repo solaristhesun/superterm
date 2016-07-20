@@ -55,10 +55,11 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     // load font from settings
     QSettings settings;
     QFont     consoleFont;
-    QColor    color = QColor(settings.value("background").toString());
+    QColor    foreGroundColor = QColor(settings.value("foreground").toString());
+    QColor    backGroundColor = QColor(settings.value("background").toString());
     consoleFont.fromString(settings.value("font").toString());
     setConsoleFont(consoleFont);
-    setBackgroundColor(color);
+    setColor(foreGroundColor, backGroundColor);
 
     createContextMenu();
 
@@ -145,8 +146,9 @@ void CConsoleTab::createContextMenu()
     m_menu->addSeparator();
     m_menu->addAction(m_ui->actionToggleAutoscroll);
     m_menu->addSeparator();
-    m_menu->addAction(m_ui->actionChangeColor);
     m_menu->addAction(m_ui->actionChangeFont);
+    m_menu->addAction(m_ui->actionChangeFontColor);
+    m_menu->addAction(m_ui->actionChangeColor);
     m_menu->addSeparator();
     m_menu->addAction(m_ui->actionClear);
     m_menu->addSeparator();
@@ -302,11 +304,12 @@ void CConsoleTab::showSaveDialog()
 void CConsoleTab::showColorDialog()
 {
     QSettings settings;
-    QColor    initial(settings.value("background").toString());
-    QColor    rgb = QColorDialog::getColor(initial, this);
+    QColor    initialBackground(settings.value("background").toString());
+    QColor    initialForeground(settings.value("foreground").toString());
+    QColor    rgb = QColorDialog::getColor(initialBackground, this);
     if (rgb.isValid())
     {
-        setBackgroundColor(rgb);
+        setColor(initialForeground, rgb);
         settings.setValue("background", rgb.name());
     }
 }
@@ -323,6 +326,19 @@ void CConsoleTab::showFontDialog()
     }
 }
 
+void CConsoleTab::showFontColorDialog()
+{
+    QSettings settings;
+    QColor    initialBackground(settings.value("background").toString());
+    QColor    initialForeground(settings.value("foreground").toString());
+    QColor    rgb = QColorDialog::getColor(initialForeground, this);
+    if (rgb.isValid())
+    {
+        setColor(rgb, initialBackground);
+        settings.setValue("foreground", rgb.name());
+    }
+}
+
 void CConsoleTab::toggleAutoScroll()
 {
     static bool bEnabled = true;
@@ -336,9 +352,9 @@ void CConsoleTab::setConsoleFont(const QFont& font)
     m_ui->consoleView->refreshCursor();
 }
 
-void CConsoleTab::setBackgroundColor(const QColor& color)
+void CConsoleTab::setColor(const QColor& foreGroundColor, const QColor& backGroundColor)
 {
-    setStyleSheet(QString("QPlainTextEdit { background-color: %1; }").arg(color.name()));
+    setStyleSheet(QString("QPlainTextEdit { color: %1; background-color: %2; }").arg(foreGroundColor.name(), backGroundColor.name()));
 }
 
 void CConsoleTab::onEndpointData(const CMessage& message)

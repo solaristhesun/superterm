@@ -146,6 +146,14 @@
     <string>&amp;Autoscroll</string>
    </property>
   </action>
+  <action name="actionChangeFontColor">
+   <property name="text">
+    <string>Change Font Color...</string>
+   </property>
+   <property name="toolTip">
+    <string>Change Font Color</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -470,6 +478,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionChangeFontColor</sender>
+   <signal>triggered()</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>showFontColorDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>
@@ -490,5 +514,6 @@
   <slot>showSaveDialog()</slot>
   <slot>hideConnectBar()</slot>
   <slot>onConfigurationChanged(QString)</slot>
+  <slot>showFontColorDialog()</slot>
  </slots>
 </ui>
