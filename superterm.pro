@@ -33,8 +33,7 @@ SOURCES += \
     src/ipc/message.cpp \
     src/ipc/messagecodec.cpp \
     src/serial/portobserver.cpp \
-    src/ui/connectionbar.cpp \
-    src/ui/waitingspinnerwidget.cpp
+    src/ui/connectionbar.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -57,8 +56,7 @@ HEADERS += \
     src/ipc/message.h \
     src/ipc/messagecodec.h \
     src/serial/portobserver.h \
-    src/ui/connectionbar.h \
-    src/ui/waitingspinnerwidget.h
+    src/ui/connectionbar.h
 
 FORMS += \
     src/ui/mainwindow.ui \
@@ -85,6 +83,7 @@ updateqm.CONFIG += no_link target_predeps
 QMAKE_EXTRA_COMPILERS += updateqm
 
 include(contrib/singleapplication/singleapplication.pri)
+include(contrib/waitingspinnerwidget/waitingspinnerwidget.pri)
 
 win32:INCLUDEPATH += C:\\DUMP\\projects\\superterm
 win32:RC_FILE += superterm.rc
