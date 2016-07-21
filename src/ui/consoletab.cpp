@@ -14,6 +14,7 @@
 #include <QFile>
 #include <QListWidgetItem>
 #include <QMetaProperty>
+#include <QDesktopWidget>
 #if defined(Q_OS_WIN)
 #include <windows.h>
 #endif
@@ -121,6 +122,10 @@ void CConsoleTab::toggleFullScreen()
         mMainWindow = static_cast<CMainWindow*>(QApplication::activeWindow());
         mMainWindow->hide();
         QWidget::setParent(0);
+
+        int screenNumber = QApplication::desktop()->screenNumber(mMainWindow);
+        QWidget::setGeometry(QApplication::desktop()->screenGeometry(screenNumber));
+
         QWidget::showFullScreen();
         m_ui->actionFullscreen->setChecked(true);
     }
