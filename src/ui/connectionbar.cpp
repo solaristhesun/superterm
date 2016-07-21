@@ -120,6 +120,8 @@ void CConnectionBar::setFlowControl(const QString& flowControl)
 
 void CConnectionBar::loadFromSession(CSession* session)
 {
+    qDebug() << *session << session->getDeviceDesc();
+    qDebug() << m_ui->comboPorts->count();
     m_ui->comboPorts->setCurrentText(session->getDeviceDesc());
     m_ui->comboBaudRates->setCurrentText(QString::number(session->getBaudRate()));
     m_ui->comboDataBits->setCurrentText(QString::number(session->getDataBits()));
@@ -237,7 +239,7 @@ void CConnectionBar::onDisconnected()
     m_ui->comboStopBits->setEnabled(true);
     m_ui->comboConfigurations->setEnabled(true);
 
-    m_ui->btnConnect->setText("&Connect");
+    m_ui->btnConnect->setText(tr("&Connect"));
 
     QWidget::show();
 }

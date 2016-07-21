@@ -46,7 +46,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     , m_portEndpoint(new CPortEndpoint(this))
     , m_session(session)
     , m_logFile(NULL)
-    , m_menu(NULL)
+    , m_contextMenu(NULL)
     , m_lastTabIndex(0)
 {
     qDebug() << "CConsoleTab::CConsoleTab()";
@@ -100,7 +100,7 @@ CConsoleTab::~CConsoleTab()
 {
     qDebug() << "CConsoleTab::~CConsoleTab()";
     delete m_ui;
-    delete m_menu;
+    delete m_contextMenu;
 }
 
 QString CConsoleTab::getLabel() const
@@ -144,34 +144,44 @@ void CConsoleTab::toggleFullScreen()
 
 void CConsoleTab::createContextMenu()
 {
-    m_menu = new QMenu(this);
-    m_menu->addAction(m_ui->actionConnection );
-    m_menu->addAction(m_ui->actionLogging);
-    m_menu->addAction(m_ui->actionHighlight);
-    m_menu->addSeparator();
-    m_menu->addAction(m_ui->actionToggleAutoscroll);
-    m_menu->addSeparator();
-    m_menu->addAction(m_ui->actionChangeFont);
-    m_menu->addAction(m_ui->actionChangeFontColor);
-    m_menu->addAction(m_ui->actionChangeColor);
-    m_menu->addSeparator();
-    m_menu->addAction(m_ui->actionClear);
-    m_menu->addSeparator();
-    m_menu->addAction(m_ui->actionFullscreen);
-    m_menu->addSeparator();
-    m_menu->addAction(m_ui->actionAbout);
+    m_contextMenu = new QMenu(this);
+    m_contextMenu->addAction(m_ui->actionConnection );
+    m_contextMenu->addAction(m_ui->actionLogging);
+    m_contextMenu->addAction(m_ui->actionHighlight);
+    m_contextMenu->addSeparator();
+    m_contextMenu->addAction(m_ui->actionToggleAutoscroll);
+    m_contextMenu->addSeparator();
+    m_contextMenu->addAction(m_ui->actionChangeFont);
+    m_contextMenu->addAction(m_ui->actionChangeFontColor);
+    m_contextMenu->addAction(m_ui->actionChangeColor);
+    m_contextMenu->addSeparator();
+    m_contextMenu->addAction(m_ui->actionClear);
+    m_contextMenu->addSeparator();
+    m_contextMenu->addAction(m_ui->actionFullscreen);
+    m_contextMenu->addSeparator();
+    m_contextMenu->addAction(m_ui->actionAbout);
     m_ui->actionToggleAutoscroll->setChecked(true);
 }
 
 void CConsoleTab::showContextMenu(const QPoint& pt)
 {
-    m_menu->exec(mapToGlobal(pt));
+    m_contextMenu->exec(mapToGlobal(pt));
 }
 
 void CConsoleTab::updateHighlighting()
 {
     QList<CHighlightsFrame::Highlighting> h = m_ui->highlightsFrame->getItems();
     m_ui->consoleView->setHighlighting(h);
+
+    if (m_session)
+    {
+        m_session->setHighlights(CSerializableObject::convertToQVariantList(m_ui->highlightsFrame->getItems()));
+
+        if (m_session->isPortConnected())
+        {
+            m_session->saveToFile();
+        }
+    }
 }
 
 void CConsoleTab::onConfigurationChanged(const QString& config)
@@ -309,9 +319,11 @@ void CConsoleTab::showSaveDialog()
 void CConsoleTab::showColorDialog()
 {
     QSettings settings;
-    QColor    initialBackground(settings.value("background").toString());
-    QColor    initialForeground(settings.value("foreground").toString());
-    QColor    rgb = QColorDialog::getColor(initialBackground, this);
+
+    QColor initialBackground(settings.value("background").toString());
+    QColor initialForeground(settings.value("foreground").toString());
+    QColor rgb = QColorDialog::getColor(initialBackground, this);
+
     if (rgb.isValid())
     {
         setColor(initialForeground, rgb);
@@ -334,9 +346,11 @@ void CConsoleTab::showFontDialog()
 void CConsoleTab::showFontColorDialog()
 {
     QSettings settings;
-    QColor    initialBackground(settings.value("background").toString());
-    QColor    initialForeground(settings.value("foreground").toString());
-    QColor    rgb = QColorDialog::getColor(initialForeground, this);
+
+    QColor initialBackground(settings.value("background").toString());
+    QColor initialForeground(settings.value("foreground").toString());
+    QColor rgb = QColorDialog::getColor(initialForeground, this);
+
     if (rgb.isValid())
     {
         setColor(rgb, initialBackground);
@@ -424,6 +438,12 @@ void CConsoleTab::onEndpointDisconnected(int returnCode)
 {
     qDebug() << "[slot] onEndpointDisconnected" << returnCode;
 
+    if (m_session)
+    {
+        delete m_session;
+        m_session = nullptr;
+    }
+
     m_ui->connectionBar->onDisconnected();
     m_ui->consoleView->setFocus();
 
@@ -498,16 +518,19 @@ void CConsoleTab::stopLogging()
     m_logFile = NULL;
 }
 
+#if 0
 void CConsoleTab::onAppQuit()
 {
     qDebug() << "[slot] onAppQuit";
-
+#if 0
     if (m_session && m_session->isPortConnected())
     {
         m_session->setHighlights(CSerializableObject::convertToQVariantList(m_ui->highlightsFrame->getItems()));
         m_session->saveToFile();
     }
+#endif
 }
+#endif
 
 void CConsoleTab::onEndpointConnected()
 {
@@ -521,6 +544,11 @@ void CConsoleTab::onEndpointConnected()
     setLabel(sDeviceName);
 
     m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(sDeviceName), 3000);
+
+    if (m_session)
+    {
+        m_session->saveToFile();
+    }
 }
 
 void CConsoleTab::onReconnectionSignal(const CMessage& message)

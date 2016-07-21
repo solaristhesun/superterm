@@ -52,7 +52,6 @@ public slots:
     void startLogging();
     void stopLogging();
     void showSaveDialog();
-    void onAppQuit();
     void onEndpointData(const CMessage& message);
     void onEndpointConnected();
     void onEndpointDisconnected(int returnCode);
@@ -70,7 +69,7 @@ private:
     CPortEndpoint*   m_portEndpoint;
     CSession*        m_session;
     QFile*           m_logFile;
-    QMenu*           m_menu;
+    QMenu*           m_contextMenu;
     int              m_lastTabIndex;
 
     static quint32 m_u32counter;

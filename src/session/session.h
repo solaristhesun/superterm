@@ -20,6 +20,10 @@ public:
     Q_PROPERTY(QVariantList m_highlights READ getHighlights WRITE setHighlights)
 
     CSession();
+    ~CSession();
+    static CSession* createSessionFromFile(const QString& fileName);
+    static void removeFiles();
+    static QStringList getSessionList();
 
     quint32 getBaudRate() const
     {
@@ -105,5 +109,7 @@ private:
 
     bool m_bPortConnected;
 };
+
+QDebug operator<<(QDebug dbg, const CSession& s);
 
 #endif // SESSION_H

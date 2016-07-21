@@ -24,9 +24,6 @@ public:
     CConsoleTab* currentWidget() const;
     CConsoleTab* widget(int index) const;
 
-signals:
-    void appQuits();
-
 public slots:
     void closeTab(int index);
     void onAddButtonClicked();

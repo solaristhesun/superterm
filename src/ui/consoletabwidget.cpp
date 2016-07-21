@@ -78,7 +78,6 @@ void CConsoleTabWidget::onTabDetached(int index)
     {
         QTabWidget::removeTab(index);
 
-        QObject::disconnect(this, &CConsoleTabWidget::appQuits, tab, &CConsoleTab::onAppQuit);
         QObject::disconnect(tab, &CConsoleTab::labelChanged, this, &CConsoleTabWidget::setCurrentTabText);
 
         // add tab to new window
@@ -96,10 +95,11 @@ void CConsoleTabWidget::onAddButtonClicked()
 
 void CConsoleTabWidget::addTab(CConsoleTab* tab)
 {
+    qDebug() << "adding tab" << tab->getLabel();
+
     QTabWidget::addTab(tab, tab->getLabel());
     QTabWidget::setCurrentWidget(tab);
 
-    QObject::connect(this, &CConsoleTabWidget::appQuits, tab, &CConsoleTab::onAppQuit);
     QObject::connect(tab, &CConsoleTab::labelChanged, this, &CConsoleTabWidget::setCurrentTabText);
 
     m_tabBar->moveButton();
@@ -120,11 +120,6 @@ void CConsoleTabWidget::setCurrentTabText(const QString& text)
     const int curIndex = currentIndex();
     setTabText(curIndex, text);
     m_tabBar->moveButton();
-}
-
-void CConsoleTabWidget::aboutToQuit()
-{
-    emit appQuits();
 }
 
 // EOF <stefan@scheler.com>

@@ -92,7 +92,6 @@ void CConsoleView::scrollDown()
 
 void CConsoleView::scrollBarChanged(int pos)
 {
-    qDebug() << "SCROLL " << pos;
     m_scrollPos = pos;
 }
 
@@ -115,13 +114,11 @@ QList<CHighlightsFrame::Highlighting>& CConsoleView::getHighlighting()
 void CConsoleView::saveCursor()
 {
     this->cursorPos = this->textCursor().position();
-    qDebug() << "saving position " << cursorPos;
 }
 
 void CConsoleView::restoreCursor()
 {
     QTextCursor cursor = this->textCursor();
-    qDebug() << "restoring position " << cursorPos;
     cursor.setPosition(this->cursorPos, QTextCursor::MoveAnchor);
     this->setTextCursor(cursor);
 }

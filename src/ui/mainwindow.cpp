@@ -1,5 +1,3 @@
-#include <QMessageBox>
-#include <QDir>
 #include <QMoveEvent>
 #include <QDebug>
 #include <QRect>
@@ -21,10 +19,9 @@ CMainWindow::CMainWindow(QWidget* parent)
     , m_ui(new Ui::CMainWindow)
 {
     qDebug() << "CMainWindow::CMainWindow()";
+
     m_ui->setupUi(this);
     QWidget::resize(800, 600);
-
-    QObject::connect(qApp, &QApplication::aboutToQuit, this, &CMainWindow::aboutToQuit);
 
     setWindowTitle(g_sAppFullName);
 }
@@ -40,52 +37,22 @@ QSize CMainWindow::sizeHint() const
     return QSize(800, 600);
 }
 
-void CMainWindow::aboutToQuit()
-{
-    removeTabFiles();
-    m_ui->tabWidget->aboutToQuit();
-}
-
 void CMainWindow::addExistingTabsFromFile()
 {
-    QDir        dir(QCoreApplication::applicationDirPath());
-    QStringList files = dir.entryList(QStringList() << "*.con", QDir::Files);
+    QStringList fileNames = CSession::getSessionList();
 
-    if (!files.isEmpty())
+    if (!fileNames.isEmpty())
     {
-        m_ui->tabWidget->clear(); // FIXME: incorrect, does not destroy initial tab
-        for (const QString& str : files)
+        for (const QString& fileName : fileNames)
         {
-            QFile file(QCoreApplication::applicationDirPath() + "/" + str);
-            file.open(QIODevice::ReadOnly);
-            QDataStream in(&file);
-
-            CSession* session = new CSession();
-            in >> *session;
-            qDebug() << "adding tab" << session->getDeviceName();
+            CSession* session = CSession::createSessionFromFile(fileName);
 
             m_ui->tabWidget->addTab(CConsoleTabFactory::createTabFromSession(session));
-
-            file.close();
         }
     }
     else
     {
         m_ui->tabWidget->addTab(CConsoleTabFactory::createTab());
-    }
-}
-
-void CMainWindow::removeTabFiles()
-{
-    QDir        dir(QCoreApplication::applicationDirPath());
-    QStringList files = dir.entryList(QStringList() << "*.con", QDir::Files);
-
-    if (!files.isEmpty())
-    {
-        for (const QString& str : files)
-        {
-            dir.remove(str);
-        }
     }
 }
 

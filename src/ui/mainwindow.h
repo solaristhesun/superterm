@@ -28,7 +28,6 @@ private:
     bool nativeEvent(const QByteArray& eventType, void* message, long* result);
 
 public slots:
-    void aboutToQuit();
     void onSecondaryInstanceLaunched();
 
 signals:
@@ -36,8 +35,6 @@ signals:
 
 private:
     Ui::CMainWindow* m_ui;
-
-    void removeTabFiles();
 };
 
 #endif // MAINWINDOW_H

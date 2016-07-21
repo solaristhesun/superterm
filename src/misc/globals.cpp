@@ -12,7 +12,8 @@ const quint32 g_u32revision  = REVISION;
 
 const QMap<QSerialPort::Parity, QString> g_ParityNameMap {
     {QSerialPort::NoParity, "None"},
-    {QSerialPort::OddParity, "Even"},
+    {QSerialPort::OddParity, "Odd"},
+    {QSerialPort::EvenParity, "Even"},
     {QSerialPort::SpaceParity, "Space"},
     {QSerialPort::MarkParity, "Mark"},
 };
