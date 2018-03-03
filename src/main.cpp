@@ -5,6 +5,7 @@
 #include <QDebug>
 
 #include "misc/globals.h"
+#include "misc/defaultsettings.h"
 #include "ui/mainwindow.h"
 #include "ui/consoletabfactory.h"
 #include "ui/highlightsframe.h"
@@ -38,6 +39,8 @@ int main(int argc, char* argv[])
             a.setStyleSheet(style.readAll());
             style.close();
         }
+
+        DefaultSettings::writeDefaults();
 
         QTranslator qtTranslator;
         qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
