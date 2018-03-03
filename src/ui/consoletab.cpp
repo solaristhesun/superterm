@@ -55,6 +55,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
 
     // load font from settings
     QSettings settings;
+
     QFont     consoleFont;
     QColor    foreGroundColor = QColor(settings.value("foreground").toString());
     QColor    backGroundColor = QColor(settings.value("background").toString());
@@ -438,12 +439,6 @@ void CConsoleTab::onEndpointDisconnected(int returnCode)
 {
     qDebug() << "[slot] onEndpointDisconnected" << returnCode;
 
-    if (m_session)
-    {
-        delete m_session;
-        m_session = nullptr;
-    }
-
     m_ui->connectionBar->onDisconnected();
     m_ui->consoleView->setFocus();
 
@@ -456,6 +451,12 @@ void CConsoleTab::onEndpointDisconnected(int returnCode)
             break;
         default:
             break;
+    }
+
+    if (m_session)
+    {
+        delete m_session;
+        m_session = nullptr;
     }
 }
 
