@@ -31,11 +31,11 @@ void LogfilePanel::showFileDialog()
     }
 }
 
-void LogfilePanel::onFileNameChanged(const QString& text)
+void LogfilePanel::onFileNameChanged(const QString& fileName)
 {
-    QFileInfo fileInfo(text);
+    QFileInfo fileInfo(fileName);
 
-    m_ui->btnStart->setEnabled(!text.isEmpty());
+    m_ui->btnStart->setEnabled(fileInfo.absoluteDir().exists() && !fileInfo.fileName().isEmpty());
 }
 
 void LogfilePanel::onStartButtonClicked()
