@@ -1,75 +1,58 @@
 #include <QSerialPortInfo>
 #include <QDateTime>
 #include <QDebug>
+#include <QTimer>
 #include <QList>
 
 #include "serial/portenumerator.h"
 #include "serial/serialportinfo.h"
 
 CPortEnumerator::CPortEnumerator()
-    : m_bActive(false)
 {
     qDebug() << "CPortEnumerator::CPortEnumerator()";
-    QThread::start();
+    QObject::moveToThread(&m_workerThread);
 }
 
 CPortEnumerator::~CPortEnumerator()
 {
     qDebug() << "CPortEnumerator::~CPortEnumerator()";
-    QThread::exit(0);
 }
 
 void CPortEnumerator::startEnumeration()
 {
-    m_bActive = true;
+    qDebug() << "CPortEnumerator::startEnumeration()";
+    QTimer::singleShot(0, this, SLOT(enumeratePorts()));
+    m_workerThread.start();
 }
 
 void CPortEnumerator::stopEnumeration()
 {
-    m_bActive = false;
+    qDebug() << "CPortEnumerator::stopEnumeration()";
+    m_workerThread.exit(0);
 }
 
-void CPortEnumerator::run()
+void CPortEnumerator::enumeratePorts()
 {
-    while (true)
+    QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
+
+    QMutexLocker locker(&m_mutex);
+    m_portsList.clear();
+    for (const QSerialPortInfo& info : ports)
     {
-        if (m_bActive)
-        {
-            //qint64 t1, t2;
-
-            //t1 = QDateTime::currentMSecsSinceEpoch();
-            QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
-            //t2 = QDateTime::currentMSecsSinceEpoch();
-
-            //qDebug() << "TIME: " << t2 - t1;
-
-            m_mutex.lock();
-            m_ports.clear();
-
-            for (const QSerialPortInfo& info : ports)
-            {
-                m_ports << CSerialPortInfo(info);
-            }
-            m_mutex.unlock();
+        m_portsList << CSerialPortInfo(info);
+    }
 
 #if defined(Q_OS_LINUX)
-            m_ports << CSerialPortInfo("/dev/COM1", "socat");
+    m_portsList << CSerialPortInfo("/dev/COM1", "socat");
 #endif
-        }
 
-        QThread::sleep(1); // seconds
-    }
+    QTimer::singleShot(1000, this, SLOT(enumeratePorts()));
 }
 
 QList<CSerialPortInfo> CPortEnumerator::getAvailablePorts()
 {
-    QList<CSerialPortInfo> list;
-
-    m_mutex.lock();
-    list = m_ports;
-    m_mutex.unlock();
-
-    return list;
+    QMutexLocker locker(&m_mutex);
+    return m_portsList;
 }
 
 // EOF <stefan@scheler.com>

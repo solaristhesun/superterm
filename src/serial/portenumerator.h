@@ -1,13 +1,15 @@
 #ifndef PORTENUMERATOR_H
 #define PORTENUMERATOR_H
 
+#include <QObject>
 #include <QThread>
 #include <QMutex>
 
 class CSerialPortInfo;
 
-class CPortEnumerator : public QThread
+class CPortEnumerator : public QObject
 {
+    Q_OBJECT
 public:
     CPortEnumerator();
     ~CPortEnumerator();
@@ -17,12 +19,13 @@ public:
 
     QList<CSerialPortInfo> getAvailablePorts();
 
-    void run();
+private slots:
+    void enumeratePorts();
 
 private:
+    QThread                m_workerThread;
     QMutex                 m_mutex;
-    QList<CSerialPortInfo> m_ports;
-    bool                   m_bActive;
+    QList<CSerialPortInfo> m_portsList;
 };
 
 #endif // PORTENUMERATOR_H
