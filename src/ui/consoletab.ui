@@ -33,62 +33,68 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="CConnectionBar" name="connectionBar">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
+     <property name="opaqueResize">
+      <bool>true</bool>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <property name="lineWidth">
+     <property name="handleWidth">
       <number>0</number>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="CConsoleView" name="consoleView" native="true">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="tabChangesFocus" stdset="0">
+     <property name="childrenCollapsible">
       <bool>false</bool>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="LogfilePanel" name="logPanel">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="CHighlightsFrame" name="highlightsFrame">
-     <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="CStatusBarFrame" name="statusBar">
-     <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
+     <widget class="CConnectionBar" name="connectionBar">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+     </widget>
+     <widget class="CConsoleView" name="consoleView" native="true">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="tabChangesFocus" stdset="0">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="LogfilePanel" name="logPanel">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
+     <widget class="CHighlightsFrame" name="highlightsFrame">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
+     <widget class="CStatusBarFrame" name="statusBar">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
     </widget>
    </item>
   </layout>
