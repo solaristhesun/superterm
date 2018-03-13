@@ -16,6 +16,7 @@ public:
     Q_PROPERTY(qint32 m_i32Parity READ getParity WRITE setParity)
     Q_PROPERTY(qint32 m_i32StopBits READ getStopBits WRITE setStopBits)
     Q_PROPERTY(qint32 m_i32FlowControl READ getFlowControl WRITE setFlowControl)
+    Q_PROPERTY(QString m_tabLabel READ getTabLabel WRITE setTabLabel)
 
     Q_PROPERTY(QVariantList m_highlights READ getHighlights WRITE setHighlights)
 
@@ -37,9 +38,17 @@ public:
     {
         return m_deviceName;
     }
+    QString getTabLabel() const
+    {
+        return m_tabLabel;
+    }
     void setDeviceName(const QString deviceName)
     {
         m_deviceName = deviceName;
+    }
+    void setTabLabel(const QString tabLabel)
+    {
+        m_tabLabel = tabLabel;
     }
     QString getDeviceDesc() const
     {
@@ -99,6 +108,7 @@ public:
 private:
     QString m_deviceDesc;
     QString m_deviceName;
+    QString m_tabLabel;
     quint32 m_u32BaudRate;
     qint32  m_i32DataBits;
     qint32  m_i32Parity;

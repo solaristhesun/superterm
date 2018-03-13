@@ -28,6 +28,7 @@ public slots:
     void closeTab(int index);
     void onAddButtonClicked();
     void onTabDetached(int index);
+    void showContextMenu();
 
 private:
     CConsoleTabBar* m_tabBar;

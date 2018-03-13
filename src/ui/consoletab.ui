@@ -46,6 +46,14 @@
      <property name="childrenCollapsible">
       <bool>false</bool>
      </property>
+     <widget class="RenameTabFrame" name="renameTabFrame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
      <widget class="CConnectionBar" name="connectionBar">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -160,6 +168,14 @@
     <string>Change Font Color</string>
    </property>
   </action>
+  <action name="actionRenameTab">
+   <property name="text">
+    <string>&amp;Rename tab</string>
+   </property>
+   <property name="toolTip">
+    <string>Rename tab</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -208,6 +224,12 @@
     <signal>saveClicked()</signal>
     <signal>configurationChanged(QString)</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>RenameTabFrame</class>
+   <extends>QFrame</extends>
+   <header>src/ui/renametabframe.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
@@ -500,6 +522,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionRenameTab</sender>
+   <signal>triggered()</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>showRenameTabDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>
@@ -521,5 +559,6 @@
   <slot>hideConnectBar()</slot>
   <slot>onConfigurationChanged(QString)</slot>
   <slot>showFontColorDialog()</slot>
+  <slot>showRenameTabDialog()</slot>
  </slots>
 </ui>

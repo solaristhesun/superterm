@@ -18,7 +18,7 @@ CConsoleTab* CConsoleTabFactory::createTab()
 CConsoleTab* CConsoleTabFactory::createTabFromSession(CSession* session)
 {
     CConsoleTab* tab = new CConsoleTab(sPortEnumerator, session);
-    tab->setLabel(session->getDeviceName());
+    tab->setLabel(session->getTabLabel());
 
     return tab;
 }

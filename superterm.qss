@@ -37,6 +37,14 @@ QFrame#connectionBar
     background-color: #ffe6ab;
 }
 
+QFrame#renameTabFrame
+{
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    border-top: 1px solid white;
+    background-color: #ffe6ab;
+}
+
 QFrame#statusBar
 {
     border-left: 1px solid white;

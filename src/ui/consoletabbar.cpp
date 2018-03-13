@@ -24,6 +24,8 @@ CConsoleTabBar::CConsoleTabBar(QWidget* parent)
     m_btn->setFocusPolicy(Qt::NoFocus);
     m_btn->setIcon(QIcon(":/icons/application_add_16x16.png"));
 
+    setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+
     connect(m_btn, &QPushButton::clicked, this, &CConsoleTabBar::addButtonClicked);
 }
 

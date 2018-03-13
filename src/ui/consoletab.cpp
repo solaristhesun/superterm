@@ -70,6 +70,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     connect(m_portEndpoint, &CPortEndpoint::disconnected, this, &CConsoleTab::onEndpointDisconnected);
     connect(m_portEndpoint, &CPortEndpoint::readyRead, this, &CConsoleTab::onReconnectionSignal);
     connect(m_ui->statusBar, &CStatusBarFrame::cancelReconnection, this, &CConsoleTab::onReconnectionCancel);
+    connect(m_ui->renameTabFrame, &RenameTabFrame::applyPressed, this, &CConsoleTab::onRenameTab);
 
     m_ui->connectionBar->setPortEnumerator(pe);
 
@@ -111,6 +112,7 @@ QString CConsoleTab::getLabel() const
 
 void CConsoleTab::setLabel(const QString& label)
 {
+    qDebug() << "setLabel(" << label << ")";
     mTabLabel = label;
 
     emit labelChanged(label);
@@ -146,7 +148,9 @@ void CConsoleTab::toggleFullScreen()
 void CConsoleTab::createContextMenu()
 {
     m_contextMenu = new QMenu(this);
-    m_contextMenu->addAction(m_ui->actionConnection );
+    m_contextMenu->addAction(m_ui->actionRenameTab);
+    m_contextMenu->addSeparator();
+    m_contextMenu->addAction(m_ui->actionConnection);
     m_contextMenu->addAction(m_ui->actionLogging);
     m_contextMenu->addAction(m_ui->actionHighlight);
     m_contextMenu->addSeparator();
@@ -420,6 +424,7 @@ void CConsoleTab::onConnectClicked()
         }
 
         m_session->setDeviceName(m_ui->connectionBar->getDeviceName());
+        m_session->setTabLabel(m_ui->connectionBar->getDeviceName());
         m_session->setDeviceDesc(m_ui->connectionBar->getDeviceDesc());
         m_session->setBaudRate(m_ui->connectionBar->getBaudRate().toUInt());
         m_session->setDataBits(m_ui->connectionBar->getDataBits().toInt());
@@ -476,6 +481,29 @@ void CConsoleTab::showAboutDialog()
                              .arg(g_sAppFullName, QString::number(g_u32revision), tr("All rights reserved."), g_sAppHomepage, tr("Visit superterm website"));
 
     QMessageBox::about(this, tr("About superterm"), contents);
+}
+
+void CConsoleTab::onRenameTab()
+{
+    QString text = m_ui->renameTabFrame->getText();
+
+    setLabel(text);
+
+    if (m_session)
+    {
+        m_session->setTabLabel(text);
+
+        if (m_session->isPortConnected())
+        {
+            m_session->saveToFile();
+        }
+    }
+}
+
+void CConsoleTab::showRenameTabDialog()
+{
+    m_ui->renameTabFrame->setText(getLabel());
+    m_ui->renameTabFrame->show();
 }
 
 void CConsoleTab::onKeyPressed(QKeyEvent* e)
@@ -542,7 +570,7 @@ void CConsoleTab::onEndpointConnected()
     m_ui->connectionBar->onConnected();
     m_ui->consoleView->setFocus();
 
-    setLabel(sDeviceName);
+    setLabel(m_session->getTabLabel());
 
     m_ui->statusBar->showMessage(tr("Successfully connected to %1.").arg(sDeviceName), 3000);
 

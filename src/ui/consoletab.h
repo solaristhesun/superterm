@@ -58,6 +58,8 @@ public slots:
     void onReconnectionSignal(const CMessage& message);
     void onReconnectionCancel();
     void onConfigurationChanged(const QString& config);
+    void showRenameTabDialog();
+    void onRenameTab();
 
 signals:
     void labelChanged(const QString&);

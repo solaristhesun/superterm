@@ -34,7 +34,8 @@ SOURCES += \
     src/ipc/messagecodec.cpp \
     src/serial/portobserver.cpp \
     src/ui/connectionbar.cpp \
-    src/misc/defaultsettings.cpp
+    src/misc/defaultsettings.cpp \
+    src/ui/renametabframe.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -58,7 +59,8 @@ HEADERS += \
     src/ipc/messagecodec.h \
     src/serial/portobserver.h \
     src/ui/connectionbar.h \
-    src/misc/defaultsettings.h
+    src/misc/defaultsettings.h \
+    src/ui/renametabframe.h
 
 FORMS += \
     src/ui/mainwindow.ui \
@@ -67,7 +69,8 @@ FORMS += \
     src/ui/highlightsframe.ui \
     src/ui/logfilepanel.ui \
     src/ui/connectionbar.ui \
-    src/ui/consoletab.ui
+    src/ui/consoletab.ui \
+    src/ui/renametabframe.ui
 
 RESOURCES += \
     superterm.qrc
