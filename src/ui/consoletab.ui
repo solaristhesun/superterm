@@ -301,16 +301,16 @@
   <connection>
    <sender>actionClear</sender>
    <signal>triggered()</signal>
-   <receiver>consoleView</receiver>
-   <slot>clear()</slot>
+   <receiver>CConsoleTab</receiver>
+   <slot>clearTab()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>272</x>
-     <y>117</y>
+     <x>581</x>
+     <y>137</y>
     </hint>
    </hints>
   </connection>
@@ -560,5 +560,6 @@
   <slot>onConfigurationChanged(QString)</slot>
   <slot>showFontColorDialog()</slot>
   <slot>showRenameTabDialog()</slot>
+  <slot>clearTab()</slot>
  </slots>
 </ui>

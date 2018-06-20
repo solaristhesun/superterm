@@ -60,6 +60,7 @@ public slots:
     void onConfigurationChanged(const QString& config);
     void showRenameTabDialog();
     void onRenameTab();
+    void clearTab();
 
 signals:
     void labelChanged(const QString&);
@@ -76,9 +77,11 @@ private:
 
     static quint32 m_u32counter;
     QStringList    m_highlightings;
+    bool             m_bSkipTimeStamp;
 
     void fillComboBoxes();
     void createContextMenu();
+    void insertTimeStamps(QByteArray& data);
 };
 
 #endif // CONSOLETAB_H

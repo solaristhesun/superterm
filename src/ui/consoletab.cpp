@@ -14,6 +14,7 @@
 #include <QFile>
 #include <QListWidgetItem>
 #include <QMetaProperty>
+#include <QDateTime>
 #include <QDesktopWidget>
 #if defined(Q_OS_WIN)
 #include <windows.h>
@@ -48,6 +49,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     , m_logFile(NULL)
     , m_contextMenu(NULL)
     , m_lastTabIndex(0)
+    , m_bSkipTimeStamp(false)
 {
     qDebug() << "CConsoleTab::CConsoleTab()";
 
@@ -143,6 +145,12 @@ void CConsoleTab::toggleFullScreen()
             mMainWindow->show();
         }
     }
+}
+
+void CConsoleTab::clearTab()
+{
+    m_ui->consoleView->clear();
+    m_bSkipTimeStamp = false;
 }
 
 void CConsoleTab::createContextMenu()
@@ -381,11 +389,39 @@ void CConsoleTab::setColor(const QColor& foreGroundColor, const QColor& backGrou
     setStyleSheet(QString("QPlainTextEdit { color: %1; background-color: %2; }").arg(foreGroundColor.name(), backGroundColor.name()));
 }
 
+void CConsoleTab::insertTimeStamps(QByteArray& data)
+{
+    //data.prepend("<");
+    //data.append(">");
+    QDateTime currentTime = QDateTime::currentDateTime();
+    QString timestamp = "[" + currentTime.toString("yyyy-MM-dd HH:mm:ss.zzz") + "] ";
+
+    QList<QByteArray> lines = data.split('\n'); //, QString::SkipEmptyParts);
+    for (int line = 0; line < lines.size(); ++line)
+    {
+        if (line == 0 && m_bSkipTimeStamp)
+            continue;
+
+        if (!lines[line].trimmed().isEmpty()) {
+            lines[line].prepend(timestamp.toUtf8());
+        }
+    }
+    data = lines.join('\n');
+
+    if (!lines.last().endsWith('\n'))
+        m_bSkipTimeStamp = true;
+
+    if (lines.last().trimmed().isEmpty())
+        m_bSkipTimeStamp = false;
+}
+
 void CConsoleTab::onEndpointData(const CMessage& message)
 {
     if (message.isCmd(CMessage::DataCmd))
     {
         QByteArray data = message.getPayload();
+
+        insertTimeStamps(data);
 
         if (m_logFile)
         {
