@@ -111,7 +111,7 @@
 <context>
     <name>CConsoleTab</name>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="481"/>
+        <location filename="../src/ui/consoletab.cpp" line="534"/>
         <source>Visit superterm website</source>
         <translation>Webseite von superterm besuchen</translation>
     </message>
@@ -121,132 +121,127 @@
         <translation>Neuer Tab</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="268"/>
+        <location filename="../src/ui/consoletab.cpp" line="278"/>
         <source>Save configuration</source>
         <translation>Konfiguration speichern</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="270"/>
+        <location filename="../src/ui/consoletab.cpp" line="280"/>
         <source>superterm configurations (*.xml)</source>
         <translation>superterm Konfigurationsdateien (*.xml)</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="483"/>
+        <location filename="../src/ui/consoletab.cpp" line="536"/>
         <source>About superterm</source>
         <translation>Über superterm</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="103"/>
+        <location filename="../src/ui/consoletab.ui" line="111"/>
         <source>Change Color...</source>
         <translation>Hintergrundfarbe...</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="108"/>
+        <location filename="../src/ui/consoletab.ui" line="116"/>
         <source>&amp;Connection...</source>
         <translation>&amp;Verbindung...</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="111"/>
+        <location filename="../src/ui/consoletab.ui" line="119"/>
         <source>Connection</source>
         <translation>Verbindung</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="116"/>
+        <location filename="../src/ui/consoletab.ui" line="124"/>
         <source>Change Font...</source>
         <translation>Schriftart...</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="144"/>
+        <location filename="../src/ui/consoletab.ui" line="152"/>
         <source>Logging...</source>
         <translation>Protokollierung...</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="152"/>
+        <location filename="../src/ui/consoletab.ui" line="160"/>
         <source>&amp;Autoscroll</source>
         <translation>&amp;Autoscroll</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="157"/>
+        <location filename="../src/ui/consoletab.ui" line="165"/>
         <source>Change Font Color...</source>
         <translation>Textfarbe...</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="160"/>
+        <location filename="../src/ui/consoletab.ui" line="168"/>
         <source>Change Font Color</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="165"/>
+        <location filename="../src/ui/consoletab.ui" line="173"/>
         <source>&amp;Rename tab</source>
         <translation>Tab &amp;umbenennen</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="168"/>
+        <location filename="../src/ui/consoletab.ui" line="176"/>
         <source>Rename tab</source>
         <translation>Tab umbenennen</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="121"/>
+        <location filename="../src/ui/consoletab.ui" line="184"/>
+        <source>Timestamps</source>
+        <translation>Zeitstempel</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/consoletab.ui" line="129"/>
         <source>&amp;About superterm</source>
         <translation>Über &amp;superterm</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="139"/>
+        <location filename="../src/ui/consoletab.ui" line="147"/>
         <source>&amp;Fullscreen</source>
         <translation>&amp;Vollbildmodus</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="126"/>
+        <location filename="../src/ui/consoletab.ui" line="134"/>
         <source>Clear</source>
         <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.ui" line="131"/>
+        <location filename="../src/ui/consoletab.ui" line="139"/>
         <source>Highlight...</source>
         <translation>Hervorheben...</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="454"/>
+        <location filename="../src/ui/consoletab.cpp" line="507"/>
         <source>Error connecting to port %1.</source>
         <translation>Fehler beim Verbinden mit Port %1.</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="489"/>
-        <source>QInputDialog::getText()</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/consoletab.cpp" line="490"/>
-        <source>User name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/consoletab.cpp" line="536"/>
+        <location filename="../src/ui/consoletab.cpp" line="590"/>
         <source>Logging to %1 failed.</source>
         <translation>Protokollierung nach %1 fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="539"/>
+        <location filename="../src/ui/consoletab.cpp" line="593"/>
         <source>Logging to %1 started.</source>
         <translation>Protokollierung nach %1 gestartet.</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="574"/>
+        <location filename="../src/ui/consoletab.cpp" line="628"/>
         <source>Successfully connected to %1.</source>
         <translation>Verbindung mit %1 erfolgreich hergestellt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="598"/>
+        <location filename="../src/ui/consoletab.cpp" line="652"/>
         <source>Trying to reconnect to %1...</source>
         <translation>Versuche Verbindung mit %1 wiederherzustellen...</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="608"/>
+        <location filename="../src/ui/consoletab.cpp" line="662"/>
         <source>Successfully reconnected to %1.</source>
         <translation>Verbindung mit %1 erfolgreich wiederhergestellt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/consoletab.cpp" line="481"/>
+        <location filename="../src/ui/consoletab.cpp" line="534"/>
         <source>All rights reserved.</source>
         <translation>Alle Rechte vorbehalten.</translation>
     </message>
@@ -332,6 +327,24 @@
         <location filename="../src/ui/logfilepanel.cpp" line="50"/>
         <source>&amp;Stop logging</source>
         <translation>Protokollierung &amp;beenden</translation>
+    </message>
+</context>
+<context>
+    <name>RenameTabFrame</name>
+    <message>
+        <location filename="../src/ui/renametabframe.ui" line="20"/>
+        <source>Frame</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/renametabframe.ui" line="48"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Abbrechen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/renametabframe.ui" line="55"/>
+        <source>&amp;Apply</source>
+        <translation></translation>
     </message>
 </context>
 </TS>
