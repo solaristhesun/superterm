@@ -424,7 +424,7 @@ void CConsoleTab::escapeSpecialChars(QByteArray& data)
         char c = data[p];
         if (!QChar::isPrint(c) && !QChar::isSpace(c))
         {
-            data.replace(p, 1, QString("\\x%1").arg((int)c, 2, 16, QChar('0')).toUtf8());
+            data.replace(p, 1, QString("\\x%1").arg((char)c & 0xFF, 2, 16, QChar('0')).toUtf8());
         }
         if (c == '\r')
         {
