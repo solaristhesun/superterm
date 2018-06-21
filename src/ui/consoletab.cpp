@@ -50,6 +50,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     , m_contextMenu(NULL)
     , m_lastTabIndex(0)
     , m_bSkipTimeStamp(false)
+    , m_bUseTimeStamps(false)
 {
     qDebug() << "CConsoleTab::CConsoleTab()";
 
@@ -160,6 +161,7 @@ void CConsoleTab::createContextMenu()
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(m_ui->actionConnection);
     m_contextMenu->addAction(m_ui->actionLogging);
+    m_contextMenu->addAction(m_ui->actionToggleTimeStamps);
     m_contextMenu->addAction(m_ui->actionHighlight);
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(m_ui->actionToggleAutoscroll);
@@ -415,13 +417,37 @@ void CConsoleTab::insertTimeStamps(QByteArray& data)
         m_bSkipTimeStamp = false;
 }
 
+void CConsoleTab::escapeSpecialChars(QByteArray& data)
+{
+    for (int p = data.size()-1; p > 0; p--)
+    {
+        char c = data[p];
+        if (!QChar::isPrint(c) && !QChar::isSpace(c))
+        {
+            data.replace(p, 1, QString("\\x%1").arg((int)c, 2, 16, QChar('0')).toUtf8());
+        }
+        if (c == '\r')
+        {
+            data.remove(p, 1);
+        }
+    }
+}
+
+void CConsoleTab::toggleTimeStamps()
+{
+    m_bUseTimeStamps = !m_bUseTimeStamps;
+}
+
 void CConsoleTab::onEndpointData(const CMessage& message)
 {
     if (message.isCmd(CMessage::DataCmd))
     {
         QByteArray data = message.getPayload();
 
-        insertTimeStamps(data);
+        if (m_bUseTimeStamps)
+        {
+            insertTimeStamps(data);
+        }
 
         if (m_logFile)
         {
@@ -435,17 +461,8 @@ void CConsoleTab::onEndpointData(const CMessage& message)
         }
         else
         {
-            for (int p = 0; p < data.size(); p++)
-            {
-                if (data.at(p) < 32 && !QChar::isSpace(data.at(p)))
-                {
-                    data[p] = '.';
-                }
-            }
-
-            QString str = data;
-            str = str.replace("\r", "");
-            m_ui->consoleView->insertPlainText(str);
+            escapeSpecialChars(data);
+            m_ui->consoleView->insertPlainText(data);
         }
     }
 }

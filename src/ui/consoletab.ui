@@ -176,6 +176,14 @@
     <string>Rename tab</string>
    </property>
   </action>
+  <action name="actionToggleTimeStamps">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Timestamps</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -538,6 +546,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionToggleTimeStamps</sender>
+   <signal>triggered()</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>toggleTimeStamps()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>
@@ -561,5 +585,6 @@
   <slot>showFontColorDialog()</slot>
   <slot>showRenameTabDialog()</slot>
   <slot>clearTab()</slot>
+  <slot>toggleTimeStamps()</slot>
  </slots>
 </ui>
