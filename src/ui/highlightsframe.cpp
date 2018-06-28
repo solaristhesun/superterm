@@ -108,6 +108,8 @@ void CHighlightsFrame::deleteAll()
 {
     m_ui->filterList->clear();
     m_ui->btnDeleteAll->setEnabled(false);
+
+    emit highlightingChanged();
 }
 
 void CHighlightsFrame::keyPressEvent(QKeyEvent* event)

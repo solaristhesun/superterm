@@ -17,6 +17,7 @@ public:
     Q_PROPERTY(qint32 m_i32StopBits READ getStopBits WRITE setStopBits)
     Q_PROPERTY(qint32 m_i32FlowControl READ getFlowControl WRITE setFlowControl)
     Q_PROPERTY(QString m_tabLabel READ getTabLabel WRITE setTabLabel)
+    Q_PROPERTY(bool m_bUseTimeStamps READ getUseTimeStamps WRITE setUseTimeStamps)
 
     Q_PROPERTY(QVariantList m_highlights READ getHighlights WRITE setHighlights)
 
@@ -91,6 +92,16 @@ public:
         m_i32FlowControl = i32FlowControl;
     }
 
+    bool getUseTimeStamps() const
+    {
+        return m_bUseTimeStamps;
+    }
+
+    void setUseTimeStamps(bool bUseTimeStamps)
+    {
+        m_bUseTimeStamps = bUseTimeStamps;
+    }
+
     QVariantList getHighlights() const
     {
         return m_highlights;
@@ -114,6 +125,7 @@ private:
     qint32  m_i32Parity;
     qint32  m_i32StopBits;
     qint32  m_i32FlowControl;
+    bool    m_bUseTimeStamps;
 
     QVariantList m_highlights;
 

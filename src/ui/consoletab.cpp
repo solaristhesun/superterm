@@ -98,6 +98,11 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
         }
 
         m_ui->consoleView->setHighlighting(highlights);
+
+        if (session->getUseTimeStamps())
+        {
+            m_ui->actionToggleTimeStamps->activate(QAction::Trigger);
+        }
     }
 }
 
@@ -436,6 +441,12 @@ void CConsoleTab::escapeSpecialChars(QByteArray& data)
 void CConsoleTab::toggleTimeStamps()
 {
     m_bUseTimeStamps = !m_bUseTimeStamps;
+
+    if (m_session)
+    {
+        m_session->setUseTimeStamps(m_bUseTimeStamps);
+        m_session->saveToFile();
+    }
 }
 
 void CConsoleTab::onEndpointData(const CMessage& message)
