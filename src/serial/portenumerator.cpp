@@ -46,6 +46,8 @@ void CPortEnumerator::enumeratePorts()
     m_portsList << CSerialPortInfo("/dev/COM1", "socat");
 #endif
 
+    emit enumerationFinished();
+
     QTimer::singleShot(1000, this, SLOT(enumeratePorts()));
 }
 

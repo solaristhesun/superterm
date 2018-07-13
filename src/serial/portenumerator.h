@@ -19,6 +19,9 @@ public:
 
     QList<CSerialPortInfo> getAvailablePorts();
 
+signals:
+    void enumerationFinished();
+
 private slots:
     void enumeratePorts();
 

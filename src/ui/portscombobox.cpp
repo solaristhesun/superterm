@@ -6,6 +6,7 @@
 
 CPortsComboBox::CPortsComboBox(QWidget* parent)
     : QComboBox(parent)
+    , m_portToBeSet("")
 {
     // currently nothing
 }
@@ -19,7 +20,14 @@ void CPortsComboBox::showPopup()
 void CPortsComboBox::setPortEnumerator(CPortEnumerator* pe)
 {
     m_pe = pe;
+    connect(m_pe, &CPortEnumerator::enumerationFinished, this, &CPortsComboBox::onEnumerationFinished);
     refresh();
+}
+
+void CPortsComboBox::setPort(QString port)
+{
+    //this->setCurrentText(port);
+    m_portToBeSet = port;
 }
 
 void CPortsComboBox::showEvent(QShowEvent*)
@@ -32,8 +40,20 @@ void CPortsComboBox::hideEvent(QHideEvent*)
     m_pe->stopEnumeration();
 }
 
+void CPortsComboBox::onEnumerationFinished()
+{
+    if (!m_portToBeSet.isEmpty())
+    {
+        refresh();
+        this->setCurrentText(m_portToBeSet);
+        m_portToBeSet = "";
+    }
+}
+
 void CPortsComboBox::refresh()
 {
+    QString currentText = this->currentText();
+
     clear();
     addItem(tr("Select port"));
 
@@ -43,6 +63,8 @@ void CPortsComboBox::refresh()
         qDebug () << "ADD " << title;
         addItem(title, QVariant(portInfo.getPortName()));
     }
+
+    this->setCurrentText(currentText);
 }
 
 // EOF <stefan@scheler.com>

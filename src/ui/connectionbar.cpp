@@ -140,7 +140,7 @@ void CConnectionBar::loadFromSession(CSession* session)
 {
     qDebug() << *session << session->getDeviceDesc();
     qDebug() << m_ui->comboPorts->count();
-    m_ui->comboPorts->setCurrentText(session->getDeviceDesc());
+    m_ui->comboPorts->setPort(session->getDeviceDesc());
 
     if (m_ui->comboBaudRates->findText(QString::number(session->getBaudRate())) >= 0)
     {

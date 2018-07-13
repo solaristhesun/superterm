@@ -13,13 +13,17 @@ public:
     void showPopup();
 
     void setPortEnumerator(CPortEnumerator* pe);
+    void setPort(QString port);
 
     void showEvent(QShowEvent* event);
     void hideEvent(QHideEvent* event);
 
-private:
+private slots:
+    void onEnumerationFinished();
 
+private:
     CPortEnumerator* m_pe;
+    QString m_portToBeSet;
 
     void refresh();
 };
