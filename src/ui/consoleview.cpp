@@ -20,7 +20,7 @@ CConsoleView::CConsoleView(QWidget* parent)
 {
     m_ui->setupUi(this);
 
-    connect(m_scrollBar, SIGNAL(valueChanged(int)), this, SLOT(scrollBarChanged(int)));
+    connect(m_scrollBar, &QScrollBar::valueChanged, this, &CConsoleView::scrollBarChanged);
     setWordWrapMode(QTextOption::WrapAnywhere);
     refreshCursor();
 }

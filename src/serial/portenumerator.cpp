@@ -21,7 +21,7 @@ CPortEnumerator::~CPortEnumerator()
 void CPortEnumerator::startEnumeration()
 {
     qDebug() << "CPortEnumerator::startEnumeration()";
-    QTimer::singleShot(0, this, SLOT(enumeratePorts()));
+    QTimer::singleShot(0, this, &CPortEnumerator::enumeratePorts);
     m_workerThread.start();
 }
 
@@ -48,7 +48,7 @@ void CPortEnumerator::enumeratePorts()
 
     emit enumerationFinished();
 
-    QTimer::singleShot(1000, this, SLOT(enumeratePorts()));
+    QTimer::singleShot(1000, this, &CPortEnumerator::enumeratePorts);
 }
 
 QList<CSerialPortInfo> CPortEnumerator::getAvailablePorts()

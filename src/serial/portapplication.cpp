@@ -71,11 +71,11 @@ int CPortApplication::exec()
     QSerialPort::StopBits    stopBits = static_cast<QSerialPort::StopBits>(arguments().at(5).toInt());
     QSerialPort::FlowControl flowControl = static_cast<QSerialPort::FlowControl>(arguments().at(6).toInt());
 
-    connect(m_socket, SIGNAL(connected()), this, SLOT(onSocketConnected()));
-    connect(m_socket, SIGNAL(disconnected()), this, SLOT(onSocketDisconnected()));
-    connect(m_socket, SIGNAL(readyRead()), this, SLOT(onSocketData()));
-    connect(m_socket, SIGNAL(error(QLocalSocket::LocalSocketError)), this, SLOT(onSocketError(QLocalSocket::LocalSocketError)));
-    connect(m_observer, SIGNAL(disconnected()), this, SLOT(onPortDisconnected()));
+    connect(m_socket, &QLocalSocket::connected, this, &CPortApplication::onSocketConnected);
+    connect(m_socket, &QLocalSocket::disconnected, this, &CPortApplication::onSocketDisconnected);
+    connect(m_socket, &QLocalSocket::readyRead, this, &CPortApplication::onSocketData);
+    connect(m_socket, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::error), this, &CPortApplication::onSocketError);
+    connect(m_observer, &CPortObserver::disconnected, this, &CPortApplication::onPortDisconnected);
 
     m_port = new QSerialPort(portName);
 
@@ -94,7 +94,7 @@ int CPortApplication::exec()
         return 1;
     }
 
-    connect(m_port, SIGNAL(readyRead()), this, SLOT(onSerialDataAvailable()));
+    connect(m_port, &QSerialPort::readyRead, this, &CPortApplication::onSerialDataAvailable);
 
     m_socket->abort();
     m_socket->connectToServer("serial:" + portName.replace("/", "_"));
