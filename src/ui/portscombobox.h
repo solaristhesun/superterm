@@ -23,7 +23,7 @@ private slots:
 
 private:
     CPortEnumerator* m_pe;
-    QString m_portToBeSet;
+    QString          m_portToBeSet;
 
     void refresh();
 };

@@ -12,7 +12,7 @@ class RenameTabFrame : public QFrame
     Q_OBJECT
 
 public:
-    explicit RenameTabFrame(QWidget *parent = 0);
+    explicit RenameTabFrame(QWidget* parent = 0);
     ~RenameTabFrame();
 
     void setText(const QString& text);
@@ -26,7 +26,7 @@ private slots:
     void onApplyClicked();
 
 private:
-    Ui::RenameTabFrame *ui;
+    Ui::RenameTabFrame* ui;
 };
 
 #endif // RENAMETABFRAME_H

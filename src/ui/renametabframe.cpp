@@ -1,8 +1,8 @@
 #include "renametabframe.h"
 #include "ui_renametabframe.h"
 
-RenameTabFrame::RenameTabFrame(QWidget *parent) :
-    QFrame(parent),
+RenameTabFrame::RenameTabFrame(QWidget* parent)
+    : QFrame(parent),
     ui(new Ui::RenameTabFrame)
 {
     ui->setupUi(this);

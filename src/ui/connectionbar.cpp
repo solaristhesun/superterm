@@ -48,7 +48,6 @@ void CConnectionBar::showEvent(QShowEvent* event)
     }
 
     QWidget::showEvent(event);
-
 }
 
 void CConnectionBar::setPortEnumerator(CPortEnumerator* pe)

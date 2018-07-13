@@ -21,7 +21,7 @@ CConsoleTabWidget::CConsoleTabWidget(QWidget* parent)
 
     connect(m_tabBar, &CConsoleTabBar::addButtonClicked, this, &CConsoleTabWidget::onAddButtonClicked);
     connect(m_tabBar, &CConsoleTabBar::tabDetached, this, &CConsoleTabWidget::onTabDetached);
-    connect(m_tabBar, &CConsoleTabBar::customContextMenuRequested, this,&CConsoleTabWidget::showContextMenu );
+    connect(m_tabBar, &CConsoleTabBar::customContextMenuRequested, this, &CConsoleTabWidget::showContextMenu );
 }
 
 void CConsoleTabWidget::showContextMenu()

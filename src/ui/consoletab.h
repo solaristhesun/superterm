@@ -78,8 +78,8 @@ private:
 
     static quint32 m_u32counter;
     QStringList    m_highlightings;
-    bool             m_bSkipTimeStamp;
-    bool             m_bUseTimeStamps;
+    bool           m_bSkipTimeStamp;
+    bool           m_bUseTimeStamps;
 
     void fillComboBoxes();
     void createContextMenu();

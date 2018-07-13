@@ -59,9 +59,9 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     // load font from settings
     QSettings settings;
 
-    QFont     consoleFont;
-    QColor    foreGroundColor = QColor(settings.value("foreground").toString());
-    QColor    backGroundColor = QColor(settings.value("background").toString());
+    QFont  consoleFont;
+    QColor foreGroundColor = QColor(settings.value("foreground").toString());
+    QColor backGroundColor = QColor(settings.value("background").toString());
     consoleFont.fromString(settings.value("font").toString());
     setConsoleFont(consoleFont);
     setColor(foreGroundColor, backGroundColor);
@@ -401,30 +401,37 @@ void CConsoleTab::insertTimeStamps(QByteArray& data)
     //data.prepend("<");
     //data.append(">");
     QDateTime currentTime = QDateTime::currentDateTime();
-    QString timestamp = "[" + currentTime.toString("yyyy-MM-dd HH:mm:ss.zzz") + "] ";
+    QString   timestamp = "[" + currentTime.toString("yyyy-MM-dd HH:mm:ss.zzz") + "] ";
 
     QList<QByteArray> lines = data.split('\n'); //, QString::SkipEmptyParts);
     for (int line = 0; line < lines.size(); ++line)
     {
         if (line == 0 && m_bSkipTimeStamp)
+        {
             continue;
+        }
 
-        if (!lines[line].trimmed().isEmpty()) {
+        if (!lines[line].trimmed().isEmpty())
+        {
             lines[line].prepend(timestamp.toUtf8());
         }
     }
     data = lines.join('\n');
 
     if (!lines.last().endsWith('\n'))
+    {
         m_bSkipTimeStamp = true;
+    }
 
     if (lines.last().trimmed().isEmpty())
+    {
         m_bSkipTimeStamp = false;
+    }
 }
 
 void CConsoleTab::escapeSpecialChars(QByteArray& data)
 {
-    for (int p = data.size()-1; p > 0; p--)
+    for (int p = data.size() - 1; p > 0; p--)
     {
         char c = data[p];
         if (!QChar::isPrint(c) && !QChar::isSpace(c))
