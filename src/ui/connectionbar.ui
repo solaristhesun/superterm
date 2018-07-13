@@ -102,6 +102,9 @@
     </widget>
    </item>
    <item>
+    <widget class="QLineEdit" name="lineEditBaudRate"/>
+   </item>
+   <item>
     <widget class="QComboBox" name="comboDataBits">
      <property name="toolTip">
       <string>Select data bits</string>

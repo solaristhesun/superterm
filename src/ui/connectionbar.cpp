@@ -15,6 +15,8 @@ CConnectionBar::CConnectionBar(QWidget* parent)
 
     fillComboBoxes();
 
+    m_ui->lineEditBaudRate->setText("9600");
+    m_ui->lineEditBaudRate->hide();
     m_ui->comboDataBits->hide();
     m_ui->comboFlowControl->hide();
     m_ui->comboParity->hide();
@@ -46,6 +48,7 @@ void CConnectionBar::showEvent(QShowEvent* event)
     }
 
     QWidget::showEvent(event);
+
 }
 
 void CConnectionBar::setPortEnumerator(CPortEnumerator* pe)
@@ -70,12 +73,27 @@ QString CConnectionBar::getDeviceDesc() const
 
 QString CConnectionBar::getBaudRate() const
 {
-    return m_ui->comboBaudRates->currentText();
+    if (m_ui->lineEditBaudRate->isVisible())
+    {
+        return m_ui->lineEditBaudRate->text();
+    }
+    else
+    {
+        return m_ui->comboBaudRates->currentText();
+    }
 }
 
 void CConnectionBar::setBaudRate(const QString& baudRate)
 {
-    m_ui->comboBaudRates->setCurrentText(baudRate);
+    if (m_ui->lineEditBaudRate->isVisible())
+    {
+        m_ui->comboBaudRates->setCurrentText("custom");
+        m_ui->lineEditBaudRate->setText(baudRate);
+    }
+    else
+    {
+        m_ui->comboBaudRates->setCurrentText(baudRate);
+    }
 }
 
 QString CConnectionBar::getDataBits() const
@@ -123,7 +141,17 @@ void CConnectionBar::loadFromSession(CSession* session)
     qDebug() << *session << session->getDeviceDesc();
     qDebug() << m_ui->comboPorts->count();
     m_ui->comboPorts->setCurrentText(session->getDeviceDesc());
-    m_ui->comboBaudRates->setCurrentText(QString::number(session->getBaudRate()));
+
+    if (m_ui->comboBaudRates->findText(QString::number(session->getBaudRate())) >= 0)
+    {
+        m_ui->comboBaudRates->setCurrentText(QString::number(session->getBaudRate()));
+    }
+    else
+    {
+        m_ui->comboBaudRates->setCurrentText("custom");
+        m_ui->lineEditBaudRate->setText(QString::number(session->getBaudRate()));
+    }
+
     m_ui->comboDataBits->setCurrentText(QString::number(session->getDataBits()));
 
     QSerialPort::Parity parity = static_cast<QSerialPort::Parity>(session->getParity());
@@ -227,11 +255,21 @@ void CConnectionBar::onComboChanged()
         m_ui->btnConnect->setEnabled(false);
         m_ui->btnSave->setEnabled(false);
     }
+
+    if (m_ui->comboBaudRates->currentText() == "custom")
+    {
+        m_ui->lineEditBaudRate->show();
+    }
+    else
+    {
+        m_ui->lineEditBaudRate->hide();
+    }
 }
 
 void CConnectionBar::onDisconnected()
 {
     m_ui->comboPorts->setEnabled(true);
+    m_ui->lineEditBaudRate->setEnabled(true);
     m_ui->comboBaudRates->setEnabled(true);
     m_ui->comboDataBits->setEnabled(true);
     m_ui->comboFlowControl->setEnabled(true);
@@ -247,6 +285,7 @@ void CConnectionBar::onDisconnected()
 void CConnectionBar::onConnected()
 {
     m_ui->comboPorts->setEnabled(false);
+    m_ui->lineEditBaudRate->setEnabled(false);
     m_ui->comboBaudRates->setEnabled(false);
     m_ui->comboDataBits->setEnabled(false);
     m_ui->comboFlowControl->setEnabled(false);
