@@ -162,8 +162,6 @@ void CConsoleTab::clearTab()
 void CConsoleTab::createContextMenu()
 {
     m_contextMenu = new QMenu(this);
-    m_contextMenu->addAction(m_ui->actionRenameTab);
-    m_contextMenu->addSeparator();
     m_contextMenu->addAction(m_ui->actionConnection);
     m_contextMenu->addAction(m_ui->actionLogging);
     m_contextMenu->addAction(m_ui->actionToggleTimeStamps);

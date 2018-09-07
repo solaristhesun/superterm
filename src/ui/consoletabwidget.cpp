@@ -1,6 +1,7 @@
 #include <QTabBar>
 #include <QApplication>
 #include <QDebug>
+#include <QMenu>
 
 #include "ui/consoletabwidget.h"
 #include "ui/consoletabbar.h"
@@ -14,18 +15,27 @@
 CConsoleTabWidget::CConsoleTabWidget(QWidget* parent)
     : QTabWidget(parent)
     , m_tabBar(new CConsoleTabBar(this))
+    , m_contextMenu(nullptr)
+    , m_renameTabAction(new QAction(tr("Rename tab..."), this))
 {
     qDebug() << "CConsoleTabWidget::CConsoleTabWidget()";
 
     QTabWidget::setTabBar(m_tabBar);
 
+    createContextMenu();
+
     connect(m_tabBar, &CConsoleTabBar::addButtonClicked, this, &CConsoleTabWidget::onAddButtonClicked);
     connect(m_tabBar, &CConsoleTabBar::tabDetached, this, &CConsoleTabWidget::onTabDetached);
-    connect(m_tabBar, &CConsoleTabBar::customContextMenuRequested, this, &CConsoleTabWidget::showContextMenu );
+    connect(m_tabBar, &CConsoleTabBar::customContextMenuRequested, this, &CConsoleTabWidget::showContextMenu);
+    connect(m_renameTabAction, &QAction::triggered, this, &CConsoleTabWidget::showTabRenameDialog);
 }
 
-void CConsoleTabWidget::showContextMenu()
+void CConsoleTabWidget::showContextMenu(const QPoint& pt)
 {
+    if (m_tabBar->tabAt(pt) != -1)
+    {
+        m_contextMenu->exec(mapToGlobal(pt));
+    }
 }
 
 CConsoleTabWidget::~CConsoleTabWidget()
@@ -125,6 +135,21 @@ void CConsoleTabWidget::setCurrentTabText(const QString& text)
     const int curIndex = currentIndex();
     setTabText(curIndex, text);
     m_tabBar->moveButton();
+}
+
+
+void CConsoleTabWidget::createContextMenu()
+{
+    m_renameTabAction->setShortcut(Qt::Key_Control | Qt::Key_R);
+
+    m_contextMenu = new QMenu(this);
+    m_contextMenu->addAction(m_renameTabAction);
+}
+
+void CConsoleTabWidget::showTabRenameDialog()
+{
+    CConsoleTab* tab = currentWidget();
+    tab->showRenameTabDialog();
 }
 
 // EOF <stefan@scheler.com>

@@ -5,7 +5,7 @@
 #include "misc/globals.h"
 
 const QString g_sAppName     = "superterm";
-const QString g_sAppVersion  = "2018.7";
+const QString g_sAppVersion  = "2018.8";
 const QString g_sAppFullName = g_sAppName + " " + g_sAppVersion;
 const QString g_sAppHomepage = "https://scheler.com/" + g_sAppName + "/";
 const quint32 g_u32revision  = REVISION;

@@ -8,6 +8,7 @@ class CConsoleTabBar;
 class CPortEnumerator;
 class CSession;
 class CMainWindow;
+class QMenu;
 
 class CConsoleTabWidget : public QTabWidget
 {
@@ -28,10 +29,16 @@ public slots:
     void closeTab(int index);
     void onAddButtonClicked();
     void onTabDetached(int index);
-    void showContextMenu();
+    void showContextMenu(const QPoint& pt);
+    void showTabRenameDialog();
+
+private:
+    void createContextMenu();
 
 private:
     CConsoleTabBar* m_tabBar;
+    QMenu*          m_contextMenu;
+    QAction*        m_renameTabAction;
 };
 
 #endif // CONSOLETABWIDGET_H
