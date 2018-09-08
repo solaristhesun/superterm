@@ -37,7 +37,8 @@ SOURCES += \
     src/misc/defaultsettings.cpp \
     src/ui/renametabframe.cpp \
     src/misc/usagetracker.cpp \
-    src/misc/uniqueidentifier.cpp
+    src/misc/uniqueidentifier.cpp \
+    src/ui/portitemdelegate.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -64,7 +65,8 @@ HEADERS += \
     src/misc/defaultsettings.h \
     src/ui/renametabframe.h \
     src/misc/uniqueidentifier.h \
-    src/misc/usagetracker.h
+    src/misc/usagetracker.h \
+    src/ui/portitemdelegate.h
 
 FORMS += \
     src/ui/mainwindow.ui \

@@ -1,6 +1,7 @@
 #include <QDebug>
 
 #include "ui/portscombobox.h"
+#include "ui/portitemdelegate.h"
 #include "serial/portenumerator.h"
 #include "serial/serialportinfo.h"
 
@@ -9,6 +10,7 @@ CPortsComboBox::CPortsComboBox(QWidget* parent)
     , m_portToBeSet("")
 {
     // currently nothing
+    //QComboBox::setItemDelegate(new PortItemDelegate());
 }
 
 void CPortsComboBox::showPopup()
