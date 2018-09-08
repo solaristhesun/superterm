@@ -167,7 +167,7 @@ void CConnectionBar::loadFromSession(CSession* session)
 
 void CConnectionBar::fillComboBoxes()
 {
-    QComboBox* combo = NULL;
+    QComboBox* combo = nullptr;
 
     /** FIXME: DO THIS IN A MORE ELEGANT WAY! */
     //while(m_pe->getAvailablePorts().count() == 0) { QThread::msleep(20); }

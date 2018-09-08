@@ -40,4 +40,9 @@ QString CSerialPortInfo::getDescription() const
     return m_strPortDesc;
 }
 
+bool CSerialPortInfo::compare(const CSerialPortInfo& first, const CSerialPortInfo& second)
+{
+    return first.getShortName() < second.getShortName();
+}
+
 // EOF <stefan@scheler.com>

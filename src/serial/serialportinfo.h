@@ -16,6 +16,8 @@ public:
     QString getShortName() const;
     QString getDescription() const;
 
+    static bool compare(const CSerialPortInfo& first, const CSerialPortInfo& second);
+
 private:
     QString m_strPortName;
     QString m_strPortDesc;
