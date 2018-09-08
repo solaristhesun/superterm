@@ -2,23 +2,23 @@
 #define SERIALPORTINFO_H
 
 #include <QString>
-
-class QSerialPortInfo;
+#include <QSerialPortInfo>
 
 class CSerialPortInfo
 {
 public:
-    CSerialPortInfo(const QString strPortName, const QString strPortDesc);
-    CSerialPortInfo(const QSerialPortInfo& info);
+    CSerialPortInfo(QSerialPortInfo info);
     ~CSerialPortInfo();
 
-    QString getPortName() const;
-    QString getShortName() const;
+    QString portName() const;
+    QString shortName() const;
     QString getDescription() const;
+    bool isBusy() const;
 
     static bool compare(const CSerialPortInfo& first, const CSerialPortInfo& second);
 
 private:
+    QSerialPortInfo portInfo_;
     QString m_strPortName;
     QString m_strPortDesc;
 };

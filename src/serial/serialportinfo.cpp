@@ -4,17 +4,10 @@
 
 #include "serial/serialportinfo.h"
 
-CSerialPortInfo::CSerialPortInfo(const QString strPortName, const QString strPortDesc)
-    : m_strPortName(strPortName)
-    , m_strPortDesc(strPortDesc)
+CSerialPortInfo::CSerialPortInfo(QSerialPortInfo info)
+    : portInfo_(info)
 {
-    // currently nothing
-}
-
-CSerialPortInfo::CSerialPortInfo(const QSerialPortInfo& info)
-{
-    m_strPortName = info.portName();
-    m_strPortDesc = info.description();
+    // currently empty
 }
 
 CSerialPortInfo::~CSerialPortInfo()
@@ -22,31 +15,35 @@ CSerialPortInfo::~CSerialPortInfo()
     // currently nothing
 }
 
-QString CSerialPortInfo::getPortName() const
+QString CSerialPortInfo::portName() const
 {
-    return m_strPortName;
+    return portInfo_.portName();
 }
 
-QString CSerialPortInfo::getShortName() const
+QString CSerialPortInfo::shortName() const
 {
 #if defined(Q_OS_LINUX)
-    QString portName(m_strPortName);
-    return portName.remove("/dev/");
+    return portName().remove("/dev/");
 #else
-    return getPortName();
+    return portName();
 #endif
 }
 
 QString CSerialPortInfo::getDescription() const
 {
-    return m_strPortDesc;
+    return portInfo_.description();
+}
+
+bool CSerialPortInfo::isBusy() const
+{
+    return portInfo_.isBusy();
 }
 
 bool CSerialPortInfo::compare(const CSerialPortInfo& first, const CSerialPortInfo& second)
 {
     QRegularExpression re("^(\\D*)(\\d+)\\D*$");
-    QRegularExpressionMatch match1 = re.match(first.getShortName());
-    QRegularExpressionMatch match2 = re.match(second.getShortName());
+    QRegularExpressionMatch match1 = re.match(first.shortName());
+    QRegularExpressionMatch match2 = re.match(second.shortName());
 
     // try to natural sort if port names match a pattern like "(name)(number)"
     if (match1.hasMatch() && match2.hasMatch())
@@ -67,7 +64,7 @@ bool CSerialPortInfo::compare(const CSerialPortInfo& first, const CSerialPortInf
     }
     else
     {
-        return first.getShortName() < second.getShortName();
+        return first.shortName() < second.shortName();
     }
 }
 

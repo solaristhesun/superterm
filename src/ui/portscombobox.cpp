@@ -59,9 +59,14 @@ void CPortsComboBox::refresh()
 
     for (const CSerialPortInfo& portInfo : m_pe->getAvailablePorts())
     {
-        const QString title = QString("%1 [%2]").arg(portInfo.getShortName(), portInfo.getDescription());
-        qDebug () << "ADD " << title;
-        addItem(title, QVariant(portInfo.getPortName()));
+        QString title = QString("%1 [%2]").arg(portInfo.shortName(), portInfo.getDescription());
+
+        if (portInfo.isBusy())
+        {
+            title.prepend("[" + tr("busy") + "] ");
+        }
+
+        addItem(title, QVariant(portInfo.portName()));
     }
 
     this->setCurrentText(currentText);

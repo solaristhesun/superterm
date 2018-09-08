@@ -289,6 +289,11 @@
         <source>Select port</source>
         <translation>Port wählen</translation>
     </message>
+    <message>
+        <location filename="../src/ui/portscombobox.cpp" line="66"/>
+        <source>busy</source>
+        <translation>belegt</translation>
+    </message>
 </context>
 <context>
     <name>CStatusBarFrame</name>
