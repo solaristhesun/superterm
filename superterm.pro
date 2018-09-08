@@ -38,7 +38,8 @@ SOURCES += \
     src/ui/renametabframe.cpp \
     src/misc/usagetracker.cpp \
     src/misc/uniqueidentifier.cpp \
-    src/ui/portitemdelegate.cpp
+    src/ui/portitemdelegate.cpp \
+    src/ui/portitemview.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -66,7 +67,8 @@ HEADERS += \
     src/ui/renametabframe.h \
     src/misc/uniqueidentifier.h \
     src/misc/usagetracker.h \
-    src/ui/portitemdelegate.h
+    src/ui/portitemdelegate.h \
+    src/ui/portitemview.h
 
 FORMS += \
     src/ui/mainwindow.ui \
@@ -76,7 +78,8 @@ FORMS += \
     src/ui/logfilepanel.ui \
     src/ui/connectionbar.ui \
     src/ui/consoletab.ui \
-    src/ui/renametabframe.ui
+    src/ui/renametabframe.ui \
+    src/ui/portitemview.ui
 
 RESOURCES += \
     superterm.qrc
