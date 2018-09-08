@@ -1,4 +1,6 @@
+#include <QDebug>
 #include <QSerialPortInfo>
+#include <QRegularExpression>
 
 #include "serial/serialportinfo.h"
 
@@ -42,7 +44,31 @@ QString CSerialPortInfo::getDescription() const
 
 bool CSerialPortInfo::compare(const CSerialPortInfo& first, const CSerialPortInfo& second)
 {
-    return first.getShortName() < second.getShortName();
+    QRegularExpression re("^(\\D*)(\\d+)\\D*$");
+    QRegularExpressionMatch match1 = re.match(first.getShortName());
+    QRegularExpressionMatch match2 = re.match(second.getShortName());
+
+    // try to natural sort if port names match a pattern like "(name)(number)"
+    if (match1.hasMatch() && match2.hasMatch())
+    {
+        QString portName1 = match1.captured(1);
+        QString portName2 = match2.captured(1);
+        uint portNumber1 = match1.captured(2).toUInt();
+        uint portNumber2 = match2.captured(2).toUInt();
+
+        if (portName1 == portName2)
+        {
+            return portNumber1 < portNumber2; // natural sort by portnumber
+        }
+        else
+        {
+            return portName1 < portName2;
+        }
+    }
+    else
+    {
+        return first.getShortName() < second.getShortName();
+    }
 }
 
 // EOF <stefan@scheler.com>
