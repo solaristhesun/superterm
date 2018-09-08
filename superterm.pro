@@ -35,7 +35,9 @@ SOURCES += \
     src/serial/portobserver.cpp \
     src/ui/connectionbar.cpp \
     src/misc/defaultsettings.cpp \
-    src/ui/renametabframe.cpp
+    src/ui/renametabframe.cpp \
+    src/misc/usagetracker.cpp \
+    src/misc/uniqueidentifier.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -60,7 +62,9 @@ HEADERS += \
     src/serial/portobserver.h \
     src/ui/connectionbar.h \
     src/misc/defaultsettings.h \
-    src/ui/renametabframe.h
+    src/ui/renametabframe.h \
+    src/misc/uniqueidentifier.h \
+    src/misc/usagetracker.h
 
 FORMS += \
     src/ui/mainwindow.ui \

@@ -154,13 +154,13 @@ void CConnectionBar::loadFromSession(CSession* session)
     m_ui->comboDataBits->setCurrentText(QString::number(session->getDataBits()));
 
     QSerialPort::Parity parity = static_cast<QSerialPort::Parity>(session->getParity());
-    m_ui->comboParity->setCurrentText(g_ParityNameMap.value(parity));
+    m_ui->comboParity->setCurrentText(Globals::ParityNameMap.value(parity));
 
     QSerialPort::StopBits stopBits = static_cast<QSerialPort::StopBits>(session->getStopBits());
-    m_ui->comboStopBits->setCurrentText(g_StopBitsNameMap.value(stopBits));
+    m_ui->comboStopBits->setCurrentText(Globals::StopBitsNameMap.value(stopBits));
 
     QSerialPort::FlowControl flowControl = static_cast<QSerialPort::FlowControl>(session->getFlowControl());
-    m_ui->comboFlowControl->setCurrentText(g_FlowControlNameMap.value(flowControl));
+    m_ui->comboFlowControl->setCurrentText(Globals::FlowControlNameMap.value(flowControl));
 
     m_ui->btnConnect->setEnabled(true); // FIXME: unsauber
 }

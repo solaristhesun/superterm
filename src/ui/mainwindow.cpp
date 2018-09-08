@@ -23,7 +23,7 @@ CMainWindow::CMainWindow(QWidget* parent)
     m_ui->setupUi(this);
     QWidget::resize(800, 600);
 
-    setWindowTitle(g_sAppFullName);
+    setWindowTitle(Globals::ApplicationFullName);
 }
 
 CMainWindow::~CMainWindow()

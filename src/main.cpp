@@ -6,6 +6,7 @@
 
 #include "misc/globals.h"
 #include "misc/defaultsettings.h"
+#include "misc/usagetracker.h"
 #include "ui/mainwindow.h"
 #include "ui/consoletabfactory.h"
 #include "ui/highlightsframe.h"
@@ -24,7 +25,7 @@ int main(int argc, char* argv[])
     {
         QApplication::setOrganizationName("SCHELER");
         QApplication::setOrganizationDomain("scheler.com");
-        QApplication::setApplicationName(g_sAppName);
+        QApplication::setApplicationName(Globals::ApplicationName);
 
         SingleApplication a(argc, argv);
 
@@ -47,7 +48,7 @@ int main(int argc, char* argv[])
         a.installTranslator(&qtTranslator);
 
         QTranslator appTranslator;
-        appTranslator.load(QCoreApplication::applicationDirPath() + "/" + g_sAppName + "_" + QLocale::system().name());
+        appTranslator.load(QCoreApplication::applicationDirPath() + "/" + Globals::ApplicationName + "_" + QLocale::system().name());
         a.installTranslator(&appTranslator);
 
         CPortEnumerator portEnumerator;
@@ -62,6 +63,9 @@ int main(int argc, char* argv[])
 
         QObject::connect(&a, &QApplication::aboutToQuit, w, &CMainWindow::deleteLater);
         QObject::connect(&a, &SingleApplication::showUp, w, &CMainWindow::onSecondaryInstanceLaunched);
+
+        UsageTracker usageTracker;
+        usageTracker.trackUsage();
 
         return a.exec();
     }

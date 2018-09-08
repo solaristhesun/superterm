@@ -46,8 +46,8 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     , mTabLabel(tr("New tab"))
     , m_portEndpoint(new CPortEndpoint(this))
     , m_session(session)
-    , m_logFile(NULL)
-    , m_contextMenu(NULL)
+    , m_logFile(nullptr)
+    , m_contextMenu(nullptr)
     , m_lastTabIndex(0)
     , m_bSkipTimeStamp(false)
     , m_bUseTimeStamps(false)
@@ -497,9 +497,9 @@ void CConsoleTab::onConnectClicked()
         m_session->setDeviceDesc(m_ui->connectionBar->getDeviceDesc());
         m_session->setBaudRate(m_ui->connectionBar->getBaudRate().toUInt());
         m_session->setDataBits(m_ui->connectionBar->getDataBits().toInt());
-        m_session->setParity(g_ParityNameMap.key(m_ui->connectionBar->getParity()));
-        m_session->setStopBits(g_StopBitsNameMap.key(m_ui->connectionBar->getStopBits()));
-        m_session->setFlowControl(g_FlowControlNameMap.key(m_ui->connectionBar->getFlowControl()));
+        m_session->setParity(Globals::ParityNameMap.key(m_ui->connectionBar->getParity()));
+        m_session->setStopBits(Globals::StopBitsNameMap.key(m_ui->connectionBar->getStopBits()));
+        m_session->setFlowControl(Globals::FlowControlNameMap.key(m_ui->connectionBar->getFlowControl()));
 
         m_portEndpoint->connectEndpoint(m_session);
     }
@@ -547,7 +547,7 @@ void CConsoleTab::showAboutDialog()
         "<p align=left>Copyright &copy; 2015-2018 Stefan Scheler. %3</p>"
         "<p><a href=\"%4\">%5</a></p>"
         "<p>The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</p>")
-                             .arg(g_sAppFullName, QString::number(g_u32revision), tr("All rights reserved."), g_sAppHomepage, tr("Visit superterm website"));
+                             .arg(Globals::ApplicationFullName, QString::number(Globals::ApplicationRevision), tr("All rights reserved."), Globals::ApplicationWebsite, tr("Visit superterm website"));
 
     QMessageBox::about(this, tr("About superterm"), contents);
 }
@@ -613,7 +613,7 @@ void CConsoleTab::stopLogging()
 {
     m_logFile->close();
     delete m_logFile;
-    m_logFile = NULL;
+    m_logFile = nullptr;
 }
 
 #if 0

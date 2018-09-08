@@ -3,14 +3,17 @@
 
 #include <QSerialPort>
 
-extern const QString g_sAppName;
-extern const QString g_sAppVersion;
-extern const QString g_sAppFullName;
-extern const QString g_sAppHomepage;
-extern const quint32 g_u32revision;
-
-extern const QMap<QSerialPort::Parity, QString>      g_ParityNameMap;
-extern const QMap<QSerialPort::StopBits, QString>    g_StopBitsNameMap;
-extern const QMap<QSerialPort::FlowControl, QString> g_FlowControlNameMap;
+class Globals
+{
+public:
+    static const QString ApplicationName;
+    static const QString ApplicationFullName;
+    static const QString ApplicationVersion;
+    static const QString ApplicationWebsite;
+    static const quint32 ApplicationRevision;
+    static const QMap<QSerialPort::Parity, QString> ParityNameMap;
+    static const QMap<QSerialPort::StopBits, QString> StopBitsNameMap;
+    static const QMap<QSerialPort::FlowControl, QString> FlowControlNameMap;
+};
 
 #endif // GLOBALS_H
