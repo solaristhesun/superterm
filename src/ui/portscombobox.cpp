@@ -46,7 +46,7 @@ void CPortsComboBox::onEnumerationFinished()
     if (!m_portToBeSet.isEmpty())
     {
         refresh();
-        this->setCurrentText(m_portToBeSet);
+        this->setCurrentDeviceName(m_portToBeSet);
         m_portToBeSet = "";
     }
 }
@@ -70,6 +70,19 @@ void CPortsComboBox::refresh()
 CSerialPortInfo CPortsComboBox::currentPortInfo() const
 {
     return qvariant_cast<CSerialPortInfo>(this->currentData());
+}
+
+void CPortsComboBox::setCurrentDeviceName(const QString& deviceName)
+{
+    for (auto idx = 0; idx < QComboBox::count(); idx++)
+    {
+        CSerialPortInfo info = qvariant_cast<CSerialPortInfo>(QComboBox::itemData(idx));
+        if (info.portName() == deviceName)
+        {
+            QComboBox::setCurrentIndex(idx);
+            break;
+        }
+    }
 }
 
 // EOF <stefan@scheler.com>

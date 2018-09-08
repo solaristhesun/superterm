@@ -62,7 +62,7 @@ QString CConnectionBar::getDeviceName() const
 
 void CConnectionBar::setDeviceName(const QString& deviceName)
 {
-    m_ui->comboPorts->setCurrentIndex(m_ui->comboPorts->findData(deviceName));
+    m_ui->comboPorts->setCurrentDeviceName(deviceName);
 }
 
 QString CConnectionBar::getDeviceDesc() const
@@ -138,8 +138,7 @@ void CConnectionBar::setFlowControl(const QString& flowControl)
 void CConnectionBar::loadFromSession(CSession* session)
 {
     qDebug() << *session << session->getDeviceDesc();
-    qDebug() << m_ui->comboPorts->count();
-    m_ui->comboPorts->setPort(session->getDeviceDesc());
+    m_ui->comboPorts->setPort(session->getDeviceName());
 
     if (m_ui->comboBaudRates->findText(QString::number(session->getBaudRate())) >= 0)
     {

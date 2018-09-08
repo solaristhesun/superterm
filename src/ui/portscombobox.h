@@ -18,6 +18,7 @@ public:
     void setPort(QString port);
 
     CSerialPortInfo currentPortInfo() const;
+    void setCurrentDeviceName(const QString& deviceName);
 
     void showEvent(QShowEvent* event);
     void hideEvent(QHideEvent* event);
