@@ -32,7 +32,7 @@ CConsoleTabWidget::CConsoleTabWidget(QWidget* parent)
 
 void CConsoleTabWidget::showContextMenu(const QPoint& pt)
 {
-    if (m_tabBar->tabAt(pt) != -1)
+    if (m_tabBar->tabAt(pt) == currentIndex())
     {
         m_contextMenu->exec(mapToGlobal(pt));
     }
