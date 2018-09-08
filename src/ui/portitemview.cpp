@@ -22,3 +22,15 @@ void PortItemView::setPortName(QString portName)
 {
     ui->portNameLabel->setText(portName);
 }
+
+void PortItemView::setBusyFlag(const bool bBusy)
+{
+    if (bBusy)
+    {
+        ui->busyLabel->setStyleSheet("background-color: red");
+    }
+    else
+    {
+        ui->busyLabel->setStyleSheet("background-color: green");
+    }
+}

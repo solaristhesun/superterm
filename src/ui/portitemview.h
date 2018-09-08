@@ -17,6 +17,7 @@ public:
 
     void setPortName(QString portName);
     void setDescription(QString description);
+    void setBusyFlag(const bool bBusy);
 
 private:
     Ui::PortItemView *ui;

@@ -9,8 +9,7 @@ CPortsComboBox::CPortsComboBox(QWidget* parent)
     : QComboBox(parent)
     , m_portToBeSet("")
 {
-    // currently nothing
-    //QComboBox::setItemDelegate(new PortItemDelegate());
+    QComboBox::setItemDelegate(new PortItemDelegate());
 }
 
 void CPortsComboBox::showPopup()
@@ -56,22 +55,21 @@ void CPortsComboBox::refresh()
 {
     QString currentText = this->currentText();
 
-    clear();
-    addItem(tr("Select port"));
+    QComboBox::clear();
+    QComboBox::addItem(tr("Select port"));
 
-    for (const CSerialPortInfo& portInfo : m_pe->getAvailablePorts())
+    for (CSerialPortInfo portInfo : m_pe->getAvailablePorts())
     {
-        QString title = QString("%1 [%2]").arg(portInfo.shortName(), portInfo.getDescription());
-
-        if (portInfo.isBusy())
-        {
-            title.prepend("[" + tr("busy") + "] ");
-        }
-
-        addItem(title, QVariant(portInfo.portName()));
+        QString title = QString("%1 [%2]").arg(portInfo.shortName(), portInfo.description());
+        QComboBox::addItem(title, QVariant::fromValue<CSerialPortInfo>(portInfo));
     }
 
     this->setCurrentText(currentText);
+}
+
+CSerialPortInfo CPortsComboBox::currentPortInfo() const
+{
+    return qvariant_cast<CSerialPortInfo>(this->currentData());
 }
 
 // EOF <stefan@scheler.com>

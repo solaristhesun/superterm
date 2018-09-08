@@ -57,7 +57,7 @@ void CConnectionBar::setPortEnumerator(CPortEnumerator* pe)
 
 QString CConnectionBar::getDeviceName() const
 {
-    return m_ui->comboPorts->currentData().toString();
+    return m_ui->comboPorts->currentPortInfo().portName();
 }
 
 void CConnectionBar::setDeviceName(const QString& deviceName)
@@ -67,7 +67,7 @@ void CConnectionBar::setDeviceName(const QString& deviceName)
 
 QString CConnectionBar::getDeviceDesc() const
 {
-    return m_ui->comboPorts->currentText();
+    return m_ui->comboPorts->currentPortInfo().description();
 }
 
 QString CConnectionBar::getBaudRate() const

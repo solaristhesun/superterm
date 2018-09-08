@@ -3,6 +3,8 @@
 
 #include <QComboBox>
 
+#include "serial/serialportinfo.h"
+
 class CPortEnumerator;
 
 class CPortsComboBox : public QComboBox
@@ -14,6 +16,8 @@ public:
 
     void setPortEnumerator(CPortEnumerator* pe);
     void setPort(QString port);
+
+    CSerialPortInfo currentPortInfo() const;
 
     void showEvent(QShowEvent* event);
     void hideEvent(QHideEvent* event);

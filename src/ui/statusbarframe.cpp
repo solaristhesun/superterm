@@ -1,4 +1,5 @@
 #include <QTimer>
+#include <QStyle>
 
 #include "ui_statusbarframe.h"
 #include "ui/statusbarframe.h"

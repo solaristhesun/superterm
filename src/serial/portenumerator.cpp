@@ -37,9 +37,10 @@ void CPortEnumerator::enumeratePorts()
 
     QMutexLocker locker(&m_mutex);
     m_portsList.clear();
-    for (const QSerialPortInfo& info : ports)
+    for (const QSerialPortInfo& portInfo : ports)
     {
-        m_portsList << CSerialPortInfo(info);
+        CSerialPortInfo info(portInfo);
+        m_portsList << info;
     }
 
 #if defined(Q_OS_LINUX) && defined(DEBUG)

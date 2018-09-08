@@ -4,10 +4,19 @@
 
 #include "serial/serialportinfo.h"
 
-CSerialPortInfo::CSerialPortInfo(QSerialPortInfo info)
-    : portInfo_(info)
+CSerialPortInfo::CSerialPortInfo()
 {
     // currently empty
+}
+CSerialPortInfo::CSerialPortInfo(QSerialPortInfo portInfo)
+    : portInfo_(portInfo)
+{
+    // currently empty
+}
+
+CSerialPortInfo::CSerialPortInfo(const CSerialPortInfo& other)
+{
+    this->portInfo_ = other.portInfo_;
 }
 
 CSerialPortInfo::~CSerialPortInfo()
@@ -20,6 +29,11 @@ QString CSerialPortInfo::portName() const
     return portInfo_.portName();
 }
 
+QString CSerialPortInfo::description() const
+{
+    return portInfo_.description();
+}
+
 QString CSerialPortInfo::shortName() const
 {
 #if defined(Q_OS_LINUX)
@@ -27,11 +41,6 @@ QString CSerialPortInfo::shortName() const
 #else
     return portName();
 #endif
-}
-
-QString CSerialPortInfo::getDescription() const
-{
-    return portInfo_.description();
 }
 
 bool CSerialPortInfo::isBusy() const
