@@ -22,6 +22,7 @@ public:
 
 private:
     QSerialPortInfo portInfo_;
+    bool            bBusy_;
 };
 
 Q_DECLARE_METATYPE(CSerialPortInfo);

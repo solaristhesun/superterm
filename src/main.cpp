@@ -29,6 +29,8 @@ int main(int argc, char* argv[])
 
         SingleApplication a(argc, argv);
 
+        QApplication::setEffectEnabled(Qt::UI_AnimateCombo, false);
+
         // set application icon
         a.setWindowIcon(QIcon(":/icons/terminal_32x32.png"));
 

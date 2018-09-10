@@ -10,13 +10,15 @@ CSerialPortInfo::CSerialPortInfo()
 }
 CSerialPortInfo::CSerialPortInfo(QSerialPortInfo portInfo)
     : portInfo_(portInfo)
+    , bBusy_(portInfo.isBusy()) // cache busy info, because it is sometimes slow
 {
     // currently empty
 }
 
 CSerialPortInfo::CSerialPortInfo(const CSerialPortInfo& other)
 {
-    this->portInfo_ = other.portInfo_;
+    portInfo_ = other.portInfo_;
+    bBusy_ = other.bBusy_;
 }
 
 CSerialPortInfo::~CSerialPortInfo()
@@ -45,7 +47,7 @@ QString CSerialPortInfo::shortName() const
 
 bool CSerialPortInfo::isBusy() const
 {
-    return portInfo_.isBusy();
+    return bBusy_;
 }
 
 bool CSerialPortInfo::compare(const CSerialPortInfo& first, const CSerialPortInfo& second)

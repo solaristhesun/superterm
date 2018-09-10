@@ -21,7 +21,7 @@ void PortItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
     if (option.state & QStyle::State_Selected)
     {
-        pal.setColor(QPalette::Background, QApplication::palette().color(QPalette::Highlight));
+        pal.setColor(QPalette::Background, option.palette.highlight().color());
     }
     else
     {

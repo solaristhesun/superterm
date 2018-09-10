@@ -4,6 +4,7 @@
 
 #if defined(Q_OS_WIN)
 #include "windows.h"
+#include "math.h"
 #endif
 
 #include "ui_mainwindow.h"
