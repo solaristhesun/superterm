@@ -1,6 +1,7 @@
 #include <QTimer>
 #include <QSettings>
 #include <QNetworkAccessManager>
+#include <QNetworkReply>
 
 #include "usagetracker.h"
 #include "misc/uniqueidentifier.h"
@@ -11,6 +12,8 @@ UsageTracker::UsageTracker()
     , manager_(new QNetworkAccessManager(this))
 {
     // currently empty
+    connect(manager_, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(replyFinished(QNetworkReply*)));
 }
 
 void UsageTracker::trackUsage()
@@ -30,6 +33,13 @@ void UsageTracker::trackUsage()
     manager_->get(request);
 
     QTimer::singleShot(24*3600*1000, this, &UsageTracker::trackUsage);
+}
+
+void UsageTracker::replyFinished(QNetworkReply* reply)
+{
+    qDebug() << "RESPONSE" << reply->readAll();
+
+    reply->deleteLater();
 }
 
 QByteArray UsageTracker::getUserAgent() const

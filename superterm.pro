@@ -39,7 +39,8 @@ SOURCES += \
     src/misc/usagetracker.cpp \
     src/misc/uniqueidentifier.cpp \
     src/ui/portitemdelegate.cpp \
-    src/ui/portitemview.cpp
+    src/ui/portitemview.cpp \
+    src/misc/softwareversion.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -68,7 +69,8 @@ HEADERS += \
     src/misc/uniqueidentifier.h \
     src/misc/usagetracker.h \
     src/ui/portitemdelegate.h \
-    src/ui/portitemview.h
+    src/ui/portitemview.h \
+    src/misc/softwareversion.h
 
 FORMS += \
     src/ui/mainwindow.ui \

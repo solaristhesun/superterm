@@ -14,8 +14,16 @@
 #include "serial/portenumerator.h"
 #include "singleapplication/singleapplication.h"
 
+#include "misc/softwareversion.h"
+
 int main(int argc, char* argv[])
 {
+    SoftwareVersion v1("2018.8a");
+    SoftwareVersion v2("2018.8b");
+
+    qDebug() << (v2 > v1);
+
+
     if (argc == 7)
     {
         CPortApplication a(argc, argv);

@@ -4,6 +4,7 @@
 #include <QObject>
 
 class QNetworkAccessManager;
+class QNetworkReply;
 
 class UsageTracker: public QObject
 {
@@ -13,6 +14,7 @@ public:
 
 public slots:
     void trackUsage();
+    void replyFinished(QNetworkReply*);
 
 private:
     QNetworkAccessManager* manager_;
