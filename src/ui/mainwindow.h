@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 class CConsoleTab;
+class SoftwareVersion;
 
 namespace Ui {
 class CMainWindow;
@@ -29,6 +30,7 @@ private:
 
 public slots:
     void onSecondaryInstanceLaunched();
+    void showUpdateInfo(const SoftwareVersion& version);
 
 signals:
     void willQuit();

@@ -14,6 +14,7 @@ public:
     quint16 versionMajor() const;
     quint16 versionMinor() const;
     char versionPatch() const;
+    bool isValid() const;
 
 private:
     quint16 versionMajor_;
@@ -23,5 +24,8 @@ private:
 };
 
 bool operator>(const SoftwareVersion& lhs, const SoftwareVersion& rhs);
+bool operator<(const SoftwareVersion& lhs, const SoftwareVersion& rhs);
+bool operator<=(const SoftwareVersion& lhs, const SoftwareVersion& rhs);
+bool operator>=(const SoftwareVersion& lhs, const SoftwareVersion& rhs);
 
 #endif // SOFTWAREVERSION_H

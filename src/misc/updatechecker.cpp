@@ -2,21 +2,21 @@
 #include <QSettings>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QRegularExpression>
 
-#include "usagetracker.h"
+#include "misc/updatechecker.h"
 #include "misc/uniqueidentifier.h"
 #include "misc/globals.h"
 
-UsageTracker::UsageTracker()
+UpdateChecker::UpdateChecker()
     : QObject(nullptr)
     , manager_(new QNetworkAccessManager(this))
 {
-    // currently empty
     connect(manager_, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(replyFinished(QNetworkReply*)));
 }
 
-void UsageTracker::trackUsage()
+void UpdateChecker::checkForUpdate()
 {
     QSettings settings;
     QString uniqueId = settings.value("unique_id").toString();
@@ -32,17 +32,34 @@ void UsageTracker::trackUsage()
     request.setRawHeader("User-Agent", getUserAgent());
     manager_->get(request);
 
-    QTimer::singleShot(24*3600*1000, this, &UsageTracker::trackUsage);
+    QTimer::singleShot(24*3600*1000, this, &UpdateChecker::checkForUpdate);
 }
 
-void UsageTracker::replyFinished(QNetworkReply* reply)
+void UpdateChecker::replyFinished(QNetworkReply* reply)
 {
-    qDebug() << "RESPONSE" << reply->readAll();
+    QString serverResponse = reply->readAll();
+
+    QRegularExpression re("^([^ ]+) ([^ ]+)$"); // example response: "OK 2018.8a"
+    QRegularExpressionMatch match = re.match(serverResponse);
+
+    if (match.hasMatch())
+    {
+        QString opcode = match.captured(1);
+        SoftwareVersion versionAvailable(match.captured(2));
+
+        if (opcode == "OK" && versionAvailable.isValid())
+        {
+            if (versionAvailable > Globals::ApplicationVersion)
+            {
+                emit updateAvailable(versionAvailable);
+            }
+        }
+    }
 
     reply->deleteLater();
 }
 
-QByteArray UsageTracker::getUserAgent() const
+QByteArray UpdateChecker::getUserAgent() const
 {
     return QString(Globals::ApplicationFullName + QString(" (revision %1)").arg(Globals::ApplicationRevision)).toUtf8();
 }

@@ -13,6 +13,7 @@
 #include "ui/consoletabbar.h"
 #include "ui/consoletabfactory.h"
 #include "misc/globals.h"
+#include "misc/softwareversion.h"
 #include "session/session.h"
 
 CMainWindow::CMainWindow(QWidget* parent)
@@ -74,6 +75,13 @@ CConsoleTab* CMainWindow::detachTab()
     qDebug() << "detaching tab" << tab->getLabel() << "from" << this;
 
     return tab;
+}
+
+void CMainWindow::showUpdateInfo(const SoftwareVersion& version)
+{
+    qDebug() << "version available " << version.toString();
+
+    QMainWindow::setWindowTitle(QMainWindow::windowTitle() + " [update available]");
 }
 
 void CMainWindow::onSecondaryInstanceLaunched()

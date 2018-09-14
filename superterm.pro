@@ -36,11 +36,11 @@ SOURCES += \
     src/ui/connectionbar.cpp \
     src/misc/defaultsettings.cpp \
     src/ui/renametabframe.cpp \
-    src/misc/usagetracker.cpp \
     src/misc/uniqueidentifier.cpp \
     src/ui/portitemdelegate.cpp \
     src/ui/portitemview.cpp \
-    src/misc/softwareversion.cpp
+    src/misc/softwareversion.cpp \
+    src/misc/updatechecker.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -67,10 +67,10 @@ HEADERS += \
     src/misc/defaultsettings.h \
     src/ui/renametabframe.h \
     src/misc/uniqueidentifier.h \
-    src/misc/usagetracker.h \
     src/ui/portitemdelegate.h \
     src/ui/portitemview.h \
-    src/misc/softwareversion.h
+    src/misc/softwareversion.h \
+    src/misc/updatechecker.h
 
 FORMS += \
     src/ui/mainwindow.ui \

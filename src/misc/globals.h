@@ -3,12 +3,14 @@
 
 #include <QSerialPort>
 
+#include "misc/softwareversion.h"
+
 class Globals
 {
 public:
     static const QString ApplicationName;
     static const QString ApplicationFullName;
-    static const QString ApplicationVersion;
+    static const SoftwareVersion ApplicationVersion;
     static const QString ApplicationWebsite;
     static const quint32 ApplicationRevision;
     static const QMap<QSerialPort::Parity, QString> ParityNameMap;

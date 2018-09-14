@@ -5,8 +5,8 @@
 #include "misc/globals.h"
 
 const QString Globals::ApplicationName = "superterm";
-const QString Globals::ApplicationVersion = "2018.8";
-const QString Globals::ApplicationFullName = Globals::ApplicationName + " " + Globals::ApplicationVersion;
+const SoftwareVersion Globals::ApplicationVersion = SoftwareVersion("2018.8b");
+const QString Globals::ApplicationFullName = Globals::ApplicationName + " " + Globals::ApplicationVersion.toString();
 const QString Globals::ApplicationWebsite = "https://scheler.com/" + Globals::ApplicationName + "/";
 const quint32 Globals::ApplicationRevision = REVISION;
 

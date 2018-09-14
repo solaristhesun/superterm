@@ -6,7 +6,7 @@
 
 #include "misc/globals.h"
 #include "misc/defaultsettings.h"
-#include "misc/usagetracker.h"
+#include "misc/updatechecker.h"
 #include "ui/mainwindow.h"
 #include "ui/consoletabfactory.h"
 #include "ui/highlightsframe.h"
@@ -18,12 +18,6 @@
 
 int main(int argc, char* argv[])
 {
-    SoftwareVersion v1("2018.8a");
-    SoftwareVersion v2("2018.8b");
-
-    qDebug() << (v2 > v1);
-
-
     if (argc == 7)
     {
         CPortApplication a(argc, argv);
@@ -74,8 +68,10 @@ int main(int argc, char* argv[])
         QObject::connect(&a, &QApplication::aboutToQuit, w, &CMainWindow::deleteLater);
         QObject::connect(&a, &SingleApplication::showUp, w, &CMainWindow::onSecondaryInstanceLaunched);
 
-        UsageTracker usageTracker;
-        usageTracker.trackUsage();
+        UpdateChecker updateChecker;
+        updateChecker.checkForUpdate();
+
+        QObject::connect(&updateChecker, &UpdateChecker::updateAvailable, w, &CMainWindow::showUpdateInfo);
 
         return a.exec();
     }
