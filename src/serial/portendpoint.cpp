@@ -9,9 +9,9 @@
 
 CPortEndpoint::CPortEndpoint(QObject* parent)
     : QObject(parent)
-    , m_process(NULL)
-    , m_server(NULL)
-    , m_socket(NULL)
+    , m_process(nullptr)
+    , m_server(nullptr)
+    , m_socket(nullptr)
 {
     // currently nothing
 }
@@ -91,13 +91,13 @@ void CPortEndpoint::disconnectEndpoint()
     if (m_socket)
     {
         delete m_socket;
-        m_socket = NULL;
+        m_socket = nullptr;
     }
 
     if (m_server)
     {
         delete m_server;
-        m_server = NULL;
+        m_server = nullptr;
     }
 
     if (m_process)
@@ -141,7 +141,7 @@ void CPortEndpoint::connectEndpoint(CSession* session)
 
 bool CPortEndpoint::isConnected()
 {
-    return m_socket != NULL;
+    return m_socket != nullptr;
 }
 
 // EOF <stefan@scheler.com>

@@ -45,7 +45,7 @@ public:
     Q_DECLARE_PUBLIC(SingleApplication)
 
     SingleApplicationPrivate( SingleApplication *q_ptr ) : q_ptr( q_ptr ) {
-        server = NULL;
+        server = nullptr;
     }
 
     ~SingleApplicationPrivate()
@@ -156,7 +156,7 @@ public:
     void cleanUp() {
         memory->lock();
         InstancesInfo* inst = (InstancesInfo*)memory->data();
-        if( server != NULL ) {
+        if( server != nullptr ) {
             server->close();
             inst->primary = false;
         } else {
@@ -269,13 +269,13 @@ SingleApplication::~SingleApplication()
 bool SingleApplication::isPrimary()
 {
     Q_D(SingleApplication);
-    return d->server != NULL;
+    return d->server != nullptr;
 }
 
 bool SingleApplication::isSecondary()
 {
     Q_D(SingleApplication);
-    return d->server == NULL;
+    return d->server == nullptr;
 }
 
 /**

@@ -55,7 +55,7 @@ void dumpDCB(const char* szFileName)
 CPortApplication::CPortApplication(int& argc, char** argv)
     : QCoreApplication(argc, argv)
     , m_socket(new QLocalSocket(this))
-    , m_port(NULL)
+    , m_port(nullptr)
     , m_observer(new CPortObserver())
     , m_bHasSendReconSignal(false)
 {

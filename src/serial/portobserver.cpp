@@ -5,7 +5,7 @@
 
 CPortObserver::CPortObserver()
     : m_bActive(false)
-    , m_port(NULL)
+    , m_port(nullptr)
 {
     QThread::start();
 }

@@ -14,7 +14,7 @@ CConsoleTabBar::CConsoleTabBar(QWidget* parent)
     , m_btn(new QPushButton(this))
     , m_selectedIndex(-1)
     , m_prevIndex(-1)
-    , mNewMainWindow(NULL)
+    , mNewMainWindow(nullptr)
 {
     qDebug() << "CConsoleTabBar::CConsoleTabBar()";
     setFocusPolicy(Qt::NoFocus);
@@ -65,7 +65,7 @@ void CConsoleTabBar::showEvent(QShowEvent* event)
 void CConsoleTabBar::mouseReleaseEvent(QMouseEvent* event)
 {
     QTabBar::mouseReleaseEvent(event);
-    mNewMainWindow = NULL;
+    mNewMainWindow = nullptr;
 }
 
 void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)

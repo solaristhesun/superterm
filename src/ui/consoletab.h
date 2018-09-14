@@ -25,7 +25,7 @@ class CConsoleTab : public QWidget
     Q_OBJECT
 
 public:
-    CConsoleTab(CPortEnumerator* pe, CSession* session = NULL);
+    CConsoleTab(CPortEnumerator* pe, CSession* session = nullptr);
     ~CConsoleTab();
 
     void hideButton(int index);
