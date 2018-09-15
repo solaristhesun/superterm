@@ -1,7 +1,7 @@
 #include <QRegularExpression>
 #include <QDebug>
 
-#include "softwareversion.h"
+#include "misc/softwareversion.h"
 
 SoftwareVersion::SoftwareVersion(QString versionString)
 {

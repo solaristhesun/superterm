@@ -22,6 +22,7 @@ CConnectionBar::CConnectionBar(QWidget* parent)
     m_ui->comboParity->hide();
     m_ui->comboStopBits->hide();
     m_ui->comboConfigurations->hide();
+    m_ui->btnSave->hide(); // save feature for now
 
     connect(m_ui->btnConnect, &QPushButton::clicked, this, &CConnectionBar::connectClicked);
     connect(m_ui->btnSave, &QPushButton::clicked, this, &CConnectionBar::saveClicked);

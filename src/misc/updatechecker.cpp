@@ -12,8 +12,7 @@ UpdateChecker::UpdateChecker()
     : QObject(nullptr)
     , manager_(new QNetworkAccessManager(this))
 {
-    connect(manager_, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(replyFinished(QNetworkReply*)));
+    connect(manager_, &QNetworkAccessManager::finished,  this, &UpdateChecker::replyFinished);
 }
 
 void UpdateChecker::checkForUpdate()

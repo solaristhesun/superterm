@@ -20,9 +20,9 @@ public:
 
     void moveTab(int from, int to);
 
-    void         tabInserted(int index);
-    void         tabRemoved(int index);
-    void         moveButton();
+    void tabInserted(int index);
+    void tabRemoved(int index);
+    void moveButton();
 
     CMainWindow* getNewMainWindow() const
     {
