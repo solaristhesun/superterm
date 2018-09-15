@@ -133,3 +133,15 @@ QTabBar::tab:last:selected
 QTabBar::tab:only-one
 {
 }
+
+QFrame#notificationBar
+{
+    background-color: rgb(239, 41, 41);
+}
+
+QFrame#notificationBar QLabel
+{
+    color: white;
+    font-weight: bold;
+}
+

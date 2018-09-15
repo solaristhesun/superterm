@@ -18,7 +18,9 @@ SoftwareVersion::SoftwareVersion(QString versionString)
 
 bool SoftwareVersion::isValid() const
 {
-    return true;
+    return versionMajor_ >= 1000 && versionMajor_ <= 9999 &&
+           versionMinor_ <= 12 &&
+           versionPatch_ >= 'a' && versionPatch_ <= 'z';
 }
 
 QString SoftwareVersion::toString() const
