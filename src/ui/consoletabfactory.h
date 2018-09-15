@@ -8,7 +8,7 @@ class CSession;
 class CConsoleTabFactory
 {
 public:
-    static void setPortEnumerator(CPortEnumerator* portEnumerator);
+    static void         setPortEnumerator(CPortEnumerator* portEnumerator);
     static CConsoleTab* createTab();
     static CConsoleTab* createTabFromSession(CSession* session);
 

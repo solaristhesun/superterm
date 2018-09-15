@@ -6,7 +6,8 @@
 class CConsoleTab;
 class SoftwareVersion;
 
-namespace Ui {
+namespace Ui
+{
 class CMainWindow;
 }
 
@@ -15,15 +16,15 @@ class CMainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit CMainWindow(QWidget* parent = 0);
+    explicit CMainWindow(QWidget* parent = nullptr);
     ~CMainWindow();
 
-    QSize sizeHint() const;
-    void attachTab(CConsoleTab* tab);
-    void addExistingTabsFromFile();
+    QSize        sizeHint() const;
+    void         attachTab(CConsoleTab* tab);
+    void         addExistingTabsFromFile();
     CConsoleTab* detachTab();
-    int getTabCount() const;
-    QRect getTabBarRect() const;
+    int          getTabCount() const;
+    QRect        getTabBarRect() const;
 
 private:
     bool nativeEvent(const QByteArray& eventType, void* message, long* result);

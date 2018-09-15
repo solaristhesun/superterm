@@ -3,7 +3,8 @@
 
 #include <QFrame>
 
-namespace Ui {
+namespace Ui
+{
 class CStatusBarFrame;
 }
 
@@ -12,7 +13,7 @@ class CStatusBarFrame : public QFrame
     Q_OBJECT
 
 public:
-    explicit CStatusBarFrame(QWidget* parent = 0);
+    explicit CStatusBarFrame(QWidget* parent = nullptr);
     ~CStatusBarFrame();
 
     void showMessage(const QString& message, const int timeout = 0);

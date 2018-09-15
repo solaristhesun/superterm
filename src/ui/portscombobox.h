@@ -11,14 +11,14 @@ class CPortsComboBox : public QComboBox
 {
     Q_OBJECT
 public:
-    explicit CPortsComboBox(QWidget* parent = 0);
+    explicit CPortsComboBox(QWidget* parent = nullptr);
     void showPopup();
 
     void setPortEnumerator(CPortEnumerator* pe);
     void setPort(QString port);
 
     CSerialPortInfo currentPortInfo() const;
-    void setCurrentDeviceName(const QString& deviceName);
+    void            setCurrentDeviceName(const QString& deviceName);
 
     void showEvent(QShowEvent* event);
     void hideEvent(QHideEvent* event);

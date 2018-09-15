@@ -3,7 +3,8 @@
 
 #include <QFrame>
 
-namespace Ui {
+namespace Ui
+{
 class PortItemView;
 }
 
@@ -12,7 +13,7 @@ class PortItemView : public QFrame
     Q_OBJECT
 
 public:
-    explicit PortItemView(QWidget *parent = nullptr);
+    explicit PortItemView(QWidget* parent = nullptr);
     ~PortItemView();
 
     void setPortName(QString portName);
@@ -20,7 +21,7 @@ public:
     void setBusyFlag(const bool bBusy);
 
 private:
-    Ui::PortItemView *ui;
+    Ui::PortItemView* ui;
 };
 
 #endif // PORTITEMVIEW_H

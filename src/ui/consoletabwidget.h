@@ -14,14 +14,14 @@ class CConsoleTabWidget : public QTabWidget
 {
     Q_OBJECT
 public:
-    explicit CConsoleTabWidget(QWidget* parent = 0);
+    explicit CConsoleTabWidget(QWidget* parent = nullptr);
     ~CConsoleTabWidget();
 
-    void addTab(CConsoleTab* tab);
-    void setCurrentTabText(const QString& test);
-    void setConsoleFont(const QFont& font);
-    void aboutToQuit();
-    void destroyTab(int index);
+    void         addTab(CConsoleTab* tab);
+    void         setCurrentTabText(const QString& test);
+    void         setConsoleFont(const QFont& font);
+    void         aboutToQuit();
+    void         destroyTab(int index);
     CConsoleTab* currentWidget() const;
     CConsoleTab* widget(int index) const;
 

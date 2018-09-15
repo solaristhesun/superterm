@@ -10,8 +10,9 @@ class PortItemDelegate : public QItemDelegate
 public:
     PortItemDelegate();
 
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    void  paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+
 private:
     PortItemView* view_;
 };

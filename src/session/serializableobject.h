@@ -8,15 +8,14 @@ class CSerializableObject : public QObject
 {
     Q_OBJECT
 public:
-    explicit CSerializableObject(QObject* parent = 0);
+    explicit CSerializableObject(QObject* parent = nullptr);
 
-    template<typename T>
+    template <typename T>
     static QVariantList convertToQVariantList(QList<T> types)
     {
         QVariantList varList;
 
-        for (const T& type : types)
-        {
+        for (const T& type : types) {
             varList.append(QVariant::fromValue(type));
         }
 

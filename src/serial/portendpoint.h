@@ -1,9 +1,9 @@
 #ifndef CPORTENDPOINT_H
 #define CPORTENDPOINT_H
 
+#include <QLocalSocket>
 #include <QObject>
 #include <QProcess>
-#include <QLocalSocket>
 
 #include "ipc/message.h"
 
@@ -15,11 +15,11 @@ class CPortEndpoint : public QObject
 {
     Q_OBJECT
 public:
-    explicit CPortEndpoint(QObject* parent = 0);
+    explicit CPortEndpoint(QObject* parent = nullptr);
 
-    void connectEndpoint(CSession* session);
-    void disconnectEndpoint();
-    bool isConnected();
+    void    connectEndpoint(CSession* session);
+    void    disconnectEndpoint();
+    bool    isConnected();
     quint64 writeData(const QByteArray& byteArray);
     quint64 writeSignal(const CMessage::Signal& signal);
     quint64 write(const QByteArray& byteArray);

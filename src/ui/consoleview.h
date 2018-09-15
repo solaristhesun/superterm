@@ -8,7 +8,8 @@ class QScrollBar;
 
 #include "highlightsframe.h"
 
-namespace Ui {
+namespace Ui
+{
 class CConsoleView;
 }
 
@@ -19,21 +20,22 @@ class CConsoleView : public QPlainTextEdit
     Q_OBJECT
 
 public:
-    CConsoleView(QWidget* parent = 0);
+    CConsoleView(QWidget* parent = nullptr);
     ~CConsoleView();
 
     void keyPressEvent(QKeyEvent* e);
     void scrollDown();
     void refreshCursor();
     void setHighlighting(QList<CHighlightsFrame::Highlighting>& highlighting);
-    QList<CHighlightsFrame::Highlighting>& getHighlighting();
     void mousePressEvent(QMouseEvent* e);
     void mouseMoveEvent(QMouseEvent* e);
     void mouseReleaseEvent(QMouseEvent* e);
 
-    void setAutoScroll(const bool bEnabled);
-    void insertBackspace();
-    void insertNewline();
+    QList<CHighlightsFrame::Highlighting>& getHighlighting();
+
+    void  setAutoScroll(const bool bEnabled);
+    void  insertBackspace();
+    void  insertNewline();
     QSize getCharSize() const;
 
 public slots:
@@ -58,9 +60,9 @@ private:
     bool                                  m_bAutoScroll;
     int                                   cursorPos;
 
-    void saveCursor();
-    void restoreCursor();
-    void wrapText(QString textToWrap, const int width);
+    void    saveCursor();
+    void    restoreCursor();
+    void    wrapText(QString textToWrap, const int width);
     QString elideText(const QString& text, int availableNrOfChars);
 };
 

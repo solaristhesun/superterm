@@ -1,12 +1,13 @@
 #ifndef CONSOLETAB_H
 #define CONSOLETAB_H
 
-#include <QWidget>
+#include <QProcess>
 #include <QSerialPort>
 #include <QTextEdit>
-#include <QProcess>
+#include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class CConsoleTab;
 }
 
@@ -30,12 +31,12 @@ public:
 
     void hideButton(int index);
 
-    void setConsoleFont(const QFont& font);
-    void setColor(const QColor& backGroundColor, const QColor& foreGroundColor);
+    void    setConsoleFont(const QFont& font);
+    void    setColor(const QColor& backGroundColor, const QColor& foreGroundColor);
     QString getLabel() const;
-    void setLabel(const QString& label);
-    QSize getViewPortSize() const;
-    QSize getCharSize() const;
+    void    setLabel(const QString& label);
+    QSize   getViewPortSize() const;
+    QSize   getCharSize() const;
 
 public slots:
     void onConnectClicked();

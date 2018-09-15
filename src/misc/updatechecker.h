@@ -8,7 +8,7 @@
 class QNetworkAccessManager;
 class QNetworkReply;
 
-class UpdateChecker: public QObject
+class UpdateChecker : public QObject
 {
     Q_OBJECT
 public:

@@ -1,22 +1,19 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-#include <QtGlobal>
 #include <QByteArray>
+#include <QtGlobal>
 
 class CMessage
 {
 public:
-
-    enum Cmd
-    {
+    enum Cmd {
         DataCmd    = 0, // Message contains data
         SigCmd     = 1, // Message contains signal
         UnknownCmd = -1
     };
 
-    enum Signal
-    {
+    enum Signal {
         IsConSig     = 0, // Reconnection mechanism was started
         DoneConSig   = 1, // Reconnection mechanism finished
         CancelConSig = 2, // Reconnection mechanism should be cancelled
@@ -31,19 +28,19 @@ public:
     CMessage(const Cmd& cmd, const Signal& signal);
 
     void setCmd(const Cmd& u8Cmd);
-    Cmd getCmd() const;
+    Cmd  getCmd() const;
 
-    void setPayload(const QByteArray& payload);
+    void       setPayload(const QByteArray& payload);
     QByteArray getPayload() const;
 
-    void setStringData(const QString& string);
+    void    setStringData(const QString& string);
     QString getStringData() const;
 
-    void setSignal(const Signal& signal);
+    void   setSignal(const Signal& signal);
     Signal getSignal() const;
 
     bool isCmd(const Cmd& cmd) const;
-    int getSize() const;
+    int  getSize() const;
 
 private:
     Cmd        m_cmd;

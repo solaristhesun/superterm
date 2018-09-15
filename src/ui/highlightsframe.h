@@ -1,10 +1,11 @@
 #ifndef HIGHLIGHTSFRAME_H
 #define HIGHLIGHTSFRAME_H
 
-#include <QFrame>
 #include <QColor>
+#include <QFrame>
 
-namespace Ui {
+namespace Ui
+{
 class CHighlightsFrame;
 }
 
@@ -15,18 +16,17 @@ class CHighlightsFrame : public QFrame
     Q_OBJECT
 
 public:
-    struct Highlighting
-    {
+    struct Highlighting {
         QString pattern;
-        QColor color;
+        QColor  color;
     };
 
-    explicit CHighlightsFrame(QWidget* parent = 0);
+    explicit CHighlightsFrame(QWidget* parent = nullptr);
     ~CHighlightsFrame();
 
     QList<Highlighting> getItems();
-    void showEvent(QShowEvent* event);
-    void keyPressEvent ( QKeyEvent* event );
+    void                showEvent(QShowEvent* event);
+    void                keyPressEvent(QKeyEvent* event);
 
 public slots:
     void clear();

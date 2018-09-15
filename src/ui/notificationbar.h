@@ -3,7 +3,8 @@
 
 #include <QFrame>
 
-namespace Ui {
+namespace Ui
+{
 class NotificationBar;
 }
 
@@ -12,7 +13,7 @@ class CNotificationBar : public QFrame
     Q_OBJECT
 
 public:
-    explicit CNotificationBar(QWidget *parent = nullptr);
+    explicit CNotificationBar(QWidget* parent = nullptr);
     ~CNotificationBar();
 
     void setNotificationText(QString text);
@@ -22,8 +23,8 @@ public slots:
     void openLinkInBrowser();
 
 private:
-    Ui::NotificationBar *ui_;
-    QString link_;
+    Ui::NotificationBar* ui_;
+    QString              link_;
 };
 
 #endif // NOTIFICATIONBAR_H

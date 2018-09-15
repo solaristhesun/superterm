@@ -3,7 +3,8 @@
 
 #include <QFrame>
 
-namespace Ui {
+namespace Ui
+{
 class RenameTabFrame;
 }
 
@@ -12,12 +13,12 @@ class RenameTabFrame : public QFrame
     Q_OBJECT
 
 public:
-    explicit RenameTabFrame(QWidget* parent = 0);
+    explicit RenameTabFrame(QWidget* parent = nullptr);
     ~RenameTabFrame();
 
-    void setText(const QString& text);
+    void    setText(const QString& text);
     QString getText() const;
-    void show();
+    void    show();
 
 signals:
     void applyPressed();

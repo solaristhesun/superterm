@@ -3,7 +3,8 @@
 
 #include <QFrame>
 
-namespace Ui {
+namespace Ui
+{
 class LogfilePanel;
 }
 
@@ -12,7 +13,7 @@ class LogfilePanel : public QFrame
     Q_OBJECT
 
 public:
-    explicit LogfilePanel(QWidget* parent = 0);
+    explicit LogfilePanel(QWidget* parent = nullptr);
     ~LogfilePanel();
 
     QString getLogFileName() const;

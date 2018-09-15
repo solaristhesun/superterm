@@ -23,8 +23,8 @@ public:
 
     CSession();
     ~CSession();
-    static CSession* createSessionFromFile(const QString& fileName);
-    static void removeFiles();
+    static CSession*   createSessionFromFile(const QString& fileName);
+    static void        removeFiles();
     static QStringList getSessionList();
 
     quint32 getBaudRate() const

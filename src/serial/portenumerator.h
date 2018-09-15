@@ -1,9 +1,9 @@
 #ifndef PORTENUMERATOR_H
 #define PORTENUMERATOR_H
 
+#include <QMutex>
 #include <QObject>
 #include <QThread>
-#include <QMutex>
 
 class CSerialPortInfo;
 

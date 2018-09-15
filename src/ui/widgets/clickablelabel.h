@@ -3,7 +3,8 @@
 
 #include <QLabel>
 
-class CClickableLabel : public QLabel {
+class CClickableLabel : public QLabel
+{
     Q_OBJECT
 
 public:
@@ -15,7 +16,6 @@ signals:
 
 protected:
     void mousePressEvent(QMouseEvent* event);
-
 };
 
 #endif // CCLICKABLELABEL_H
