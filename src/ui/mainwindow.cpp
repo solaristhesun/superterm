@@ -1,6 +1,7 @@
 #include <QMoveEvent>
 #include <QDebug>
 #include <QRect>
+#include <QString>
 
 #if defined(Q_OS_WIN)
 #include "windows.h"
@@ -23,6 +24,7 @@ CMainWindow::CMainWindow(QWidget* parent)
     qDebug() << "CMainWindow::CMainWindow()";
 
     m_ui->setupUi(this);
+    m_ui->notificationBar->hide();
     QWidget::resize(800, 600);
 
     setWindowTitle(Globals::ApplicationFullName);
@@ -79,9 +81,9 @@ CConsoleTab* CMainWindow::detachTab()
 
 void CMainWindow::showUpdateInfo(const SoftwareVersion& version)
 {
-    qDebug() << "version available " << version.toString();
-
-    QMainWindow::setWindowTitle(QMainWindow::windowTitle() + " [update available]");
+    m_ui->notificationBar->setNotificationText(QString(tr("A software update is available. Click here to download superterm %1.")).arg(version.toString()));
+    m_ui->notificationBar->setLink(Globals::ApplicationWebsite);
+    m_ui->notificationBar->show();
 }
 
 void CMainWindow::onSecondaryInstanceLaunched()

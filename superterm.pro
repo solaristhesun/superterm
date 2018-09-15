@@ -40,7 +40,9 @@ SOURCES += \
     src/ui/portitemdelegate.cpp \
     src/ui/portitemview.cpp \
     src/misc/softwareversion.cpp \
-    src/misc/updatechecker.cpp
+    src/misc/updatechecker.cpp \
+    src/ui/notificationbar.cpp \
+    src/ui/widgets/clickablelabel.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -70,7 +72,9 @@ HEADERS += \
     src/ui/portitemdelegate.h \
     src/ui/portitemview.h \
     src/misc/softwareversion.h \
-    src/misc/updatechecker.h
+    src/misc/updatechecker.h \
+    src/ui/notificationbar.h \
+    src/ui/widgets/clickablelabel.h
 
 FORMS += \
     src/ui/mainwindow.ui \
@@ -81,7 +85,8 @@ FORMS += \
     src/ui/connectionbar.ui \
     src/ui/consoletab.ui \
     src/ui/renametabframe.ui \
-    src/ui/portitemview.ui
+    src/ui/portitemview.ui \
+    src/ui/notificationbar.ui
 
 RESOURCES += \
     superterm.qrc
@@ -120,4 +125,6 @@ isEmpty(REVISION){
 DEFINES += REVISION=$${REVISION} 
 
 # EOF <stefan@scheler.com>
+
+STATECHARTS +=
 

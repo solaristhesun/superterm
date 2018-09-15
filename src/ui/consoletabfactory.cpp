@@ -3,7 +3,7 @@
 #include "serial/portenumerator.h"
 #include "session/session.h"
 
-CPortEnumerator* CConsoleTabFactory::sPortEnumerator = NULL;
+CPortEnumerator* CConsoleTabFactory::sPortEnumerator = nullptr;
 
 void CConsoleTabFactory::setPortEnumerator(CPortEnumerator* portEnumerator)
 {
@@ -12,7 +12,7 @@ void CConsoleTabFactory::setPortEnumerator(CPortEnumerator* portEnumerator)
 
 CConsoleTab* CConsoleTabFactory::createTab()
 {
-    return new CConsoleTab(sPortEnumerator, NULL);
+    return new CConsoleTab(sPortEnumerator, nullptr);
 }
 
 CConsoleTab* CConsoleTabFactory::createTabFromSession(CSession* session)

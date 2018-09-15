@@ -41,64 +41,57 @@ char SoftwareVersion::versionPatch() const
     return versionPatch_;
 }
 
-bool operator>(const SoftwareVersion& lhs, const SoftwareVersion& rhs)
+bool SoftwareVersion::operator==(const SoftwareVersion& other)
 {
-    if (lhs.versionMajor() > rhs.versionMajor())
+    return (versionMajor() == other.versionMajor() &&
+            versionMinor() == other.versionMinor() &&
+            versionPatch() == other.versionPatch());
+}
+
+bool SoftwareVersion::operator>(const SoftwareVersion& other)
+{
+    if (versionMajor() > other.versionMajor())
     {
         return true;
     }
-    else
+    else if (versionMajor() == other.versionMajor())
     {
-        if (lhs.versionMinor() > rhs.versionMinor())
+        if (versionMinor() > other.versionMinor())
         {
             return true;
         }
-        else
+        else if (versionMinor() == other.versionMinor())
         {
-            if (lhs.versionPatch() > rhs.versionPatch())
+            if (versionPatch() > other.versionPatch())
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
         }
     }
+
+    return false;
 }
 
-bool operator<(const SoftwareVersion& lhs, const SoftwareVersion& rhs)
+bool SoftwareVersion::operator<(const SoftwareVersion& other)
 {
-    if (lhs.versionMajor() < rhs.versionMajor())
-    {
-        return true;
-    }
-    else
-    {
-        if (lhs.versionMinor() < rhs.versionMinor())
-        {
-            return true;
-        }
-        else
-        {
-            if (lhs.versionPatch() < rhs.versionPatch())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
+    return !(*this > other) && ! (*this == other);
 }
 
-bool operator<=(const SoftwareVersion& lhs, const SoftwareVersion& rhs)
+bool SoftwareVersion::operator<=(const SoftwareVersion& other)
 {
-    return !(lhs > rhs);
+    return !(*this > other);
 }
 
-bool operator>=(const SoftwareVersion& lhs, const SoftwareVersion& rhs)
+bool SoftwareVersion::operator>=(const SoftwareVersion& other)
 {
-    return !(lhs < rhs);
+    return !(*this < other);
 }
+
+QDebug operator<<(QDebug dbg, const SoftwareVersion& version)
+{
+    QDebugStateSaver saver(dbg);
+    dbg.nospace() << version.toString();
+    return dbg;
+}
+
+// EOF <stefan@scheler.com>

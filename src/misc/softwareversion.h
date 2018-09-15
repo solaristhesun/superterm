@@ -1,6 +1,7 @@
 #ifndef SOFTWAREVERSION_H
 #define SOFTWAREVERSION_H
 
+#include <QDebug>
 #include <QtGlobal>
 #include <QLatin1Literal>
 
@@ -16,6 +17,12 @@ public:
     char versionPatch() const;
     bool isValid() const;
 
+    bool operator==(const SoftwareVersion& other);
+    bool operator>(const SoftwareVersion& other);
+    bool operator<(const SoftwareVersion& other);
+    bool operator<=(const SoftwareVersion& other);
+    bool operator>=(const SoftwareVersion& other);
+
 private:
     quint16 versionMajor_;
     quint8  versionMinor_;
@@ -23,9 +30,6 @@ private:
 
 };
 
-bool operator>(const SoftwareVersion& lhs, const SoftwareVersion& rhs);
-bool operator<(const SoftwareVersion& lhs, const SoftwareVersion& rhs);
-bool operator<=(const SoftwareVersion& lhs, const SoftwareVersion& rhs);
-bool operator>=(const SoftwareVersion& lhs, const SoftwareVersion& rhs);
+QDebug operator<<(QDebug dbg, const SoftwareVersion& version);
 
 #endif // SOFTWAREVERSION_H

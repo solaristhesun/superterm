@@ -10,6 +10,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
+set(CMAKE_PREFIX_PATH "~/qt/5.10.1/gcc_64/lib/cmake")
+
 # Find the QtWidgets library
 find_package(Qt5 COMPONENTS Gui Widgets Network SerialPort REQUIRED)
 
@@ -21,6 +23,7 @@ set(superterm_SRCS
     src/session/serializableobject.cpp
     src/ipc/message.cpp
 	src/ipc/messagecodec.cpp
+	src/ui/widgets/clickablelabel.cpp
 	src/ui/consoletabbar.cpp
 	src/ui/consoleview.cpp
 	src/ui/statusbarframe.ui
@@ -34,6 +37,11 @@ set(superterm_SRCS
 	src/ui/mainwindow.ui
 	src/ui/consoletab.ui
 	src/ui/consoleview.ui
+	src/ui/portitemdelegate.cpp
+	src/ui/portitemview.cpp
+	src/ui/portitemview.ui
+	src/ui/notificationbar.ui
+	src/ui/notificationbar.cpp
 	src/ui/highlightsframe.cpp
 	src/ui/renametabframe.cpp
 	src/ui/connectionbar.ui
@@ -43,6 +51,9 @@ set(superterm_SRCS
 	src/ui/highlightsframe.ui
 	src/misc/defaultsettings.cpp
 	src/misc/globals.cpp
+	src/misc/softwareversion.cpp
+	src/misc/updatechecker.cpp
+	src/misc/uniqueidentifier.cpp
 	src/main.cpp
 	src/serial/portenumerator.cpp
 	src/serial/portendpoint.cpp
@@ -54,7 +65,7 @@ set(superterm_SRCS
 )
 include_directories(src contrib)
 
-add_definitions(-DREVISION=55 -DQAPPLICATION_CLASS=QApplication)
+add_definitions(-DREVISION=250 -DQAPPLICATION_CLASS=QApplication)
 
 # Tell CMake to create the helloworld executable
 add_executable(superterm WIN32 ${superterm_SRCS})

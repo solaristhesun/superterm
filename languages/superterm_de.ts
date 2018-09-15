@@ -15,7 +15,7 @@
     </message>
     <message>
         <location filename="../src/ui/connectionbar.ui" line="91"/>
-        <location filename="../src/ui/connectionbar.cpp" line="180"/>
+        <location filename="../src/ui/connectionbar.cpp" line="179"/>
         <source>Select baud rate</source>
         <translation>Baudrate wählen</translation>
     </message>
@@ -41,13 +41,13 @@
     </message>
     <message>
         <location filename="../src/ui/connectionbar.ui" line="153"/>
-        <location filename="../src/ui/connectionbar.cpp" line="239"/>
+        <location filename="../src/ui/connectionbar.cpp" line="238"/>
         <source>&amp;More &gt;&gt;</source>
         <translation>&amp;Mehr &gt;&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/connectionbar.ui" line="169"/>
-        <location filename="../src/ui/connectionbar.cpp" line="279"/>
+        <location filename="../src/ui/connectionbar.cpp" line="278"/>
         <source>&amp;Connect</source>
         <translation>&amp;Verbinden</translation>
     </message>
@@ -62,48 +62,48 @@
         <translation>Konfiguration wählen</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="200"/>
-        <location filename="../src/ui/connectionbar.cpp" line="217"/>
+        <location filename="../src/ui/connectionbar.cpp" line="199"/>
+        <location filename="../src/ui/connectionbar.cpp" line="216"/>
         <source>None</source>
         <translation>Keine</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="201"/>
+        <location filename="../src/ui/connectionbar.cpp" line="200"/>
         <source>Even</source>
         <translation>Gerade</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="202"/>
+        <location filename="../src/ui/connectionbar.cpp" line="201"/>
         <source>Odd</source>
         <translation>Ungerade</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="203"/>
+        <location filename="../src/ui/connectionbar.cpp" line="202"/>
         <source>Space</source>
         <translation>Leerzeichen</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="204"/>
+        <location filename="../src/ui/connectionbar.cpp" line="203"/>
         <source>Mark</source>
         <translation>Markierung</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="218"/>
+        <location filename="../src/ui/connectionbar.cpp" line="217"/>
         <source>Xon/Xoff</source>
         <translation>Xon/Xoff</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="219"/>
+        <location filename="../src/ui/connectionbar.cpp" line="218"/>
         <source>Hardware</source>
         <translation>Hardware</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="231"/>
+        <location filename="../src/ui/connectionbar.cpp" line="230"/>
         <source>&lt;&lt; &amp;Less</source>
         <translation>&lt;&lt; &amp;Weniger</translation>
     </message>
     <message>
-        <location filename="../src/ui/connectionbar.cpp" line="295"/>
+        <location filename="../src/ui/connectionbar.cpp" line="294"/>
         <source>&amp;Disconnect</source>
         <translation>&amp;Trennen</translation>
     </message>
@@ -283,16 +283,23 @@
     </message>
 </context>
 <context>
+    <name>CMainWindow</name>
+    <message>
+        <location filename="../src/ui/mainwindow.cpp" line="84"/>
+        <source>A software update is available. Click here to download superterm %1.</source>
+        <translation>Ein Update ist verfügbar. Hier klicken um superterm %1 herunterzuladen.</translation>
+    </message>
+</context>
+<context>
     <name>CPortsComboBox</name>
     <message>
-        <location filename="../src/ui/portscombobox.cpp" line="58"/>
+        <location filename="../src/ui/portscombobox.cpp" line="59"/>
         <source>Select port</source>
         <translation>Port wählen</translation>
     </message>
     <message>
-        <location filename="../src/ui/portscombobox.cpp" line="66"/>
         <source>busy</source>
-        <translation>belegt</translation>
+        <translation type="vanished">belegt</translation>
     </message>
 </context>
 <context>
