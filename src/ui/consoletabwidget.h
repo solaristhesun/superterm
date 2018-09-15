@@ -31,6 +31,7 @@ public slots:
     void onTabDetached(int index);
     void showContextMenu(const QPoint& pt);
     void showTabRenameDialog();
+    void onTabCloseRequested(int index);
 
 private:
     void createContextMenu();

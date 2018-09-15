@@ -28,6 +28,7 @@ CConsoleTabWidget::CConsoleTabWidget(QWidget* parent)
     connect(m_tabBar, &CConsoleTabBar::tabDetached, this, &CConsoleTabWidget::onTabDetached);
     connect(m_tabBar, &CConsoleTabBar::customContextMenuRequested, this, &CConsoleTabWidget::showContextMenu);
     connect(m_renameTabAction, &QAction::triggered, this, &CConsoleTabWidget::showTabRenameDialog);
+    connect(this, &CConsoleTabWidget::tabCloseRequested, this, &CConsoleTabWidget::onTabCloseRequested);
 }
 
 void CConsoleTabWidget::showContextMenu(const QPoint& pt)
@@ -66,6 +67,12 @@ void CConsoleTabWidget::destroyTab(int index)
     {
         delete tab;
     }
+}
+
+void CConsoleTabWidget::onTabCloseRequested(int index)
+{
+    CConsoleTab* tab = widget(index);
+    tab->disconnectEndpoint();
 }
 
 void CConsoleTabWidget::closeTab(int index)

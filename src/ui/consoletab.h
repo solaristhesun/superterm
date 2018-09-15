@@ -37,6 +37,7 @@ public:
     void    setLabel(const QString& label);
     QSize   getViewPortSize() const;
     QSize   getCharSize() const;
+    void    disconnectEndpoint();
 
 public slots:
     void onConnectClicked();
@@ -86,6 +87,7 @@ private:
     void createContextMenu();
     void insertTimeStamps(QByteArray& data);
     void escapeSpecialChars(QByteArray& data);
+    void destroySession();
 };
 
 #endif // CONSOLETAB_H

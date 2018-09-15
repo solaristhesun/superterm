@@ -505,7 +505,25 @@ void CConsoleTab::onConnectClicked()
     }
     else
     {
+        disconnectEndpoint();
+    }
+}
+
+void CConsoleTab::disconnectEndpoint()
+{
+    if (m_portEndpoint->isConnected())
+    {
         m_portEndpoint->disconnectEndpoint();
+        destroySession();
+    }
+}
+
+void CConsoleTab::destroySession()
+{
+    if (m_session)
+    {
+        delete m_session;
+        m_session = nullptr;
     }
 }
 
@@ -527,11 +545,7 @@ void CConsoleTab::onEndpointDisconnected(int returnCode)
             break;
     }
 
-    if (m_session)
-    {
-        delete m_session;
-        m_session = nullptr;
-    }
+    destroySession();
 }
 
 void CConsoleTab::showError(QSerialPort::SerialPortError error)

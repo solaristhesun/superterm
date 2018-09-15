@@ -81,7 +81,7 @@ int CPortApplication::exec()
 
     if (m_port->open(QIODevice::ReadWrite))
     {
-        QTextStream(stdout) << "open" << portName << endl;
+        QTextStream(stdout) << "open:" << portName << endl;
         m_port->setBaudRate(baudRate);
         m_port->setFlowControl(flowControl);
         m_port->setParity(parity);
@@ -99,7 +99,7 @@ int CPortApplication::exec()
     m_socket->abort();
     m_socket->connectToServer("serial:" + portName.replace("/", "_"));
 
-    QTextStream(stdout) << "started" << portName << endl;
+    QTextStream(stdout) << "started:" << portName << endl;
 
     return QCoreApplication::exec();
 }
