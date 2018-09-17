@@ -8,3 +8,7 @@ superterm is the next-generation serial port terminal built for embedded softwar
 - <strong>session management:</strong> superterm resumes all open connections from your last session.
 - <strong>highlighting capabilities:</strong> you will never miss an important debug message.
 - <strong>portable:</strong> superterm is available for windows and linux platforms.
+
+# Screenshots
+![Screenshot](https://raw.githubusercontent.com/solaristhesun/superterm/master/screenshots/screenshot2.png)
+
