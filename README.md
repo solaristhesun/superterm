@@ -10,4 +10,5 @@ superterm is the next-generation serial port terminal built for embedded softwar
 - <strong>portable:</strong> superterm is available for windows and linux platforms.
 
 # Screenshots
-![](https://raw.githubusercontent.com/solaristhesun/superterm/master/screenshots/screenshot1.png | width=100)
+![Screenshot](https://raw.githubusercontent.com/solaristhesun/superterm/master/screenshots/screenshot2.png)
+
