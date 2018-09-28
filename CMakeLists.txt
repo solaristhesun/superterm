@@ -49,6 +49,8 @@ set(superterm_SRCS
 	src/ui/consoletabwidget.cpp
 	src/ui/mainwindow.cpp
 	src/ui/highlightsframe.ui
+	src/ui/newconsoleview.ui
+	src/ui/newconsoleview.cpp
 	src/misc/defaultsettings.cpp
 	src/misc/globals.cpp
 	src/misc/softwareversion.cpp
@@ -60,6 +62,8 @@ set(superterm_SRCS
 	src/serial/serialportinfo.cpp
 	src/serial/portapplication.cpp
 	src/serial/portobserver.cpp
+	src/models/consolelinebuffer.cpp
+	src/models/consoleline.cpp
 	superterm.qrc
 	superterm.qss
 )

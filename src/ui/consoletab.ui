@@ -72,6 +72,9 @@
       </property>
      </widget>
      <widget class="CConsoleView" name="consoleView" native="true">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="styleSheet">
        <string notr="true"/>
       </property>
@@ -101,6 +104,22 @@
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
+     <widget class="NewConsoleView" name="listView">
+      <property name="styleSheet">
+       <string notr="true">QListView {
+background-color: #142462;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::WinPanel</enum>
+      </property>
+      <property name="showDropIndicator" stdset="0">
+       <bool>false</bool>
+      </property>
+      <property name="selectionRectVisible">
+       <bool>false</bool>
       </property>
      </widget>
     </widget>
@@ -238,6 +257,14 @@
    <extends>QFrame</extends>
    <header>src/ui/renametabframe.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NewConsoleView</class>
+   <extends>QListView</extends>
+   <header>src/ui/newconsoleview.h</header>
+   <slots>
+    <signal>keyPressed(QKeyEvent*)</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>
@@ -555,6 +582,38 @@
     <hint type="sourcelabel">
      <x>-1</x>
      <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listView</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>showContextMenu(QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>581</x>
+     <y>219</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listView</sender>
+   <signal>keyPressed(QKeyEvent*)</signal>
+   <receiver>CConsoleTab</receiver>
+   <slot>onKeyPressed(QKeyEvent*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>581</x>
+     <y>219</y>
     </hint>
     <hint type="destinationlabel">
      <x>581</x>

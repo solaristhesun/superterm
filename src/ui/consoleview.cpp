@@ -163,6 +163,7 @@ void CConsoleView::insertPlainText(const QString& text)
 
     if (!m_bAutoScroll)
     {
+        qDebug() << m_scrollPos;
         m_scrollBar->setSliderPosition(m_scrollPos);
     }
 }

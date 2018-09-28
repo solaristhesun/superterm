@@ -12,6 +12,7 @@ class CConsoleTab;
 }
 
 class QSerialPort;
+class ConsoleLineBuffer;
 class CConsoleTabWidget;
 class QFile;
 class CPortEnumerator;
@@ -71,6 +72,7 @@ signals:
 private:
     Ui::CConsoleTab* m_ui;
     CMainWindow*     mMainWindow;
+    ConsoleLineBuffer* lineBuffer_;
     QString          mTabLabel;
     CPortEndpoint*   m_portEndpoint;
     CSession*        m_session;

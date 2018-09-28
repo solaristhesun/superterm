@@ -42,7 +42,10 @@ SOURCES += \
     src/misc/softwareversion.cpp \
     src/misc/updatechecker.cpp \
     src/ui/notificationbar.cpp \
-    src/ui/widgets/clickablelabel.cpp
+    src/ui/widgets/clickablelabel.cpp \
+    src/models/consolelinebuffer.cpp \
+    src/ui/newconsoleview.cpp \
+    src/models/consoleline.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -74,7 +77,10 @@ HEADERS += \
     src/misc/softwareversion.h \
     src/misc/updatechecker.h \
     src/ui/notificationbar.h \
-    src/ui/widgets/clickablelabel.h
+    src/ui/widgets/clickablelabel.h \
+    src/models/consolelinebuffer.h \
+    src/ui/newconsoleview.h \
+    src/models/consoleline.h
 
 FORMS += \
     src/ui/mainwindow.ui \
@@ -86,7 +92,8 @@ FORMS += \
     src/ui/consoletab.ui \
     src/ui/renametabframe.ui \
     src/ui/portitemview.ui \
-    src/ui/notificationbar.ui
+    src/ui/notificationbar.ui \
+    src/ui/newconsoleview.ui
 
 RESOURCES += \
     superterm.qrc

@@ -43,9 +43,9 @@ void CPortEnumerator::enumeratePorts()
         m_portsList << info;
     }
 
-#if defined(Q_OS_LINUX) && defined(DEBUG)
-    m_portsList << CSerialPortInfo("/dev/COM1", "socat");
-#endif
+//#if defined(Q_OS_LINUX) && defined(DEBUG)
+    m_portsList << CSerialPortInfo(QSerialPortInfo("/dev/COM1"));
+//#endif
 
     std::sort(m_portsList.begin(), m_portsList.end(), CSerialPortInfo::compare);
 

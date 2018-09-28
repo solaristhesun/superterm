@@ -16,6 +16,10 @@
 #include <QMetaProperty>
 #include <QDateTime>
 #include <QDesktopWidget>
+#include <QStringListModel>
+#include <QItemDelegate>
+#include <QPainter>
+#include <QColor>
 #if defined(Q_OS_WIN)
 #include <windows.h>
 #endif
@@ -31,6 +35,8 @@
 #include "serial/portendpoint.h"
 #include "session/session.h"
 #include "ipc/message.h"
+#include "models/consolelinebuffer.h"
+
 
 quint32 CConsoleTab::m_u32counter = 1;
 
@@ -43,6 +49,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     : QWidget(Q_NULLPTR)
     , m_ui(new Ui::CConsoleTab)
     , mMainWindow(Q_NULLPTR)
+    , lineBuffer_(new ConsoleLineBuffer)
     , mTabLabel(tr("New tab"))
     , m_portEndpoint(new CPortEndpoint(this))
     , m_session(session)
@@ -62,6 +69,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     QFont  consoleFont;
     QColor foreGroundColor = QColor(settings.value("foreground").toString());
     QColor backGroundColor = QColor(settings.value("background").toString());
+    qDebug() << consoleFont;
     consoleFont.fromString(settings.value("font").toString());
     setConsoleFont(consoleFont);
     setColor(foreGroundColor, backGroundColor);
@@ -104,6 +112,17 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
             m_ui->actionToggleTimeStamps->activate(QAction::Trigger);
         }
     }
+
+    // TESTING AREA
+    m_ui->consoleView->hide();
+    lineBuffer_->append(QString("test\n"));
+    lineBuffer_->append(QString("foo ABC\n"));
+    lineBuffer_->append(QString("bar\n"));
+    lineBuffer_->append(QString("very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line \n"));
+    lineBuffer_->append(QString("test dsfdf dsf dsf df\n"));
+
+    m_ui->listView->setModel(lineBuffer_);
+
 }
 
 CConsoleTab::~CConsoleTab()
@@ -111,6 +130,7 @@ CConsoleTab::~CConsoleTab()
     qDebug() << "CConsoleTab::~CConsoleTab()";
     delete m_ui;
     delete m_contextMenu;
+    delete lineBuffer_;
 }
 
 QString CConsoleTab::getLabel() const
@@ -157,6 +177,7 @@ void CConsoleTab::clearTab()
 {
     m_ui->consoleView->clear();
     m_bSkipTimeStamp = false;
+    lineBuffer_->clear();
 }
 
 void CConsoleTab::createContextMenu()
@@ -183,6 +204,7 @@ void CConsoleTab::createContextMenu()
 
 void CConsoleTab::showContextMenu(const QPoint& pt)
 {
+    qDebug() << "XCONTExt";
     m_contextMenu->exec(mapToGlobal(pt));
 }
 
@@ -387,6 +409,8 @@ void CConsoleTab::setConsoleFont(const QFont& font)
 {
     m_ui->consoleView->setFont(font);
     m_ui->consoleView->refreshCursor();
+    m_ui->listView->setFont(font);
+
 }
 
 void CConsoleTab::setColor(const QColor& foreGroundColor, const QColor& backGroundColor)
@@ -460,26 +484,14 @@ void CConsoleTab::onEndpointData(const CMessage& message)
     {
         QByteArray data = message.getPayload();
 
-        if (m_bUseTimeStamps)
-        {
-            insertTimeStamps(data);
-        }
-
         if (m_logFile)
         {
             m_logFile->write(data);
             m_logFile->flush();
         }
 
-        if (data.at(0) == 0x08)
-        {
-            m_ui->consoleView->insertBackspace();
-        }
-        else
-        {
-            escapeSpecialChars(data);
-            m_ui->consoleView->insertPlainText(data);
-        }
+        //escapeSpecialChars(data);
+        lineBuffer_->append(data);
     }
 }
 
@@ -608,6 +620,8 @@ void CConsoleTab::onKeyPressed(QKeyEvent* e)
     {
         m_portEndpoint->writeData(b);
     }
+
+    lineBuffer_->append(b); // FIXME: remove
 }
 
 void CConsoleTab::startLogging()

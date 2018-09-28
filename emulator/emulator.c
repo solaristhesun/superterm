@@ -1,25 +1,27 @@
-#define _XOPEN_SOURCE
+#define _XOPEN_SOURCE 501
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
 
 int main(int argc, char *argv[])
 {
+
     srand(time(NULL));
+#if 1
+    int fd = open("/dev/tnt0", O_RDWR | O_NOCTTY);
 
-    int fd = open("/dev/ptmx", O_RDWR | O_NOCTTY);
-
-    grantpt(fd);
-    unlockpt(fd);
-    
+//    grantpt(fd);
+  //  unlockpt(fd);
+#endif
     if (argc < 2)
     {
         return 1;
     }
 
-    printf("created virtual port %s\n", ptsname(fd));
+   // printf("created virtual port %s\n", ptsname(fd));
     
     unsigned long c = 0;
 
@@ -50,7 +52,7 @@ int main(int argc, char *argv[])
             lseek(fd_log, 0, SEEK_SET);
         }
 
-        usleep(100000);
+        usleep(500000);
     }
 
     close(fd_log);
