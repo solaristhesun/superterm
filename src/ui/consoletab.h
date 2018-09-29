@@ -82,13 +82,10 @@ private:
 
     static quint32 m_u32counter;
     QStringList    m_highlightings;
-    bool           m_bSkipTimeStamp;
-    bool           m_bUseTimeStamps;
     bool           m_bAutoScroll;
 
     void fillComboBoxes();
     void createContextMenu();
-    void insertTimeStamps(QByteArray& data);
     void escapeSpecialChars(QByteArray& data);
     void destroySession();
 };

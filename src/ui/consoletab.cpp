@@ -56,8 +56,6 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     , m_logFile(nullptr)
     , m_contextMenu(nullptr)
     , m_lastTabIndex(0)
-    , m_bSkipTimeStamp(false)
-    , m_bUseTimeStamps(false)
     , m_bAutoScroll(true)
 {
     qDebug() << "CConsoleTab::CConsoleTab()";
@@ -152,7 +150,7 @@ void CConsoleTab::toggleFullScreen()
     {
         mMainWindow = static_cast<CMainWindow*>(QApplication::activeWindow());
         mMainWindow->hide();
-        QWidget::setParent(0);
+        QWidget::setParent(nullptr);
 
         int screenNumber = QApplication::desktop()->screenNumber(mMainWindow);
         QWidget::setGeometry(QApplication::desktop()->screenGeometry(screenNumber));
@@ -175,7 +173,6 @@ void CConsoleTab::toggleFullScreen()
 
 void CConsoleTab::clearTab()
 {
-    m_bSkipTimeStamp = false;
     lineBuffer_->clear();
 }
 
@@ -413,39 +410,6 @@ void CConsoleTab::setColor(const QColor& textColor, const QColor& backgroundColo
     m_ui->consoleView->setBackgroundColor(backgroundColor);
 }
 
-void CConsoleTab::insertTimeStamps(QByteArray& data)
-{
-    //data.prepend("<");
-    //data.append(">");
-    QDateTime currentTime = QDateTime::currentDateTime();
-    QString   timestamp = "[" + currentTime.toString("yyyy-MM-dd HH:mm:ss.zzz") + "] ";
-
-    QList<QByteArray> lines = data.split('\n'); //, QString::SkipEmptyParts);
-    for (int line = 0; line < lines.size(); ++line)
-    {
-        if (line == 0 && m_bSkipTimeStamp)
-        {
-            continue;
-        }
-
-        if (!lines[line].trimmed().isEmpty())
-        {
-            lines[line].prepend(timestamp.toUtf8());
-        }
-    }
-    data = lines.join('\n');
-
-    if (!lines.last().endsWith('\n'))
-    {
-        m_bSkipTimeStamp = true;
-    }
-
-    if (lines.last().trimmed().isEmpty())
-    {
-        m_bSkipTimeStamp = false;
-    }
-}
-
 void CConsoleTab::escapeSpecialChars(QByteArray& data)
 {
     for (int p = data.size() - 1; p > 0; p--)
@@ -464,13 +428,13 @@ void CConsoleTab::escapeSpecialChars(QByteArray& data)
 
 void CConsoleTab::toggleTimeStamps()
 {
-    m_bUseTimeStamps = !m_bUseTimeStamps;
+    const bool bTimestampsEnabled = !m_ui->consoleView->timestampsEnabled();
 
-    m_ui->consoleView->setTimestampsEnabled(m_bUseTimeStamps);
+    m_ui->consoleView->setTimestampsEnabled(bTimestampsEnabled);
 
     if (m_session)
     {
-        m_session->setUseTimeStamps(m_bUseTimeStamps);
+        m_session->setUseTimeStamps(bTimestampsEnabled);
         m_session->saveToFile();
     }
 }
