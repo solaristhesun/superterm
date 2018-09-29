@@ -31,35 +31,26 @@ QPlainTextEdit
 
 QFrame#connectionBar
 {
-    border-left: 1px solid white;
-    border-right: 1px solid white;
-    border-top: 1px solid white;
+    border: 1px solid white;
     background-color: #ffe6ab;
 }
 
 QFrame#renameTabFrame
 {
-    border-left: 1px solid white;
-    border-right: 1px solid white;
-    border-top: 1px solid white;
+    border: 1px solid white;
     background-color: #ffe6ab;
 }
 
 QFrame#statusBar
 {
-    border-left: 1px solid white;
-    border-right: 1px solid white;
-    border-bottom: 1px solid white;
+    border: 1px solid white;
     background-color: #6fdc6f;
     min-height: 37px;
 }
 
 QFrame#highlightsFrame, QFrame#logPanel
 {
-    border: 0;
-    border-left: 1px solid white;
-    border-right: 1px solid white;
-    border-bottom: 1px solid white;
+    border: 1px solid white;
     background-color: #ffe6ab;
 }
 
@@ -81,6 +72,10 @@ QFrame#statusBar QLabel
 QTabWidget::tab-bar
 {
     top: 0px;
+}
+
+QTabWidget::pane
+{
 }
 
 /* Style the tab using the tab sub-control. Note that
@@ -144,4 +139,3 @@ QFrame#notificationBar QLabel
     color: white;
     font-weight: bold;
 }
-
