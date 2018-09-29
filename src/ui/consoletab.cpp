@@ -451,7 +451,7 @@ void CConsoleTab::onEndpointData(const CMessage& message)
             m_logFile->flush();
         }
 
-        //escapeSpecialChars(data);
+        escapeSpecialChars(data);
         lineBuffer_->append(data);
     }
 }
@@ -582,7 +582,7 @@ void CConsoleTab::onKeyPressed(QKeyEvent* e)
         m_portEndpoint->writeData(b);
     }
 
-    lineBuffer_->append(b); // FIXME: remove
+ //   lineBuffer_->append(b); // FIXME: remove
 }
 
 void CConsoleTab::startLogging()

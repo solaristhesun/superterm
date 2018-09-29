@@ -1,20 +1,20 @@
 #ifndef CONSOLELINE_H
 #define CONSOLELINE_H
 
+#include <QColor>
 #include <QDateTime>
 #include <QMetaType>
-#include <QColor>
 
 class ConsoleLine
 {
 public:
     ConsoleLine();
 
-    void append(QChar c);
-    void setColor(QColor color);
+    void      append(QChar c);
+    void      setColor(QColor color);
     QDateTime timestamp();
-    QColor color();
-    QString text();
+    QColor    color();
+    QString   text();
 
 private:
     QDateTime timestamp_;

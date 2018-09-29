@@ -14,7 +14,7 @@
    <enum>Qt::CustomContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>Frame</string>
+   <string notr="true"/>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>

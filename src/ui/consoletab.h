@@ -70,15 +70,15 @@ signals:
     void labelChanged(const QString&);
 
 private:
-    Ui::CConsoleTab* m_ui;
-    CMainWindow*     mMainWindow;
+    Ui::CConsoleTab*   m_ui;
+    CMainWindow*       mMainWindow;
     ConsoleLineBuffer* lineBuffer_;
-    QString          mTabLabel;
-    CPortEndpoint*   m_portEndpoint;
-    CSession*        m_session;
-    QFile*           m_logFile;
-    QMenu*           m_contextMenu;
-    int              m_lastTabIndex;
+    QString            mTabLabel;
+    CPortEndpoint*     m_portEndpoint;
+    CSession*          m_session;
+    QFile*             m_logFile;
+    QMenu*             m_contextMenu;
+    int                m_lastTabIndex;
 
     static quint32 m_u32counter;
     QStringList    m_highlightings;

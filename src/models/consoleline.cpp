@@ -17,7 +17,8 @@ void ConsoleLine::append(QChar c)
     {
         text_.chop(1);
     }
-    else {
+    else
+    {
         text_.append(c);
     }
 }
@@ -41,3 +42,5 @@ QString ConsoleLine::text()
 {
     return text_;
 }
+
+// EOF <stefan@scheler.com>

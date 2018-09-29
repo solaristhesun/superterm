@@ -2,18 +2,18 @@
 #define CONSOLELINEBUFFER_H
 
 #include <QAbstractListModel>
-#include <QStringList>
 #include <QPair>
+#include <QStringList>
 
 #include "models/consoleline.h"
 
-class ConsoleLineBuffer: public QAbstractListModel
+class ConsoleLineBuffer : public QAbstractListModel
 {
 public:
     ConsoleLineBuffer();
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    int      rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
     void append(QByteArray data);
     void append(QString data);
@@ -28,7 +28,7 @@ private:
     void refreshSingleHighlighting(ConsoleLine& line);
 
 private:
-    QList<ConsoleLine> list_;
+    QList<ConsoleLine>            list_;
     QList<QPair<QString, QColor>> highlighting_;
 };
 
