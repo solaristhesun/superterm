@@ -48,7 +48,7 @@ public slots:
     void showFontDialog();
     void showFontColorDialog();
     void showError(QSerialPort::SerialPortError error);
-    void updateHighlighting();
+    void updateHighlightings();
     void showAboutDialog();
     void toggleFullScreen();
     void toggleAutoScroll();

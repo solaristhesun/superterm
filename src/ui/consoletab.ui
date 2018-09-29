@@ -93,7 +93,7 @@
        <enum>QFrame::Raised</enum>
       </property>
      </widget>
-     <widget class="CHighlightsFrame" name="highlightsFrame">
+     <widget class="CHighlightingsFrame" name="highlightingsFrame">
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
@@ -199,9 +199,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>CHighlightsFrame</class>
+   <class>CHighlightingsFrame</class>
    <extends>QFrame</extends>
-   <header>src/ui/highlightsframe.h</header>
+   <header>src/ui/highlightingsframe.h</header>
    <container>1</container>
    <slots>
     <signal>highlightingChanged()</signal>
@@ -313,7 +313,7 @@
   <connection>
    <sender>actionHighlight</sender>
    <signal>triggered()</signal>
-   <receiver>highlightsFrame</receiver>
+   <receiver>highlightingsFrame</receiver>
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -327,10 +327,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>highlightsFrame</sender>
+   <sender>highlightingsFrame</sender>
    <signal>highlightingChanged()</signal>
    <receiver>CConsoleTab</receiver>
-   <slot>updateHighlighting()</slot>
+   <slot>updateHighlightings()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>272</x>
@@ -575,7 +575,7 @@
   <slot>showColorDialog()</slot>
   <slot>showConnectBar()</slot>
   <slot>showFontDialog()</slot>
-  <slot>updateHighlighting()</slot>
+  <slot>updateHighlightings()</slot>
   <slot>showAboutDialog()</slot>
   <slot>toggleFullScreen()</slot>
   <slot>startLogging()</slot>

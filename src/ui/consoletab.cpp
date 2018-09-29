@@ -29,7 +29,7 @@
 #include "ui/consoletab.h"
 #include "ui/mainwindow.h"
 #include "ui/consoletabwidget.h"
-#include "ui/highlightsframe.h"
+#include "ui/highlightingsframe.h"
 #include "serial/portenumerator.h"
 #include "serial/serialportinfo.h"
 #include "serial/portendpoint.h"
@@ -89,35 +89,27 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
 
         m_ui->connectionBar->loadFromSession(session);
 
-        QList<CHighlightsFrame::Highlighting> highlights;
+        QList<Highlighting> highlightings;
 
         for (const QVariant& h : session->getHighlights())
         {
-            CHighlightsFrame::Highlighting hi = h.value<CHighlightsFrame::Highlighting>();
+            Highlighting hi = h.value<Highlighting>();
             QPixmap                        pixmap(10, 10);
             pixmap.fill(hi.color);
             QIcon            icon(pixmap);
             QListWidgetItem* item = new QListWidgetItem(icon, hi.pattern);
             item->setData(Qt::UserRole, QVariant(hi.color));
-            m_ui->highlightsFrame->addHighlighting(item);
-            highlights.append(hi);
+            m_ui->highlightingsFrame->addHighlighting(item);
+            highlightings.append(hi);
         }
 
-        //m_ui->consoleView->setHighlighting(highlights); FIXME
+        lineBuffer_->setHighlightings(highlightings);
 
         if (session->getUseTimeStamps())
         {
             m_ui->actionToggleTimeStamps->activate(QAction::Trigger);
         }
     }
-
-    // TESTING AREA
-    lineBuffer_->addLineHighlighting("foo", QColor("yellow"));
-    lineBuffer_->append(QString("test\n"));
-    lineBuffer_->append(QString("foo ABC\n"));
-    lineBuffer_->append(QString("bar\n"));
-    lineBuffer_->append(QString("very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line \n"));
-    lineBuffer_->append(QString("test dsfdf dsf dsf df\n"));
 
     m_ui->consoleView->setModel(lineBuffer_);
 }
@@ -202,14 +194,14 @@ void CConsoleTab::showContextMenu(const QPoint& pt)
     m_contextMenu->exec(mapToGlobal(pt));
 }
 
-void CConsoleTab::updateHighlighting()
+void CConsoleTab::updateHighlightings()
 {
-    QList<CHighlightsFrame::Highlighting> h = m_ui->highlightsFrame->getItems();
-    //m_ui->consoleView->setHighlighting(h); FIXME
+    QList<Highlighting> highlightings = m_ui->highlightingsFrame->getItems();
+    lineBuffer_->setHighlightings(highlightings);
 
     if (m_session)
     {
-        m_session->setHighlights(CSerializableObject::convertToQVariantList(m_ui->highlightsFrame->getItems()));
+        m_session->setHighlights(CSerializableObject::convertToQVariantList(m_ui->highlightingsFrame->getItems()));
 
         if (m_session->isPortConnected())
         {
@@ -236,8 +228,8 @@ void CConsoleTab::onConfigurationChanged(const QString& config)
 
     QXmlStreamReader xml(&file);
 
-    QList<CHighlightsFrame::Highlighting> h;
-    m_ui->highlightsFrame->clear();
+    QList<Highlighting> highlightings;
+    m_ui->highlightingsFrame->clear();
 
     while (!xml.atEnd())
     {
@@ -274,22 +266,22 @@ void CConsoleTab::onConfigurationChanged(const QString& config)
             else if (token == "pattern")
             {
                 QXmlStreamAttributes           attr = xml.attributes();
-                CHighlightsFrame::Highlighting hi;
+                Highlighting hi;
                 hi.pattern = xml.readElementText();
                 hi.color = QColor(attr.value("color").toString());
-                h.append(hi);
+                highlightings.append(hi);
 
                 QPixmap pixmap(10, 10);
                 pixmap.fill(hi.color );
                 QIcon            icon(pixmap);
                 QListWidgetItem* item = new QListWidgetItem(icon, hi.pattern);
                 item->setData(Qt::UserRole, QVariant(hi.color));
-                m_ui->highlightsFrame->addHighlighting(item);
+                m_ui->highlightingsFrame->addHighlighting(item);
             }
         }
     }
 
-    //m_ui->consoleView->setHighlighting(h); FIXME
+    lineBuffer_->setHighlightings(highlightings);
 }
 
 void CConsoleTab::showSaveDialog()
@@ -321,7 +313,7 @@ void CConsoleTab::showSaveDialog()
     xmlWriter.writeTextElement("flowcontrol", m_ui->connectionBar->getFlowControl());
     xmlWriter.writeEndElement();
 
-    QList<CHighlightsFrame::Highlighting> h = m_ui->highlightsFrame->getItems();
+    QList<Highlighting> h = m_ui->highlightingsFrame->getItems();
 
     if (h.size() > 0)
     {
@@ -582,7 +574,7 @@ void CConsoleTab::onKeyPressed(QKeyEvent* e)
         m_portEndpoint->writeData(b);
     }
 
- //   lineBuffer_->append(b); // FIXME: remove
+    lineBuffer_->append(b); // FIXME: remove
 }
 
 void CConsoleTab::startLogging()
@@ -604,20 +596,6 @@ void CConsoleTab::stopLogging()
     delete m_logFile;
     m_logFile = nullptr;
 }
-
-#if 0
-void CConsoleTab::onAppQuit()
-{
-    qDebug() << "[slot] onAppQuit";
-#if 0
-    if (m_session && m_session->isPortConnected())
-    {
-        m_session->setHighlights(CSerializableObject::convertToQVariantList(m_ui->highlightsFrame->getItems()));
-        m_session->saveToFile();
-    }
-#endif
-}
-#endif
 
 void CConsoleTab::onEndpointConnected()
 {

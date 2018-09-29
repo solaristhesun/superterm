@@ -9,11 +9,11 @@
 #include "misc/updatechecker.h"
 #include "ui/mainwindow.h"
 #include "ui/consoletabfactory.h"
-#include "ui/highlightsframe.h"
+#include "ui/highlightingsframe.h"
 #include "serial/portapplication.h"
 #include "serial/portenumerator.h"
 #include "singleapplication/singleapplication.h"
-
+#include "models/highlighting.h"
 #include "misc/softwareversion.h"
 
 int main(int argc, char* argv[])
@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
         CPortEnumerator portEnumerator;
         CConsoleTabFactory::setPortEnumerator(&portEnumerator);
 
-        qRegisterMetaTypeStreamOperators<CHighlightsFrame::Highlighting>("CHighlightsFrame::Highlighting");
+        qRegisterMetaTypeStreamOperators<Highlighting>("Highlighting");
 
         // create main window on heap!
         CMainWindow* w = new CMainWindow;

@@ -39,7 +39,7 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
     {
         painter->setPen(QColor(backgroundColor));
         painter->setBrush(QBrush(QColor(backgroundColor)));
-        painter->drawRect(option.rect);
+        painter->drawRect(option.rect.adjusted(0,0,0,-2));
     }
 
      painter->setFont(consoleView_->font());

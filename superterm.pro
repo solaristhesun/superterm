@@ -19,7 +19,7 @@ SOURCES += \
     src/ui/consoletabbar.cpp \
     src/ui/statusbarframe.cpp \
     src/ui/portscombobox.cpp \
-    src/ui/highlightsframe.cpp \
+    src/ui/highlightingsframe.cpp \
     src/ui/consoletabfactory.cpp \
     src/ui/logfilepanel.cpp \
     src/misc/globals.cpp \
@@ -54,7 +54,7 @@ HEADERS += \
     src/ui/consoletabbar.h \
     src/ui/statusbarframe.h \
     src/ui/portscombobox.h \
-    src/ui/highlightsframe.h \
+    src/ui/highlightingsframe.h \
     src/ui/consoletabfactory.h \
     src/ui/logfilepanel.h \
     src/misc/globals.h \
@@ -80,12 +80,13 @@ HEADERS += \
     src/models/consolelinebuffer.h \
     src/ui/consoleview/consoleview.h \
     src/models/consoleline.h \
-    src/ui/consoleview/consolelineitemdelegate.h
+    src/ui/consoleview/consolelineitemdelegate.h \
+    src/models/highlighting.h
 
 FORMS += \
     src/ui/mainwindow.ui \
     src/ui/statusbarframe.ui \
-    src/ui/highlightsframe.ui \
+    src/ui/highlightingsframe.ui \
     src/ui/logfilepanel.ui \
     src/ui/connectionbar.ui \
     src/ui/consoletab.ui \

@@ -9,6 +9,11 @@ ConsoleLineBuffer::ConsoleLineBuffer()
     clear();
 }
 
+ConsoleLineBuffer::~ConsoleLineBuffer()
+{
+    // currently empty
+}
+
 void ConsoleLineBuffer::appendToLastLine(QChar c)
 {
     ConsoleLine& line = list_.last();
@@ -75,12 +80,9 @@ QVariant ConsoleLineBuffer::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void ConsoleLineBuffer::addLineHighlighting(QString pattern, QColor color)
+void ConsoleLineBuffer::setHighlightings(QList<Highlighting> highlightings)
 {
-    QPair<QString, QColor> highlighting;
-    highlighting.first = pattern;
-    highlighting.second = color;
-    highlighting_.append(highlighting);
+    highlightings_ = highlightings;
     refreshHighlighting();
 }
 
@@ -94,18 +96,18 @@ void ConsoleLineBuffer::refreshHighlighting()
 
 void ConsoleLineBuffer::refreshSingleHighlighting(ConsoleLine& line)
 {
-    for (int i = 0; i < highlighting_.size(); i++)
+    for (int i = 0; i < highlightings_.size(); i++)
     {
-        QPair<QString, QColor> highlight;
+        Highlighting highlighting = highlightings_.at(i);
 
-        if (line.text().contains(highlight.first))
+        if (line.text().contains(highlighting.pattern))
         {
-            //qDebug() << "MATCH" << line.text() << highlight.first;
-            line.setColor(highlight.second);
+            line.setColor(highlighting.color);
             emit dataChanged(QAbstractListModel::index(list_.count()), QAbstractListModel::index(list_.count()));
-            break;
+            return;
         }
     }
+    line.setColor(QColor::Invalid);
 }
 
 // EOF <stefan@scheler.com>

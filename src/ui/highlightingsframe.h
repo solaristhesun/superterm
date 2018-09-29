@@ -1,28 +1,25 @@
-#ifndef HIGHLIGHTSFRAME_H
-#define HIGHLIGHTSFRAME_H
+#ifndef HIGHLIGHTINGSFRAME_H
+#define HIGHLIGHTINGSFRAME_H
 
 #include <QColor>
 #include <QFrame>
 
+#include "models/highlighting.h"
+
 namespace Ui
 {
-class CHighlightsFrame;
+class CHighlightingsFrame;
 }
 
 class QListWidgetItem;
 
-class CHighlightsFrame : public QFrame
+class CHighlightingsFrame : public QFrame
 {
     Q_OBJECT
 
 public:
-    struct Highlighting {
-        QString pattern;
-        QColor  color;
-    };
-
-    explicit CHighlightsFrame(QWidget* parent = nullptr);
-    ~CHighlightsFrame();
+    explicit CHighlightingsFrame(QWidget* parent = nullptr);
+    ~CHighlightingsFrame();
 
     QList<Highlighting> getItems();
     void                showEvent(QShowEvent* event);
@@ -42,15 +39,10 @@ signals:
     void highlightingChanged();
 
 private:
-    Ui::CHighlightsFrame* m_ui;
-    QColor                m_color;
+    Ui::CHighlightingsFrame* m_ui;
+    QColor                   m_color;
 
     void refreshColorButton();
 };
 
-Q_DECLARE_METATYPE(CHighlightsFrame::Highlighting)
-
-QDataStream& operator<<(QDataStream& out, const CHighlightsFrame::Highlighting& v);
-QDataStream& operator>>(QDataStream& in, CHighlightsFrame::Highlighting& v);
-
-#endif // HIGHLIGHTSFRAME_H
+#endif // HIGHLIGHTINGSFRAME_H

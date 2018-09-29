@@ -43,13 +43,13 @@ set(superterm_SRCS
 	src/ui/portitemview.ui
 	src/ui/notificationbar.ui
 	src/ui/notificationbar.cpp
-	src/ui/highlightsframe.cpp
+	src/ui/highlightingsframe.cpp
 	src/ui/renametabframe.cpp
 	src/ui/connectionbar.ui
 	src/ui/logfilepanel.ui
 	src/ui/consoletabwidget.cpp
 	src/ui/mainwindow.cpp
-	src/ui/highlightsframe.ui
+	src/ui/highlightingsframe.ui
 	src/misc/defaultsettings.cpp
 	src/misc/globals.cpp
 	src/misc/softwareversion.cpp
