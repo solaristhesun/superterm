@@ -6,13 +6,13 @@
 
 #include "session/session.h"
 
-CSession::CSession()
+Session::Session()
     : m_bPortConnected(true)
 {
     // currently nothing
 }
 
-CSession::~CSession()
+Session::~Session()
 {
     qDebug() << "CSession::~CSession";
 
@@ -20,14 +20,14 @@ CSession::~CSession()
     QFile::remove(fileName);
 }
 
-CSession* CSession::createSessionFromFile(const QString& fileName)
+Session* Session::createSessionFromFile(const QString& fileName)
 {
     QFile file(QCoreApplication::applicationDirPath() + "/" + fileName);
 
     file.open(QIODevice::ReadOnly);
     QDataStream in(&file);
 
-    CSession* session = new CSession();
+    Session* session = new Session();
     in >> *session;
 
     file.close();
@@ -35,7 +35,7 @@ CSession* CSession::createSessionFromFile(const QString& fileName)
     return session;
 }
 
-void CSession::saveToFile()
+void Session::saveToFile()
 {
     QString fileName = QCoreApplication::applicationDirPath() + "/superterm_" + m_deviceName + ".session";
     QFile   file(fileName);
@@ -55,7 +55,7 @@ void CSession::saveToFile()
     file.close();
 }
 
-QStringList CSession::getSessionList()
+QStringList Session::getSessionList()
 {
     QDir dir(QCoreApplication::applicationDirPath());
 
@@ -64,7 +64,7 @@ QStringList CSession::getSessionList()
     return sessions;
 }
 
-void CSession::removeFiles()
+void Session::removeFiles()
 {
     QDir        dir(QCoreApplication::applicationDirPath());
     QStringList files = dir.entryList(QStringList() << "*.session", QDir::Files);
@@ -78,17 +78,17 @@ void CSession::removeFiles()
     }
 }
 
-void CSession::setPortConnected(bool bPortConnected)
+void Session::setPortConnected(bool bPortConnected)
 {
     m_bPortConnected = bPortConnected;
 }
 
-bool CSession::isPortConnected() const
+bool Session::isPortConnected() const
 {
     return m_bPortConnected;
 }
 
-QDebug operator<<(QDebug dbg, const CSession& s)
+QDebug operator<<(QDebug dbg, const Session& s)
 {
     dbg.nospace() << "CSession(port=" << s.getDeviceName() << ")";
 

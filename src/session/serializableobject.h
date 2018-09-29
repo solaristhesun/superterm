@@ -4,11 +4,11 @@
 #include <QObject>
 #include <QVariantList>
 
-class CSerializableObject : public QObject
+class SerializableObject : public QObject
 {
     Q_OBJECT
 public:
-    explicit CSerializableObject(QObject* parent = nullptr);
+    explicit SerializableObject(QObject* parent = nullptr);
 
     template <typename T>
     static QVariantList convertToQVariantList(QList<T> types)
@@ -27,7 +27,7 @@ signals:
 public slots:
 };
 
-QDataStream& operator<<(QDataStream& ds, const CSerializableObject& obj);
-QDataStream& operator>>(QDataStream& ds, CSerializableObject& obj);
+QDataStream& operator<<(QDataStream& ds, const SerializableObject& obj);
+QDataStream& operator>>(QDataStream& ds, SerializableObject& obj);
 
 #endif // SERIALIZABLEOBJECT_H

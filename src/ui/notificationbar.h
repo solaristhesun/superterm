@@ -8,13 +8,13 @@ namespace Ui
 class NotificationBar;
 }
 
-class CNotificationBar : public QFrame
+class NotificationBar : public QFrame
 {
     Q_OBJECT
 
 public:
-    explicit CNotificationBar(QWidget* parent = nullptr);
-    ~CNotificationBar();
+    explicit NotificationBar(QWidget* parent = nullptr);
+    ~NotificationBar();
 
     void setNotificationText(QString text);
     void setLink(QString link);

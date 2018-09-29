@@ -3,21 +3,21 @@
 #include "serial/portenumerator.h"
 #include "session/session.h"
 
-CPortEnumerator* CConsoleTabFactory::sPortEnumerator = nullptr;
+PortEnumerator* ConsoleTabFactory::sPortEnumerator = nullptr;
 
-void CConsoleTabFactory::setPortEnumerator(CPortEnumerator* portEnumerator)
+void ConsoleTabFactory::setPortEnumerator(PortEnumerator* portEnumerator)
 {
     sPortEnumerator = portEnumerator;
 }
 
-CConsoleTab* CConsoleTabFactory::createTab()
+ConsoleTab* ConsoleTabFactory::createTab()
 {
-    return new CConsoleTab(sPortEnumerator, nullptr);
+    return new ConsoleTab(sPortEnumerator, nullptr);
 }
 
-CConsoleTab* CConsoleTabFactory::createTabFromSession(CSession* session)
+ConsoleTab* ConsoleTabFactory::createTabFromSession(Session* session)
 {
-    CConsoleTab* tab = new CConsoleTab(sPortEnumerator, session);
+    ConsoleTab* tab = new ConsoleTab(sPortEnumerator, session);
     tab->setLabel(session->getTabLabel());
 
     return tab;

@@ -3,13 +3,13 @@
 
 #include "session/serializableobject.h"
 
-CSerializableObject::CSerializableObject(QObject* parent)
+SerializableObject::SerializableObject(QObject* parent)
     : QObject(parent)
 {
     // currently nothing
 }
 
-QDataStream& operator<<(QDataStream& ds, const CSerializableObject& obj)
+QDataStream& operator<<(QDataStream& ds, const SerializableObject& obj)
 {
     for (int i=0; i<obj.metaObject()->propertyCount(); ++i)
     {
@@ -22,7 +22,7 @@ QDataStream& operator<<(QDataStream& ds, const CSerializableObject& obj)
     return ds;
 }
 
-QDataStream& operator>>(QDataStream& ds, CSerializableObject& obj)
+QDataStream& operator>>(QDataStream& ds, SerializableObject& obj)
 {
     QVariant var;
 

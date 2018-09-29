@@ -37,20 +37,20 @@
 #include "ipc/message.h"
 #include "models/consolelinebuffer.h"
 
-quint32 CConsoleTab::m_u32counter = 1;
+quint32 ConsoleTab::m_u32counter = 1;
 
 Q_DECLARE_METATYPE(QSerialPort::DataBits)
 Q_DECLARE_METATYPE(QSerialPort::StopBits)
 Q_DECLARE_METATYPE(QSerialPort::Parity)
 Q_DECLARE_METATYPE(QSerialPort::FlowControl)
 
-CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
+ConsoleTab::ConsoleTab(PortEnumerator* pe, Session* session)
     : QWidget(nullptr)
-    , m_ui(new Ui::CConsoleTab)
-    , mMainWindow(Q_NULLPTR)
+    , m_ui(new Ui::ConsoleTab)
+    , mMainWindow(nullptr)
     , lineBuffer_(new ConsoleLineBuffer)
     , mTabLabel(tr("New tab"))
-    , m_portEndpoint(new CPortEndpoint(this))
+    , m_portEndpoint(new PortEndpoint(this))
     , m_session(session)
     , m_logFile(nullptr)
     , m_contextMenu(nullptr)
@@ -73,12 +73,12 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
 
     createContextMenu();
 
-    connect(m_portEndpoint, &CPortEndpoint::readyRead, this, &CConsoleTab::onEndpointData);
-    connect(m_portEndpoint, &CPortEndpoint::connected, this, &CConsoleTab::onEndpointConnected);
-    connect(m_portEndpoint, &CPortEndpoint::disconnected, this, &CConsoleTab::onEndpointDisconnected);
-    connect(m_portEndpoint, &CPortEndpoint::readyRead, this, &CConsoleTab::onReconnectionSignal);
-    connect(m_ui->statusBar, &CStatusBarFrame::cancelReconnection, this, &CConsoleTab::onReconnectionCancel);
-    connect(m_ui->renameTabFrame, &RenameTabFrame::applyPressed, this, &CConsoleTab::onRenameTab);
+    connect(m_portEndpoint, &PortEndpoint::readyRead, this, &ConsoleTab::onEndpointData);
+    connect(m_portEndpoint, &PortEndpoint::connected, this, &ConsoleTab::onEndpointConnected);
+    connect(m_portEndpoint, &PortEndpoint::disconnected, this, &ConsoleTab::onEndpointDisconnected);
+    connect(m_portEndpoint, &PortEndpoint::readyRead, this, &ConsoleTab::onReconnectionSignal);
+    connect(m_ui->statusBar, &StatusBarFrame::cancelReconnection, this, &ConsoleTab::onReconnectionCancel);
+    connect(m_ui->renameTabFrame, &RenameTabFrame::applyPressed, this, &ConsoleTab::onRenameTab);
 
     m_ui->connectionBar->setPortEnumerator(pe);
 
@@ -115,7 +115,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     m_ui->consoleView->installEventFilter(this);
 }
 
-CConsoleTab::~CConsoleTab()
+ConsoleTab::~ConsoleTab()
 {
     qDebug() << "CConsoleTab::~CConsoleTab()";
     delete m_ui;
@@ -123,12 +123,12 @@ CConsoleTab::~CConsoleTab()
     delete lineBuffer_;
 }
 
-QString CConsoleTab::getLabel() const
+QString ConsoleTab::getLabel() const
 {
     return mTabLabel;
 }
 
-void CConsoleTab::setLabel(const QString& label)
+void ConsoleTab::setLabel(const QString& label)
 {
     qDebug() << "setLabel(" << label << ")";
     mTabLabel = label;
@@ -136,11 +136,11 @@ void CConsoleTab::setLabel(const QString& label)
     emit labelChanged(label);
 }
 
-void CConsoleTab::toggleFullScreen()
+void ConsoleTab::toggleFullScreen()
 {
     if (!QWidget::isFullScreen())
     {
-        mMainWindow = static_cast<CMainWindow*>(QApplication::activeWindow());
+        mMainWindow = static_cast<MainWindow*>(QApplication::activeWindow());
         mMainWindow->hide();
         QWidget::setParent(nullptr);
 
@@ -163,12 +163,12 @@ void CConsoleTab::toggleFullScreen()
     }
 }
 
-void CConsoleTab::clearTab()
+void ConsoleTab::clearTab()
 {
     lineBuffer_->clear();
 }
 
-void CConsoleTab::createContextMenu()
+void ConsoleTab::createContextMenu()
 {
     m_contextMenu = new QMenu(this);
     m_contextMenu->addAction(m_ui->actionConnection);
@@ -190,19 +190,19 @@ void CConsoleTab::createContextMenu()
     m_ui->actionToggleAutoscroll->setChecked(true);
 }
 
-void CConsoleTab::showContextMenu(const QPoint& pt)
+void ConsoleTab::showContextMenu(const QPoint& pt)
 {
     m_contextMenu->exec(mapToGlobal(pt));
 }
 
-void CConsoleTab::updateHighlightings()
+void ConsoleTab::updateHighlightings()
 {
     QList<Highlighting> highlightings = m_ui->highlightingsFrame->getItems();
     lineBuffer_->setHighlightings(highlightings);
 
     if (m_session)
     {
-        m_session->setHighlights(CSerializableObject::convertToQVariantList(m_ui->highlightingsFrame->getItems()));
+        m_session->setHighlights(SerializableObject::convertToQVariantList(m_ui->highlightingsFrame->getItems()));
 
         if (m_session->isPortConnected())
         {
@@ -211,7 +211,7 @@ void CConsoleTab::updateHighlightings()
     }
 }
 
-void CConsoleTab::onConfigurationChanged(const QString& config)
+void ConsoleTab::onConfigurationChanged(const QString& config)
 {
     if (!config.endsWith(".xml"))
     {
@@ -285,7 +285,7 @@ void CConsoleTab::onConfigurationChanged(const QString& config)
     lineBuffer_->setHighlightings(highlightings);
 }
 
-void CConsoleTab::showSaveDialog()
+void ConsoleTab::showSaveDialog()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save configuration"),
                                                     "",
@@ -343,7 +343,7 @@ void CConsoleTab::showSaveDialog()
     file.close();
 }
 
-void CConsoleTab::showColorDialog()
+void ConsoleTab::showColorDialog()
 {
     QSettings settings;
 
@@ -358,7 +358,7 @@ void CConsoleTab::showColorDialog()
     }
 }
 
-void CConsoleTab::showFontDialog()
+void ConsoleTab::showFontDialog()
 {
     bool  ok;
     QFont font = QFontDialog::getFont(&ok, m_ui->consoleView->font(), this, QString(), QFontDialog::MonospacedFonts);
@@ -370,7 +370,7 @@ void CConsoleTab::showFontDialog()
     }
 }
 
-void CConsoleTab::showFontColorDialog()
+void ConsoleTab::showFontColorDialog()
 {
     QSettings settings;
 
@@ -385,25 +385,25 @@ void CConsoleTab::showFontColorDialog()
     }
 }
 
-void CConsoleTab::toggleAutoScroll()
+void ConsoleTab::toggleAutoScroll()
 {
     const bool bAutoScrollToBottom = !m_ui->consoleView->autoScrollToBottom();
 
     m_ui->consoleView->setAutoScrollToBottom(bAutoScrollToBottom);
 }
 
-void CConsoleTab::setConsoleFont(const QFont& font)
+void ConsoleTab::setConsoleFont(const QFont& font)
 {
     m_ui->consoleView->setFont(font);
 }
 
-void CConsoleTab::setColor(const QColor& textColor, const QColor& backgroundColor)
+void ConsoleTab::setColor(const QColor& textColor, const QColor& backgroundColor)
 {
     m_ui->consoleView->setTextColor(textColor);
     m_ui->consoleView->setBackgroundColor(backgroundColor);
 }
 
-void CConsoleTab::escapeSpecialChars(QByteArray& data)
+void ConsoleTab::escapeSpecialChars(QByteArray& data)
 {
     for (int p = data.size() - 1; p > 0; p--)
     {
@@ -419,7 +419,7 @@ void CConsoleTab::escapeSpecialChars(QByteArray& data)
     }
 }
 
-void CConsoleTab::toggleTimeStamps()
+void ConsoleTab::toggleTimeStamps()
 {
     const bool bTimestampsEnabled = !m_ui->consoleView->timestampsEnabled();
 
@@ -432,9 +432,9 @@ void CConsoleTab::toggleTimeStamps()
     }
 }
 
-void CConsoleTab::onEndpointData(const CMessage& message)
+void ConsoleTab::onEndpointData(const Message& message)
 {
-    if (message.isCmd(CMessage::DataCmd))
+    if (message.isCmd(Message::DataCmd))
     {
         QByteArray data = message.getPayload();
 
@@ -449,13 +449,13 @@ void CConsoleTab::onEndpointData(const CMessage& message)
     }
 }
 
-void CConsoleTab::onConnectClicked()
+void ConsoleTab::onConnectClicked()
 {
     if (!m_portEndpoint->isConnected())
     {
         if (!m_session)
         {
-            m_session = new CSession();
+            m_session = new Session();
         }
 
         m_session->setDeviceName(m_ui->connectionBar->getDeviceName());
@@ -475,7 +475,7 @@ void CConsoleTab::onConnectClicked()
     }
 }
 
-void CConsoleTab::disconnectEndpoint()
+void ConsoleTab::disconnectEndpoint()
 {
     if (m_portEndpoint->isConnected())
     {
@@ -484,7 +484,7 @@ void CConsoleTab::disconnectEndpoint()
     }
 }
 
-void CConsoleTab::destroySession()
+void ConsoleTab::destroySession()
 {
     if (m_session)
     {
@@ -493,7 +493,7 @@ void CConsoleTab::destroySession()
     }
 }
 
-void CConsoleTab::onEndpointDisconnected(int returnCode)
+void ConsoleTab::onEndpointDisconnected(int returnCode)
 {
     qDebug() << "[slot] onEndpointDisconnected" << returnCode;
 
@@ -514,13 +514,13 @@ void CConsoleTab::onEndpointDisconnected(int returnCode)
     destroySession();
 }
 
-void CConsoleTab::showError(QSerialPort::SerialPortError error)
+void ConsoleTab::showError(QSerialPort::SerialPortError error)
 {
     qDebug() << "ERROR: " << error;
     m_ui->statusBar->showMessage("ERROR: " + QString::number(error) + " opening port " );
 }
 
-bool CConsoleTab::eventFilter(QObject *obj, QEvent *event)
+bool ConsoleTab::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() ==QEvent::KeyPress)
     {
@@ -541,7 +541,7 @@ bool CConsoleTab::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 
-void CConsoleTab::showAboutDialog()
+void ConsoleTab::showAboutDialog()
 {
     const QString contents = QString(
         "<p><font color=#000080><font size=6><b>%1</b></font> <font size=4>(revision %2)</font></font></p>"
@@ -553,7 +553,7 @@ void CConsoleTab::showAboutDialog()
     QMessageBox::about(this, tr("About superterm"), contents);
 }
 
-void CConsoleTab::onRenameTab()
+void ConsoleTab::onRenameTab()
 {
     QString text = m_ui->renameTabFrame->getText();
 
@@ -570,13 +570,13 @@ void CConsoleTab::onRenameTab()
     }
 }
 
-void CConsoleTab::showRenameTabDialog()
+void ConsoleTab::showRenameTabDialog()
 {
     m_ui->renameTabFrame->setText(getLabel());
     m_ui->renameTabFrame->show();
 }
 
-void CConsoleTab::onKeyPressed(QKeyEvent* e)
+void ConsoleTab::onKeyPressed(QKeyEvent* e)
 {
     QString key;
 
@@ -599,7 +599,7 @@ void CConsoleTab::onKeyPressed(QKeyEvent* e)
     lineBuffer_->append(b); // FIXME: remove
 }
 
-void CConsoleTab::startLogging()
+void ConsoleTab::startLogging()
 {
     qDebug() << "LOGGING STARTED";
     const QString sFileName = m_ui->logPanel->getLogFileName();
@@ -612,14 +612,14 @@ void CConsoleTab::startLogging()
     m_ui->statusBar->showMessage(tr("Logging to %1 started.").arg(sFileName), 3000);
 }
 
-void CConsoleTab::stopLogging()
+void ConsoleTab::stopLogging()
 {
     m_logFile->close();
     delete m_logFile;
     m_logFile = nullptr;
 }
 
-void CConsoleTab::onEndpointConnected()
+void ConsoleTab::onEndpointConnected()
 {
     qDebug() << "[slot] onEndpointConnected";
 
@@ -638,16 +638,16 @@ void CConsoleTab::onEndpointConnected()
     }
 }
 
-void CConsoleTab::onReconnectionSignal(const CMessage& message)
+void ConsoleTab::onReconnectionSignal(const Message& message)
 {
     const QString sDeviceName = m_session->getDeviceName();
 
-    if (message.isCmd(CMessage::SigCmd))
+    if (message.isCmd(Message::SigCmd))
     {
-        CMessage::Signal sig = message.getSignal();
+        Message::Signal sig = message.getSignal();
         qDebug() << "[slot] onReconnectionSignal(" << sig << ")";
 
-        if (sig == CMessage::IsConSig)
+        if (sig == Message::IsConSig)
         {
             if (m_session)
             {
@@ -656,7 +656,7 @@ void CConsoleTab::onReconnectionSignal(const CMessage& message)
 
             m_ui->statusBar->showProgressMessage(tr("Trying to reconnect to %1...").arg(sDeviceName));
         }
-        else if (sig == CMessage::DoneConSig)
+        else if (sig == Message::DoneConSig)
         {
             if (m_session)
             {
@@ -669,17 +669,17 @@ void CConsoleTab::onReconnectionSignal(const CMessage& message)
     }
 }
 
-void CConsoleTab::onReconnectionCancel()
+void ConsoleTab::onReconnectionCancel()
 {
-    m_portEndpoint->writeSignal(CMessage::CancelConSig);
+    m_portEndpoint->writeSignal(Message::CancelConSig);
 }
 
-QSize CConsoleTab::getViewPortSize() const
+QSize ConsoleTab::getViewPortSize() const
 {
     return m_ui->consoleView->viewport()->size();
 }
 
-QSize CConsoleTab::getCharWidth() const
+QSize ConsoleTab::getCharWidth() const
 {
     return m_ui->consoleView->getCharWidth();
 }

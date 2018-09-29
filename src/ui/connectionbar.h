@@ -5,17 +5,17 @@
 
 namespace Ui
 {
-class CConnectionBar;
+class ConnectionBar;
 }
 
-class CSession;
-class CPortEnumerator;
+class Session;
+class PortEnumerator;
 
-class CConnectionBar : public QFrame
+class ConnectionBar : public QFrame
 {
     Q_OBJECT
 public:
-    void    loadFromSession(CSession* session);
+    void    loadFromSession(Session* session);
     void    onConnected();
     void    onDisconnected();
     QString getDeviceName() const;
@@ -31,9 +31,9 @@ public:
     void    setParity(const QString& parity);
     void    setStopBits(const QString& stopBits);
     void    setFlowControl(const QString& flowControl);
-    void    setPortEnumerator(CPortEnumerator* pe);
-    explicit CConnectionBar(QWidget* parent = nullptr);
-    ~CConnectionBar();
+    void    setPortEnumerator(PortEnumerator* pe);
+    explicit ConnectionBar(QWidget* parent = nullptr);
+    ~ConnectionBar();
 
 protected:
     void showEvent(QShowEvent* event);
@@ -48,7 +48,7 @@ signals:
     void configurationChanged(const QString& config);
 
 private:
-    Ui::CConnectionBar* m_ui;
+    Ui::ConnectionBar* m_ui;
 
     void fillComboBoxes();
 };

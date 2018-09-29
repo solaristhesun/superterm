@@ -7,31 +7,31 @@
 #include "serial/portenumerator.h"
 #include "serial/serialportinfo.h"
 
-CPortEnumerator::CPortEnumerator()
+PortEnumerator::PortEnumerator()
 {
     qDebug() << "CPortEnumerator::CPortEnumerator()";
     QObject::moveToThread(&m_workerThread);
 }
 
-CPortEnumerator::~CPortEnumerator()
+PortEnumerator::~PortEnumerator()
 {
     qDebug() << "CPortEnumerator::~CPortEnumerator()";
 }
 
-void CPortEnumerator::startEnumeration()
+void PortEnumerator::startEnumeration()
 {
     qDebug() << "CPortEnumerator::startEnumeration()";
-    QTimer::singleShot(0, this, &CPortEnumerator::enumeratePorts);
+    QTimer::singleShot(0, this, &PortEnumerator::enumeratePorts);
     m_workerThread.start();
 }
 
-void CPortEnumerator::stopEnumeration()
+void PortEnumerator::stopEnumeration()
 {
     qDebug() << "CPortEnumerator::stopEnumeration()";
     m_workerThread.exit(0);
 }
 
-void CPortEnumerator::enumeratePorts()
+void PortEnumerator::enumeratePorts()
 {
     QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
 
@@ -39,22 +39,22 @@ void CPortEnumerator::enumeratePorts()
     m_portsList.clear();
     for (const QSerialPortInfo& portInfo : ports)
     {
-        CSerialPortInfo info(portInfo);
+        SerialPortInfo info(portInfo);
         m_portsList << info;
     }
 
 //#if defined(Q_OS_LINUX) && defined(DEBUG)
-    m_portsList << CSerialPortInfo(QSerialPortInfo("/dev/COM1"));
+    m_portsList << SerialPortInfo(QSerialPortInfo("/dev/COM1"));
 //#endif
 
-    std::sort(m_portsList.begin(), m_portsList.end(), CSerialPortInfo::compare);
+    std::sort(m_portsList.begin(), m_portsList.end(), SerialPortInfo::compare);
 
     emit enumerationFinished();
 
-    QTimer::singleShot(1000, this, &CPortEnumerator::enumeratePorts);
+    QTimer::singleShot(1000, this, &PortEnumerator::enumeratePorts);
 }
 
-QList<CSerialPortInfo> CPortEnumerator::getAvailablePorts()
+QList<SerialPortInfo> PortEnumerator::getAvailablePorts()
 {
     QMutexLocker locker(&m_mutex);
     return m_portsList;

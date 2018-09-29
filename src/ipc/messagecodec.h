@@ -10,13 +10,13 @@ class QString;
 
 namespace MessageCodec
 {
-CMessage decode(QByteArray& message);
+Message decode(QByteArray& message);
 
 QByteArray encodeData(const QByteArray& payload);
 QByteArray encodeStringData(const QString& string);
-QByteArray encodeSignal(const CMessage::Signal& signal);
-QByteArray encode(const CMessage::Cmd& cmd, const QByteArray& payload);
-QByteArray encode(const CMessage& message);
+QByteArray encodeSignal(const Message::Signal& signal);
+QByteArray encode(const Message::Cmd& cmd, const QByteArray& payload);
+QByteArray encode(const Message& message);
 }
 
 #endif // MESSAGECODEC_H

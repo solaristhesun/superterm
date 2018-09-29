@@ -5,43 +5,43 @@
 #include "serial/portenumerator.h"
 #include "serial/serialportinfo.h"
 
-CPortsComboBox::CPortsComboBox(QWidget* parent)
+PortsComboBox::PortsComboBox(QWidget* parent)
     : QComboBox(parent)
     , m_portToBeSet("")
 {
     QComboBox::setItemDelegate(new PortItemDelegate());
 }
 
-void CPortsComboBox::showPopup()
+void PortsComboBox::showPopup()
 {
     refresh();
     QComboBox::showPopup();
 }
 
-void CPortsComboBox::setPortEnumerator(CPortEnumerator* pe)
+void PortsComboBox::setPortEnumerator(PortEnumerator* pe)
 {
     m_pe = pe;
-    connect(m_pe, &CPortEnumerator::enumerationFinished, this, &CPortsComboBox::onEnumerationFinished);
+    connect(m_pe, &PortEnumerator::enumerationFinished, this, &PortsComboBox::onEnumerationFinished);
     refresh();
 }
 
-void CPortsComboBox::setPort(QString port)
+void PortsComboBox::setPort(QString port)
 {
     //this->setCurrentText(port);
     m_portToBeSet = port;
 }
 
-void CPortsComboBox::showEvent(QShowEvent*)
+void PortsComboBox::showEvent(QShowEvent*)
 {
     m_pe->startEnumeration();
 }
 
-void CPortsComboBox::hideEvent(QHideEvent*)
+void PortsComboBox::hideEvent(QHideEvent*)
 {
     m_pe->stopEnumeration();
 }
 
-void CPortsComboBox::onEnumerationFinished()
+void PortsComboBox::onEnumerationFinished()
 {
     if (!m_portToBeSet.isEmpty())
     {
@@ -51,32 +51,32 @@ void CPortsComboBox::onEnumerationFinished()
     }
 }
 
-void CPortsComboBox::refresh()
+void PortsComboBox::refresh()
 {
     QString currentText = this->currentText();
 
     QComboBox::clear();
     QComboBox::addItem(tr("Select port"));
 
-    for (CSerialPortInfo portInfo : m_pe->getAvailablePorts())
+    for (SerialPortInfo portInfo : m_pe->getAvailablePorts())
     {
         QString title = QString("%1 [%2]").arg(portInfo.shortName(), portInfo.description());
-        QComboBox::addItem(title, QVariant::fromValue<CSerialPortInfo>(portInfo));
+        QComboBox::addItem(title, QVariant::fromValue<SerialPortInfo>(portInfo));
     }
 
     this->setCurrentText(currentText);
 }
 
-CSerialPortInfo CPortsComboBox::currentPortInfo() const
+SerialPortInfo PortsComboBox::currentPortInfo() const
 {
-    return qvariant_cast<CSerialPortInfo>(this->currentData());
+    return qvariant_cast<SerialPortInfo>(this->currentData());
 }
 
-void CPortsComboBox::setCurrentDeviceName(const QString& deviceName)
+void PortsComboBox::setCurrentDeviceName(const QString& deviceName)
 {
     for (auto idx = 0; idx < QComboBox::count(); idx++)
     {
-        CSerialPortInfo info = qvariant_cast<CSerialPortInfo>(QComboBox::itemData(idx));
+        SerialPortInfo info = qvariant_cast<SerialPortInfo>(QComboBox::itemData(idx));
         if (info.portName() == deviceName)
         {
             QComboBox::setCurrentIndex(idx);

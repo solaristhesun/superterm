@@ -5,13 +5,13 @@
 
 class QSerialPort;
 
-class CPortObserver : public QThread
+class PortObserver : public QThread
 {
     Q_OBJECT
 
 public:
-    CPortObserver();
-    ~CPortObserver();
+    PortObserver();
+    ~PortObserver();
 
     void setActive(bool bActive);
     void setPort(QSerialPort* port);

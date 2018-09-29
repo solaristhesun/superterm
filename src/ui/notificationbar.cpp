@@ -4,29 +4,29 @@
 #include "notificationbar.h"
 #include "ui_notificationbar.h"
 
-CNotificationBar::CNotificationBar(QWidget *parent)
+NotificationBar::NotificationBar(QWidget *parent)
     : QFrame(parent)
     , ui_(new Ui::NotificationBar)
 {
     ui_->setupUi(this);
 }
 
-CNotificationBar::~CNotificationBar()
+NotificationBar::~NotificationBar()
 {
     delete ui_;
 }
 
-void CNotificationBar::setNotificationText(QString text)
+void NotificationBar::setNotificationText(QString text)
 {
     ui_->label->setText(text);
 }
 
-void CNotificationBar::setLink(QString link)
+void NotificationBar::setLink(QString link)
 {
     link_ = link;
 }
 
-void CNotificationBar::openLinkInBrowser()
+void NotificationBar::openLinkInBrowser()
 {
     QDesktopServices::openUrl(QUrl(link_));
 }

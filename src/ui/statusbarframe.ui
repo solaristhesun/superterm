@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CStatusBarFrame</class>
- <widget class="QFrame" name="CStatusBarFrame">
+ <class>StatusBarFrame</class>
+ <widget class="QFrame" name="StatusBarFrame">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -115,7 +115,7 @@
   <connection>
    <sender>btnClose</sender>
    <signal>pressed()</signal>
-   <receiver>CStatusBarFrame</receiver>
+   <receiver>StatusBarFrame</receiver>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -131,7 +131,7 @@
   <connection>
    <sender>btnCancel</sender>
    <signal>pressed()</signal>
-   <receiver>CStatusBarFrame</receiver>
+   <receiver>StatusBarFrame</receiver>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CConnectionBar</class>
- <widget class="QFrame" name="CConnectionBar">
+ <class>ConnectionBar</class>
+ <widget class="QFrame" name="ConnectionBar">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -64,7 +64,7 @@
     </widget>
    </item>
    <item>
-    <widget class="CPortsComboBox" name="comboPorts">
+    <widget class="PortsComboBox" name="comboPorts">
      <property name="minimumSize">
       <size>
        <width>250</width>
@@ -223,7 +223,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CPortsComboBox</class>
+   <class>PortsComboBox</class>
    <extends>QComboBox</extends>
    <header>src/ui/portscombobox.h</header>
   </customwidget>
@@ -235,7 +235,7 @@
   <connection>
    <sender>btnMore</sender>
    <signal>clicked()</signal>
-   <receiver>CConnectionBar</receiver>
+   <receiver>ConnectionBar</receiver>
    <slot>onMoreClicked()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -251,7 +251,7 @@
   <connection>
    <sender>comboPorts</sender>
    <signal>currentIndexChanged(QString)</signal>
-   <receiver>CConnectionBar</receiver>
+   <receiver>ConnectionBar</receiver>
    <slot>onComboChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -267,7 +267,7 @@
   <connection>
    <sender>btnClose</sender>
    <signal>clicked()</signal>
-   <receiver>CConnectionBar</receiver>
+   <receiver>ConnectionBar</receiver>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -283,7 +283,7 @@
   <connection>
    <sender>comboBaudRates</sender>
    <signal>currentIndexChanged(QString)</signal>
-   <receiver>CConnectionBar</receiver>
+   <receiver>ConnectionBar</receiver>
    <slot>onComboChanged()</slot>
    <hints>
     <hint type="sourcelabel">

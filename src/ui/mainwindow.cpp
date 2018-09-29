@@ -17,9 +17,9 @@
 #include "misc/softwareversion.h"
 #include "session/session.h"
 
-CMainWindow::CMainWindow(QWidget* parent)
+MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
-    , m_ui(new Ui::CMainWindow)
+    , m_ui(new Ui::MainWindow)
 {
     qDebug() << "CMainWindow::CMainWindow()";
 
@@ -30,48 +30,48 @@ CMainWindow::CMainWindow(QWidget* parent)
     setWindowTitle(Globals::ApplicationFullName);
 }
 
-CMainWindow::~CMainWindow()
+MainWindow::~MainWindow()
 {
     qDebug() << "CMainWindow::~CMainWindow()" << this;
     delete m_ui;
 }
 
-QSize CMainWindow::sizeHint() const
+QSize MainWindow::sizeHint() const
 {
     return QSize(800, 600);
 }
 
-void CMainWindow::addExistingTabsFromFile()
+void MainWindow::addExistingTabsFromFile()
 {
-    QStringList fileNames = CSession::getSessionList();
+    QStringList fileNames = Session::getSessionList();
 
     if (!fileNames.isEmpty())
     {
         for (const QString& fileName : fileNames)
         {
-            CSession* session = CSession::createSessionFromFile(fileName);
+            Session* session = Session::createSessionFromFile(fileName);
 
-            m_ui->tabWidget->addTab(CConsoleTabFactory::createTabFromSession(session));
+            m_ui->tabWidget->addTab(ConsoleTabFactory::createTabFromSession(session));
         }
     }
     else
     {
-        m_ui->tabWidget->addTab(CConsoleTabFactory::createTab());
+        m_ui->tabWidget->addTab(ConsoleTabFactory::createTab());
     }
 }
 
-void CMainWindow::attachTab(CConsoleTab* tab)
+void MainWindow::attachTab(ConsoleTab* tab)
 {
     qDebug() << "attaching tab" << tab->getLabel() << "to" << this;
 
     m_ui->tabWidget->addTab(tab);
 }
 
-CConsoleTab* CMainWindow::detachTab()
+ConsoleTab* MainWindow::detachTab()
 {
     int curIndex = m_ui->tabWidget->currentIndex();
 
-    CConsoleTab* tab = m_ui->tabWidget->widget(curIndex);
+    ConsoleTab* tab = m_ui->tabWidget->widget(curIndex);
     m_ui->tabWidget->removeTab(curIndex);
 
     qDebug() << "detaching tab" << tab->getLabel() << "from" << this;
@@ -79,24 +79,24 @@ CConsoleTab* CMainWindow::detachTab()
     return tab;
 }
 
-void CMainWindow::showUpdateInfo(const SoftwareVersion& version)
+void MainWindow::showUpdateInfo(const SoftwareVersion& version)
 {
     m_ui->notificationBar->setNotificationText(QString(tr("A software update is available. Click here to download superterm %1.")).arg(version.toString()));
     m_ui->notificationBar->setLink(Globals::ApplicationWebsite);
     m_ui->notificationBar->show();
 }
 
-void CMainWindow::onSecondaryInstanceLaunched()
+void MainWindow::onSecondaryInstanceLaunched()
 {
     qDebug() << "[slot] onSecondaryInstanceLaunched";
 
-    CMainWindow* mainWindow = new CMainWindow;
+    MainWindow* mainWindow = new MainWindow;
 
     mainWindow->show();
-    mainWindow->attachTab(CConsoleTabFactory::createTab());
+    mainWindow->attachTab(ConsoleTabFactory::createTab());
 }
 
-bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long*)
+bool MainWindow::nativeEvent(const QByteArray& eventType, void* message, long*)
 {
     bool bEventHandled = false;
 
@@ -148,14 +148,14 @@ bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long*)
     return bEventHandled;
 }
 
-int CMainWindow::getTabCount() const
+int MainWindow::getTabCount() const
 {
     return m_ui->tabWidget->count();
 }
 
-QRect CMainWindow::getTabBarRect() const
+QRect MainWindow::getTabBarRect() const
 {
-    CConsoleTabBar* tabBar = static_cast<CConsoleTabBar*>(m_ui->tabWidget->tabBar());
+    ConsoleTabBar* tabBar = static_cast<ConsoleTabBar*>(m_ui->tabWidget->tabBar());
     return QRect(tabBar->mapToGlobal(QPoint(0, 0)), tabBar->size());
 }
 

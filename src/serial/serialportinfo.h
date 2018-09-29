@@ -5,26 +5,26 @@
 #include <QSerialPortInfo>
 #include <QString>
 
-class CSerialPortInfo
+class SerialPortInfo
 {
 public:
-    CSerialPortInfo();
-    CSerialPortInfo(QSerialPortInfo portInfo);
-    CSerialPortInfo(const CSerialPortInfo& other);
-    ~CSerialPortInfo();
+    SerialPortInfo();
+    SerialPortInfo(QSerialPortInfo portInfo);
+    SerialPortInfo(const SerialPortInfo& other);
+    ~SerialPortInfo();
 
     QString description() const;
     QString portName() const;
     QString shortName() const;
     bool    isBusy() const;
 
-    static bool compare(const CSerialPortInfo& first, const CSerialPortInfo& second);
+    static bool compare(const SerialPortInfo& first, const SerialPortInfo& second);
 
 private:
     QSerialPortInfo portInfo_;
     bool            bBusy_;
 };
 
-Q_DECLARE_METATYPE(CSerialPortInfo);
+Q_DECLARE_METATYPE(SerialPortInfo);
 
 #endif // SERIALPORTINFO_H

@@ -6,9 +6,9 @@
 #include "ui_highlightingsframe.h"
 #include "ui/highlightingsframe.h"
 
-CHighlightingsFrame::CHighlightingsFrame(QWidget* parent)
+HighlightingsFrame::HighlightingsFrame(QWidget* parent)
     : QFrame(parent)
-    , m_ui(new Ui::CHighlightingsFrame)
+    , m_ui(new Ui::HighlightingsFrame)
     , m_color(QColor(Qt::red))
 {
     m_ui->setupUi(this);
@@ -16,12 +16,12 @@ CHighlightingsFrame::CHighlightingsFrame(QWidget* parent)
     refreshColorButton();
 }
 
-CHighlightingsFrame::~CHighlightingsFrame()
+HighlightingsFrame::~HighlightingsFrame()
 {
     delete m_ui;
 }
 
-void CHighlightingsFrame::addHighlighting()
+void HighlightingsFrame::addHighlighting()
 {
     const QString str = m_ui->filterEdit->text();
 
@@ -41,12 +41,12 @@ void CHighlightingsFrame::addHighlighting()
     emit highlightingChanged();
 }
 
-void CHighlightingsFrame::addHighlighting(QListWidgetItem* item)
+void HighlightingsFrame::addHighlighting(QListWidgetItem* item)
 {
     m_ui->filterList->addItem(item);
 }
 
-void CHighlightingsFrame::showEvent(QShowEvent* event)
+void HighlightingsFrame::showEvent(QShowEvent* event)
 {
     m_ui->filterEdit->setText("");
     m_ui->filterEdit->setFocus();
@@ -63,19 +63,19 @@ void CHighlightingsFrame::showEvent(QShowEvent* event)
     QFrame::showEvent(event);
 }
 
-void CHighlightingsFrame::onTextEdited(const QString& text)
+void HighlightingsFrame::onTextEdited(const QString& text)
 {
     m_ui->btnAdd->setEnabled(!text.isEmpty());
 }
 
-void CHighlightingsFrame::onSelectionChanged()
+void HighlightingsFrame::onSelectionChanged()
 {
     QList<QListWidgetItem*> items = m_ui->filterList->selectedItems();
     qDebug() << "COUNT " << items.count();
     m_ui->btnDelete->setEnabled(!items.isEmpty());
 }
 
-void CHighlightingsFrame::changeColor()
+void HighlightingsFrame::changeColor()
 {
     QColor color = QColorDialog::getColor(QColor("red"), this);
     if (color.isValid())
@@ -85,12 +85,12 @@ void CHighlightingsFrame::changeColor()
     }
 }
 
-void CHighlightingsFrame::refreshColorButton()
+void HighlightingsFrame::refreshColorButton()
 {
     m_ui->btnColor->setStyleSheet(QString("background-color: %1;").arg(m_color.name()));
 }
 
-void CHighlightingsFrame::deleteHighlighting()
+void HighlightingsFrame::deleteHighlighting()
 {
     QListWidgetItem* item = m_ui->filterList->currentItem();
     delete item;
@@ -103,7 +103,7 @@ void CHighlightingsFrame::deleteHighlighting()
     emit highlightingChanged();
 }
 
-void CHighlightingsFrame::deleteAll()
+void HighlightingsFrame::deleteAll()
 {
     m_ui->filterList->clear();
     m_ui->btnDeleteAll->setEnabled(false);
@@ -111,7 +111,7 @@ void CHighlightingsFrame::deleteAll()
     emit highlightingChanged();
 }
 
-void CHighlightingsFrame::keyPressEvent(QKeyEvent* event)
+void HighlightingsFrame::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Escape)
     {
@@ -121,12 +121,12 @@ void CHighlightingsFrame::keyPressEvent(QKeyEvent* event)
     QFrame::keyPressEvent(event);
 }
 
-void CHighlightingsFrame::clear()
+void HighlightingsFrame::clear()
 {
     m_ui->filterList->clear();
 }
 
-QList<Highlighting> CHighlightingsFrame::getItems()
+QList<Highlighting> HighlightingsFrame::getItems()
 {
     QList<QListWidgetItem*> items = m_ui->filterList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
     QList<Highlighting>     list;

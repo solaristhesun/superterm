@@ -3,28 +3,28 @@
 
 #include <QMainWindow>
 
-class CConsoleTab;
+class ConsoleTab;
 class SoftwareVersion;
 
 namespace Ui
 {
-class CMainWindow;
+class MainWindow;
 }
 
-class CMainWindow : public QMainWindow
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit CMainWindow(QWidget* parent = nullptr);
-    ~CMainWindow();
+    explicit MainWindow(QWidget* parent = nullptr);
+    ~MainWindow();
 
-    QSize        sizeHint() const;
-    void         attachTab(CConsoleTab* tab);
-    void         addExistingTabsFromFile();
-    CConsoleTab* detachTab();
-    int          getTabCount() const;
-    QRect        getTabBarRect() const;
+    QSize       sizeHint() const;
+    void        attachTab(ConsoleTab* tab);
+    void        addExistingTabsFromFile();
+    ConsoleTab* detachTab();
+    int         getTabCount() const;
+    QRect       getTabBarRect() const;
 
 private:
     bool nativeEvent(const QByteArray& eventType, void* message, long* result);
@@ -37,7 +37,7 @@ signals:
     void willQuit();
 
 private:
-    Ui::CMainWindow* m_ui;
+    Ui::MainWindow* m_ui;
 };
 
 #endif // MAINWINDOW_H

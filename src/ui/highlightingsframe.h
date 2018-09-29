@@ -8,18 +8,18 @@
 
 namespace Ui
 {
-class CHighlightingsFrame;
+class HighlightingsFrame;
 }
 
 class QListWidgetItem;
 
-class CHighlightingsFrame : public QFrame
+class HighlightingsFrame : public QFrame
 {
     Q_OBJECT
 
 public:
-    explicit CHighlightingsFrame(QWidget* parent = nullptr);
-    ~CHighlightingsFrame();
+    explicit HighlightingsFrame(QWidget* parent = nullptr);
+    ~HighlightingsFrame();
 
     QList<Highlighting> getItems();
     void                showEvent(QShowEvent* event);
@@ -39,8 +39,8 @@ signals:
     void highlightingChanged();
 
 private:
-    Ui::CHighlightingsFrame* m_ui;
-    QColor                   m_color;
+    Ui::HighlightingsFrame* m_ui;
+    QColor                  m_color;
 
     void refreshColorButton();
 };

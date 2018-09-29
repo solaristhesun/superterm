@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CMainWindow</class>
- <widget class="QMainWindow" name="CMainWindow">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -43,7 +43,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="CNotificationBar" name="notificationBar">
+     <widget class="NotificationBar" name="notificationBar">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -53,7 +53,7 @@
      </widget>
     </item>
     <item>
-     <widget class="CConsoleTabWidget" name="tabWidget">
+     <widget class="ConsoleTabWidget" name="tabWidget">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -110,13 +110,13 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>CConsoleTabWidget</class>
+   <class>ConsoleTabWidget</class>
    <extends>QTabWidget</extends>
    <header>src/ui/consoletabwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>CNotificationBar</class>
+   <class>NotificationBar</class>
    <extends>QFrame</extends>
    <header>src/ui/notificationbar.h</header>
    <container>1</container>

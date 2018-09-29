@@ -5,7 +5,7 @@
 
 #include "session/serializableobject.h"
 
-class CSession : public CSerializableObject
+class Session : public SerializableObject
 {
     Q_OBJECT
 public:
@@ -21,9 +21,9 @@ public:
 
     Q_PROPERTY(QVariantList m_highlights READ getHighlights WRITE setHighlights)
 
-    CSession();
-    ~CSession();
-    static CSession*   createSessionFromFile(const QString& fileName);
+    Session();
+    ~Session();
+    static Session*    createSessionFromFile(const QString& fileName);
     static void        removeFiles();
     static QStringList getSessionList();
 
@@ -132,6 +132,6 @@ private:
     bool m_bPortConnected;
 };
 
-QDebug operator<<(QDebug dbg, const CSession& s);
+QDebug operator<<(QDebug dbg, const Session& s);
 
 #endif // SESSION_H

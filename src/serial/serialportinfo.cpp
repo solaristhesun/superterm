@@ -4,39 +4,39 @@
 
 #include "serial/serialportinfo.h"
 
-CSerialPortInfo::CSerialPortInfo()
+SerialPortInfo::SerialPortInfo()
 {
     // currently empty
 }
-CSerialPortInfo::CSerialPortInfo(QSerialPortInfo portInfo)
+SerialPortInfo::SerialPortInfo(QSerialPortInfo portInfo)
     : portInfo_(portInfo)
     , bBusy_(portInfo.isBusy()) // cache busy info, because it is sometimes slow
 {
     // currently empty
 }
 
-CSerialPortInfo::CSerialPortInfo(const CSerialPortInfo& other)
+SerialPortInfo::SerialPortInfo(const SerialPortInfo& other)
 {
     portInfo_ = other.portInfo_;
     bBusy_ = other.bBusy_;
 }
 
-CSerialPortInfo::~CSerialPortInfo()
+SerialPortInfo::~SerialPortInfo()
 {
     // currently nothing
 }
 
-QString CSerialPortInfo::portName() const
+QString SerialPortInfo::portName() const
 {
     return portInfo_.portName();
 }
 
-QString CSerialPortInfo::description() const
+QString SerialPortInfo::description() const
 {
     return portInfo_.description();
 }
 
-QString CSerialPortInfo::shortName() const
+QString SerialPortInfo::shortName() const
 {
 #if defined(Q_OS_LINUX)
     return portName().remove("/dev/");
@@ -45,12 +45,12 @@ QString CSerialPortInfo::shortName() const
 #endif
 }
 
-bool CSerialPortInfo::isBusy() const
+bool SerialPortInfo::isBusy() const
 {
     return bBusy_;
 }
 
-bool CSerialPortInfo::compare(const CSerialPortInfo& first, const CSerialPortInfo& second)
+bool SerialPortInfo::compare(const SerialPortInfo& first, const SerialPortInfo& second)
 {
     QRegularExpression re("^(\\D*)(\\d+)\\D*$");
     QRegularExpressionMatch match1 = re.match(first.shortName());

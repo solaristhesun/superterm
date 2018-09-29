@@ -1,19 +1,19 @@
 #ifndef CONSOLETABFACTORY_H
 #define CONSOLETABFACTORY_H
 
-class CPortEnumerator;
-class CConsoleTab;
-class CSession;
+class PortEnumerator;
+class ConsoleTab;
+class Session;
 
-class CConsoleTabFactory
+class ConsoleTabFactory
 {
 public:
-    static void         setPortEnumerator(CPortEnumerator* portEnumerator);
-    static CConsoleTab* createTab();
-    static CConsoleTab* createTabFromSession(CSession* session);
+    static void        setPortEnumerator(PortEnumerator* portEnumerator);
+    static ConsoleTab* createTab();
+    static ConsoleTab* createTabFromSession(Session* session);
 
 private:
-    static CPortEnumerator* sPortEnumerator;
+    static PortEnumerator* sPortEnumerator;
 };
 
 #endif // CONSOLETABFACTORY_H

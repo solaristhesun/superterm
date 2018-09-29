@@ -7,9 +7,9 @@
 #include "connectionbar.h"
 #include "ui_connectionbar.h"
 
-CConnectionBar::CConnectionBar(QWidget* parent)
+ConnectionBar::ConnectionBar(QWidget* parent)
     : QFrame(parent)
-    , m_ui(new Ui::CConnectionBar)
+    , m_ui(new Ui::ConnectionBar)
 {
     m_ui->setupUi(this);
 
@@ -24,17 +24,17 @@ CConnectionBar::CConnectionBar(QWidget* parent)
     m_ui->comboConfigurations->hide();
     m_ui->btnSave->hide(); // save feature for now
 
-    connect(m_ui->btnConnect, &QPushButton::clicked, this, &CConnectionBar::connectClicked);
-    connect(m_ui->btnSave, &QPushButton::clicked, this, &CConnectionBar::saveClicked);
-    connect(m_ui->comboConfigurations, static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::activated), this, &CConnectionBar::configurationChanged);
+    connect(m_ui->btnConnect, &QPushButton::clicked, this, &ConnectionBar::connectClicked);
+    connect(m_ui->btnSave, &QPushButton::clicked, this, &ConnectionBar::saveClicked);
+    connect(m_ui->comboConfigurations, static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::activated), this, &ConnectionBar::configurationChanged);
 }
 
-CConnectionBar::~CConnectionBar()
+ConnectionBar::~ConnectionBar()
 {
     delete m_ui;
 }
 
-void CConnectionBar::showEvent(QShowEvent* event)
+void ConnectionBar::showEvent(QShowEvent* event)
 {
     QDir        dir(QCoreApplication::applicationDirPath());
     QStringList files = dir.entryList(QStringList() << "*.xml", QDir::Files);
@@ -51,27 +51,27 @@ void CConnectionBar::showEvent(QShowEvent* event)
     QWidget::showEvent(event);
 }
 
-void CConnectionBar::setPortEnumerator(CPortEnumerator* pe)
+void ConnectionBar::setPortEnumerator(PortEnumerator* pe)
 {
     m_ui->comboPorts->setPortEnumerator(pe);
 }
 
-QString CConnectionBar::getDeviceName() const
+QString ConnectionBar::getDeviceName() const
 {
     return m_ui->comboPorts->currentPortInfo().portName();
 }
 
-void CConnectionBar::setDeviceName(const QString& deviceName)
+void ConnectionBar::setDeviceName(const QString& deviceName)
 {
     m_ui->comboPorts->setCurrentDeviceName(deviceName);
 }
 
-QString CConnectionBar::getDeviceDesc() const
+QString ConnectionBar::getDeviceDesc() const
 {
     return m_ui->comboPorts->currentPortInfo().description();
 }
 
-QString CConnectionBar::getBaudRate() const
+QString ConnectionBar::getBaudRate() const
 {
     if (m_ui->lineEditBaudRate->isVisible())
     {
@@ -83,7 +83,7 @@ QString CConnectionBar::getBaudRate() const
     }
 }
 
-void CConnectionBar::setBaudRate(const QString& baudRate)
+void ConnectionBar::setBaudRate(const QString& baudRate)
 {
     if (m_ui->lineEditBaudRate->isVisible())
     {
@@ -96,47 +96,47 @@ void CConnectionBar::setBaudRate(const QString& baudRate)
     }
 }
 
-QString CConnectionBar::getDataBits() const
+QString ConnectionBar::getDataBits() const
 {
     return m_ui->comboDataBits->currentText();
 }
 
-void CConnectionBar::setDataBits(const QString& dataBits)
+void ConnectionBar::setDataBits(const QString& dataBits)
 {
     m_ui->comboDataBits->setCurrentText(dataBits);
 }
 
-QString CConnectionBar::getParity() const
+QString ConnectionBar::getParity() const
 {
     return m_ui->comboParity->currentText();
 }
 
-void CConnectionBar::setParity(const QString& parity)
+void ConnectionBar::setParity(const QString& parity)
 {
     m_ui->comboParity->setCurrentText(parity);
 }
 
-QString CConnectionBar::getStopBits() const
+QString ConnectionBar::getStopBits() const
 {
     return m_ui->comboStopBits->currentText();
 }
 
-void CConnectionBar::setStopBits(const QString& stopBits)
+void ConnectionBar::setStopBits(const QString& stopBits)
 {
     m_ui->comboStopBits->setCurrentText(stopBits);
 }
 
-QString CConnectionBar::getFlowControl() const
+QString ConnectionBar::getFlowControl() const
 {
     return m_ui->comboFlowControl->currentText();
 }
 
-void CConnectionBar::setFlowControl(const QString& flowControl)
+void ConnectionBar::setFlowControl(const QString& flowControl)
 {
     m_ui->comboFlowControl->setCurrentText(flowControl);
 }
 
-void CConnectionBar::loadFromSession(CSession* session)
+void ConnectionBar::loadFromSession(Session* session)
 {
     qDebug() << *session << session->getDeviceDesc();
     m_ui->comboPorts->setPort(session->getDeviceName());
@@ -165,7 +165,7 @@ void CConnectionBar::loadFromSession(CSession* session)
     m_ui->btnConnect->setEnabled(true); // FIXME: unsauber
 }
 
-void CConnectionBar::fillComboBoxes()
+void ConnectionBar::fillComboBoxes()
 {
     QComboBox* combo = nullptr;
 
@@ -220,7 +220,7 @@ void CConnectionBar::fillComboBoxes()
     combo->setCurrentIndex(0);
 }
 
-void CConnectionBar::onMoreClicked()
+void ConnectionBar::onMoreClicked()
 {
     if (!m_ui->comboParity->isVisible())
     {
@@ -240,7 +240,7 @@ void CConnectionBar::onMoreClicked()
     }
 }
 
-void CConnectionBar::onComboChanged()
+void ConnectionBar::onComboChanged()
 {
     qDebug() << "[slot] onComboChanged";
 
@@ -265,7 +265,7 @@ void CConnectionBar::onComboChanged()
     }
 }
 
-void CConnectionBar::onDisconnected()
+void ConnectionBar::onDisconnected()
 {
     m_ui->comboPorts->setEnabled(true);
     m_ui->lineEditBaudRate->setEnabled(true);
@@ -281,7 +281,7 @@ void CConnectionBar::onDisconnected()
     QWidget::show();
 }
 
-void CConnectionBar::onConnected()
+void ConnectionBar::onConnected()
 {
     m_ui->comboPorts->setEnabled(false);
     m_ui->lineEditBaudRate->setEnabled(false);

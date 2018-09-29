@@ -4,14 +4,14 @@
 #include <QTabBar>
 
 class QPushButton;
-class CMainWindow;
+class MainWindow;
 
-class CConsoleTabBar : public QTabBar
+class ConsoleTabBar : public QTabBar
 {
     Q_OBJECT
 public:
-    explicit CConsoleTabBar(QWidget* parent = nullptr);
-    ~CConsoleTabBar();
+    explicit ConsoleTabBar(QWidget* parent = nullptr);
+    ~ConsoleTabBar();
 
     void mouseReleaseEvent(QMouseEvent* event);
     void mousePressEvent(QMouseEvent* event);
@@ -24,7 +24,7 @@ public:
     void tabRemoved(int index);
     void moveButton();
 
-    CMainWindow* getNewMainWindow() const
+    MainWindow* getNewMainWindow() const
     {
         return mNewMainWindow;
     }
@@ -43,7 +43,7 @@ private:
     QPushButton* m_btn;
     int          m_selectedIndex;
     int          m_prevIndex;
-    CMainWindow* mNewMainWindow;
+    MainWindow*  mNewMainWindow;
     QPoint       mOffset;
 };
 

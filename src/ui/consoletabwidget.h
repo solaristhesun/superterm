@@ -3,27 +3,27 @@
 
 #include <QTabWidget>
 
-class CConsoleTab;
-class CConsoleTabBar;
-class CPortEnumerator;
-class CSession;
-class CMainWindow;
+class ConsoleTab;
+class ConsoleTabBar;
+class PortEnumerator;
+class Session;
+class MainWindow;
 class QMenu;
 
-class CConsoleTabWidget : public QTabWidget
+class ConsoleTabWidget : public QTabWidget
 {
     Q_OBJECT
 public:
-    explicit CConsoleTabWidget(QWidget* parent = nullptr);
-    ~CConsoleTabWidget();
+    explicit ConsoleTabWidget(QWidget* parent = nullptr);
+    ~ConsoleTabWidget();
 
-    void         addTab(CConsoleTab* tab);
-    void         setCurrentTabText(const QString& test);
-    void         setConsoleFont(const QFont& font);
-    void         aboutToQuit();
-    void         destroyTab(int index);
-    CConsoleTab* currentWidget() const;
-    CConsoleTab* widget(int index) const;
+    void        addTab(ConsoleTab* tab);
+    void        setCurrentTabText(const QString& test);
+    void        setConsoleFont(const QFont& font);
+    void        aboutToQuit();
+    void        destroyTab(int index);
+    ConsoleTab* currentWidget() const;
+    ConsoleTab* widget(int index) const;
 
 public slots:
     void closeTab(int index);
@@ -37,9 +37,9 @@ private:
     void createContextMenu();
 
 private:
-    CConsoleTabBar* m_tabBar;
-    QMenu*          m_contextMenu;
-    QAction*        m_renameTabAction;
+    ConsoleTabBar* m_tabBar;
+    QMenu*         m_contextMenu;
+    QAction*       m_renameTabAction;
 };
 
 #endif // CONSOLETABWIDGET_H

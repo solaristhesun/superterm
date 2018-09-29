@@ -4,7 +4,7 @@
 #include <QByteArray>
 #include <QtGlobal>
 
-class CMessage
+class Message
 {
 public:
     enum Cmd {
@@ -20,12 +20,12 @@ public:
         UnknownSig   = -1
     };
 
-    CMessage();
-    ~CMessage();
+    Message();
+    ~Message();
 
-    CMessage(const Cmd& cmd, const QByteArray& payload);
-    CMessage(const Cmd& cmd, const QString& stringData);
-    CMessage(const Cmd& cmd, const Signal& signal);
+    Message(const Cmd& cmd, const QByteArray& payload);
+    Message(const Cmd& cmd, const QString& stringData);
+    Message(const Cmd& cmd, const Signal& signal);
 
     void setCmd(const Cmd& u8Cmd);
     Cmd  getCmd() const;
@@ -47,7 +47,7 @@ private:
     QByteArray m_payload;
 };
 
-QDataStream& operator<<(QDataStream& ds, const CMessage& obj);
-QDataStream& operator>>(QDataStream& ds, CMessage& obj);
+QDataStream& operator<<(QDataStream& ds, const Message& obj);
+QDataStream& operator>>(QDataStream& ds, Message& obj);
 
 #endif // MESSAGE_H

@@ -9,7 +9,7 @@
 #include "ui/consoletab.h"
 #include "ui/consoletabbar.h"
 
-CConsoleTabBar::CConsoleTabBar(QWidget* parent)
+ConsoleTabBar::ConsoleTabBar(QWidget* parent)
     : QTabBar(parent)
     , m_btn(new QPushButton(this))
     , m_selectedIndex(-1)
@@ -26,25 +26,25 @@ CConsoleTabBar::CConsoleTabBar(QWidget* parent)
 
     setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 
-    connect(m_btn, &QPushButton::clicked, this, &CConsoleTabBar::addButtonClicked);
+    connect(m_btn, &QPushButton::clicked, this, &ConsoleTabBar::addButtonClicked);
 }
 
-CConsoleTabBar::~CConsoleTabBar()
+ConsoleTabBar::~ConsoleTabBar()
 {
     qDebug() << "CConsoleTabBar::~CConsoleTabBar()";
 }
 
-void CConsoleTabBar::tabInserted(int)
+void ConsoleTabBar::tabInserted(int)
 {
     moveButton();
 }
 
-void CConsoleTabBar::tabRemoved(int)
+void ConsoleTabBar::tabRemoved(int)
 {
     moveButton();
 }
 
-void CConsoleTabBar::moveButton()
+void ConsoleTabBar::moveButton()
 {
     const int iLastTabIndex = count() - 1;
 
@@ -56,24 +56,24 @@ void CConsoleTabBar::moveButton()
     }
 }
 
-void CConsoleTabBar::showEvent(QShowEvent* event)
+void ConsoleTabBar::showEvent(QShowEvent* event)
 {
     moveButton();
     QTabBar::showEvent(event);
 }
 
-void CConsoleTabBar::mouseReleaseEvent(QMouseEvent* event)
+void ConsoleTabBar::mouseReleaseEvent(QMouseEvent* event)
 {
     QTabBar::mouseReleaseEvent(event);
     mNewMainWindow = nullptr;
 }
 
-void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
+void ConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
 {
     QPoint pos = event->pos();
     QPoint globalPos = event->globalPos() - mOffset;
 
-    CMainWindow* currentWindow = static_cast<CMainWindow*>(QApplication::activeWindow());
+    MainWindow* currentWindow = static_cast<MainWindow*>(QApplication::activeWindow());
 
     if (!currentWindow)
     {
@@ -90,7 +90,7 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
         {
             if (widget->objectName() == "CMainWindow" && widget != currentWindow)
             {
-                CMainWindow* otherWindow = static_cast<CMainWindow*>(widget);
+                MainWindow* otherWindow = static_cast<MainWindow*>(widget);
                 QRect        tabBarRect = otherWindow->getTabBarRect();
 
                 // check if mouse is in tabbar rect
@@ -119,7 +119,7 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
 
             if (pos.x() < -iThreshold || pos.x() > QTabBar::rect().width() + iThreshold)
             {
-                mNewMainWindow = new CMainWindow;
+                mNewMainWindow = new MainWindow;
                 mNewMainWindow->hide();
                 mNewMainWindow->setGeometry(QApplication::activeWindow()->geometry());
                 mNewMainWindow->show();
@@ -135,14 +135,14 @@ void CConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
     }
 }
 
-void CConsoleTabBar::mousePressEvent(QMouseEvent* event)
+void ConsoleTabBar::mousePressEvent(QMouseEvent* event)
 {
     QRect rect = tabRect(currentIndex());
 
     mOffset.setX(event->pos().x() - rect.x());
     mOffset.setY(event->pos().y() - rect.y());
 
-    QMainWindow* mainWindow = static_cast<CMainWindow*>(QApplication::activeWindow());
+    QMainWindow* mainWindow = static_cast<MainWindow*>(QApplication::activeWindow());
     QSize        decorationSize = mainWindow->frameSize() - mainWindow->size();
 
     mOffset.setX(mOffset.x() + decorationSize.width() / 2);

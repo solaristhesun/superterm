@@ -13,7 +13,7 @@ namespace Ui
 class CConsoleView;
 }
 
-class CConsoleTab;
+class ConsoleTab;
 
 class CConsoleView : public QPlainTextEdit
 {
@@ -48,7 +48,7 @@ signals:
 
 private:
     Ui::CConsoleView*                     m_ui;
-    CConsoleTab*                          m_parent;
+    ConsoleTab*                           m_parent;
     QList<QTextEdit::ExtraSelection>      m_extras;
     int                                   m_cursorPos;
     QList<CHighlightsFrame::Highlighting> m_highlightings;

@@ -12,7 +12,7 @@
 CConsoleView::CConsoleView(QWidget* parent)
     : QPlainTextEdit(parent)
     , m_ui(new Ui::CConsoleView)
-    , m_parent(static_cast<CConsoleTab*>(parent))
+    , m_parent(static_cast<ConsoleTab*>(parent))
     , m_bMouseDown(false)
     , m_scrollBar(verticalScrollBar())
     , m_scrollPos(0)

@@ -4,9 +4,9 @@
 #include "ui_statusbarframe.h"
 #include "ui/statusbarframe.h"
 
-CStatusBarFrame::CStatusBarFrame(QWidget* parent)
+StatusBarFrame::StatusBarFrame(QWidget* parent)
     : QFrame(parent)
-    , m_ui(new Ui::CStatusBarFrame)
+    , m_ui(new Ui::StatusBarFrame)
 {
     m_ui->setupUi(this);
 
@@ -15,15 +15,15 @@ CStatusBarFrame::CStatusBarFrame(QWidget* parent)
 
     hide();
 
-    connect(m_ui->btnCancel, &QPushButton::pressed, this, &CStatusBarFrame::cancelReconnection);
+    connect(m_ui->btnCancel, &QPushButton::pressed, this, &StatusBarFrame::cancelReconnection);
 }
 
-CStatusBarFrame::~CStatusBarFrame()
+StatusBarFrame::~StatusBarFrame()
 {
     delete m_ui;
 }
 
-void CStatusBarFrame::showMessage(const QString& message, const int timeout)
+void StatusBarFrame::showMessage(const QString& message, const int timeout)
 {
     m_ui->labelMessage->setText(message);
 
@@ -40,13 +40,13 @@ void CStatusBarFrame::showMessage(const QString& message, const int timeout)
         m_ui->waitingSpinner->stop();
         m_ui->btnCancel->hide();
         m_ui->btnClose->hide();
-        QTimer::singleShot(timeout, this, &CStatusBarFrame::hideOnTimeout);
+        QTimer::singleShot(timeout, this, &StatusBarFrame::hideOnTimeout);
     }
 
     show();
 }
 
-void CStatusBarFrame::hideOnTimeout()
+void StatusBarFrame::hideOnTimeout()
 {
     if (QObject::property("theme") == "default")
     {
@@ -54,7 +54,7 @@ void CStatusBarFrame::hideOnTimeout()
     }
 }
 
-void CStatusBarFrame::showProgressMessage(const QString& message)
+void StatusBarFrame::showProgressMessage(const QString& message)
 {
     m_ui->labelMessage->setText(message);
 
@@ -66,13 +66,13 @@ void CStatusBarFrame::showProgressMessage(const QString& message)
     show();
 }
 
-void CStatusBarFrame::hideProgressMessage()
+void StatusBarFrame::hideProgressMessage()
 {
     m_ui->waitingSpinner->stop();
     hide();
 }
 
-void CStatusBarFrame::setStyleProperty(const char* name, const QVariant& variant)
+void StatusBarFrame::setStyleProperty(const char* name, const QVariant& variant)
 {
     setProperty(name, variant);
     style()->unpolish(this);
@@ -80,7 +80,7 @@ void CStatusBarFrame::setStyleProperty(const char* name, const QVariant& variant
     update();
 }
 
-void CStatusBarFrame::setupWaitingSpinner()
+void StatusBarFrame::setupWaitingSpinner()
 {
     m_ui->waitingSpinner->setRoundness(70.0);
     m_ui->waitingSpinner->setMinimumTrailOpacity(15.0);

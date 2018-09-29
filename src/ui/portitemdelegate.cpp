@@ -15,7 +15,7 @@ PortItemDelegate::PortItemDelegate()
 
 void PortItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    CSerialPortInfo info = qvariant_cast<CSerialPortInfo>(index.data(Qt::UserRole));
+    SerialPortInfo info = qvariant_cast<SerialPortInfo>(index.data(Qt::UserRole));
 
     QPalette pal;
 

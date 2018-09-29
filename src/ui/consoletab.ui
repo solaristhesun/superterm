@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CConsoleTab</class>
- <widget class="QWidget" name="CConsoleTab">
+ <class>ConsoleTab</class>
+ <widget class="QWidget" name="ConsoleTab">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -54,7 +54,7 @@
        <enum>QFrame::Raised</enum>
       </property>
      </widget>
-     <widget class="CConnectionBar" name="connectionBar">
+     <widget class="ConnectionBar" name="connectionBar">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -99,7 +99,7 @@
        <enum>QFrame::Raised</enum>
       </property>
      </widget>
-     <widget class="CHighlightingsFrame" name="highlightingsFrame">
+     <widget class="HighlightingsFrame" name="highlightingsFrame">
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
@@ -107,7 +107,7 @@
        <enum>QFrame::Raised</enum>
       </property>
      </widget>
-     <widget class="CStatusBarFrame" name="statusBar">
+     <widget class="StatusBarFrame" name="statusBar">
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
@@ -199,13 +199,13 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CStatusBarFrame</class>
+   <class>StatusBarFrame</class>
    <extends>QFrame</extends>
    <header>src/ui/statusbarframe.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>CHighlightingsFrame</class>
+   <class>HighlightingsFrame</class>
    <extends>QFrame</extends>
    <header>src/ui/highlightingsframe.h</header>
    <container>1</container>
@@ -225,7 +225,7 @@
    </slots>
   </customwidget>
   <customwidget>
-   <class>CConnectionBar</class>
+   <class>ConnectionBar</class>
    <extends>QFrame</extends>
    <header>src/ui/connectionbar.h</header>
    <container>1</container>
@@ -255,7 +255,7 @@
   <connection>
    <sender>actionChangeColor</sender>
    <signal>triggered()</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>showColorDialog()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -287,7 +287,7 @@
   <connection>
    <sender>actionChangeFont</sender>
    <signal>triggered()</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>showFontDialog()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -303,7 +303,7 @@
   <connection>
    <sender>actionClear</sender>
    <signal>triggered()</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>clearTab()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -335,7 +335,7 @@
   <connection>
    <sender>highlightingsFrame</sender>
    <signal>highlightingChanged()</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>updateHighlightings()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -351,7 +351,7 @@
   <connection>
    <sender>actionAbout</sender>
    <signal>triggered()</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>showAboutDialog()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -367,7 +367,7 @@
   <connection>
    <sender>actionFullscreen</sender>
    <signal>triggered()</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>toggleFullScreen()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -399,7 +399,7 @@
   <connection>
    <sender>logPanel</sender>
    <signal>loggingStarted()</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>startLogging()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -415,7 +415,7 @@
   <connection>
    <sender>logPanel</sender>
    <signal>loggingStopped()</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>stopLogging()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -431,7 +431,7 @@
   <connection>
    <sender>actionToggleAutoscroll</sender>
    <signal>triggered()</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>toggleAutoScroll()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -447,7 +447,7 @@
   <connection>
    <sender>connectionBar</sender>
    <signal>connectClicked()</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>onConnectClicked()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -463,7 +463,7 @@
   <connection>
    <sender>connectionBar</sender>
    <signal>saveClicked()</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>showSaveDialog()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -479,7 +479,7 @@
   <connection>
    <sender>connectionBar</sender>
    <signal>configurationChanged(QString)</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>onConfigurationChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -495,7 +495,7 @@
   <connection>
    <sender>actionChangeFontColor</sender>
    <signal>triggered()</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>showFontColorDialog()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -511,7 +511,7 @@
   <connection>
    <sender>actionRenameTab</sender>
    <signal>triggered()</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>showRenameTabDialog()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -527,7 +527,7 @@
   <connection>
    <sender>actionToggleTimeStamps</sender>
    <signal>triggered()</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>toggleTimeStamps()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -543,7 +543,7 @@
   <connection>
    <sender>consoleView</sender>
    <signal>customContextMenuRequested(QPoint)</signal>
-   <receiver>CConsoleTab</receiver>
+   <receiver>ConsoleTab</receiver>
    <slot>showContextMenu(QPoint)</slot>
    <hints>
     <hint type="sourcelabel">

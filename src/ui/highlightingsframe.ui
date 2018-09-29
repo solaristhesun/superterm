@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CHighlightingsFrame</class>
- <widget class="QFrame" name="CHighlightingsFrame">
+ <class>HighlightingsFrame</class>
+ <widget class="QFrame" name="HighlightingsFrame">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -151,7 +151,7 @@
   <connection>
    <sender>btnAdd</sender>
    <signal>clicked()</signal>
-   <receiver>CHighlightingsFrame</receiver>
+   <receiver>HighlightingsFrame</receiver>
    <slot>addHighlighting()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -167,7 +167,7 @@
   <connection>
    <sender>btnDelete</sender>
    <signal>clicked()</signal>
-   <receiver>CHighlightingsFrame</receiver>
+   <receiver>HighlightingsFrame</receiver>
    <slot>deleteHighlighting()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -183,7 +183,7 @@
   <connection>
    <sender>btnClose</sender>
    <signal>clicked()</signal>
-   <receiver>CHighlightingsFrame</receiver>
+   <receiver>HighlightingsFrame</receiver>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -199,7 +199,7 @@
   <connection>
    <sender>filterEdit</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>CHighlightingsFrame</receiver>
+   <receiver>HighlightingsFrame</receiver>
    <slot>onTextEdited(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -231,7 +231,7 @@
   <connection>
    <sender>filterList</sender>
    <signal>itemSelectionChanged()</signal>
-   <receiver>CHighlightingsFrame</receiver>
+   <receiver>HighlightingsFrame</receiver>
    <slot>onSelectionChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -247,7 +247,7 @@
   <connection>
    <sender>btnColor</sender>
    <signal>clicked()</signal>
-   <receiver>CHighlightingsFrame</receiver>
+   <receiver>HighlightingsFrame</receiver>
    <slot>changeColor()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -263,7 +263,7 @@
   <connection>
    <sender>btnDeleteAll</sender>
    <signal>clicked()</signal>
-   <receiver>CHighlightingsFrame</receiver>
+   <receiver>HighlightingsFrame</receiver>
    <slot>deleteAll()</slot>
    <hints>
     <hint type="sourcelabel">

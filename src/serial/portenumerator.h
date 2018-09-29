@@ -5,19 +5,19 @@
 #include <QObject>
 #include <QThread>
 
-class CSerialPortInfo;
+class SerialPortInfo;
 
-class CPortEnumerator : public QObject
+class PortEnumerator : public QObject
 {
     Q_OBJECT
 public:
-    CPortEnumerator();
-    ~CPortEnumerator();
+    PortEnumerator();
+    ~PortEnumerator();
 
     void startEnumeration();
     void stopEnumeration();
 
-    QList<CSerialPortInfo> getAvailablePorts();
+    QList<SerialPortInfo> getAvailablePorts();
 
 signals:
     void enumerationFinished();
@@ -26,9 +26,9 @@ private slots:
     void enumeratePorts();
 
 private:
-    QThread                m_workerThread;
-    QMutex                 m_mutex;
-    QList<CSerialPortInfo> m_portsList;
+    QThread               m_workerThread;
+    QMutex                m_mutex;
+    QList<SerialPortInfo> m_portsList;
 };
 
 #endif // PORTENUMERATOR_H

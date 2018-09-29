@@ -5,16 +5,16 @@
 
 namespace Ui
 {
-class CStatusBarFrame;
+class StatusBarFrame;
 }
 
-class CStatusBarFrame : public QFrame
+class StatusBarFrame : public QFrame
 {
     Q_OBJECT
 
 public:
-    explicit CStatusBarFrame(QWidget* parent = nullptr);
-    ~CStatusBarFrame();
+    explicit StatusBarFrame(QWidget* parent = nullptr);
+    ~StatusBarFrame();
 
     void showMessage(const QString& message, const int timeout = 0);
     void showProgressMessage(const QString& message);
@@ -27,7 +27,7 @@ signals:
     void cancelReconnection();
 
 private:
-    Ui::CStatusBarFrame* m_ui;
+    Ui::StatusBarFrame* m_ui;
 
     void setStyleProperty(const char* name, const QVariant& variant);
     void setupWaitingSpinner();

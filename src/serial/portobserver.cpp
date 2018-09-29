@@ -3,29 +3,29 @@
 
 #include "portobserver.h"
 
-CPortObserver::CPortObserver()
+PortObserver::PortObserver()
     : m_bActive(false)
     , m_port(nullptr)
 {
     QThread::start();
 }
 
-CPortObserver::~CPortObserver()
+PortObserver::~PortObserver()
 {
     QThread::exit(0);
 }
 
-void CPortObserver::setActive(bool bActive)
+void PortObserver::setActive(bool bActive)
 {
     m_bActive = bActive;
 }
 
-void CPortObserver::setPort(QSerialPort* port)
+void PortObserver::setPort(QSerialPort* port)
 {
     m_port = port;
 }
 
-void CPortObserver::run()
+void PortObserver::run()
 {
     while (true)
     {

@@ -5,13 +5,13 @@
 #include <QLocalSocket>
 
 class QSerialPort;
-class CPortObserver;
+class PortObserver;
 
-class CPortApplication : public QCoreApplication
+class PortApplication : public QCoreApplication
 {
     Q_OBJECT
 public:
-    CPortApplication(int& argc, char** argv);
+    PortApplication(int& argc, char** argv);
 
     int exec();
 
@@ -24,10 +24,10 @@ public slots:
     void onPortDisconnected();
 
 private:
-    QLocalSocket*  m_socket;
-    QSerialPort*   m_port;
-    CPortObserver* m_observer;
-    bool           m_bHasSendReconSignal;
+    QLocalSocket* m_socket;
+    QSerialPort*  m_port;
+    PortObserver* m_observer;
+    bool          m_bHasSendReconSignal;
 };
 
 #endif // PORTAPPLICATION_H

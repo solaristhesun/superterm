@@ -9,23 +9,23 @@
 
 class QLocalServer;
 class QLocalSocket;
-class CSession;
+class Session;
 
-class CPortEndpoint : public QObject
+class PortEndpoint : public QObject
 {
     Q_OBJECT
 public:
-    explicit CPortEndpoint(QObject* parent = nullptr);
+    explicit PortEndpoint(QObject* parent = nullptr);
 
-    void    connectEndpoint(CSession* session);
+    void    connectEndpoint(Session* session);
     void    disconnectEndpoint();
     bool    isConnected();
     quint64 writeData(const QByteArray& byteArray);
-    quint64 writeSignal(const CMessage::Signal& signal);
+    quint64 writeSignal(const Message::Signal& signal);
     quint64 write(const QByteArray& byteArray);
 
 signals:
-    void readyRead(const CMessage& message);
+    void readyRead(const Message& message);
     void disconnected(int);
     void connected();
     void showStatusBar();

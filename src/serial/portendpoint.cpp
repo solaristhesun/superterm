@@ -7,7 +7,7 @@
 #include "serial/portendpoint.h"
 #include "session/session.h"
 
-CPortEndpoint::CPortEndpoint(QObject* parent)
+PortEndpoint::PortEndpoint(QObject* parent)
     : QObject(parent)
     , m_process(nullptr)
     , m_server(nullptr)
@@ -16,7 +16,7 @@ CPortEndpoint::CPortEndpoint(QObject* parent)
     // currently nothing
 }
 
-void CPortEndpoint::onProcessFinished(int retval)
+void PortEndpoint::onProcessFinished(int retval)
 {
     qDebug() << "[slot] onProcessFinished" << retval;
 
@@ -24,17 +24,17 @@ void CPortEndpoint::onProcessFinished(int retval)
     emit disconnected(retval);
 }
 
-void CPortEndpoint::onProcessStarted()
+void PortEndpoint::onProcessStarted()
 {
     qDebug() << "[slot] onProcessStarted";
 }
 
-void CPortEndpoint::onProcessError(QProcess::ProcessError error)
+void PortEndpoint::onProcessError(QProcess::ProcessError error)
 {
     qDebug() << "[slot] onProcessError:" << error;
 }
 
-void CPortEndpoint::onSocketConnection()
+void PortEndpoint::onSocketConnection()
 {
     qDebug() << "[slot] onSocketConnection";
 
@@ -42,15 +42,15 @@ void CPortEndpoint::onSocketConnection()
 
     if (m_socket)
     {
-        connect(m_socket, &QLocalSocket::disconnected, m_socket, &CPortEndpoint::deleteLater);
-        connect(m_socket, &QLocalSocket::readyRead, this, &CPortEndpoint::onSocketData);
-        connect(m_socket, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::error), this, &CPortEndpoint::onSocketError);
+        connect(m_socket, &QLocalSocket::disconnected, m_socket, &PortEndpoint::deleteLater);
+        connect(m_socket, &QLocalSocket::readyRead, this, &PortEndpoint::onSocketData);
+        connect(m_socket, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::error), this, &PortEndpoint::onSocketError);
 
         emit connected();
     }
 }
 
-void CPortEndpoint::onSocketData()
+void PortEndpoint::onSocketData()
 {
     QByteArray array = m_socket->readAll();
     while (array.size() > 0)
@@ -59,22 +59,22 @@ void CPortEndpoint::onSocketData()
     }
 }
 
-void CPortEndpoint::onSocketError(QLocalSocket::LocalSocketError error)
+void PortEndpoint::onSocketError(QLocalSocket::LocalSocketError error)
 {
     qDebug() << "[slot] onSocketError:" << error;
 }
 
-quint64 CPortEndpoint::writeData(const QByteArray& byteArray)
+quint64 PortEndpoint::writeData(const QByteArray& byteArray)
 {
     return write(MessageCodec::encodeData(byteArray));
 }
 
-quint64 CPortEndpoint::writeSignal(const CMessage::Signal& signal)
+quint64 PortEndpoint::writeSignal(const Message::Signal& signal)
 {
     return write(MessageCodec::encodeSignal(signal));
 }
 
-quint64 CPortEndpoint::write(const QByteArray& byteArray)
+quint64 PortEndpoint::write(const QByteArray& byteArray)
 {
     quint64 u64ret = 0;
 
@@ -86,7 +86,7 @@ quint64 CPortEndpoint::write(const QByteArray& byteArray)
     return u64ret;
 }
 
-void CPortEndpoint::disconnectEndpoint()
+void PortEndpoint::disconnectEndpoint()
 {
     if (m_socket)
     {
@@ -106,15 +106,15 @@ void CPortEndpoint::disconnectEndpoint()
     }
 }
 
-void CPortEndpoint::connectEndpoint(CSession* session)
+void PortEndpoint::connectEndpoint(Session* session)
 {
     m_process = new QProcess(this);
     m_server  = new QLocalServer(this);
 
-    connect(m_process, &QProcess::started, this, &CPortEndpoint::onProcessStarted);
-    connect(m_process, &QProcess::errorOccurred, this, &CPortEndpoint::onProcessError);
-    connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &CPortEndpoint::onProcessFinished);
-    connect(m_server, &QLocalServer::newConnection, this, &CPortEndpoint::onSocketConnection);
+    connect(m_process, &QProcess::started, this, &PortEndpoint::onProcessStarted);
+    connect(m_process, &QProcess::errorOccurred, this, &PortEndpoint::onProcessError);
+    connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &PortEndpoint::onProcessFinished);
+    connect(m_server, &QLocalServer::newConnection, this, &PortEndpoint::onSocketConnection);
 
     qDebug() << "LISTEN" << "serial:" + session->getDeviceName();
 
@@ -139,7 +139,7 @@ void CPortEndpoint::connectEndpoint(CSession* session)
     m_process->start(QCoreApplication::applicationFilePath(), args);
 }
 
-bool CPortEndpoint::isConnected()
+bool PortEndpoint::isConnected()
 {
     return m_socket != nullptr;
 }

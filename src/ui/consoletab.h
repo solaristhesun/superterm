@@ -8,27 +8,27 @@
 
 namespace Ui
 {
-class CConsoleTab;
+class ConsoleTab;
 }
 
 class QSerialPort;
 class ConsoleLineBuffer;
 class CConsoleTabWidget;
 class QFile;
-class CPortEnumerator;
+class PortEnumerator;
 class QMenu;
-class CPortEndpoint;
-class CSession;
-class CMainWindow;
-class CMessage;
+class PortEndpoint;
+class Session;
+class MainWindow;
+class Message;
 
-class CConsoleTab : public QWidget
+class ConsoleTab : public QWidget
 {
     Q_OBJECT
 
 public:
-    CConsoleTab(CPortEnumerator* pe, CSession* session = nullptr);
-    ~CConsoleTab();
+    ConsoleTab(PortEnumerator* pe, Session* session = nullptr);
+    ~ConsoleTab();
 
     void hideButton(int index);
 
@@ -40,7 +40,7 @@ public:
     QSize   getCharWidth() const;
     void    disconnectEndpoint();
 
-    bool eventFilter(QObject *obj, QEvent *event);
+    bool eventFilter(QObject* obj, QEvent* event);
 
 public slots:
     void onConnectClicked();
@@ -57,10 +57,10 @@ public slots:
     void startLogging();
     void stopLogging();
     void showSaveDialog();
-    void onEndpointData(const CMessage& message);
+    void onEndpointData(const Message& message);
     void onEndpointConnected();
     void onEndpointDisconnected(int returnCode);
-    void onReconnectionSignal(const CMessage& message);
+    void onReconnectionSignal(const Message& message);
     void onReconnectionCancel();
     void onConfigurationChanged(const QString& config);
     void showRenameTabDialog();
@@ -72,12 +72,12 @@ signals:
     void labelChanged(const QString&);
 
 private:
-    Ui::CConsoleTab*   m_ui;
-    CMainWindow*       mMainWindow;
+    Ui::ConsoleTab*    m_ui;
+    MainWindow*        mMainWindow;
     ConsoleLineBuffer* lineBuffer_;
     QString            mTabLabel;
-    CPortEndpoint*     m_portEndpoint;
-    CSession*          m_session;
+    PortEndpoint*      m_portEndpoint;
+    Session*           m_session;
     QFile*             m_logFile;
     QMenu*             m_contextMenu;
     int                m_lastTabIndex;

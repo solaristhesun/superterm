@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
 {
     if (argc == 7)
     {
-        CPortApplication a(argc, argv);
+        PortApplication a(argc, argv);
         return a.exec();
     }
     else
@@ -55,23 +55,23 @@ int main(int argc, char* argv[])
         appTranslator.load(QCoreApplication::applicationDirPath() + "/" + Globals::ApplicationName + "_" + QLocale::system().name());
         a.installTranslator(&appTranslator);
 
-        CPortEnumerator portEnumerator;
-        CConsoleTabFactory::setPortEnumerator(&portEnumerator);
+        PortEnumerator portEnumerator;
+        ConsoleTabFactory::setPortEnumerator(&portEnumerator);
 
         qRegisterMetaTypeStreamOperators<Highlighting>("Highlighting");
 
         // create main window on heap!
-        CMainWindow* w = new CMainWindow;
+        MainWindow* w = new MainWindow;
         w->addExistingTabsFromFile();
         w->show();
 
-        QObject::connect(&a, &QApplication::aboutToQuit, w, &CMainWindow::deleteLater);
-        QObject::connect(&a, &SingleApplication::showUp, w, &CMainWindow::onSecondaryInstanceLaunched);
+        QObject::connect(&a, &QApplication::aboutToQuit, w, &MainWindow::deleteLater);
+        QObject::connect(&a, &SingleApplication::showUp, w, &MainWindow::onSecondaryInstanceLaunched);
 
         UpdateChecker updateChecker;
         updateChecker.checkForUpdate();
 
-        QObject::connect(&updateChecker, &UpdateChecker::updateAvailable, w, &CMainWindow::showUpdateInfo);
+        QObject::connect(&updateChecker, &UpdateChecker::updateAvailable, w, &MainWindow::showUpdateInfo);
 
         return a.exec();
     }
