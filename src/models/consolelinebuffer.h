@@ -24,6 +24,8 @@ public:
 private:
     void appendToLastLine(QChar c);
     void createNewLine();
+    void refreshHighlighting();
+    void refreshSingleHighlighting(ConsoleLine& line);
 
 private:
     QList<ConsoleLine> list_;

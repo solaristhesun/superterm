@@ -1,4 +1,5 @@
 release/
+build_ninja/
 debug/
 emulator/emulator
 Makefile

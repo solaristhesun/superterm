@@ -105,7 +105,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
             highlights.append(hi);
         }
 
-        m_ui->consoleView->setHighlighting(highlights);
+        //m_ui->consoleView->setHighlighting(highlights); FIXME
 
         if (session->getUseTimeStamps())
         {
@@ -114,15 +114,14 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     }
 
     // TESTING AREA
-    m_ui->consoleView->hide();
+    lineBuffer_->addLineHighlighting("foo", QColor("yellow"));
     lineBuffer_->append(QString("test\n"));
     lineBuffer_->append(QString("foo ABC\n"));
     lineBuffer_->append(QString("bar\n"));
     lineBuffer_->append(QString("very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line very long line \n"));
     lineBuffer_->append(QString("test dsfdf dsf dsf df\n"));
 
-    m_ui->listView->setModel(lineBuffer_);
-
+    m_ui->consoleView->setModel(lineBuffer_);
 }
 
 CConsoleTab::~CConsoleTab()
@@ -175,7 +174,6 @@ void CConsoleTab::toggleFullScreen()
 
 void CConsoleTab::clearTab()
 {
-    m_ui->consoleView->clear();
     m_bSkipTimeStamp = false;
     lineBuffer_->clear();
 }
@@ -204,14 +202,13 @@ void CConsoleTab::createContextMenu()
 
 void CConsoleTab::showContextMenu(const QPoint& pt)
 {
-    qDebug() << "XCONTExt";
     m_contextMenu->exec(mapToGlobal(pt));
 }
 
 void CConsoleTab::updateHighlighting()
 {
     QList<CHighlightsFrame::Highlighting> h = m_ui->highlightsFrame->getItems();
-    m_ui->consoleView->setHighlighting(h);
+    //m_ui->consoleView->setHighlighting(h); FIXME
 
     if (m_session)
     {
@@ -295,7 +292,7 @@ void CConsoleTab::onConfigurationChanged(const QString& config)
         }
     }
 
-    m_ui->consoleView->setHighlighting(h);
+    //m_ui->consoleView->setHighlighting(h); FIXME
 }
 
 void CConsoleTab::showSaveDialog()
@@ -407,7 +404,7 @@ void CConsoleTab::toggleAutoScroll()
 
 void CConsoleTab::setConsoleFont(const QFont& font)
 {
-    m_ui->listView->setFont(font);
+    m_ui->consoleView->setFont(font);
 }
 
 void CConsoleTab::setColor(const QColor& foreGroundColor, const QColor& backGroundColor)
@@ -715,9 +712,9 @@ QSize CConsoleTab::getViewPortSize() const
     return m_ui->consoleView->viewport()->size();
 }
 
-QSize CConsoleTab::getCharSize() const
+QSize CConsoleTab::getCharWidth() const
 {
-    return m_ui->consoleView->getCharSize();
+    return m_ui->consoleView->getCharWidth();
 }
 
 // EOF <stefan@scheler.com>

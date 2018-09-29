@@ -15,7 +15,6 @@ SOURCES += \
     src/main.cpp \
     src/ui/mainwindow.cpp \
     src/ui/consoletabwidget.cpp \
-    src/ui/consoleview.cpp \
     src/ui/consoletab.cpp \
     src/ui/consoletabbar.cpp \
     src/ui/statusbarframe.cpp \
@@ -44,13 +43,13 @@ SOURCES += \
     src/ui/notificationbar.cpp \
     src/ui/widgets/clickablelabel.cpp \
     src/models/consolelinebuffer.cpp \
-    src/ui/newconsoleview.cpp \
-    src/models/consoleline.cpp
+    src/ui/consoleview/consoleview.cpp \
+    src/models/consoleline.cpp \
+    src/ui/consoleview/consolelineitemdelegate.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
     src/ui/consoletabwidget.h \
-    src/ui/consoleview.h \
     src/ui/consoletab.h \
     src/ui/consoletabbar.h \
     src/ui/statusbarframe.h \
@@ -79,12 +78,12 @@ HEADERS += \
     src/ui/notificationbar.h \
     src/ui/widgets/clickablelabel.h \
     src/models/consolelinebuffer.h \
-    src/ui/newconsoleview.h \
-    src/models/consoleline.h
+    src/ui/consoleview/consoleview.h \
+    src/models/consoleline.h \
+    src/ui/consoleview/consolelineitemdelegate.h
 
 FORMS += \
     src/ui/mainwindow.ui \
-    src/ui/consoleview.ui \
     src/ui/statusbarframe.ui \
     src/ui/highlightsframe.ui \
     src/ui/logfilepanel.ui \
@@ -93,7 +92,7 @@ FORMS += \
     src/ui/renametabframe.ui \
     src/ui/portitemview.ui \
     src/ui/notificationbar.ui \
-    src/ui/newconsoleview.ui
+    src/ui/consoleview/consoleview.ui
 
 RESOURCES += \
     superterm.qrc

@@ -71,7 +71,7 @@
        <number>0</number>
       </property>
      </widget>
-     <widget class="NewConsoleView" name="listView">
+     <widget class="ConsoleView" name="consoleView">
       <property name="styleSheet">
        <string notr="true">QListView {
 background-color: #142462;
@@ -84,17 +84,6 @@ background-color: #142462;
        <bool>false</bool>
       </property>
       <property name="selectionRectVisible">
-       <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="CConsoleView" name="consoleView" native="true">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="tabChangesFocus" stdset="0">
        <bool>false</bool>
       </property>
      </widget>
@@ -232,16 +221,6 @@ background-color: #142462;
    </slots>
   </customwidget>
   <customwidget>
-   <class>CConsoleView</class>
-   <extends>QWidget</extends>
-   <header>src/ui/consoleview.h</header>
-   <container>1</container>
-   <slots>
-    <signal>keyPressed(QKeyEvent*)</signal>
-    <slot>clear()</slot>
-   </slots>
-  </customwidget>
-  <customwidget>
    <class>CConnectionBar</class>
    <extends>QFrame</extends>
    <header>src/ui/connectionbar.h</header>
@@ -259,9 +238,9 @@ background-color: #142462;
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>NewConsoleView</class>
+   <class>ConsoleView</class>
    <extends>QListView</extends>
-   <header>src/ui/newconsoleview.h</header>
+   <header>src/ui/consoleview/consoleview.h</header>
    <slots>
     <signal>keyPressed(QKeyEvent*)</signal>
    </slots>
@@ -269,22 +248,6 @@ background-color: #142462;
  </customwidgets>
  <resources/>
  <connections>
-  <connection>
-   <sender>consoleView</sender>
-   <signal>customContextMenuRequested(QPoint)</signal>
-   <receiver>CConsoleTab</receiver>
-   <slot>showContextMenu(QPoint)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>347</x>
-     <y>255</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>347</x>
-     <y>237</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>actionChangeColor</sender>
    <signal>triggered()</signal>
@@ -478,22 +441,6 @@ background-color: #142462;
    </hints>
   </connection>
   <connection>
-   <sender>consoleView</sender>
-   <signal>keyPressed(QKeyEvent*)</signal>
-   <receiver>CConsoleTab</receiver>
-   <slot>onKeyPressed(QKeyEvent*)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>382</x>
-     <y>109</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>382</x>
-     <y>106</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>connectionBar</sender>
    <signal>connectClicked()</signal>
    <receiver>CConsoleTab</receiver>
@@ -590,7 +537,7 @@ background-color: #142462;
    </hints>
   </connection>
   <connection>
-   <sender>listView</sender>
+   <sender>consoleView</sender>
    <signal>customContextMenuRequested(QPoint)</signal>
    <receiver>CConsoleTab</receiver>
    <slot>showContextMenu(QPoint)</slot>
@@ -606,7 +553,7 @@ background-color: #142462;
    </hints>
   </connection>
   <connection>
-   <sender>listView</sender>
+   <sender>consoleView</sender>
    <signal>keyPressed(QKeyEvent*)</signal>
    <receiver>CConsoleTab</receiver>
    <slot>onKeyPressed(QKeyEvent*)</slot>

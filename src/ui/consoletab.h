@@ -37,7 +37,7 @@ public:
     QString getLabel() const;
     void    setLabel(const QString& label);
     QSize   getViewPortSize() const;
-    QSize   getCharSize() const;
+    QSize   getCharWidth() const;
     void    disconnectEndpoint();
 
 public slots:

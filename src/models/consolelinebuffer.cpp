@@ -48,6 +48,7 @@ void ConsoleLineBuffer::append(QByteArray data)
 
         if (c == '\n')
         {
+            refreshSingleHighlighting(list_.last());
             createNewLine();
         }
     }
@@ -55,7 +56,9 @@ void ConsoleLineBuffer::append(QByteArray data)
 
 int ConsoleLineBuffer::rowCount(const QModelIndex &parent) const
 {
-     return list_.count();
+    Q_UNUSED(parent);
+
+    return list_.count();
 }
 
 QVariant ConsoleLineBuffer::data(const QModelIndex &index, int role) const
@@ -79,4 +82,31 @@ void ConsoleLineBuffer::addLineHighlighting(QString pattern, QColor color)
     highlighting.first = pattern;
     highlighting.second = color;
     highlighting_.append(highlighting);
+    refreshHighlighting();
 }
+
+void ConsoleLineBuffer::refreshHighlighting()
+{
+    for (int i = 0; i < list_.size(); ++i)
+    {
+        refreshSingleHighlighting(list_[i]);
+    }
+}
+
+void ConsoleLineBuffer::refreshSingleHighlighting(ConsoleLine& line)
+{
+    for (int i = 0; i < highlighting_.size(); i++)
+    {
+        QPair<QString, QColor> highlight;
+
+        if (line.text().contains(highlight.first))
+        {
+            qDebug() << "MATCH" << line.text() << highlight.first;
+            line.setColor(highlight.second);
+            emit dataChanged(QAbstractListModel::index(list_.count()), QAbstractListModel::index(list_.count()));
+            break;
+        }
+    }
+}
+
+// EOF <stefan@scheler.com>

@@ -1,6 +1,7 @@
 #include "consoleline.h"
 
 ConsoleLine::ConsoleLine()
+    : timestamp_(QDateTime::currentDateTime())
 {
     // currently empty
 }

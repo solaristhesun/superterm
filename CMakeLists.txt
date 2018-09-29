@@ -25,7 +25,8 @@ set(superterm_SRCS
 	src/ipc/messagecodec.cpp
 	src/ui/widgets/clickablelabel.cpp
 	src/ui/consoletabbar.cpp
-	src/ui/consoleview.cpp
+	src/ui/consoleview/consoleview.cpp
+	src/ui/consoleview/consolelineitemdelegate.cpp
 	src/ui/statusbarframe.ui
 	src/ui/logfilepanel.cpp
 	src/ui/renametabframe.ui
@@ -36,7 +37,7 @@ set(superterm_SRCS
 	src/ui/statusbarframe.cpp
 	src/ui/mainwindow.ui
 	src/ui/consoletab.ui
-	src/ui/consoleview.ui
+	src/ui/consoleview/consoleview.ui
 	src/ui/portitemdelegate.cpp
 	src/ui/portitemview.cpp
 	src/ui/portitemview.ui
@@ -49,8 +50,6 @@ set(superterm_SRCS
 	src/ui/consoletabwidget.cpp
 	src/ui/mainwindow.cpp
 	src/ui/highlightsframe.ui
-	src/ui/newconsoleview.ui
-	src/ui/newconsoleview.cpp
 	src/misc/defaultsettings.cpp
 	src/misc/globals.cpp
 	src/misc/softwareversion.cpp
