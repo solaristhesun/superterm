@@ -40,7 +40,6 @@ void ConsoleLineBuffer::append(QString data)
 
 void ConsoleLineBuffer::append(QByteArray data)
 {
-    qDebug() << "appending" << data.length();
     for (int i = 0; i < data.size(); ++i)
     {
         const char c = data.at(i);
@@ -101,7 +100,7 @@ void ConsoleLineBuffer::refreshSingleHighlighting(ConsoleLine& line)
 
         if (line.text().contains(highlight.first))
         {
-            qDebug() << "MATCH" << line.text() << highlight.first;
+            //qDebug() << "MATCH" << line.text() << highlight.first;
             line.setColor(highlight.second);
             emit dataChanged(QAbstractListModel::index(list_.count()), QAbstractListModel::index(list_.count()));
             break;

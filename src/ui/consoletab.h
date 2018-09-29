@@ -82,7 +82,6 @@ private:
 
     static quint32 m_u32counter;
     QStringList    m_highlightings;
-    bool           m_bAutoScroll;
 
     void fillComboBoxes();
     void createContextMenu();

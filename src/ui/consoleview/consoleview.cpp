@@ -12,13 +12,11 @@ ConsoleView::ConsoleView(QWidget *parent)
     , ui_(new Ui::ConsoleView)
     , consoleTab_(static_cast<CConsoleTab*>(parent))
     , bTimestampsEnabled_(false)
+    , bAutoScrollToBottom_(true)
 {
     ui_->setupUi(this);
 
     QListView::setItemDelegate(new ConsoleLineItemDelegate(this));
-
-    connect(model(), SIGNAL(rowsInserted(QModelIndex,int,int)),
-            this, SLOT(scrollToBottom()));
 }
 
 ConsoleView::~ConsoleView()
@@ -61,6 +59,22 @@ void ConsoleView::paintEvent(QPaintEvent *event)
     QListView::paintEvent(event);
 }
 
+void ConsoleView::setModel(QAbstractItemModel *model)
+{
+    QListView::setModel(model);
+
+    connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)),
+            this, SLOT(onRowsInserted(QModelIndex,int,int)), Qt::UniqueConnection);
+}
+
+void ConsoleView::onRowsInserted(QModelIndex,int,int)
+{
+    if (bAutoScrollToBottom_)
+    {
+        QListView::scrollToBottom();
+    }
+}
+
 void ConsoleView::setTimestampsEnabled(const bool bTimestampsEnabled)
 {
     bTimestampsEnabled_ = bTimestampsEnabled;
@@ -69,6 +83,21 @@ void ConsoleView::setTimestampsEnabled(const bool bTimestampsEnabled)
 bool ConsoleView::timestampsEnabled() const
 {
     return bTimestampsEnabled_;
+}
+
+void ConsoleView::setAutoScrollToBottom(const bool bAutoScrollToBottom)
+{
+    bAutoScrollToBottom_ = bAutoScrollToBottom;
+
+    if (bAutoScrollToBottom)
+    {
+        QListView::scrollToBottom();
+    }
+}
+
+bool ConsoleView::autoScrollToBottom() const
+{
+    return bAutoScrollToBottom_;
 }
 
 void ConsoleView::setTextColor(QColor color)

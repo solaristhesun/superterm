@@ -1,6 +1,7 @@
 #ifndef CONSOLEVIEW_H
 #define CONSOLEVIEW_H
 
+#include <QObject>
 #include <QListView>
 #include <QKeyEvent>
 
@@ -18,9 +19,12 @@ class ConsoleView : public QListView
 public:
     explicit ConsoleView(QWidget *parent = nullptr);
     ~ConsoleView();
-    void keyPressEvent(QKeyEvent* e);
 
-    void paintEvent(QPaintEvent *event);
+    void keyPressEvent(QKeyEvent* e) override;
+    void paintEvent(QPaintEvent *event) override;
+
+    void setModel(QAbstractItemModel *model) override;
+
     QSize getCharWidth() const;
 
     void setTimestampsEnabled(const bool bTimestampsEnabled);
@@ -31,6 +35,12 @@ public:
 
     void setBackgroundColor(QColor color);
     QColor backgroundColor() const;
+
+    void setAutoScrollToBottom(const bool bAutoScrollToBottom);
+    bool autoScrollToBottom() const;
+
+public slots:
+    void onRowsInserted(QModelIndex,int,int);
 
 
 signals:
@@ -43,6 +53,7 @@ private:
     Ui::ConsoleView*         ui_;
     CConsoleTab*             consoleTab_;
     bool                     bTimestampsEnabled_;
+    bool                     bAutoScrollToBottom_;
     QColor                   textColor_;
     QColor                   backgroundColor_;
 };

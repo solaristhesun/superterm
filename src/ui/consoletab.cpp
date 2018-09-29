@@ -56,7 +56,6 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     , m_logFile(nullptr)
     , m_contextMenu(nullptr)
     , m_lastTabIndex(0)
-    , m_bAutoScroll(true)
 {
     qDebug() << "CConsoleTab::CConsoleTab()";
 
@@ -395,8 +394,9 @@ void CConsoleTab::showFontColorDialog()
 
 void CConsoleTab::toggleAutoScroll()
 {
-    m_bAutoScroll = !m_bAutoScroll;
-    m_ui->consoleView->setAutoScroll(m_bAutoScroll);
+    const bool bAutoScrollToBottom = !m_ui->consoleView->autoScrollToBottom();
+
+    m_ui->consoleView->setAutoScrollToBottom(bAutoScrollToBottom);
 }
 
 void CConsoleTab::setConsoleFont(const QFont& font)
