@@ -118,7 +118,7 @@ bool CMainWindow::nativeEvent(const QByteArray& eventType, void* message, long*)
                     CConsoleTab* tab = m_ui->tabWidget->widget(0); // FIXME: ugly
 
                     QSize decorationSize = QWidget::frameSize() - QWidget::size();
-                    QSize charSize = tab->getCharSize();
+                    QSize charSize = tab->getCharWidth();
 
                     int tabBarWidth = QWidget::width() - tab->getViewPortSize().width();
 

@@ -39,7 +39,7 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
     {
         painter->setPen(QColor(backgroundColor));
         painter->setBrush(QBrush(QColor(backgroundColor)));
-        painter->drawRect(option.rect.adjusted(0,0,0,-2));
+        painter->drawRect(option.rect.adjusted(0,0,0,-1));
     }
 
      painter->setFont(consoleView_->font());
@@ -49,6 +49,8 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
     {
         painter->setPen(QColor(Qt::white).darker(150));
         painter->drawText(adjusted, Qt::AlignLeft, timestamp);
+        painter->setPen(QColor("white").darker(150));
+        painter->drawLine(getTimestampWidth()+7,0,getTimestampWidth()+7,option.rect.bottom());
         xTextStart += getTimestampWidth() + 15;
     }
 
