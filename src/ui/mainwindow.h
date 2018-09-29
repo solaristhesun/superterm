@@ -5,6 +5,7 @@
 
 class ConsoleTab;
 class SoftwareVersion;
+class QShortcut;
 
 namespace Ui
 {
@@ -37,7 +38,9 @@ signals:
     void willQuit();
 
 private:
-    Ui::MainWindow* m_ui;
+    Ui::MainWindow* ui_;
+    QShortcut*      shortcutNextTab_;
+    QShortcut*      shortcutPrevTab_;
 };
 
 #endif // MAINWINDOW_H

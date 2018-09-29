@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QRect>
 #include <QString>
+#include <QShortcut>
 
 #if defined(Q_OS_WIN)
 #include "windows.h"
@@ -19,21 +20,28 @@
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
-    , m_ui(new Ui::MainWindow)
+    , ui_(new Ui::MainWindow)
+    , shortcutNextTab_(new QShortcut(QKeySequence("Alt+Right"), this))
+    , shortcutPrevTab_(new QShortcut(QKeySequence("Alt+Left"), this))
 {
     qDebug() << "CMainWindow::CMainWindow()";
 
-    m_ui->setupUi(this);
-    m_ui->notificationBar->hide();
+    ui_->setupUi(this);
+    ui_->notificationBar->hide();
     QWidget::resize(800, 600);
 
     setWindowTitle(Globals::ApplicationFullName);
+
+    connect(shortcutNextTab_, &QShortcut::activated, ui_->tabWidget, &ConsoleTabWidget::activateNextTab);
+    connect(shortcutPrevTab_, &QShortcut::activated, ui_->tabWidget, &ConsoleTabWidget::activatePrevTab);
 }
 
 MainWindow::~MainWindow()
 {
     qDebug() << "CMainWindow::~CMainWindow()" << this;
-    delete m_ui;
+    delete shortcutNextTab_;
+    delete shortcutPrevTab_;
+    delete ui_;
 }
 
 QSize MainWindow::sizeHint() const
@@ -51,12 +59,12 @@ void MainWindow::addExistingTabsFromFile()
         {
             Session* session = Session::createSessionFromFile(fileName);
 
-            m_ui->tabWidget->addTab(ConsoleTabFactory::createTabFromSession(session));
+            ui_->tabWidget->addTab(ConsoleTabFactory::createTabFromSession(session));
         }
     }
     else
     {
-        m_ui->tabWidget->addTab(ConsoleTabFactory::createTab());
+        ui_->tabWidget->addTab(ConsoleTabFactory::createTab());
     }
 }
 
@@ -64,15 +72,16 @@ void MainWindow::attachTab(ConsoleTab* tab)
 {
     qDebug() << "attaching tab" << tab->getLabel() << "to" << this;
 
-    m_ui->tabWidget->addTab(tab);
+    ui_->tabWidget->addTab(tab);
 }
+
 
 ConsoleTab* MainWindow::detachTab()
 {
-    int curIndex = m_ui->tabWidget->currentIndex();
+    int curIndex = ui_->tabWidget->currentIndex();
 
-    ConsoleTab* tab = m_ui->tabWidget->widget(curIndex);
-    m_ui->tabWidget->removeTab(curIndex);
+    ConsoleTab* tab = ui_->tabWidget->widget(curIndex);
+    ui_->tabWidget->removeTab(curIndex);
 
     qDebug() << "detaching tab" << tab->getLabel() << "from" << this;
 
@@ -81,9 +90,9 @@ ConsoleTab* MainWindow::detachTab()
 
 void MainWindow::showUpdateInfo(const SoftwareVersion& version)
 {
-    m_ui->notificationBar->setNotificationText(QString(tr("A software update is available. Click here to download superterm %1.")).arg(version.toString()));
-    m_ui->notificationBar->setLink(Globals::ApplicationWebsite);
-    m_ui->notificationBar->show();
+    ui_->notificationBar->setNotificationText(QString(tr("A software update is available. Click here to download superterm %1.")).arg(version.toString()));
+    ui_->notificationBar->setLink(Globals::ApplicationWebsite);
+    ui_->notificationBar->show();
 }
 
 void MainWindow::onSecondaryInstanceLaunched()
@@ -150,12 +159,12 @@ bool MainWindow::nativeEvent(const QByteArray& eventType, void* message, long*)
 
 int MainWindow::getTabCount() const
 {
-    return m_ui->tabWidget->count();
+    return ui_->tabWidget->count();
 }
 
 QRect MainWindow::getTabBarRect() const
 {
-    ConsoleTabBar* tabBar = static_cast<ConsoleTabBar*>(m_ui->tabWidget->tabBar());
+    ConsoleTabBar* tabBar = static_cast<ConsoleTabBar*>(ui_->tabWidget->tabBar());
     return QRect(tabBar->mapToGlobal(QPoint(0, 0)), tabBar->size());
 }
 

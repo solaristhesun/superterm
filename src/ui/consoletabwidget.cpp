@@ -90,6 +90,41 @@ void ConsoleTabWidget::closeTab(int index)
     }
 }
 
+
+void ConsoleTabWidget::activateNextTab()
+{
+    int currentIndex = QTabWidget::currentIndex();
+    int maximumIndex = QTabWidget::count() - 1;
+
+    if (currentIndex < maximumIndex)
+    {
+        currentIndex++;
+    }
+    else
+    {
+        currentIndex = 0;
+    }
+
+    QTabWidget::setCurrentIndex(currentIndex);
+}
+
+void ConsoleTabWidget::activatePrevTab()
+{
+    int currentIndex = QTabWidget::currentIndex();
+    int maximumIndex = QTabWidget::count() - 1;
+
+    if (currentIndex > 0)
+    {
+        currentIndex--;
+    }
+    else
+    {
+        currentIndex = maximumIndex;
+    }
+
+    QTabWidget::setCurrentIndex(currentIndex);
+}
+
 void ConsoleTabWidget::onTabDetached(int index)
 {
     qDebug() << "[slot] onTabDetached";

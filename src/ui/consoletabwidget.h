@@ -32,6 +32,8 @@ public slots:
     void showContextMenu(const QPoint& pt);
     void showTabRenameDialog();
     void onTabCloseRequested(int index);
+    void activateNextTab();
+    void activatePrevTab();
 
 private:
     void createContextMenu();
