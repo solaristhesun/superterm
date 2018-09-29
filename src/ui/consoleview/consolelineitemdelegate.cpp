@@ -14,8 +14,19 @@ ConsoleLineItemDelegate::ConsoleLineItemDelegate(ConsoleView *consoleView)
 
 QSize ConsoleLineItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    ConsoleLine line = qvariant_cast<ConsoleLine>(index.data());
     QFontMetrics metrics(consoleView_->font());
-    return QSize(1,metrics.height()+4);
+
+    QSize size;
+    size.setWidth(metrics.width(line.text()));
+    size.setHeight(metrics.height() + 4);
+
+    if (consoleView_->timestampsEnabled())
+    {
+        size.setWidth(size.width() + getTimestampWidth() + 15);
+    }
+
+    return size;
 }
 
 void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
