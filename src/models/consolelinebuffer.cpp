@@ -6,7 +6,7 @@
 ConsoleLineBuffer::ConsoleLineBuffer()
     : QAbstractListModel()
 {
-    createNewLine();
+    clear();
 }
 
 void ConsoleLineBuffer::appendToLastLine(QChar c)
@@ -29,6 +29,7 @@ void ConsoleLineBuffer::clear()
 {
     beginResetModel();
     list_.clear();
+    createNewLine();
     endResetModel();
 }
 

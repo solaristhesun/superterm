@@ -71,6 +71,22 @@
        <number>0</number>
       </property>
      </widget>
+     <widget class="NewConsoleView" name="listView">
+      <property name="styleSheet">
+       <string notr="true">QListView {
+background-color: #142462;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::WinPanel</enum>
+      </property>
+      <property name="showDropIndicator" stdset="0">
+       <bool>false</bool>
+      </property>
+      <property name="selectionRectVisible">
+       <bool>false</bool>
+      </property>
+     </widget>
      <widget class="CConsoleView" name="consoleView" native="true">
       <property name="enabled">
        <bool>true</bool>
@@ -104,22 +120,6 @@
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
-      </property>
-     </widget>
-     <widget class="NewConsoleView" name="listView">
-      <property name="styleSheet">
-       <string notr="true">QListView {
-background-color: #142462;
-}</string>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::WinPanel</enum>
-      </property>
-      <property name="showDropIndicator" stdset="0">
-       <bool>false</bool>
-      </property>
-      <property name="selectionRectVisible">
-       <bool>false</bool>
       </property>
      </widget>
     </widget>

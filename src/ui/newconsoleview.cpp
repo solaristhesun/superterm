@@ -1,5 +1,6 @@
 #include <QItemDelegate>
 #include <QPainter>
+#include <QDebug>
 
 #include "newconsoleview.h"
 #include "ui_newconsoleview.h"
@@ -28,15 +29,19 @@ public:
     {
         QFontMetrics metrics(font_);
 
+        const int cursorWidth = metrics.width(" ");
+
         QRect adjusted = option.rect.adjusted(2,+2,-2,-2);
 
         ConsoleLine line = qvariant_cast<ConsoleLine>(index.data());
         QColor backgroundColor = line.color();
         painter->save();
 
-        QDateTime timestamp = line.timestamp();
-        QString text = "[" + timestamp.toString("yyyy-MM-dd HH:mm:ss.zzz") + "] " + line.text();
+        QString timestamp = "[" + line.timestamp().toString("yyyy-MM-dd HH:mm:ss.zzz") + "]";
+        QString text = line.text();
 
+        int widthTimeStamp = metrics.width("[yyyy-MM-dd HH:mm:ss.zzz]");
+        // draw background color
         if (backgroundColor.isValid())
         {
             painter->setPen(QColor(backgroundColor));
@@ -44,13 +49,27 @@ public:
             painter->drawRect(option.rect);
         }
 
+         painter->setFont(font_);
+         painter->setPen(QColor(Qt::white).darker(150));
+
+        if (line.timestamp().isValid())
+        {
+            QColor c("#142462");
+            painter->setPen(QColor(c.darker(120)));
+            painter->setBrush(QBrush(QColor(c.darker(120))));
+            painter->drawRect(0,option.rect.y(),widthTimeStamp+7,option.rect.height());
+            painter->setPen(QColor(Qt::white).darker(150));
+            painter->drawText(adjusted, Qt::AlignLeft, timestamp);
+            painter->drawLine(widthTimeStamp + 7, option.rect.y(), widthTimeStamp+7, option.rect.bottom());
+        }
+
+        adjusted.setLeft(widthTimeStamp + 15);
         painter->setPen(Qt::white);
-        painter->setFont(font_);
         painter->drawText(adjusted, Qt::AlignLeft, text);
         painter->setBrush(QBrush(Qt::white, Qt::SolidPattern));
         if (index.row() == index.model()->rowCount()-1)
-            painter->drawRect(metrics.width(text) + 4, option.rect.y()+2, 10, option.rect.height()-4);
-        //qDebug() << metrics.width(line) << option.rect.y() <<metrics.width(line) + 10 << option.rect.height();
+            painter->drawRect(widthTimeStamp + 15 + metrics.width(text) + 1, option.rect.y()+2, cursorWidth, option.rect.height()-4);
+
         painter->restore();
     }
 

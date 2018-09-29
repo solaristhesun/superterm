@@ -407,10 +407,7 @@ void CConsoleTab::toggleAutoScroll()
 
 void CConsoleTab::setConsoleFont(const QFont& font)
 {
-    m_ui->consoleView->setFont(font);
-    m_ui->consoleView->refreshCursor();
     m_ui->listView->setFont(font);
-
 }
 
 void CConsoleTab::setColor(const QColor& foreGroundColor, const QColor& backGroundColor)
