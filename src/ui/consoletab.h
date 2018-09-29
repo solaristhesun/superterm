@@ -40,6 +40,8 @@ public:
     QSize   getCharWidth() const;
     void    disconnectEndpoint();
 
+    bool eventFilter(QObject *obj, QEvent *event);
+
 public slots:
     void onConnectClicked();
     void onKeyPressed(QKeyEvent* e);

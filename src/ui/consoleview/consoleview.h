@@ -10,7 +10,6 @@ namespace Ui
 class ConsoleView;
 }
 
-class CConsoleTab;
 class ConsoleLineItemDelegate;
 
 class ConsoleView : public QListView
@@ -21,7 +20,6 @@ public:
     explicit ConsoleView(QWidget* parent = nullptr);
     ~ConsoleView();
 
-    void keyPressEvent(QKeyEvent* e) override;
     void paintEvent(QPaintEvent* event) override;
 
     void setModel(QAbstractItemModel* model) override;
@@ -43,15 +41,11 @@ public:
 public slots:
     void onRowsInserted(QModelIndex, int, int);
 
-signals:
-    void keyPressed(QKeyEvent* e);
-
 private:
     void drawTimestampsArea();
 
 private:
     Ui::ConsoleView* ui_;
-    CConsoleTab*     consoleTab_;
     bool             bTimestampsEnabled_;
     bool             bAutoScrollToBottom_;
     QColor           textColor_;

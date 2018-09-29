@@ -37,7 +37,6 @@
 #include "ipc/message.h"
 #include "models/consolelinebuffer.h"
 
-
 quint32 CConsoleTab::m_u32counter = 1;
 
 Q_DECLARE_METATYPE(QSerialPort::DataBits)
@@ -46,7 +45,7 @@ Q_DECLARE_METATYPE(QSerialPort::Parity)
 Q_DECLARE_METATYPE(QSerialPort::FlowControl)
 
 CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
-    : QWidget(Q_NULLPTR)
+    : QWidget(nullptr)
     , m_ui(new Ui::CConsoleTab)
     , mMainWindow(Q_NULLPTR)
     , lineBuffer_(new ConsoleLineBuffer)
@@ -112,6 +111,8 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     }
 
     m_ui->consoleView->setModel(lineBuffer_);
+
+    m_ui->consoleView->installEventFilter(this);
 }
 
 CConsoleTab::~CConsoleTab()
@@ -517,6 +518,27 @@ void CConsoleTab::showError(QSerialPort::SerialPortError error)
 {
     qDebug() << "ERROR: " << error;
     m_ui->statusBar->showMessage("ERROR: " + QString::number(error) + " opening port " );
+}
+
+bool CConsoleTab::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() ==QEvent::KeyPress)
+    {
+        QKeyEvent *e = static_cast<QKeyEvent *>(event);
+
+        if ((e->key()==Qt::Key_Return) && (e->modifiers()==Qt::AltModifier))
+        {
+            toggleFullScreen();
+        }
+        else
+        {
+            onKeyPressed(e);
+        }
+
+        return true;
+    }
+
+    return QObject::eventFilter(obj, event);
 }
 
 void CConsoleTab::showAboutDialog()

@@ -553,22 +553,6 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>consoleView</sender>
-   <signal>keyPressed(QKeyEvent*)</signal>
-   <receiver>CConsoleTab</receiver>
-   <slot>onKeyPressed(QKeyEvent*)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>581</x>
-     <y>219</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>581</x>
-     <y>137</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
  <slots>
   <slot>onConnectClicked()</slot>

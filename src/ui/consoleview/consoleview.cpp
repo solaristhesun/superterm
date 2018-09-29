@@ -3,14 +3,12 @@
 
 #include "consoleview.h"
 #include "ui_consoleview.h"
-#include "ui/consoletab.h"
 #include "models/consoleline.h"
 #include "ui/consoleview/consolelineitemdelegate.h"
 
 ConsoleView::ConsoleView(QWidget *parent)
     : QListView(parent)
     , ui_(new Ui::ConsoleView)
-    , consoleTab_(static_cast<CConsoleTab*>(parent))
     , bTimestampsEnabled_(false)
     , bAutoScrollToBottom_(true)
 {
@@ -22,17 +20,6 @@ ConsoleView::ConsoleView(QWidget *parent)
 ConsoleView::~ConsoleView()
 {
     delete ui_;
-}
-
-void ConsoleView::keyPressEvent(QKeyEvent* e)
-{
-    if ((e->key()==Qt::Key_Return) && (e->modifiers()==Qt::AltModifier))
-    {
-        consoleTab_->toggleFullScreen();
-        return;
-    }
-
-    emit keyPressed(e);
 }
 
 void ConsoleView::paintEvent(QPaintEvent *event)
