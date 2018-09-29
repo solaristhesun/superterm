@@ -2,23 +2,25 @@
 
 #include "consolelineitemdelegate.h"
 #include "models/consoleline.h"
+#include "ui/consoleview/consoleview.h"
 
-ConsoleLineItemDelegate::ConsoleLineItemDelegate(QObject *parent)
-    : QItemDelegate(parent)
-    , font_("Consolas", 11)
+ConsoleLineItemDelegate::ConsoleLineItemDelegate(ConsoleView *consoleView)
+    : QItemDelegate(consoleView)
+    , consoleView_(consoleView)
+    , timestampFormat_("[yyyy-MM-dd HH:mm:ss.zzz]")
 {
     // currently empty
 }
 
 QSize ConsoleLineItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    QFontMetrics metrics(font_);
+    QFontMetrics metrics(consoleView_->font());
     return QSize(1,metrics.height()+4);
 }
 
 void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    QFontMetrics metrics(font_);
+    QFontMetrics metrics(consoleView_->font());
 
     const int cursorWidth = metrics.width(" ");
 
@@ -28,13 +30,11 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
     QColor backgroundColor = line.color();
     painter->save();
 
-    QString timestamp = "[" + line.timestamp().toString("yyyy-MM-dd HH:mm:ss.zzz") + "]";
+    QString timestamp = line.timestamp().toString(timestampFormat_);
     QString text = line.text();
 
-    int widthTimeStamp = metrics.width("[yyyy-MM-dd HH:mm:ss.zzz]");
-    //qDebug() << widthTimeStamp;
-    // draw background color
-    //qDebug() << backgroundColor.name();
+    int xTextStart = 0;
+
     if (backgroundColor.isValid())
     {
         painter->setPen(QColor(backgroundColor));
@@ -42,24 +42,36 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
         painter->drawRect(option.rect);
     }
 
-     painter->setFont(font_);
+     painter->setFont(consoleView_->font());
      painter->setPen(QColor(Qt::white).darker(150));
 
-    if (line.timestamp().isValid())
+    if (consoleView_->timestampsEnabled())
     {
         painter->setPen(QColor(Qt::white).darker(150));
         painter->drawText(adjusted, Qt::AlignLeft, timestamp);
-        //painter->drawLine(widthTimeStamp + 7, option.rect.y(), widthTimeStamp+7, option.rect.bottom());
+        xTextStart += getTimestampWidth() + 15;
     }
 
-    adjusted.setLeft(widthTimeStamp + 15);
-    painter->setPen(Qt::white);
+    adjusted.setLeft(xTextStart);
+
+    // draw text
+    painter->setPen(consoleView_->textColor());
     painter->drawText(adjusted, Qt::AlignLeft, text);
-    painter->setBrush(QBrush(Qt::white, Qt::SolidPattern));
+
+    // draw cursor
     if (index.row() == index.model()->rowCount()-1)
-        painter->drawRect(widthTimeStamp + 15 + metrics.width(text) + 1, option.rect.y()+2, cursorWidth, option.rect.height()-4);
+    {
+        painter->setBrush(QBrush(Qt::white, Qt::SolidPattern));
+        painter->drawRect(xTextStart + metrics.width(text) + 1, option.rect.y(), cursorWidth, option.rect.height()-4);
+    }
 
     painter->restore();
+}
+
+int ConsoleLineItemDelegate::getTimestampWidth() const
+{
+    QFontMetrics metrics(consoleView_->font());
+    return metrics.width(timestampFormat_);
 }
 
 // EOF <stefan@scheler.com>

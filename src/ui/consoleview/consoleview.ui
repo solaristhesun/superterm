@@ -16,6 +16,9 @@
   <property name="windowTitle">
    <string>Frame</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
  </widget>
  <resources/>
  <connections/>

@@ -3,16 +3,21 @@
 
 #include <QItemDelegate>
 
+class ConsoleView;
+
 class ConsoleLineItemDelegate : public QItemDelegate
 {
 public:
-    explicit ConsoleLineItemDelegate(QObject *parent);
+    explicit ConsoleLineItemDelegate(ConsoleView *parent);
 
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
+    int getTimestampWidth() const;
+
 private:
-    QFont font_;
+    ConsoleView* consoleView_;
+    QString      timestampFormat_;
 };
 
 

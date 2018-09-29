@@ -84,6 +84,7 @@ private:
     QStringList    m_highlightings;
     bool           m_bSkipTimeStamp;
     bool           m_bUseTimeStamps;
+    bool           m_bAutoScroll;
 
     void fillComboBoxes();
     void createContextMenu();

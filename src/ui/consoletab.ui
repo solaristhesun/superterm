@@ -72,13 +72,11 @@
       </property>
      </widget>
      <widget class="ConsoleView" name="consoleView">
-      <property name="styleSheet">
-       <string notr="true">QListView {
-background-color: #142462;
-}</string>
-      </property>
       <property name="frameShape">
-       <enum>QFrame::WinPanel</enum>
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
       </property>
       <property name="showDropIndicator" stdset="0">
        <bool>false</bool>

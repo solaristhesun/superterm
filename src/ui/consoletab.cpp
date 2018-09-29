@@ -58,6 +58,7 @@ CConsoleTab::CConsoleTab(CPortEnumerator* pe, CSession* session)
     , m_lastTabIndex(0)
     , m_bSkipTimeStamp(false)
     , m_bUseTimeStamps(false)
+    , m_bAutoScroll(true)
 {
     qDebug() << "CConsoleTab::CConsoleTab()";
 
@@ -397,9 +398,8 @@ void CConsoleTab::showFontColorDialog()
 
 void CConsoleTab::toggleAutoScroll()
 {
-    static bool bEnabled = true;
-    bEnabled = !bEnabled;
-    m_ui->consoleView->setAutoScroll(bEnabled);
+    m_bAutoScroll = !m_bAutoScroll;
+    m_ui->consoleView->setAutoScroll(m_bAutoScroll);
 }
 
 void CConsoleTab::setConsoleFont(const QFont& font)
@@ -407,9 +407,10 @@ void CConsoleTab::setConsoleFont(const QFont& font)
     m_ui->consoleView->setFont(font);
 }
 
-void CConsoleTab::setColor(const QColor& foreGroundColor, const QColor& backGroundColor)
+void CConsoleTab::setColor(const QColor& textColor, const QColor& backgroundColor)
 {
-    setStyleSheet(QString("QPlainTextEdit { color: %1; background-color: %2; }").arg(foreGroundColor.name(), backGroundColor.name()));
+    m_ui->consoleView->setTextColor(textColor);
+    m_ui->consoleView->setBackgroundColor(backgroundColor);
 }
 
 void CConsoleTab::insertTimeStamps(QByteArray& data)
@@ -464,6 +465,8 @@ void CConsoleTab::escapeSpecialChars(QByteArray& data)
 void CConsoleTab::toggleTimeStamps()
 {
     m_bUseTimeStamps = !m_bUseTimeStamps;
+
+    m_ui->consoleView->setTimestampsEnabled(m_bUseTimeStamps);
 
     if (m_session)
     {

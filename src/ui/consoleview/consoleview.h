@@ -9,6 +9,7 @@ class ConsoleView;
 }
 
 class CConsoleTab;
+class ConsoleLineItemDelegate;
 
 class ConsoleView : public QListView
 {
@@ -22,12 +23,28 @@ public:
     void paintEvent(QPaintEvent *event);
     QSize getCharWidth() const;
 
+    void setTimestampsEnabled(const bool bTimestampsEnabled);
+    bool timestampsEnabled() const;
+
+    void setTextColor(QColor color);
+    QColor textColor() const;
+
+    void setBackgroundColor(QColor color);
+    QColor backgroundColor() const;
+
+
 signals:
     void keyPressed(QKeyEvent* e);
 
 private:
-    Ui::ConsoleView *ui;
-    CConsoleTab*        parent_;
+    void drawTimestampsArea();
+
+private:
+    Ui::ConsoleView*         ui_;
+    CConsoleTab*             consoleTab_;
+    bool                     bTimestampsEnabled_;
+    QColor                   textColor_;
+    QColor                   backgroundColor_;
 };
 
 #endif // CONSOLEVIEW_H
