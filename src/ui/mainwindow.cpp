@@ -124,7 +124,7 @@ bool MainWindow::nativeEvent(const QByteArray& eventType, void* message, long*)
                     long heightWindow = r->bottom - r->top;
 
                     qDebug() << widthWindow << heightWindow;
-                    CConsoleTab* tab = m_ui->tabWidget->widget(0); // FIXME: ugly
+                    ConsoleTab* tab = ui_->tabWidget->widget(0); // FIXME: ugly
 
                     QSize decorationSize = QWidget::frameSize() - QWidget::size();
                     QSize charSize = tab->getCharWidth();
