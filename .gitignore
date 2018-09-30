@@ -1,6 +1,5 @@
-release/
 build_ninja/
-debug/
+build/
 emulator/emulator
 Makefile
 *.user

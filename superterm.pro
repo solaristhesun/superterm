@@ -5,7 +5,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = superterm
 TEMPLATE = app
 
-DESTDIR = release
+DESTDIR = build/release
 OBJECTS_DIR = $$DESTDIR/.obj
 MOC_DIR = $$DESTDIR/.moc
 UI_DIR  = $$DESTDIR/.ui

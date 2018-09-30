@@ -68,7 +68,11 @@ set(superterm_SRCS
 )
 include_directories(src contrib)
 
-add_definitions(-DREVISION=250 -DQAPPLICATION_CLASS=QApplication)
+execute_process(COMMAND git rev-list --count HEAD OUTPUT_VARIABLE REVISION)
+
+set(CMAKE_BUILD_TYPE RELEASE)
+
+add_definitions(-DREVISION=${REVISION} -DQAPPLICATION_CLASS=QApplication)
 
 # Tell CMake to create the helloworld executable
 add_executable(superterm WIN32 ${superterm_SRCS})

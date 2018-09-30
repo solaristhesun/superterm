@@ -7,7 +7,7 @@ qmake superterm.pro -r -spec linux-g++
 
 make -r -w -j8 || exit 1
 
-strip release/superterm
+strip build/release/superterm
 
 # EOF <stefan@scheler.com>
 
