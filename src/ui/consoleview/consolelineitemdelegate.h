@@ -16,6 +16,9 @@ public:
     int getTimestampWidth() const;
 
 private:
+    int charsPerLine(int width) const;
+
+private:
     ConsoleView* consoleView_;
     QString      timestampFormat_;
 };

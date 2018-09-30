@@ -595,8 +595,6 @@ void ConsoleTab::onKeyPressed(QKeyEvent* e)
     {
         m_portEndpoint->writeData(b);
     }
-
-    lineBuffer_->append(b); // FIXME: remove
 }
 
 void ConsoleTab::startLogging()

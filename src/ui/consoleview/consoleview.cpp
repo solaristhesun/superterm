@@ -40,7 +40,7 @@ void ConsoleView::paintEvent(QPaintEvent *event)
         painter.setBrush(QBrush(QColor(backgroundColor().darker(120))));
         painter.drawRect(0,cr.y(),widthTimeStamp+7,cr.height());
         painter.setPen(QColor("white").darker(150));
-        painter.drawLine(widthTimeStamp + 7, cr.y(), widthTimeStamp+7, cr.bottom());
+        painter.drawLine(widthTimeStamp + 5, cr.y(), widthTimeStamp+5, cr.bottom());
     }
 
     QListView::paintEvent(event);
@@ -52,6 +52,12 @@ void ConsoleView::setModel(QAbstractItemModel *model)
 
     connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)),
             this, SLOT(onRowsInserted(QModelIndex,int,int)), Qt::UniqueConnection);
+}
+
+void ConsoleView::resizeEvent(QResizeEvent *event) {
+
+    QListView::reset(); // FIXME: check why this is necessary
+    QListView::resizeEvent(event);
 }
 
 void ConsoleView::onRowsInserted(QModelIndex,int,int)
@@ -122,7 +128,7 @@ void ConsoleView::drawTimestampsArea()
     painter.setBrush(QBrush(backgroundColor()));
     painter.drawRect(widthTimeStamp+8, cr.y(), cr.width(), cr.height());
     painter.setPen(QColor("white").darker(150));
-    painter.drawLine(widthTimeStamp + 7, cr.y(), widthTimeStamp+7, cr.bottom());
+    painter.drawLine(widthTimeStamp + 5, cr.y(), widthTimeStamp+5, cr.bottom());
 }
 
 QSize ConsoleView::getCharWidth() const

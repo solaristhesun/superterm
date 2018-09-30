@@ -24,6 +24,8 @@ public:
 
     void setModel(QAbstractItemModel* model) override;
 
+    void resizeEvent(QResizeEvent *event) override;
+
     QSize getCharWidth() const;
 
     void setTimestampsEnabled(const bool bTimestampsEnabled);

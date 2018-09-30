@@ -13,13 +13,17 @@ void ConsoleLine::append(QChar c)
         timestamp_ = QDateTime::currentDateTime();
     }
 
-    if (c == 0x08)
+    switch (c.toLatin1())
     {
-        text_.chop(1);
-    }
-    else
-    {
-        text_.append(c);
+        case 0x08:
+            text_.chop(1);
+            break;
+        case '\r':
+        case '\n':
+            break;
+        default:
+            text_.append(c);
+            break;
     }
 }
 
