@@ -38,7 +38,7 @@ void ConsoleView::paintEvent(QPaintEvent *event)
 
         painter.setPen(backgroundColor().darker(120));
         painter.setBrush(QBrush(QColor(backgroundColor().darker(120))));
-        painter.drawRect(0,cr.y(),widthTimeStamp+7,cr.height());
+        painter.drawRect(0,cr.y(),widthTimeStamp+5,cr.height());
         painter.setPen(QColor("white").darker(150));
         painter.drawLine(widthTimeStamp + 5, cr.y(), widthTimeStamp+5, cr.bottom());
     }
@@ -123,12 +123,12 @@ void ConsoleView::drawTimestampsArea()
     QColor c("#142462");
     painter.setPen(QColor(c.darker(120)));
     painter.setBrush(QBrush(QColor(c.darker(120))));
-    painter.drawRect(0,cr.y(),widthTimeStamp+7,cr.height());
+    //painter.drawRect(0,cr.y(),widthTimeStamp+5,cr.height());
     painter.setPen(backgroundColor());
     painter.setBrush(QBrush(backgroundColor()));
-    painter.drawRect(widthTimeStamp+8, cr.y(), cr.width(), cr.height());
+    //painter.drawRect(widthTimeStamp+6, cr.y(), cr.width(), cr.height());
     painter.setPen(QColor("white").darker(150));
-    painter.drawLine(widthTimeStamp + 5, cr.y(), widthTimeStamp+5, cr.bottom());
+    //painter.drawLine(widthTimeStamp + 5, cr.y(), widthTimeStamp+5, cr.bottom());
 }
 
 QSize ConsoleView::getCharWidth() const
