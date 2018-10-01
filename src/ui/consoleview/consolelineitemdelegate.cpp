@@ -67,9 +67,9 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
     {
         painter->setPen(QColor(Qt::white).darker(125));
         painter->drawText(adjusted, Qt::AlignLeft, timestamp);
-        painter->setPen(QColor("white").darker(125));
-        painter->drawLine(timestampWidth()+5,0,timestampWidth()+5,option.rect.bottom());
-        xTextStart += timestampWidth() + 11;
+        /*painter->setPen(QColor("white").darker(125));
+        painter->drawLine(timestampWidth()+3,0,timestampWidth()+3,option.rect.bottom());*/
+        xTextStart += timestampWidth() + 7;
     }
 
     adjusted.setLeft(xTextStart);
@@ -115,7 +115,7 @@ int ConsoleLineItemDelegate::charsPerLine(int width) const
 
     if (consoleView_->timestampsEnabled())
     {
-        pixelsAvailable -= timestampWidth() + 11;
+        pixelsAvailable -= timestampWidth() + 7;
     }
 
     return pixelsAvailable / cursorWidth_;

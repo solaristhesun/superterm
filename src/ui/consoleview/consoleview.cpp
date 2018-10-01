@@ -41,9 +41,9 @@ void ConsoleView::paintEvent(QPaintEvent *event)
 
         painter.setPen(backgroundColor().darker(120));
         painter.setBrush(QBrush(QColor(backgroundColor().darker(120))));
-        painter.drawRect(0,cr.y(),widthTimeStamp+5,cr.height());
+        painter.drawRect(0,cr.y(),widthTimeStamp+2,cr.height());
         painter.setPen(QColor("white").darker(150));
-        painter.drawLine(widthTimeStamp + 5, cr.y(), widthTimeStamp+5, cr.bottom());
+        painter.drawLine(widthTimeStamp+2, cr.y(), widthTimeStamp+2, cr.bottom());
     }
 
     QElapsedTimer timer; timer.start();
