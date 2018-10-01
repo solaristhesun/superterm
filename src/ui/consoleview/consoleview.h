@@ -26,6 +26,8 @@ public:
 
     void resizeEvent(QResizeEvent *event) override;
 
+    void mouseReleaseEvent(QMouseEvent * event) override;
+
     void setFont(const QFont & font);
 
     QSize getCharWidth() const;
@@ -47,6 +49,7 @@ public slots:
 
 private:
     void drawTimestampsArea();
+    void copySelectionToClipboard();
 
 private:
     Ui::ConsoleView*         ui_;

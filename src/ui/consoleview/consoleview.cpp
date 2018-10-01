@@ -1,4 +1,5 @@
 #include <QPainter>
+#include <QClipboard>
 #include <QElapsedTimer>
 #include <QScrollBar>
 #include <QDebug>
@@ -24,6 +25,13 @@ ConsoleView::ConsoleView(QWidget *parent)
 ConsoleView::~ConsoleView()
 {
     delete ui_;
+}
+
+void ConsoleView::mouseReleaseEvent(QMouseEvent * event)
+{
+    QListView::mouseReleaseEvent(event);
+    copySelectionToClipboard();
+    QListView::clearSelection();
 }
 
 void ConsoleView::paintEvent(QPaintEvent *event)
@@ -150,3 +158,25 @@ QSize ConsoleView::getCharWidth() const
     QFontMetrics fm(font());
     return QSize(fm.averageCharWidth(), fm.height());
 }
+
+void ConsoleView::copySelectionToClipboard()
+{
+    QString copyText;
+    QModelIndexList list = QListView::selectedIndexes();
+
+    for (QModelIndex& index : list)
+    {
+        ConsoleLine line = qvariant_cast<ConsoleLine>(QListView::model()->data(index));
+
+        if (bTimestampsEnabled_)
+        {
+            copyText += line.timestamp().toString("[yyyy-MM-dd HH:mm:ss.zzz] ");
+        }
+
+        copyText += line.text() + "\r\n";
+    }
+
+    QApplication::clipboard()->setText(copyText.trimmed());
+}
+
+// EOF <stefan@scheler.com>

@@ -53,22 +53,24 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
 
     int xTextStart = 0;
 
-    if (backgroundColor.isValid())
+    if (option.state & QStyle::State_Selected)
     {
-        painter->setPen(QColor(backgroundColor));
-        painter->setBrush(QBrush(QColor(backgroundColor)));
-        painter->drawRect(option.rect.adjusted(0,0,0,-1));
+        painter->fillRect(option.rect, consoleView_->palette().highlight());
+    }
+    else if (backgroundColor.isValid())
+    {
+        painter->fillRect(option.rect, backgroundColor);
     }
 
-     painter->setFont(consoleView_->font());
-     painter->setPen(QColor(Qt::white).darker(150));
+    painter->setFont(consoleView_->font());
+    painter->setPen(QColor(Qt::white).darker(150));
 
     if (consoleView_->timestampsEnabled())
     {
         painter->setPen(QColor(Qt::white).darker(125));
         painter->drawText(adjusted, Qt::AlignLeft, timestamp);
-        /*painter->setPen(QColor("white").darker(125));
-        painter->drawLine(timestampWidth()+3,0,timestampWidth()+3,option.rect.bottom());*/
+        painter->setPen(QColor("white").darker(125)); // FIXME: only required if background is repainted
+        painter->drawLine(timestampWidth()+2,0,timestampWidth()+2,option.rect.bottom()); // FIXME: only required if background is repainted
         xTextStart += timestampWidth() + 7;
     }
 
