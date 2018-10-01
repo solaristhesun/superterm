@@ -6,17 +6,17 @@
 
 LogfilePanel::LogfilePanel(QWidget* parent)
     : QFrame(parent)
-    , m_ui(new Ui::LogfilePanel)
-    , m_bEnabled(false)
+    , ui_(new Ui::LogfilePanel)
+    , bEnabled_(false)
 {
-    m_ui->setupUi(this);
+    ui_->setupUi(this);
 
     hide();
 }
 
 LogfilePanel::~LogfilePanel()
 {
-    delete m_ui;
+    delete ui_;
 }
 
 void LogfilePanel::showFileDialog()
@@ -27,7 +27,7 @@ void LogfilePanel::showFileDialog()
 
     if (!fileName.isEmpty())
     {
-        m_ui->editFileName->setText(fileName);
+        ui_->editFileName->setText(fileName);
     }
 }
 
@@ -35,33 +35,38 @@ void LogfilePanel::onFileNameChanged(const QString& fileName)
 {
     QFileInfo fileInfo(fileName);
 
-    m_ui->btnStart->setEnabled(fileInfo.absoluteDir().exists() && !fileInfo.fileName().isEmpty());
+    ui_->btnStart->setEnabled(fileInfo.absoluteDir().exists() && !fileInfo.fileName().isEmpty());
 }
 
 void LogfilePanel::onStartButtonClicked()
 {
-    m_bEnabled = !m_bEnabled;
+    bEnabled_ = !bEnabled_;
 
-    if (m_bEnabled)
+    if (bEnabled_)
     {
         emit loggingStarted();
-        m_ui->btnSelect->setEnabled(false);
-        m_ui->editFileName->setEnabled(false);
-        m_ui->btnStart->setText(tr("&Stop logging"));
+        ui_->btnSelect->setEnabled(false);
+        ui_->editFileName->setEnabled(false);
+        ui_->btnStart->setText(tr("&Stop logging"));
         hide();
     }
     else
     {
         emit loggingStopped();
-        m_ui->btnSelect->setEnabled(true);
-        m_ui->editFileName->setEnabled(true);
-        m_ui->btnStart->setText(tr("&Start logging"));
+        ui_->btnSelect->setEnabled(true);
+        ui_->editFileName->setEnabled(true);
+        ui_->btnStart->setText(tr("&Start logging"));
     }
 }
 
 QString LogfilePanel::getLogFileName() const
 {
-    return m_ui->editFileName->text();
+    return ui_->editFileName->text();
+}
+
+void LogfilePanel::setLogFileName(QString fileName)
+{
+    ui_->editFileName->setText(fileName);
 }
 
 // EOF <stefan@scheler.com>

@@ -39,9 +39,9 @@ private:
     void createContextMenu();
 
 private:
-    ConsoleTabBar* m_tabBar;
-    QMenu*         m_contextMenu;
-    QAction*       m_renameTabAction;
+    ConsoleTabBar* tabBar_;
+    QMenu*         contextMenu_;
+    QAction*       renameTabAction_;
 };
 
 #endif // CONSOLETABWIDGET_H

@@ -17,6 +17,7 @@ public:
     ~LogfilePanel();
 
     QString getLogFileName() const;
+    void setLogFileName(QString fileName);
 
 public slots:
     void showFileDialog();
@@ -28,8 +29,8 @@ signals:
     void loggingStopped();
 
 private:
-    Ui::LogfilePanel* m_ui;
-    bool              m_bEnabled;
+    Ui::LogfilePanel* ui_;
+    bool              bEnabled_;
 };
 
 #endif // LOGFILEPANEL_H

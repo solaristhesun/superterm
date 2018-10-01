@@ -27,7 +27,7 @@ signals:
     void cancelReconnection();
 
 private:
-    Ui::StatusBarFrame* m_ui;
+    Ui::StatusBarFrame* ui_;
 
     void setStyleProperty(const char* name, const QVariant& variant);
     void setupWaitingSpinner();

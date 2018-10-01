@@ -14,35 +14,35 @@
 
 ConsoleTabWidget::ConsoleTabWidget(QWidget* parent)
     : QTabWidget(parent)
-    , m_tabBar(new ConsoleTabBar(this))
-    , m_contextMenu(nullptr)
-    , m_renameTabAction(new QAction(tr("Rename tab..."), this))
+    , tabBar_(new ConsoleTabBar(this))
+    , contextMenu_(nullptr)
+    , renameTabAction_(new QAction(tr("Rename tab..."), this))
 {
     qDebug() << "CConsoleTabWidget::CConsoleTabWidget()";
 
-    QTabWidget::setTabBar(m_tabBar);
+    QTabWidget::setTabBar(tabBar_);
 
     createContextMenu();
 
-    connect(m_tabBar, &ConsoleTabBar::addButtonClicked, this, &ConsoleTabWidget::onAddButtonClicked);
-    connect(m_tabBar, &ConsoleTabBar::tabDetached, this, &ConsoleTabWidget::onTabDetached);
-    connect(m_tabBar, &ConsoleTabBar::customContextMenuRequested, this, &ConsoleTabWidget::showContextMenu);
-    connect(m_renameTabAction, &QAction::triggered, this, &ConsoleTabWidget::showTabRenameDialog);
+    connect(tabBar_, &ConsoleTabBar::addButtonClicked, this, &ConsoleTabWidget::onAddButtonClicked);
+    connect(tabBar_, &ConsoleTabBar::tabDetached, this, &ConsoleTabWidget::onTabDetached);
+    connect(tabBar_, &ConsoleTabBar::customContextMenuRequested, this, &ConsoleTabWidget::showContextMenu);
+    connect(renameTabAction_, &QAction::triggered, this, &ConsoleTabWidget::showTabRenameDialog);
     connect(this, &ConsoleTabWidget::tabCloseRequested, this, &ConsoleTabWidget::onTabCloseRequested);
 }
 
 void ConsoleTabWidget::showContextMenu(const QPoint& pt)
 {
-    if (m_tabBar->tabAt(pt) == currentIndex())
+    if (tabBar_->tabAt(pt) == currentIndex())
     {
-        m_contextMenu->exec(mapToGlobal(pt));
+        contextMenu_->exec(mapToGlobal(pt));
     }
 }
 
 ConsoleTabWidget::~ConsoleTabWidget()
 {
     qDebug() << "CConsoleTabWidget::~CConsoleTabWidget()";
-    delete m_tabBar;
+    delete tabBar_;
 }
 
 ConsoleTab* ConsoleTabWidget::currentWidget() const
@@ -138,7 +138,7 @@ void ConsoleTabWidget::onTabDetached(int index)
         QObject::disconnect(tab, &ConsoleTab::labelChanged, this, &ConsoleTabWidget::setCurrentTabText);
 
         // add tab to new window
-        MainWindow* newWin = m_tabBar->getNewMainWindow();
+        MainWindow* newWin = tabBar_->getNewMainWindow();
         newWin->attachTab(tab);
     }
 }
@@ -159,7 +159,7 @@ void ConsoleTabWidget::addTab(ConsoleTab* tab)
 
     QObject::connect(tab, &ConsoleTab::labelChanged, this, &ConsoleTabWidget::setCurrentTabText);
 
-    m_tabBar->moveButton();
+    tabBar_->moveButton();
 }
 
 void ConsoleTabWidget::setConsoleFont(const QFont& font)
@@ -176,16 +176,16 @@ void ConsoleTabWidget::setCurrentTabText(const QString& text)
 {
     const int curIndex = currentIndex();
     setTabText(curIndex, text);
-    m_tabBar->moveButton();
+    tabBar_->moveButton();
 }
 
 
 void ConsoleTabWidget::createContextMenu()
 {
-    m_renameTabAction->setShortcut(Qt::Key_Control | Qt::Key_R);
+    renameTabAction_->setShortcut(Qt::Key_Control | Qt::Key_R);
 
-    m_contextMenu = new QMenu(this);
-    m_contextMenu->addAction(m_renameTabAction);
+    contextMenu_ = new QMenu(this);
+    contextMenu_->addAction(renameTabAction_);
 }
 
 void ConsoleTabWidget::showTabRenameDialog()

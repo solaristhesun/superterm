@@ -1,3 +1,5 @@
+#include <QFile>
+#include <QElapsedTimer>
 #include <QModelIndex>
 #include <QDebug>
 
@@ -5,6 +7,7 @@
 
 ConsoleLineBuffer::ConsoleLineBuffer()
     : QAbstractListModel()
+    , logFile_(nullptr)
 {
     clear();
 }
@@ -45,6 +48,9 @@ void ConsoleLineBuffer::append(QString data)
 
 void ConsoleLineBuffer::append(QByteArray data)
 {
+    QElapsedTimer timer; timer.start();
+    QElapsedTimer timer2;
+    quint64 t;
     for (int i = 0; i < data.size(); ++i)
     {
         const char c = data.at(i);
@@ -52,9 +58,23 @@ void ConsoleLineBuffer::append(QByteArray data)
 
         if (c == '\n')
         {
+            timer2.start();
             refreshSingleHighlighting(list_.last());
+            writeLineToLogFile(list_.last());
             createNewLine();
+            t = timer2.nsecsElapsed();
         }
+    }
+    qDebug() << "append" << timer.nsecsElapsed() << t;
+}
+
+void ConsoleLineBuffer::writeLineToLogFile(ConsoleLine& line)
+{
+    if (logFile_)
+    {
+        QString lineStr = line.timestamp().toString("[yyyy-MM-dd HH:mm:ss.zzz] ") + line.text() + "\r\n";
+        logFile_->write(lineStr.toUtf8());
+        logFile_->flush();
     }
 }
 
@@ -108,6 +128,33 @@ void ConsoleLineBuffer::refreshSingleHighlighting(ConsoleLine& line)
         }
     }
     line.setColor(QColor::Invalid);
+}
+
+bool ConsoleLineBuffer::startLogging(QString fileName)
+{
+    if (logFile_ != nullptr)
+    {
+        stopLogging();
+    }
+
+    logFile_ = new QFile(fileName);
+
+    if (!logFile_->open(QIODevice::WriteOnly | QIODevice::Append))
+    {
+        return false;
+    }
+
+    return true;
+}
+
+void ConsoleLineBuffer::stopLogging()
+{
+    if (logFile_ != nullptr)
+    {
+        logFile_->close();
+        delete logFile_;
+        logFile_ = nullptr;
+    }
 }
 
 // EOF <stefan@scheler.com>

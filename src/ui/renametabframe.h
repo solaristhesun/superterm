@@ -27,7 +27,7 @@ private slots:
     void onApplyClicked();
 
 private:
-    Ui::RenameTabFrame* ui;
+    Ui::RenameTabFrame* ui_;
 };
 
 #endif // RENAMETABFRAME_H

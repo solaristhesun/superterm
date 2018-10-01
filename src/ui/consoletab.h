@@ -14,7 +14,6 @@ class ConsoleTab;
 class QSerialPort;
 class ConsoleLineBuffer;
 class CConsoleTabWidget;
-class QFile;
 class PortEnumerator;
 class QMenu;
 class PortEndpoint;
@@ -72,15 +71,14 @@ signals:
     void labelChanged(const QString&);
 
 private:
-    Ui::ConsoleTab*    m_ui;
-    MainWindow*        mMainWindow;
+    Ui::ConsoleTab*    ui_;
+    MainWindow*        mainWindow_;
     ConsoleLineBuffer* lineBuffer_;
-    QString            mTabLabel;
-    PortEndpoint*      m_portEndpoint;
-    Session*           m_session;
-    QFile*             m_logFile;
-    QMenu*             m_contextMenu;
-    int                m_lastTabIndex;
+    QString            tabLabel_;
+    PortEndpoint*      portEndpoint_;
+    Session*           session_;
+    QMenu*             contextMenu_;
+    int                lastTabIndex_;
 
     static quint32 m_u32counter;
     QStringList    m_highlightings;

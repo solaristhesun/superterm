@@ -1,4 +1,6 @@
 #include <QPainter>
+#include <QElapsedTimer>
+#include <QScrollBar>
 #include <QDebug>
 
 #include "consoleview.h"
@@ -9,12 +11,14 @@
 ConsoleView::ConsoleView(QWidget *parent)
     : QListView(parent)
     , ui_(new Ui::ConsoleView)
+    , itemDelegate_(new ConsoleLineItemDelegate(this))
     , bTimestampsEnabled_(false)
     , bAutoScrollToBottom_(true)
 {
     ui_->setupUi(this);
+    itemDelegate_->updateFontMetrics();
 
-    QListView::setItemDelegate(new ConsoleLineItemDelegate(this));
+    QListView::setItemDelegate(itemDelegate_);
 }
 
 ConsoleView::~ConsoleView()
@@ -33,8 +37,7 @@ void ConsoleView::paintEvent(QPaintEvent *event)
 
     if (bTimestampsEnabled_)
     {
-        ConsoleLineItemDelegate* delegate = static_cast<ConsoleLineItemDelegate*>(itemDelegate());
-        int widthTimeStamp = delegate->getTimestampWidth();
+        int widthTimeStamp = itemDelegate_->timestampWidth();
 
         painter.setPen(backgroundColor().darker(120));
         painter.setBrush(QBrush(QColor(backgroundColor().darker(120))));
@@ -43,7 +46,9 @@ void ConsoleView::paintEvent(QPaintEvent *event)
         painter.drawLine(widthTimeStamp + 5, cr.y(), widthTimeStamp+5, cr.bottom());
     }
 
+    QElapsedTimer timer; timer.start();
     QListView::paintEvent(event);
+    qDebug() << "paintEvent" << timer.elapsed() << "ms";
 }
 
 void ConsoleView::setModel(QAbstractItemModel *model)
@@ -54,10 +59,19 @@ void ConsoleView::setModel(QAbstractItemModel *model)
             this, SLOT(onRowsInserted(QModelIndex,int,int)), Qt::UniqueConnection);
 }
 
-void ConsoleView::resizeEvent(QResizeEvent *event) {
+void ConsoleView::resizeEvent(QResizeEvent *event)
+{
+    qDebug() << "RESIZE";
 
     QListView::reset(); // FIXME: check why this is necessary
     QListView::resizeEvent(event);
+    itemDelegate_->updateFontMetrics();
+}
+
+void ConsoleView::setFont(const QFont& font)
+{
+    QListView::setFont(font);
+    itemDelegate_->updateFontMetrics();
 }
 
 void ConsoleView::onRowsInserted(QModelIndex,int,int)
@@ -118,7 +132,7 @@ void ConsoleView::drawTimestampsArea()
     QPainter painter(viewport());
     QRect cr = contentsRect();
     ConsoleLineItemDelegate* delegate = static_cast<ConsoleLineItemDelegate*>(itemDelegate());
-    int widthTimeStamp = delegate->getTimestampWidth();
+    int widthTimeStamp = delegate->timestampWidth();
 
     QColor c("#142462");
     painter.setPen(QColor(c.darker(120)));

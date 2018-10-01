@@ -13,7 +13,9 @@ public:
     QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
     void  paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 
-    int getTimestampWidth() const;
+    int timestampWidth() const;
+
+    void updateFontMetrics();
 
 private:
     int charsPerLine(int width) const;
@@ -21,6 +23,10 @@ private:
 private:
     ConsoleView* consoleView_;
     QString      timestampFormat_;
+    int          timestampWidth_;
+    int          cursorWidth_;
+    int          fontHeight_;
+    int          charsPerLine_;
 };
 
 #endif // CONSOLELINEITEMDELEGATE_H

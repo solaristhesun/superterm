@@ -18,6 +18,7 @@ public:
     Q_PROPERTY(qint32 m_i32FlowControl READ getFlowControl WRITE setFlowControl)
     Q_PROPERTY(QString m_tabLabel READ getTabLabel WRITE setTabLabel)
     Q_PROPERTY(bool m_bUseTimeStamps READ getUseTimeStamps WRITE setUseTimeStamps)
+    Q_PROPERTY(QString logFileName_ READ getLogFileName WRITE setLogFileName)
 
     Q_PROPERTY(QVariantList m_highlights READ getHighlights WRITE setHighlights)
 
@@ -111,6 +112,15 @@ public:
         m_highlights = highlights;
     }
 
+    void setLogFileName(QString logFileName)
+    {
+        logFileName_ = logFileName;
+    }
+    QString getLogFileName() const
+    {
+        return logFileName_;
+    }
+
     void saveToFile();
 
     void setPortConnected(bool bPortConnected);
@@ -126,6 +136,7 @@ private:
     qint32  m_i32StopBits;
     qint32  m_i32FlowControl;
     bool    m_bUseTimeStamps;
+    QString logFileName_;
 
     QVariantList m_highlights;
 

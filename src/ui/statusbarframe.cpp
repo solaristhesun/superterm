@@ -6,40 +6,40 @@
 
 StatusBarFrame::StatusBarFrame(QWidget* parent)
     : QFrame(parent)
-    , m_ui(new Ui::StatusBarFrame)
+    , ui_(new Ui::StatusBarFrame)
 {
-    m_ui->setupUi(this);
+    ui_->setupUi(this);
 
     setProperty("theme", "default");
     setupWaitingSpinner();
 
     hide();
 
-    connect(m_ui->btnCancel, &QPushButton::pressed, this, &StatusBarFrame::cancelReconnection);
+    connect(ui_->btnCancel, &QPushButton::pressed, this, &StatusBarFrame::cancelReconnection);
 }
 
 StatusBarFrame::~StatusBarFrame()
 {
-    delete m_ui;
+    delete ui_;
 }
 
 void StatusBarFrame::showMessage(const QString& message, const int timeout)
 {
-    m_ui->labelMessage->setText(message);
+    ui_->labelMessage->setText(message);
 
     if (timeout == 0)
     {
         setStyleProperty("theme", "error");
-        m_ui->waitingSpinner->stop();
-        m_ui->btnCancel->hide();
-        m_ui->btnClose->show();
+        ui_->waitingSpinner->stop();
+        ui_->btnCancel->hide();
+        ui_->btnClose->show();
     }
     else
     {
         setStyleProperty("theme", "default");
-        m_ui->waitingSpinner->stop();
-        m_ui->btnCancel->hide();
-        m_ui->btnClose->hide();
+        ui_->waitingSpinner->stop();
+        ui_->btnCancel->hide();
+        ui_->btnClose->hide();
         QTimer::singleShot(timeout, this, &StatusBarFrame::hideOnTimeout);
     }
 
@@ -56,19 +56,19 @@ void StatusBarFrame::hideOnTimeout()
 
 void StatusBarFrame::showProgressMessage(const QString& message)
 {
-    m_ui->labelMessage->setText(message);
+    ui_->labelMessage->setText(message);
 
     setStyleProperty("theme", "warning");
-    m_ui->btnClose->hide();
-    m_ui->btnCancel->show();
-    m_ui->waitingSpinner->start();
+    ui_->btnClose->hide();
+    ui_->btnCancel->show();
+    ui_->waitingSpinner->start();
 
     show();
 }
 
 void StatusBarFrame::hideProgressMessage()
 {
-    m_ui->waitingSpinner->stop();
+    ui_->waitingSpinner->stop();
     hide();
 }
 
@@ -82,13 +82,13 @@ void StatusBarFrame::setStyleProperty(const char* name, const QVariant& variant)
 
 void StatusBarFrame::setupWaitingSpinner()
 {
-    m_ui->waitingSpinner->setRoundness(70.0);
-    m_ui->waitingSpinner->setMinimumTrailOpacity(15.0);
-    m_ui->waitingSpinner->setTrailFadePercentage(70.0);
-    m_ui->waitingSpinner->setNumberOfLines(8);
-    m_ui->waitingSpinner->setLineLength(5);
-    m_ui->waitingSpinner->setLineWidth(5);
-    m_ui->waitingSpinner->setInnerRadius(5);
+    ui_->waitingSpinner->setRoundness(70.0);
+    ui_->waitingSpinner->setMinimumTrailOpacity(15.0);
+    ui_->waitingSpinner->setTrailFadePercentage(70.0);
+    ui_->waitingSpinner->setNumberOfLines(8);
+    ui_->waitingSpinner->setLineLength(5);
+    ui_->waitingSpinner->setLineWidth(5);
+    ui_->waitingSpinner->setInnerRadius(5);
 }
 
 // EOF <stefan@scheler.com>

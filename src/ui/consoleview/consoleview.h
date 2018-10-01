@@ -26,6 +26,8 @@ public:
 
     void resizeEvent(QResizeEvent *event) override;
 
+    void setFont(const QFont & font);
+
     QSize getCharWidth() const;
 
     void setTimestampsEnabled(const bool bTimestampsEnabled);
@@ -47,11 +49,12 @@ private:
     void drawTimestampsArea();
 
 private:
-    Ui::ConsoleView* ui_;
-    bool             bTimestampsEnabled_;
-    bool             bAutoScrollToBottom_;
-    QColor           textColor_;
-    QColor           backgroundColor_;
+    Ui::ConsoleView*         ui_;
+    ConsoleLineItemDelegate* itemDelegate_;
+    bool                     bTimestampsEnabled_;
+    bool                     bAutoScrollToBottom_;
+    QColor                   textColor_;
+    QColor                   backgroundColor_;
 };
 
 #endif // CONSOLEVIEW_H

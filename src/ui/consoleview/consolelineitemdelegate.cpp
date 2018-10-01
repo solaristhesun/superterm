@@ -1,4 +1,5 @@
 #include <QPainter>
+#include <QElapsedTimer>
 #include <QScrollBar>
 #include <QDebug>
 
@@ -10,33 +11,36 @@ ConsoleLineItemDelegate::ConsoleLineItemDelegate(ConsoleView *consoleView)
     : QItemDelegate(consoleView)
     , consoleView_(consoleView)
     , timestampFormat_("[yyyy-MM-dd HH:mm:ss.zzz]")
+    , timestampWidth_(0)
+    , cursorWidth_(0)
+    , fontHeight_(0)
+    , charsPerLine_(0)
 {
     // currently empty
 }
 
 QSize ConsoleLineItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    QElapsedTimer timer; timer.start();
+    // sizeHint is performance critical
     ConsoleLine line = qvariant_cast<ConsoleLine>(index.data());
-    QFontMetrics metrics(consoleView_->font());
-
+quint64 t1 = timer.nsecsElapsed();
     QSize size;
-
-    int numChars = charsPerLine(consoleView_->width() - consoleView_->verticalScrollBar()->width());
+    int numChars = charsPerLine_;
     int numLines = 1;
     if (numChars > 0)
         numLines = line.text().length() / numChars + 1;
-
-    size.setHeight((metrics.height()+2)*numLines);
+quint64 t2 = timer.nsecsElapsed();
+    size.setHeight((fontHeight_+2)*numLines);
     size.setWidth(option.rect.width());
-
+    //qDebug() << "size" << index.row() <<  t1 << t2 << timer.nsecsElapsed();
     return size;
 }
 
 void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    //qDebug() << "PAINT" << index.row();
     QFontMetrics metrics(consoleView_->font());
-
-    const int cursorWidth = metrics.width(" ");
 
     QRect adjusted = option.rect.adjusted(0,+1,0,-1);
 
@@ -61,11 +65,11 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
 
     if (consoleView_->timestampsEnabled())
     {
-        painter->setPen(QColor(Qt::white).darker(150));
+        painter->setPen(QColor(Qt::white).darker(125));
         painter->drawText(adjusted, Qt::AlignLeft, timestamp);
-        painter->setPen(QColor("white").darker(150));
-        painter->drawLine(getTimestampWidth()+5,0,getTimestampWidth()+5,option.rect.bottom());
-        xTextStart += getTimestampWidth() + 11;
+        painter->setPen(QColor("white").darker(125));
+        painter->drawLine(timestampWidth()+5,0,timestampWidth()+5,option.rect.bottom());
+        xTextStart += timestampWidth() + 11;
     }
 
     adjusted.setLeft(xTextStart);
@@ -73,7 +77,7 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
     // draw text
     painter->setPen(consoleView_->textColor());
 
-    int numChars = charsPerLine(consoleView_->width() - consoleView_->verticalScrollBar()->width());
+    int numChars = charsPerLine_;
     int numLines = 1;
     if (numChars > 0)
         numLines = line.text().length() / numChars + 1;
@@ -82,7 +86,7 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
     for (int i = 0; i < numLines; i++)
     {
         QString lineText = text.mid(i*numChars, numChars);
-        painter->drawText(adjusted.x(), option.rect.y()+ (metrics.height()+1) + (i)*(metrics.height()+2)-metrics.descent(),lineText);
+        painter->drawText(adjusted.x(), option.rect.y()+ (fontHeight_+1) + (i)*(fontHeight_+2)-metrics.descent(),lineText);
 
         if (i+1 == numLines)
         {
@@ -94,30 +98,36 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
     if (index.row() == index.model()->rowCount()-1)
     {
         painter->setBrush(QBrush(Qt::white, Qt::SolidPattern));
-        painter->drawRect(xTextStart + lastLineWidth, option.rect.y() + (numLines-1)*metrics.height(), cursorWidth, metrics.height());
+        painter->drawRect(xTextStart + lastLineWidth, option.rect.y() + (numLines-1)*fontHeight_, cursorWidth_, fontHeight_);
     }
 
     painter->restore();
 }
 
-int ConsoleLineItemDelegate::getTimestampWidth() const
+int ConsoleLineItemDelegate::timestampWidth() const
 {
-    QFontMetrics metrics(consoleView_->font());
-    return metrics.width(timestampFormat_);
+    return timestampWidth_;
 }
 
 int ConsoleLineItemDelegate::charsPerLine(int width) const
 {
-    QFontMetrics metrics(consoleView_->font());
-
     int pixelsAvailable = width;
 
     if (consoleView_->timestampsEnabled())
     {
-        pixelsAvailable -= getTimestampWidth() + 11;
+        pixelsAvailable -= timestampWidth() + 11;
     }
 
-    return pixelsAvailable / metrics.averageCharWidth();
+    return pixelsAvailable / cursorWidth_;
+}
+
+void ConsoleLineItemDelegate::updateFontMetrics()
+{
+    QFontMetrics metrics(consoleView_->font());
+    timestampWidth_ = metrics.width(timestampFormat_);
+    cursorWidth_ = metrics.averageCharWidth();
+    fontHeight_ = metrics.height();
+    charsPerLine_ = charsPerLine(consoleView_->width() - consoleView_->verticalScrollBar()->width());
 }
 
 // EOF <stefan@scheler.com>

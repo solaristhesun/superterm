@@ -21,7 +21,7 @@ public:
     void setBusyFlag(const bool bBusy);
 
 private:
-    Ui::PortItemView* ui;
+    Ui::PortItemView* ui_;
 };
 
 #endif // PORTITEMVIEW_H

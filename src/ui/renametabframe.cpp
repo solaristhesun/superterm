@@ -3,35 +3,37 @@
 
 RenameTabFrame::RenameTabFrame(QWidget* parent)
     : QFrame(parent),
-    ui(new Ui::RenameTabFrame)
+    ui_(new Ui::RenameTabFrame)
 {
-    ui->setupUi(this);
+    ui_->setupUi(this);
     hide();
 }
 
 RenameTabFrame::~RenameTabFrame()
 {
-    delete ui;
+    delete ui_;
 }
 
 void RenameTabFrame::setText(const QString& text)
 {
-    ui->labelEdit->setText(text);
+    ui_->labelEdit->setText(text);
 }
 
 QString RenameTabFrame::getText() const
 {
-    return ui->labelEdit->text();
+    return ui_->labelEdit->text();
 }
 
 void RenameTabFrame::show()
 {
     QFrame::show();
-    ui->labelEdit->selectAll();
-    ui->labelEdit->setFocus();
+    ui_->labelEdit->selectAll();
+    ui_->labelEdit->setFocus();
 }
 
 void RenameTabFrame::onApplyClicked()
 {
     emit applyPressed();
 }
+
+// EOF <stefan@scheler.com>
