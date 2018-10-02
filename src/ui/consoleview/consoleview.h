@@ -28,6 +28,8 @@ public:
 
     void mouseReleaseEvent(QMouseEvent * event) override;
 
+    void mousePressEvent(QMouseEvent * event) override;
+
     void setFont(const QFont & font);
 
     QSize getCharWidth() const;

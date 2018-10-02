@@ -29,9 +29,30 @@ ConsoleView::~ConsoleView()
 
 void ConsoleView::mouseReleaseEvent(QMouseEvent * event)
 {
-    QListView::mouseReleaseEvent(event);
-    copySelectionToClipboard();
-    QListView::clearSelection();
+    if (event->button() == Qt::LeftButton)
+    {
+        QListView::mouseReleaseEvent(event);
+        copySelectionToClipboard();
+        QListView::clearSelection();
+    }
+    else
+    {
+        // forward directly to QAbstractScrollArea to prevent right click selection
+        QAbstractScrollArea::mouseReleaseEvent(event);
+    }
+}
+
+void ConsoleView::mousePressEvent(QMouseEvent * event)
+{
+    if (event->button() == Qt::RightButton)
+    {
+        // forward directly to QAbstractScrollArea to prevent right click selection
+        QAbstractScrollArea::mousePressEvent(event);
+    }
+    else
+    {
+        QListView::mousePressEvent(event);
+    }
 }
 
 void ConsoleView::paintEvent(QPaintEvent *event)
