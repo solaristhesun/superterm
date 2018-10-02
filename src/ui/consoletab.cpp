@@ -195,7 +195,7 @@ void ConsoleTab::createContextMenu()
 
 void ConsoleTab::showContextMenu(const QPoint& pt)
 {
-    contextMenu_->exec(mapToGlobal(pt));
+    contextMenu_->exec(ui_->consoleView->viewport()->mapToGlobal(pt));
 }
 
 void ConsoleTab::updateHighlightings()
