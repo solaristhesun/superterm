@@ -2,62 +2,53 @@
 #include <QColorDialog>
 #include <QKeyEvent>
 #include <QDataStream>
+#include <QSortFilterProxyModel>
 
 #include "ui_highlightingsframe.h"
 #include "ui/highlightingsframe.h"
+#include "models/highlightingsmodel.h"
 
 HighlightingsFrame::HighlightingsFrame(QWidget* parent)
     : QFrame(parent)
-    , m_ui(new Ui::HighlightingsFrame)
-    , m_color(QColor(Qt::red))
+    , ui_(new Ui::HighlightingsFrame)
+    , proxyModel_(new QSortFilterProxyModel(this))
+    , model_(nullptr)
 {
-    m_ui->setupUi(this);
-    hide();
+    ui_->setupUi(this);
+
+    QFrame::hide();
+
+    highlighting_.color = QColor(Qt::red);
     refreshColorButton();
 }
 
 HighlightingsFrame::~HighlightingsFrame()
 {
-    delete m_ui;
+    delete proxyModel_;
+    delete ui_;
 }
 
 void HighlightingsFrame::addHighlighting()
 {
-    const QString str = m_ui->filterEdit->text();
+    model_->addHighlighting(highlighting_);
 
-    if (!str.isEmpty())
-    {
-        QPixmap pixmap(10, 10);
-        pixmap.fill(m_color);
-        QIcon            icon(pixmap);
-        QListWidgetItem* item = new QListWidgetItem(icon, str);
-        item->setData(Qt::UserRole, QVariant(m_color));
-        m_ui->filterList->addItem(item);
-        m_ui->filterEdit->setText("");
-        m_ui->filterEdit->setFocus();
-        m_ui->btnDeleteAll->setEnabled(true);
-    }
-
-    emit highlightingChanged();
-}
-
-void HighlightingsFrame::addHighlighting(QListWidgetItem* item)
-{
-    m_ui->filterList->addItem(item);
+    ui_->patternEdit->setText("");
+    ui_->patternEdit->setFocus();
+    ui_->btnDeleteAll->setEnabled(true);
 }
 
 void HighlightingsFrame::showEvent(QShowEvent* event)
 {
-    m_ui->filterEdit->setText("");
-    m_ui->filterEdit->setFocus();
+    ui_->patternEdit->setText("");
+    ui_->patternEdit->setFocus();
 
-    if (m_ui->filterList->count() == 0)
+    if (model_->rowCount() == 0)
     {
-        m_ui->btnDeleteAll->setEnabled(false);
+        ui_->btnDeleteAll->setEnabled(false);
     }
     else
     {
-        m_ui->btnDeleteAll->setEnabled(true);
+        ui_->btnDeleteAll->setEnabled(true);
     }
 
     QFrame::showEvent(event);
@@ -65,50 +56,42 @@ void HighlightingsFrame::showEvent(QShowEvent* event)
 
 void HighlightingsFrame::onTextEdited(const QString& text)
 {
-    m_ui->btnAdd->setEnabled(!text.isEmpty());
+    highlighting_.pattern = text;
+    ui_->btnAdd->setEnabled(!text.isEmpty());
 }
 
 void HighlightingsFrame::onSelectionChanged()
 {
-    QList<QListWidgetItem*> items = m_ui->filterList->selectedItems();
-    qDebug() << "COUNT " << items.count();
-    m_ui->btnDelete->setEnabled(!items.isEmpty());
+    ui_->btnDelete->setEnabled(ui_->patternView->currentIndex().isValid());
 }
 
 void HighlightingsFrame::changeColor()
 {
     QColor color = QColorDialog::getColor(QColor("red"), this);
+
     if (color.isValid())
     {
-        m_color = color;
+        highlighting_.color = color;
         refreshColorButton();
     }
 }
 
 void HighlightingsFrame::refreshColorButton()
 {
-    m_ui->btnColor->setStyleSheet(QString("background-color: %1;").arg(m_color.name()));
+    ui_->btnColor->setStyleSheet(QString("background-color: %1;").arg(highlighting_.color.name()));
 }
 
 void HighlightingsFrame::deleteHighlighting()
 {
-    QListWidgetItem* item = m_ui->filterList->currentItem();
-    delete item;
-
-    if (m_ui->filterList->count() == 0)
-    {
-        m_ui->btnDeleteAll->setEnabled(false);
-    }
-
-    emit highlightingChanged();
+    //model_->remove(proxyModel_->mapToSource(ui_->patternView->currentIndex()));
+    model_->remove(ui_->patternView->currentIndex());
+    ui_->btnDelete->setEnabled(false);
 }
 
 void HighlightingsFrame::deleteAll()
 {
-    m_ui->filterList->clear();
-    m_ui->btnDeleteAll->setEnabled(false);
-
-    emit highlightingChanged();
+    model_->removeAll();
+    ui_->btnDeleteAll->setEnabled(false);
 }
 
 void HighlightingsFrame::keyPressEvent(QKeyEvent* event)
@@ -121,24 +104,15 @@ void HighlightingsFrame::keyPressEvent(QKeyEvent* event)
     QFrame::keyPressEvent(event);
 }
 
-void HighlightingsFrame::clear()
+void HighlightingsFrame::setModel(HighlightingsModel* model)
 {
-    m_ui->filterList->clear();
-}
+    model_ = model;
+    //proxyModel_->setSourceModel(model);
 
-QList<Highlighting> HighlightingsFrame::getItems()
-{
-    QList<QListWidgetItem*> items = m_ui->filterList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
-    QList<Highlighting>     list;
-
-    for (QListWidgetItem* item : items)
-    {
-        Highlighting h;
-        h.pattern = item->text();
-        h.color = item->data(Qt::UserRole).value<QColor>();
-        list.append(h);
-    }
-    return list;
+    //proxyModel_->setSortRole(Qt::DisplayRole);
+    //proxyModel_->setDynamicSortFilter(true);
+    //proxyModel_->sort(0);
+    ui_->patternView->setModel(model_);
 }
 
 QDataStream& operator<<(QDataStream& out, const Highlighting& v)

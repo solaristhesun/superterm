@@ -20,6 +20,7 @@ class PortEndpoint;
 class Session;
 class MainWindow;
 class Message;
+class HighlightingsModel;
 
 class ConsoleTab : public QWidget
 {
@@ -71,14 +72,15 @@ signals:
     void labelChanged(const QString&);
 
 private:
-    Ui::ConsoleTab*    ui_;
-    MainWindow*        mainWindow_;
-    ConsoleLineBuffer* lineBuffer_;
-    QString            tabLabel_;
-    PortEndpoint*      portEndpoint_;
-    Session*           session_;
-    QMenu*             contextMenu_;
-    int                lastTabIndex_;
+    Ui::ConsoleTab*     ui_;
+    MainWindow*         mainWindow_;
+    HighlightingsModel* highlightingsModel_;
+    ConsoleLineBuffer*  lineBuffer_;
+    QString             tabLabel_;
+    PortEndpoint*       portEndpoint_;
+    Session*            session_;
+    QMenu*              contextMenu_;
+    int                 lastTabIndex_;
 
     static quint32 m_u32counter;
     QStringList    m_highlightings;

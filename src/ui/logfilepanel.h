@@ -17,7 +17,7 @@ public:
     ~LogfilePanel();
 
     QString getLogFileName() const;
-    void setLogFileName(QString fileName);
+    void    setLogFileName(QString fileName);
 
 public slots:
     void showFileDialog();

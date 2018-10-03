@@ -48,7 +48,7 @@ QFrame#statusBar
     min-height: 37px;
 }
 
-QFrame#highlightsFrame, QFrame#logPanel
+QFrame#highlightingsFrame, QFrame#logPanel
 {
     border-top: 1px solid white;
     background-color: #ffe6ab;

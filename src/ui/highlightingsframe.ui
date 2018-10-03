@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>16777193</width>
-    <height>90</height>
+    <width>16761562</width>
+    <height>95</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -68,10 +68,22 @@
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
      <item>
-      <widget class="QLineEdit" name="filterEdit"/>
+      <widget class="QLineEdit" name="patternEdit"/>
      </item>
      <item>
       <widget class="QPushButton" name="btnColor">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>18</height>
+        </size>
+       </property>
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
@@ -132,17 +144,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QListWidget" name="filterList">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="sortingEnabled">
-      <bool>true</bool>
-     </property>
-    </widget>
+    <widget class="QListView" name="patternView"/>
    </item>
   </layout>
  </widget>
@@ -197,7 +199,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>filterEdit</sender>
+   <sender>patternEdit</sender>
    <signal>textChanged(QString)</signal>
    <receiver>HighlightingsFrame</receiver>
    <slot>onTextEdited(QString)</slot>
@@ -213,7 +215,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>filterEdit</sender>
+   <sender>patternEdit</sender>
    <signal>returnPressed()</signal>
    <receiver>btnAdd</receiver>
    <slot>click()</slot>
@@ -225,22 +227,6 @@
     <hint type="destinationlabel">
      <x>228</x>
      <y>22</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>filterList</sender>
-   <signal>itemSelectionChanged()</signal>
-   <receiver>HighlightingsFrame</receiver>
-   <slot>onSelectionChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>222</x>
-     <y>59</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>222</x>
-     <y>44</y>
     </hint>
    </hints>
   </connection>
@@ -272,6 +258,22 @@
     </hint>
     <hint type="destinationlabel">
      <x>222</x>
+     <y>44</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>patternView</sender>
+   <signal>pressed(QModelIndex)</signal>
+   <receiver>HighlightingsFrame</receiver>
+   <slot>onSelectionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>8388596</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>8388596</x>
      <y>44</y>
     </hint>
    </hints>

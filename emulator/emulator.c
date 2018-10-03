@@ -10,12 +10,9 @@ int main(int argc, char *argv[])
 {
 
     srand(time(NULL));
-#if 1
+
     int fd = open("/dev/tnt0", O_RDWR | O_NOCTTY);
 
-//    grantpt(fd);
-  //  unlockpt(fd);
-#endif
     if (argc < 2)
     {
         return 1;
@@ -25,37 +22,34 @@ int main(int argc, char *argv[])
     
     unsigned long c = 0;
 
-    int fd_log = open(argv[1], O_RDONLY);
+    FILE* fp = fopen(argv[1], "r");
 
-    if (fd_log == -1)
-    {
-        return 2;
-    }
+	if (fp != NULL)
+	{
+		printf("starting playback of %s...\n", argv[1]);    
+		
+		while(1)
+		{
+			
+			char msg[100];
 
+			fgets(&msg, 100, fp);
 
-    printf("starting playback of %s in 10 seconds...\n", argv[1]);    
-    
-    sleep(10);
-    while(1)
-    {
-        int r = rand() % 6;
-        
-        char msg[100];
+			if (fgets(&msg, 100, fp) != 0)
+			{
+				printf("{%s}\n", msg);
+				write(fd, msg, strlen(msg));
+			}
+			else
+			{
+				fseek(fp, 0, SEEK_SET);
+			}
 
-        if (read(fd_log, msg, 100) != 0)
-        {
-            printf("{%s}\n", msg);
-            write(fd, msg, strlen(msg));
-        }
-        else
-        {
-            lseek(fd_log, 0, SEEK_SET);
-        }
+			usleep(50000);
+		}
 
-        usleep(500000);
-    }
-
-    close(fd_log);
+		fclose(fp);
+	}
 }
 
 // EOF <stefan@scheler.com>

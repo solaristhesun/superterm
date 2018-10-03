@@ -9,12 +9,13 @@
 #include "models/highlighting.h"
 
 class QFile;
+class HighlightingsModel;
 
 class ConsoleLineBuffer : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    ConsoleLineBuffer();
+    ConsoleLineBuffer(HighlightingsModel* highlightingsModel);
     virtual ~ConsoleLineBuffer() override;
 
     int      rowCount(const QModelIndex& parent = QModelIndex()) const override;
@@ -26,19 +27,20 @@ public:
     void append(QByteArray data);
     void append(QString data);
     void clear();
-    void setHighlightings(QList<Highlighting> highlightings);
+
+private slots:
+    void refreshHighlighting();
 
 private:
     void appendToLastLine(QChar c);
     void createNewLine();
-    void refreshHighlighting();
     void refreshSingleHighlighting(ConsoleLine& line);
     void writeLineToLogFile(ConsoleLine& line);
 
 private:
-    QVector<ConsoleLine>  list_;
-    QList<Highlighting> highlightings_;
-    QFile*              logFile_;
+    QVector<ConsoleLine> list_;
+    HighlightingsModel*  highlightingsModel_;
+    QFile*               logFile_;
 };
 
 #endif // CONSOLELINEBUFFER_H

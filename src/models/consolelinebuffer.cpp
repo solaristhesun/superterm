@@ -3,13 +3,17 @@
 #include <QModelIndex>
 #include <QDebug>
 
-#include "consolelinebuffer.h"
+#include "models/consolelinebuffer.h"
+#include "models/highlightingsmodel.h"
 
-ConsoleLineBuffer::ConsoleLineBuffer()
+ConsoleLineBuffer::ConsoleLineBuffer(HighlightingsModel* highlightingsModel)
     : QAbstractListModel()
+    , highlightingsModel_(highlightingsModel)
     , logFile_(nullptr)
 {
     clear();
+
+    connect(highlightingsModel_, &HighlightingsModel::highlightingChanged, this, &ConsoleLineBuffer::refreshHighlighting);
 }
 
 ConsoleLineBuffer::~ConsoleLineBuffer()
@@ -100,12 +104,6 @@ QVariant ConsoleLineBuffer::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void ConsoleLineBuffer::setHighlightings(QList<Highlighting> highlightings)
-{
-    highlightings_ = highlightings;
-    refreshHighlighting();
-}
-
 void ConsoleLineBuffer::refreshHighlighting()
 {
     for (int i = 0; i < list_.size(); ++i)
@@ -116,18 +114,13 @@ void ConsoleLineBuffer::refreshHighlighting()
 
 void ConsoleLineBuffer::refreshSingleHighlighting(ConsoleLine& line)
 {
-    for (int i = 0; i < highlightings_.size(); i++)
-    {
-        Highlighting highlighting = highlightings_.at(i);
+    QColor color = highlightingsModel_->lineColor(line.text());
 
-        if (line.text().contains(highlighting.pattern))
-        {
-            line.setColor(highlighting.color);
-            emit dataChanged(QAbstractListModel::index(list_.count()), QAbstractListModel::index(list_.count()));
-            return;
-        }
+    if (color != line.color())
+    {
+        line.setColor(color);
+        emit dataChanged(QAbstractListModel::index(list_.count()), QAbstractListModel::index(list_.count()));
     }
-    line.setColor(QColor::Invalid);
 }
 
 bool ConsoleLineBuffer::startLogging(QString fileName)

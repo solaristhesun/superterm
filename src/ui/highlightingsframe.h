@@ -3,6 +3,7 @@
 
 #include <QColor>
 #include <QFrame>
+#include <QItemSelection>
 
 #include "models/highlighting.h"
 
@@ -12,6 +13,8 @@ class HighlightingsFrame;
 }
 
 class QListWidgetItem;
+class HighlightingsModel;
+class QSortFilterProxyModel;
 
 class HighlightingsFrame : public QFrame
 {
@@ -19,28 +22,26 @@ class HighlightingsFrame : public QFrame
 
 public:
     explicit HighlightingsFrame(QWidget* parent = nullptr);
-    ~HighlightingsFrame();
+    virtual ~HighlightingsFrame() override;
 
-    QList<Highlighting> getItems();
-    void                showEvent(QShowEvent* event);
-    void                keyPressEvent(QKeyEvent* event);
+    void showEvent(QShowEvent* event) override;
+    void keyPressEvent(QKeyEvent* event) override;
+
+    void setModel(HighlightingsModel* model);
 
 public slots:
-    void clear();
     void addHighlighting();
-    void addHighlighting(QListWidgetItem* item);
     void deleteHighlighting();
     void onTextEdited(const QString& text);
     void onSelectionChanged();
     void changeColor();
     void deleteAll();
 
-signals:
-    void highlightingChanged();
-
 private:
-    Ui::HighlightingsFrame* m_ui;
-    QColor                  m_color;
+    Ui::HighlightingsFrame* ui_;
+    Highlighting            highlighting_;
+    QSortFilterProxyModel*  proxyModel_;
+    HighlightingsModel*     model_;
 
     void refreshColorButton();
 };

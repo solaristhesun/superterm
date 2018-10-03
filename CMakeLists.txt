@@ -10,7 +10,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_PREFIX_PATH "~/qt/5.10.1/gcc_64/lib/cmake")
+set(CMAKE_PREFIX_PATH "~/qt/5.11.2/gcc_64/lib/cmake")
 
 # Find the QtWidgets library
 find_package(Qt5 COMPONENTS Gui Widgets Network SerialPort REQUIRED)
@@ -63,6 +63,7 @@ set(superterm_SRCS
 	src/serial/portobserver.cpp
 	src/models/consolelinebuffer.cpp
 	src/models/consoleline.cpp
+	src/models/highlightingsmodel.cpp
 	superterm.qrc
 	superterm.qss
 )

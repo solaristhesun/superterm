@@ -35,6 +35,7 @@
 #include "session/session.h"
 #include "ipc/message.h"
 #include "models/consolelinebuffer.h"
+#include "models/highlightingsmodel.h"
 
 quint32 ConsoleTab::m_u32counter = 1;
 
@@ -47,7 +48,8 @@ ConsoleTab::ConsoleTab(PortEnumerator* pe, Session* session)
     : QWidget(nullptr)
     , ui_(new Ui::ConsoleTab)
     , mainWindow_(nullptr)
-    , lineBuffer_(new ConsoleLineBuffer)
+    , highlightingsModel_(new HighlightingsModel)
+    , lineBuffer_(new ConsoleLineBuffer(highlightingsModel_))
     , tabLabel_(tr("New tab"))
     , portEndpoint_(new PortEndpoint(this))
     , session_(session)
@@ -57,6 +59,7 @@ ConsoleTab::ConsoleTab(PortEnumerator* pe, Session* session)
     qDebug() << "CConsoleTab::CConsoleTab()";
 
     ui_->setupUi(this);
+    ui_->highlightingsFrame->setModel(highlightingsModel_);
 
     // load font from settings
     QSettings settings;
@@ -77,6 +80,7 @@ ConsoleTab::ConsoleTab(PortEnumerator* pe, Session* session)
     connect(portEndpoint_, &PortEndpoint::readyRead, this, &ConsoleTab::onReconnectionSignal);
     connect(ui_->statusBar, &StatusBarFrame::cancelReconnection, this, &ConsoleTab::onReconnectionCancel);
     connect(ui_->renameTabFrame, &RenameTabFrame::applyPressed, this, &ConsoleTab::onRenameTab);
+    connect(highlightingsModel_, &HighlightingsModel::highlightingChanged, this, &ConsoleTab::updateHighlightings);
 
     ui_->connectionBar->setPortEnumerator(pe);
 
@@ -90,17 +94,9 @@ ConsoleTab::ConsoleTab(PortEnumerator* pe, Session* session)
 
         for (const QVariant& h : session->getHighlights())
         {
-            Highlighting hi = h.value<Highlighting>();
-            QPixmap                        pixmap(10, 10);
-            pixmap.fill(hi.color);
-            QIcon            icon(pixmap);
-            QListWidgetItem* item = new QListWidgetItem(icon, hi.pattern);
-            item->setData(Qt::UserRole, QVariant(hi.color));
-            ui_->highlightingsFrame->addHighlighting(item);
-            highlightings.append(hi);
+            highlightings.append(h.value<Highlighting>());
         }
-
-        lineBuffer_->setHighlightings(highlightings);
+        highlightingsModel_->setHighlightings(highlightings);
 
         if (session->getUseTimeStamps())
         {
@@ -200,12 +196,11 @@ void ConsoleTab::showContextMenu(const QPoint& pt)
 
 void ConsoleTab::updateHighlightings()
 {
-    QList<Highlighting> highlightings = ui_->highlightingsFrame->getItems();
-    lineBuffer_->setHighlightings(highlightings);
+    QList<Highlighting> highlightings = highlightingsModel_->highlightings();
 
     if (session_)
     {
-        session_->setHighlights(SerializableObject::convertToQVariantList(ui_->highlightingsFrame->getItems()));
+        session_->setHighlights(SerializableObject::convertToQVariantList(highlightings));
 
         if (session_->isPortConnected())
         {
@@ -233,7 +228,6 @@ void ConsoleTab::onConfigurationChanged(const QString& config)
     QXmlStreamReader xml(&file);
 
     QList<Highlighting> highlightings;
-    ui_->highlightingsFrame->clear();
 
     while (!xml.atEnd())
     {
@@ -274,18 +268,11 @@ void ConsoleTab::onConfigurationChanged(const QString& config)
                 hi.pattern = xml.readElementText();
                 hi.color = QColor(attr.value("color").toString());
                 highlightings.append(hi);
-
-                QPixmap pixmap(10, 10);
-                pixmap.fill(hi.color );
-                QIcon            icon(pixmap);
-                QListWidgetItem* item = new QListWidgetItem(icon, hi.pattern);
-                item->setData(Qt::UserRole, QVariant(hi.color));
-                ui_->highlightingsFrame->addHighlighting(item);
             }
         }
     }
 
-    lineBuffer_->setHighlightings(highlightings);
+    highlightingsModel_->setHighlightings(highlightings);
 }
 
 void ConsoleTab::showSaveDialog()
@@ -317,7 +304,8 @@ void ConsoleTab::showSaveDialog()
     xmlWriter.writeTextElement("flowcontrol", ui_->connectionBar->getFlowControl());
     xmlWriter.writeEndElement();
 
-    QList<Highlighting> h = ui_->highlightingsFrame->getItems();
+
+    QList<Highlighting> h = highlightingsModel_->highlightings();
 
     if (h.size() > 0)
     {
@@ -592,6 +580,8 @@ void ConsoleTab::onKeyPressed(QKeyEvent* e)
     {
         portEndpoint_->writeData(b);
     }
+
+    lineBuffer_->append(b);
 }
 
 void ConsoleTab::startLogging()

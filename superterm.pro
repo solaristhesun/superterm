@@ -45,7 +45,8 @@ SOURCES += \
     src/models/consolelinebuffer.cpp \
     src/ui/consoleview/consoleview.cpp \
     src/models/consoleline.cpp \
-    src/ui/consoleview/consolelineitemdelegate.cpp
+    src/ui/consoleview/consolelineitemdelegate.cpp \
+    src/models/highlightingsmodel.cpp
 
 HEADERS += \
     src/ui/mainwindow.h \
@@ -81,7 +82,8 @@ HEADERS += \
     src/ui/consoleview/consoleview.h \
     src/models/consoleline.h \
     src/ui/consoleview/consolelineitemdelegate.h \
-    src/models/highlighting.h
+    src/models/highlighting.h \
+    src/models/highlightingsmodel.h
 
 FORMS += \
     src/ui/mainwindow.ui \

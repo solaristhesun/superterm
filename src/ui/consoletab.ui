@@ -345,22 +345,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>highlightingsFrame</sender>
-   <signal>highlightingChanged()</signal>
-   <receiver>ConsoleTab</receiver>
-   <slot>updateHighlightings()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>272</x>
-     <y>197</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>272</x>
-     <y>106</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionAbout</sender>
    <signal>triggered()</signal>
    <receiver>ConsoleTab</receiver>
