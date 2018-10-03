@@ -88,13 +88,26 @@ void HighlightingsFrame::refreshColorButton()
 void HighlightingsFrame::deleteHighlighting()
 {
     model_->remove(proxyModel_->mapToSource(ui_->patternView->currentIndex()));
-    ui_->btnDelete->setEnabled(false);
 }
 
 void HighlightingsFrame::deleteAll()
 {
     model_->removeAll();
     ui_->btnDeleteAll->setEnabled(false);
+}
+
+void HighlightingsFrame::selectionChanged(const QItemSelection &selection, const QItemSelection &)
+{
+    if (selection.empty())
+    {
+        ui_->btnDeleteAll->setEnabled(false);
+        ui_->btnDelete->setEnabled(false);
+    }
+    else
+    {
+        ui_->btnDeleteAll->setEnabled(true);
+        ui_->btnDelete->setEnabled(true);
+    }
 }
 
 void HighlightingsFrame::keyPressEvent(QKeyEvent* event)
@@ -112,6 +125,10 @@ void HighlightingsFrame::setModel(HighlightingsModel* model)
     model_ = model;
     proxyModel_->setSourceModel(model);
     ui_->patternView->setModel(proxyModel_);
+
+    QItemSelectionModel *selectionModel= ui_->patternView->selectionModel();
+    connect(selectionModel, SIGNAL(selectionChanged (const QItemSelection &, const QItemSelection &)),
+            this, SLOT(selectionChanged(const QItemSelection &, const QItemSelection &)));
 }
 
 QDataStream& operator<<(QDataStream& out, const Highlighting& v)
