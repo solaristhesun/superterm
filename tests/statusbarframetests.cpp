@@ -3,9 +3,9 @@
 #include "gmock/gmock.h"
 #include "ui/statusbarframe.h"
 
-TEST(CStatusBarFrameTests, showMessage)
+TEST(StatusBarFrameTests, showMessage)
 {
-    CStatusBarFrame frame;
+    StatusBarFrame frame;
 
     frame.showMessage("test message");
 

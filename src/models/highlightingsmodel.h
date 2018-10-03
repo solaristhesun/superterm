@@ -3,7 +3,7 @@
 
 #include <QAbstractListModel>
 
-#include "../superterm/src/models/highlighting.h"
+#include "models/highlighting.h"
 
 class HighlightingsModel : public QAbstractListModel
 {

@@ -16,6 +16,10 @@ HighlightingsFrame::HighlightingsFrame(QWidget* parent)
 {
     ui_->setupUi(this);
 
+    proxyModel_->setSortRole(Qt::DisplayRole);
+    proxyModel_->setDynamicSortFilter(true);
+    proxyModel_->sort(0);
+
     QFrame::hide();
 
     highlighting_.color = QColor(Qt::red);
@@ -83,8 +87,7 @@ void HighlightingsFrame::refreshColorButton()
 
 void HighlightingsFrame::deleteHighlighting()
 {
-    //model_->remove(proxyModel_->mapToSource(ui_->patternView->currentIndex()));
-    model_->remove(ui_->patternView->currentIndex());
+    model_->remove(proxyModel_->mapToSource(ui_->patternView->currentIndex()));
     ui_->btnDelete->setEnabled(false);
 }
 
@@ -107,12 +110,8 @@ void HighlightingsFrame::keyPressEvent(QKeyEvent* event)
 void HighlightingsFrame::setModel(HighlightingsModel* model)
 {
     model_ = model;
-    //proxyModel_->setSourceModel(model);
-
-    //proxyModel_->setSortRole(Qt::DisplayRole);
-    //proxyModel_->setDynamicSortFilter(true);
-    //proxyModel_->sort(0);
-    ui_->patternView->setModel(model_);
+    proxyModel_->setSourceModel(model);
+    ui_->patternView->setModel(proxyModel_);
 }
 
 QDataStream& operator<<(QDataStream& out, const Highlighting& v)

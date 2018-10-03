@@ -53,9 +53,7 @@ void HighlightingsModel::remove(const QModelIndex& index)
     if (!index.isValid())
         return;
 
-    qDebug() << "removing row" << index.row();
-
-    beginRemoveRows(index, index.row(), index.row());
+    beginRemoveRows(QModelIndex(), index.row(), index.row());
     highlightings_.removeAt(index.row());
     endRemoveRows();
 

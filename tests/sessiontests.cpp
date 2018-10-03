@@ -1,9 +1,9 @@
 #include "gmock/gmock.h"
 #include "session/session.h"
 
-TEST(CSessionTests, testTest)
+TEST(SessionTests, testTest)
 {
-    CSession session;
+    Session session;
     ASSERT_TRUE(true);
 }
 
