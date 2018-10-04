@@ -12,6 +12,7 @@ public:
 
     void      append(QChar c);
     void      setColor(QColor color);
+
     QDateTime timestamp();
     QColor    color();
     QString   text();
@@ -22,6 +23,6 @@ private:
     QColor    color_;
 };
 
-Q_DECLARE_METATYPE(ConsoleLine);
+Q_DECLARE_METATYPE(ConsoleLine)
 
 #endif // CONSOLELINE_H

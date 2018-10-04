@@ -3,8 +3,8 @@
 
 #include "highlightingsmodel.h"
 
-HighlightingsModel::HighlightingsModel()
-    : QAbstractListModel()
+HighlightingsModel::HighlightingsModel(QObject* parent)
+    : QAbstractListModel(parent)
 {
     // currently empty
 }
@@ -25,15 +25,15 @@ QVariant HighlightingsModel::data(const QModelIndex &index, int role) const
     if (index.row() >= highlightings_.size() || index.row() < 0)
         return QVariant();
 
-    if (role == Qt::DisplayRole) {
+    if (role == Qt::DisplayRole)
         return QVariant::fromValue(highlightings_.at(index.row()).pattern);
-    }
 
-    if (role == Qt::DecorationRole) {
+    if (role == Qt::DecorationRole)
+    {
         QPixmap pixmap(10, 10);
         pixmap.fill(highlightings_.at(index.row()).color);
-        QIcon            icon(pixmap);
-        return QVariant::fromValue(icon);
+
+        return QVariant::fromValue(QIcon(pixmap));
     }
 
     return QVariant();

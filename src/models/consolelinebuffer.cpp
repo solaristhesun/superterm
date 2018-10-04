@@ -27,7 +27,7 @@ void ConsoleLineBuffer::appendToLastLine(QChar c)
 
     line.append(c);
 
-    emit dataChanged(QAbstractListModel::index(list_.count()), QAbstractListModel::index(list_.count()));
+   // emit dataChanged(QAbstractListModel::index(list_.count()), QAbstractListModel::index(list_.count()));
 }
 
 void ConsoleLineBuffer::createNewLine()
@@ -54,7 +54,8 @@ void ConsoleLineBuffer::append(QByteArray data)
 {
     QElapsedTimer timer; timer.start();
     QElapsedTimer timer2;
-    quint64 t;
+    quint64 t;quint64 t2;
+    int firstChangedRow = list_.count();
     for (int i = 0; i < data.size(); ++i)
     {
         const char c = data.at(i);
@@ -62,14 +63,26 @@ void ConsoleLineBuffer::append(QByteArray data)
 
         if (c == '\n')
         {
-            timer2.start();
+            //timer2.start();
             refreshSingleHighlighting(list_.last());
             writeLineToLogFile(list_.last());
-            createNewLine();
-            t = timer2.nsecsElapsed();
+             timer2.start();
+            //createNewLine();
+                          timer2.start();
+             beginInsertRows(QModelIndex(), list_.count(), list_.count());
+t2 = timer2.nsecsElapsed();
+             list_.append(ConsoleLine());
+      //       qDebug () << "endInsertRows";
+             endInsertRows();
+                         t = timer2.nsecsElapsed();
         }
     }
-    qDebug() << "append" << timer.nsecsElapsed() << t;
+
+    int lastChangedRow = list_.count();
+    //qDebug() << "dataChanged" << firstChangedRow << lastChangedRow;
+    emit dataChanged(QAbstractListModel::index(firstChangedRow), QAbstractListModel::index(lastChangedRow));
+
+    qDebug() << "append" << data.size() << timer.nsecsElapsed() << t2 <<t << list_.count();
 }
 
 void ConsoleLineBuffer::writeLineToLogFile(ConsoleLine& line)
