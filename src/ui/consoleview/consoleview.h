@@ -48,6 +48,7 @@ public:
 
 public slots:
     void onRowsInserted(QModelIndex, int, int);
+    void scrollToBottom();
 
 private:
     void drawTimestampsArea();
@@ -60,6 +61,7 @@ private:
     bool                     bAutoScrollToBottom_;
     QColor                   textColor_;
     QColor                   backgroundColor_;
+    bool                     bAutoScrollTriggered;
 };
 
 #endif // CONSOLEVIEW_H

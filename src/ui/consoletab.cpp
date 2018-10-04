@@ -577,6 +577,17 @@ void ConsoleTab::onKeyPressed(QKeyEvent* e)
     {
         portEndpoint_->writeData(b);
     }
+#if 0
+    lineBuffer_->append(key);
+
+    if (key == 'd')
+    {
+        for (int i = 1; i < 50; i++)
+        {
+            lineBuffer_->append(QByteArray("012345678901234567890123456789012345678901234567890123456789\r\n"));
+        }
+    }
+#endif
 }
 
 void ConsoleTab::startLogging()

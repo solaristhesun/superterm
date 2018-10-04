@@ -1,4 +1,5 @@
 #include <QPainter>
+#include <QTimer>
 #include <QClipboard>
 #include <QElapsedTimer>
 #include <QScrollBar>
@@ -15,6 +16,7 @@ ConsoleView::ConsoleView(QWidget *parent)
     , itemDelegate_(new ConsoleLineItemDelegate(this))
     , bTimestampsEnabled_(false)
     , bAutoScrollToBottom_(true)
+    , bAutoScrollTriggered(false)
 {
     ui_->setupUi(this);
     itemDelegate_->updateFontMetrics();
@@ -107,8 +109,19 @@ void ConsoleView::onRowsInserted(QModelIndex,int,int)
 {
     if (bAutoScrollToBottom_)
     {
-        QListView::scrollToBottom();
+        //QListView::scrollToBottom();
+        if (!bAutoScrollTriggered)
+        {
+            bAutoScrollTriggered = true;
+            QTimer::singleShot(50, this, &ConsoleView::scrollToBottom);
+        }
     }
+}
+
+void ConsoleView::scrollToBottom()
+{
+    QListView::scrollToBottom();
+    bAutoScrollTriggered = false;
 }
 
 void ConsoleView::setTimestampsEnabled(const bool bTimestampsEnabled)

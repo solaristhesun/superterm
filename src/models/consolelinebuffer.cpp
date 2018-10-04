@@ -82,7 +82,7 @@ t2 = timer2.nsecsElapsed();
     //qDebug() << "dataChanged" << firstChangedRow << lastChangedRow;
     emit dataChanged(QAbstractListModel::index(firstChangedRow), QAbstractListModel::index(lastChangedRow));
 
-    qDebug() << "append" << data.size() << timer.nsecsElapsed() << t2 <<t << list_.count();
+    //qDebug() << "append" << data.size() << timer.nsecsElapsed() << t2 <<t << list_.count();
 }
 
 void ConsoleLineBuffer::writeLineToLogFile(ConsoleLine& line)
