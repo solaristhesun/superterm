@@ -6,12 +6,6 @@ QPlainTextEdit
     selection-color: yellow;
 }
 
-QPushButton#btnColor
-{
-    border: 1px solid black;
-    width: 50px;
-}
-
 QComboBox
 {
     min-height: 20px;
@@ -52,6 +46,18 @@ QFrame#highlightingsFrame, QFrame#logPanel
 {
     border-top: 1px solid white;
     background-color: #ffe6ab;
+}
+
+
+QLabel#btnColor
+{
+    border: 1px solid white;
+    min-width: 50px;
+}
+
+QFrame#highlightingsFrame QPushButton, QLineEdit, QLabel
+{
+    height: 20px;
 }
 
 QFrame#statusBar[theme="error"]

@@ -36,7 +36,7 @@ public slots:
     void onSelectionChanged();
     void changeColor();
     void deleteAll();
-    void selectionChanged(const QItemSelection &, const QItemSelection &);
+    void selectionChanged(const QItemSelection&, const QItemSelection&);
 
 private:
     Ui::HighlightingsFrame* ui_;

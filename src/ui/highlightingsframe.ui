@@ -71,30 +71,15 @@
       <widget class="QLineEdit" name="patternEdit"/>
      </item>
      <item>
-      <widget class="QPushButton" name="btnColor">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
+      <widget class="CClickableLabel" name="btnColor">
        <property name="minimumSize">
         <size>
-         <width>0</width>
-         <height>16</height>
+         <width>50</width>
+         <height>0</height>
         </size>
        </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="toolTip">
-        <string>Select color</string>
-       </property>
        <property name="text">
-        <string/>
-       </property>
-       <property name="flat">
-        <bool>true</bool>
+        <string notr="true"/>
        </property>
       </widget>
      </item>
@@ -148,6 +133,16 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CClickableLabel</class>
+   <extends>QLabel</extends>
+   <header>src/ui/widgets/clickablelabel.h</header>
+   <slots>
+    <signal>clicked()</signal>
+   </slots>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
@@ -231,22 +226,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>btnColor</sender>
-   <signal>clicked()</signal>
-   <receiver>HighlightingsFrame</receiver>
-   <slot>changeColor()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>157</x>
-     <y>17</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>222</x>
-     <y>44</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>btnDeleteAll</sender>
    <signal>clicked()</signal>
    <receiver>HighlightingsFrame</receiver>
@@ -275,6 +254,22 @@
     <hint type="destinationlabel">
      <x>8388596</x>
      <y>44</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnColor</sender>
+   <signal>clicked()</signal>
+   <receiver>HighlightingsFrame</receiver>
+   <slot>changeColor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>16761190</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>8380780</x>
+     <y>47</y>
     </hint>
    </hints>
   </connection>
