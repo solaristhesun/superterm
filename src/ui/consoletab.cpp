@@ -120,6 +120,7 @@ ConsoleTab::~ConsoleTab()
     delete ui_;
     delete contextMenu_;
     delete lineBuffer_;
+    delete portEndpoint_;
 }
 
 QString ConsoleTab::getLabel() const
@@ -129,9 +130,7 @@ QString ConsoleTab::getLabel() const
 
 void ConsoleTab::setLabel(const QString& label)
 {
-    qDebug() << "setLabel(" << label << ")";
     tabLabel_ = label;
-
     emit labelChanged(label);
 }
 
@@ -378,9 +377,7 @@ void ConsoleTab::showFontColorDialog()
 
 void ConsoleTab::toggleAutoScroll()
 {
-    const bool bAutoScrollToBottom = !ui_->consoleView->autoScrollToBottom();
-
-    ui_->consoleView->setAutoScrollToBottom(bAutoScrollToBottom);
+    ui_->consoleView->setAutoScrollToBottom(!ui_->consoleView->autoScrollToBottom());
 }
 
 void ConsoleTab::setConsoleFont(const QFont& font)
@@ -540,13 +537,13 @@ void ConsoleTab::showAboutDialog()
 
 void ConsoleTab::onRenameTab()
 {
-    QString text = ui_->renameTabFrame->getText();
+    QString tabLabel = ui_->renameTabFrame->tabLabel();
 
-    setLabel(text);
+    setLabel(tabLabel);
 
     if (session_)
     {
-        session_->setTabLabel(text);
+        session_->setTabLabel(tabLabel);
 
         if (session_->isPortConnected())
         {
@@ -557,7 +554,7 @@ void ConsoleTab::onRenameTab()
 
 void ConsoleTab::showRenameTabDialog()
 {
-    ui_->renameTabFrame->setText(getLabel());
+    ui_->renameTabFrame->setTabLabel(getLabel());
     ui_->renameTabFrame->show();
 }
 
@@ -580,8 +577,6 @@ void ConsoleTab::onKeyPressed(QKeyEvent* e)
     {
         portEndpoint_->writeData(b);
     }
-
-    lineBuffer_->append(b);
 }
 
 void ConsoleTab::startLogging()

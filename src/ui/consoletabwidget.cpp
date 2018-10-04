@@ -31,18 +31,20 @@ ConsoleTabWidget::ConsoleTabWidget(QWidget* parent)
     connect(this, &ConsoleTabWidget::tabCloseRequested, this, &ConsoleTabWidget::onTabCloseRequested);
 }
 
+ConsoleTabWidget::~ConsoleTabWidget()
+{
+    qDebug() << "CConsoleTabWidget::~CConsoleTabWidget()";
+    delete tabBar_;
+    delete renameTabAction_;
+    delete contextMenu_;
+}
+
 void ConsoleTabWidget::showContextMenu(const QPoint& pt)
 {
     if (tabBar_->tabAt(pt) == currentIndex())
     {
         contextMenu_->exec(mapToGlobal(pt));
     }
-}
-
-ConsoleTabWidget::~ConsoleTabWidget()
-{
-    qDebug() << "CConsoleTabWidget::~CConsoleTabWidget()";
-    delete tabBar_;
 }
 
 ConsoleTab* ConsoleTabWidget::currentWidget() const

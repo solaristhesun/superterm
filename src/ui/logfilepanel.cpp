@@ -11,7 +11,7 @@ LogfilePanel::LogfilePanel(QWidget* parent)
 {
     ui_->setupUi(this);
 
-    hide();
+    QFrame::hide();
 }
 
 LogfilePanel::~LogfilePanel()
@@ -48,7 +48,7 @@ void LogfilePanel::onStartButtonClicked()
         ui_->btnSelect->setEnabled(false);
         ui_->editFileName->setEnabled(false);
         ui_->btnStart->setText(tr("&Stop logging"));
-        hide();
+        QFrame::hide();
     }
     else
     {

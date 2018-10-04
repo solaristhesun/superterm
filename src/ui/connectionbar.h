@@ -48,7 +48,7 @@ signals:
     void configurationChanged(const QString& config);
 
 private:
-    Ui::ConnectionBar* m_ui;
+    Ui::ConnectionBar* ui_;
 
     void fillComboBoxes();
 };

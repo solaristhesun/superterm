@@ -7,6 +7,7 @@
 NotificationBar::NotificationBar(QWidget *parent)
     : QFrame(parent)
     , ui_(new Ui::NotificationBar)
+    , link_()
 {
     ui_->setupUi(this);
 }
@@ -16,12 +17,12 @@ NotificationBar::~NotificationBar()
     delete ui_;
 }
 
-void NotificationBar::setNotificationText(QString text)
+void NotificationBar::setNotificationText(const QString& text)
 {
     ui_->label->setText(text);
 }
 
-void NotificationBar::setLink(QString link)
+void NotificationBar::setLink(const QString& link)
 {
     link_ = link;
 }

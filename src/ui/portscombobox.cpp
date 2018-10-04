@@ -7,7 +7,8 @@
 
 PortsComboBox::PortsComboBox(QWidget* parent)
     : QComboBox(parent)
-    , m_portToBeSet("")
+    , portEnumerator_(nullptr)
+    , portToBeSet_("")
 {
     QComboBox::setItemDelegate(new PortItemDelegate());
 }
@@ -20,45 +21,44 @@ void PortsComboBox::showPopup()
 
 void PortsComboBox::setPortEnumerator(PortEnumerator* pe)
 {
-    m_pe = pe;
-    connect(m_pe, &PortEnumerator::enumerationFinished, this, &PortsComboBox::onEnumerationFinished);
+    portEnumerator_ = pe;
+    connect(portEnumerator_, &PortEnumerator::enumerationFinished, this, &PortsComboBox::onEnumerationFinished);
     refresh();
 }
 
 void PortsComboBox::setPort(QString port)
 {
-    //this->setCurrentText(port);
-    m_portToBeSet = port;
+    portToBeSet_ = port;
 }
 
 void PortsComboBox::showEvent(QShowEvent*)
 {
-    m_pe->startEnumeration();
+    portEnumerator_->startEnumeration();
 }
 
 void PortsComboBox::hideEvent(QHideEvent*)
 {
-    m_pe->stopEnumeration();
+    portEnumerator_->stopEnumeration();
 }
 
 void PortsComboBox::onEnumerationFinished()
 {
-    if (!m_portToBeSet.isEmpty())
+    if (!portToBeSet_.isEmpty())
     {
         refresh();
-        this->setCurrentDeviceName(m_portToBeSet);
-        m_portToBeSet = "";
+        this->setCurrentDeviceName(portToBeSet_);
+        portToBeSet_ = "";
     }
 }
 
 void PortsComboBox::refresh()
 {
-    QString currentText = this->currentText();
+    QString currentText = QComboBox::currentText();
 
     QComboBox::clear();
     QComboBox::addItem(tr("Select port"));
 
-    for (SerialPortInfo portInfo : m_pe->getAvailablePorts())
+    for (SerialPortInfo portInfo : portEnumerator_->getAvailablePorts())
     {
         QString title = QString("%1 [%2]").arg(portInfo.shortName(), portInfo.description());
         QComboBox::addItem(title, QVariant::fromValue<SerialPortInfo>(portInfo));

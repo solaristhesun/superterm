@@ -16,8 +16,8 @@ public:
     explicit PortItemView(QWidget* parent = nullptr);
     ~PortItemView();
 
-    void setPortName(QString portName);
-    void setDescription(QString description);
+    void setPortName(const QString& portName);
+    void setDescription(const QString& description);
     void setBusyFlag(const bool bBusy);
 
 private:

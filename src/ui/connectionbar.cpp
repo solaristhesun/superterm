@@ -9,43 +9,43 @@
 
 ConnectionBar::ConnectionBar(QWidget* parent)
     : QFrame(parent)
-    , m_ui(new Ui::ConnectionBar)
+    , ui_(new Ui::ConnectionBar)
 {
-    m_ui->setupUi(this);
+    ui_->setupUi(this);
 
     fillComboBoxes();
 
-    m_ui->lineEditBaudRate->setText("9600");
-    m_ui->lineEditBaudRate->hide();
-    m_ui->comboDataBits->hide();
-    m_ui->comboFlowControl->hide();
-    m_ui->comboParity->hide();
-    m_ui->comboStopBits->hide();
-    m_ui->comboConfigurations->hide();
-    m_ui->btnSave->hide(); // save feature for now
+    ui_->lineEditBaudRate->setText("9600");
+    ui_->lineEditBaudRate->hide();
+    ui_->comboDataBits->hide();
+    ui_->comboFlowControl->hide();
+    ui_->comboParity->hide();
+    ui_->comboStopBits->hide();
+    ui_->comboConfigurations->hide();
+    ui_->btnSave->hide(); // save feature for now
 
-    connect(m_ui->btnConnect, &QPushButton::clicked, this, &ConnectionBar::connectClicked);
-    connect(m_ui->btnSave, &QPushButton::clicked, this, &ConnectionBar::saveClicked);
-    connect(m_ui->comboConfigurations, static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::activated), this, &ConnectionBar::configurationChanged);
+    connect(ui_->btnConnect, &QPushButton::clicked, this, &ConnectionBar::connectClicked);
+    connect(ui_->btnSave, &QPushButton::clicked, this, &ConnectionBar::saveClicked);
+    connect(ui_->comboConfigurations, static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::activated), this, &ConnectionBar::configurationChanged);
 }
 
 ConnectionBar::~ConnectionBar()
 {
-    delete m_ui;
+    delete ui_;
 }
 
 void ConnectionBar::showEvent(QShowEvent* event)
 {
     QDir        dir(QCoreApplication::applicationDirPath());
     QStringList files = dir.entryList(QStringList() << "*.xml", QDir::Files);
-    m_ui->comboConfigurations->clear();
-    m_ui->comboConfigurations->insertItems(0, files);
+    ui_->comboConfigurations->clear();
+    ui_->comboConfigurations->insertItems(0, files);
 
     if (!files.isEmpty())
     {
-        m_ui->comboConfigurations->insertItem(0, tr("Select configuration"));
-        m_ui->comboConfigurations->setCurrentIndex(0);
-        m_ui->comboConfigurations->show();
+        ui_->comboConfigurations->insertItem(0, tr("Select configuration"));
+        ui_->comboConfigurations->setCurrentIndex(0);
+        ui_->comboConfigurations->show();
     }
 
     QWidget::showEvent(event);
@@ -53,127 +53,124 @@ void ConnectionBar::showEvent(QShowEvent* event)
 
 void ConnectionBar::setPortEnumerator(PortEnumerator* pe)
 {
-    m_ui->comboPorts->setPortEnumerator(pe);
+    ui_->comboPorts->setPortEnumerator(pe);
 }
 
 QString ConnectionBar::getDeviceName() const
 {
-    return m_ui->comboPorts->currentPortInfo().portName();
+    return ui_->comboPorts->currentPortInfo().portName();
 }
 
 void ConnectionBar::setDeviceName(const QString& deviceName)
 {
-    m_ui->comboPorts->setCurrentDeviceName(deviceName);
+    ui_->comboPorts->setCurrentDeviceName(deviceName);
 }
 
 QString ConnectionBar::getDeviceDesc() const
 {
-    return m_ui->comboPorts->currentPortInfo().description();
+    return ui_->comboPorts->currentPortInfo().description();
 }
 
 QString ConnectionBar::getBaudRate() const
 {
-    if (m_ui->lineEditBaudRate->isVisible())
+    if (ui_->lineEditBaudRate->isVisible())
     {
-        return m_ui->lineEditBaudRate->text();
+        return ui_->lineEditBaudRate->text();
     }
     else
     {
-        return m_ui->comboBaudRates->currentText();
+        return ui_->comboBaudRates->currentText();
     }
 }
 
 void ConnectionBar::setBaudRate(const QString& baudRate)
 {
-    if (m_ui->lineEditBaudRate->isVisible())
+    if (ui_->lineEditBaudRate->isVisible())
     {
-        m_ui->comboBaudRates->setCurrentText("custom");
-        m_ui->lineEditBaudRate->setText(baudRate);
+        ui_->comboBaudRates->setCurrentText("custom");
+        ui_->lineEditBaudRate->setText(baudRate);
     }
     else
     {
-        m_ui->comboBaudRates->setCurrentText(baudRate);
+        ui_->comboBaudRates->setCurrentText(baudRate);
     }
 }
 
 QString ConnectionBar::getDataBits() const
 {
-    return m_ui->comboDataBits->currentText();
+    return ui_->comboDataBits->currentText();
 }
 
 void ConnectionBar::setDataBits(const QString& dataBits)
 {
-    m_ui->comboDataBits->setCurrentText(dataBits);
+    ui_->comboDataBits->setCurrentText(dataBits);
 }
 
 QString ConnectionBar::getParity() const
 {
-    return m_ui->comboParity->currentText();
+    return ui_->comboParity->currentText();
 }
 
 void ConnectionBar::setParity(const QString& parity)
 {
-    m_ui->comboParity->setCurrentText(parity);
+    ui_->comboParity->setCurrentText(parity);
 }
 
 QString ConnectionBar::getStopBits() const
 {
-    return m_ui->comboStopBits->currentText();
+    return ui_->comboStopBits->currentText();
 }
 
 void ConnectionBar::setStopBits(const QString& stopBits)
 {
-    m_ui->comboStopBits->setCurrentText(stopBits);
+    ui_->comboStopBits->setCurrentText(stopBits);
 }
 
 QString ConnectionBar::getFlowControl() const
 {
-    return m_ui->comboFlowControl->currentText();
+    return ui_->comboFlowControl->currentText();
 }
 
 void ConnectionBar::setFlowControl(const QString& flowControl)
 {
-    m_ui->comboFlowControl->setCurrentText(flowControl);
+    ui_->comboFlowControl->setCurrentText(flowControl);
 }
 
 void ConnectionBar::loadFromSession(Session* session)
 {
     qDebug() << *session << session->getDeviceDesc();
-    m_ui->comboPorts->setPort(session->getDeviceName());
+    ui_->comboPorts->setPort(session->getDeviceName());
 
-    if (m_ui->comboBaudRates->findText(QString::number(session->getBaudRate())) >= 0)
+    if (ui_->comboBaudRates->findText(QString::number(session->getBaudRate())) >= 0)
     {
-        m_ui->comboBaudRates->setCurrentText(QString::number(session->getBaudRate()));
+        ui_->comboBaudRates->setCurrentText(QString::number(session->getBaudRate()));
     }
     else
     {
-        m_ui->comboBaudRates->setCurrentText("custom");
-        m_ui->lineEditBaudRate->setText(QString::number(session->getBaudRate()));
+        ui_->comboBaudRates->setCurrentText("custom");
+        ui_->lineEditBaudRate->setText(QString::number(session->getBaudRate()));
     }
 
-    m_ui->comboDataBits->setCurrentText(QString::number(session->getDataBits()));
+    ui_->comboDataBits->setCurrentText(QString::number(session->getDataBits()));
 
     QSerialPort::Parity parity = static_cast<QSerialPort::Parity>(session->getParity());
-    m_ui->comboParity->setCurrentText(Globals::ParityNameMap.value(parity));
+    ui_->comboParity->setCurrentText(Globals::ParityNameMap.value(parity));
 
     QSerialPort::StopBits stopBits = static_cast<QSerialPort::StopBits>(session->getStopBits());
-    m_ui->comboStopBits->setCurrentText(Globals::StopBitsNameMap.value(stopBits));
+    ui_->comboStopBits->setCurrentText(Globals::StopBitsNameMap.value(stopBits));
 
     QSerialPort::FlowControl flowControl = static_cast<QSerialPort::FlowControl>(session->getFlowControl());
-    m_ui->comboFlowControl->setCurrentText(Globals::FlowControlNameMap.value(flowControl));
+    ui_->comboFlowControl->setCurrentText(Globals::FlowControlNameMap.value(flowControl));
 
-    m_ui->btnConnect->setEnabled(true); // FIXME: unsauber
+    ui_->btnConnect->setEnabled(true); // FIXME: unsauber
 }
 
 void ConnectionBar::fillComboBoxes()
 {
     QComboBox* combo = nullptr;
 
-    /** FIXME: DO THIS IN A MORE ELEGANT WAY! */
-    //while(m_pe->getAvailablePorts().count() == 0) { QThread::msleep(20); }
-
     // fill baud rates
-    combo = m_ui->comboBaudRates;
+    combo = ui_->comboBaudRates;
 
     // just use more common baud rates for now
     combo->clear();
@@ -186,7 +183,7 @@ void ConnectionBar::fillComboBoxes()
     combo->addItem("custom", QVariant(0));
 
     // fill data bits
-    combo = m_ui->comboDataBits;
+    combo = ui_->comboDataBits;
     combo->clear();
     combo->addItem("5", qVariantFromValue(QSerialPort::Data5));
     combo->addItem("6", qVariantFromValue(QSerialPort::Data6));
@@ -195,7 +192,7 @@ void ConnectionBar::fillComboBoxes()
     combo->setCurrentIndex(3);
 
     // fill parity
-    combo = m_ui->comboParity;
+    combo = ui_->comboParity;
     combo->clear();
     combo->addItem(tr("None"), qVariantFromValue(QSerialPort::NoParity));
     combo->addItem(tr("Even"), qVariantFromValue(QSerialPort::EvenParity));
@@ -204,7 +201,7 @@ void ConnectionBar::fillComboBoxes()
     combo->addItem(tr("Mark"), qVariantFromValue(QSerialPort::MarkParity));
 
     // fill stop bits
-    combo = m_ui->comboStopBits;
+    combo = ui_->comboStopBits;
     combo->clear();
     combo->addItem("1", qVariantFromValue(QSerialPort::OneStop));
     combo->addItem("1.5", qVariantFromValue(QSerialPort::OneAndHalfStop));
@@ -212,7 +209,7 @@ void ConnectionBar::fillComboBoxes()
     combo->setCurrentIndex(0);
 
     // fill flow control
-    combo = m_ui->comboFlowControl;
+    combo = ui_->comboFlowControl;
     combo->clear();
     combo->addItem(tr("None"), qVariantFromValue(QSerialPort::NoFlowControl));
     combo->addItem(tr("Xon/Xoff"), qVariantFromValue(QSerialPort::SoftwareControl));
@@ -222,21 +219,21 @@ void ConnectionBar::fillComboBoxes()
 
 void ConnectionBar::onMoreClicked()
 {
-    if (!m_ui->comboParity->isVisible())
+    if (!ui_->comboParity->isVisible())
     {
-        m_ui->comboDataBits->show();
-        m_ui->comboFlowControl->show();
-        m_ui->comboParity->show();
-        m_ui->comboStopBits->show();
-        m_ui->btnMore->setText(tr("<< &Less"));
+        ui_->comboDataBits->show();
+        ui_->comboFlowControl->show();
+        ui_->comboParity->show();
+        ui_->comboStopBits->show();
+        ui_->btnMore->setText(tr("<< &Less"));
     }
     else
     {
-        m_ui->comboDataBits->hide();
-        m_ui->comboFlowControl->hide();
-        m_ui->comboParity->hide();
-        m_ui->comboStopBits->hide();
-        m_ui->btnMore->setText(tr("&More >>"));
+        ui_->comboDataBits->hide();
+        ui_->comboFlowControl->hide();
+        ui_->comboParity->hide();
+        ui_->comboStopBits->hide();
+        ui_->btnMore->setText(tr("&More >>"));
     }
 }
 
@@ -244,55 +241,55 @@ void ConnectionBar::onComboChanged()
 {
     qDebug() << "[slot] onComboChanged";
 
-    if (m_ui->comboPorts->currentIndex() != 0 && m_ui->comboBaudRates->currentIndex() != 0)
+    if (ui_->comboPorts->currentIndex() != 0 && ui_->comboBaudRates->currentIndex() != 0)
     {
-        m_ui->btnConnect->setEnabled(true);
-        m_ui->btnSave->setEnabled(true);
+        ui_->btnConnect->setEnabled(true);
+        ui_->btnSave->setEnabled(true);
     }
     else
     {
-        m_ui->btnConnect->setEnabled(false);
-        m_ui->btnSave->setEnabled(false);
+        ui_->btnConnect->setEnabled(false);
+        ui_->btnSave->setEnabled(false);
     }
 
-    if (m_ui->comboBaudRates->currentText() == "custom")
+    if (ui_->comboBaudRates->currentText() == "custom")
     {
-        m_ui->lineEditBaudRate->show();
+        ui_->lineEditBaudRate->show();
     }
     else
     {
-        m_ui->lineEditBaudRate->hide();
+        ui_->lineEditBaudRate->hide();
     }
 }
 
 void ConnectionBar::onDisconnected()
 {
-    m_ui->comboPorts->setEnabled(true);
-    m_ui->lineEditBaudRate->setEnabled(true);
-    m_ui->comboBaudRates->setEnabled(true);
-    m_ui->comboDataBits->setEnabled(true);
-    m_ui->comboFlowControl->setEnabled(true);
-    m_ui->comboParity->setEnabled(true);
-    m_ui->comboStopBits->setEnabled(true);
-    m_ui->comboConfigurations->setEnabled(true);
+    ui_->comboPorts->setEnabled(true);
+    ui_->lineEditBaudRate->setEnabled(true);
+    ui_->comboBaudRates->setEnabled(true);
+    ui_->comboDataBits->setEnabled(true);
+    ui_->comboFlowControl->setEnabled(true);
+    ui_->comboParity->setEnabled(true);
+    ui_->comboStopBits->setEnabled(true);
+    ui_->comboConfigurations->setEnabled(true);
 
-    m_ui->btnConnect->setText(tr("&Connect"));
+    ui_->btnConnect->setText(tr("&Connect"));
 
     QWidget::show();
 }
 
 void ConnectionBar::onConnected()
 {
-    m_ui->comboPorts->setEnabled(false);
-    m_ui->lineEditBaudRate->setEnabled(false);
-    m_ui->comboBaudRates->setEnabled(false);
-    m_ui->comboDataBits->setEnabled(false);
-    m_ui->comboFlowControl->setEnabled(false);
-    m_ui->comboParity->setEnabled(false);
-    m_ui->comboStopBits->setEnabled(false);
-    m_ui->comboConfigurations->setEnabled(false);
+    ui_->comboPorts->setEnabled(false);
+    ui_->lineEditBaudRate->setEnabled(false);
+    ui_->comboBaudRates->setEnabled(false);
+    ui_->comboDataBits->setEnabled(false);
+    ui_->comboFlowControl->setEnabled(false);
+    ui_->comboParity->setEnabled(false);
+    ui_->comboStopBits->setEnabled(false);
+    ui_->comboConfigurations->setEnabled(false);
 
-    m_ui->btnConnect->setText(tr("&Disconnect"));
+    ui_->btnConnect->setText(tr("&Disconnect"));
 
     QWidget::hide();
 }

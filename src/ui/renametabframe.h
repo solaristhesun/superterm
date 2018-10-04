@@ -16,8 +16,8 @@ public:
     explicit RenameTabFrame(QWidget* parent = nullptr);
     ~RenameTabFrame();
 
-    void    setText(const QString& text);
-    QString getText() const;
+    void    setTabLabel(const QString& text);
+    QString tabLabel() const;
     void    show();
 
 signals:

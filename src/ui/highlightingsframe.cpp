@@ -114,7 +114,7 @@ void HighlightingsFrame::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Escape)
     {
-        hide();
+        QFrame::hide();
     }
 
     QFrame::keyPressEvent(event);

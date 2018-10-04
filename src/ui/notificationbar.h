@@ -16,8 +16,8 @@ public:
     explicit NotificationBar(QWidget* parent = nullptr);
     ~NotificationBar();
 
-    void setNotificationText(QString text);
-    void setLink(QString link);
+    void setNotificationText(const QString& text);
+    void setLink(const QString& link);
 
 public slots:
     void openLinkInBrowser();

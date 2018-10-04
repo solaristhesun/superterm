@@ -27,8 +27,8 @@ private slots:
     void onEnumerationFinished();
 
 private:
-    PortEnumerator* m_pe;
-    QString         m_portToBeSet;
+    PortEnumerator* portEnumerator_;
+    QString         portToBeSet_;
 
     void refresh();
 };

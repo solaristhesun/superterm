@@ -17,20 +17,19 @@ public:
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
     void showEvent(QShowEvent* event);
-
-    void moveTab(int from, int to);
-
     void tabInserted(int index);
     void tabRemoved(int index);
+
     void moveButton();
+    void moveTab(int from, int to);
 
     MainWindow* getNewMainWindow() const
     {
-        return mNewMainWindow;
+        return newMainWindow_;
     }
     QPoint getClickOffset() const
     {
-        return mOffset;
+        return offset_;
     }
 
 signals:
@@ -40,11 +39,9 @@ signals:
 public slots:
 
 private:
-    QPushButton* m_btn;
-    int          m_selectedIndex;
-    int          m_prevIndex;
-    MainWindow*  mNewMainWindow;
-    QPoint       mOffset;
+    QPushButton* addTabButton_;
+    MainWindow*  newMainWindow_;
+    QPoint       offset_;
 };
 
 #endif // CONSOLETABBAR_H

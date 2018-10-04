@@ -10,10 +10,10 @@ StatusBarFrame::StatusBarFrame(QWidget* parent)
 {
     ui_->setupUi(this);
 
-    setProperty("theme", "default");
-    setupWaitingSpinner();
+    QFrame::hide();
+    QFrame::setProperty("theme", "default");
 
-    hide();
+    setupWaitingSpinner();
 
     connect(ui_->btnCancel, &QPushButton::pressed, this, &StatusBarFrame::cancelReconnection);
 }
@@ -43,7 +43,7 @@ void StatusBarFrame::showMessage(const QString& message, const int timeout)
         QTimer::singleShot(timeout, this, &StatusBarFrame::hideOnTimeout);
     }
 
-    show();
+    QFrame::show();
 }
 
 void StatusBarFrame::hideOnTimeout()
@@ -63,7 +63,7 @@ void StatusBarFrame::showProgressMessage(const QString& message)
     ui_->btnCancel->show();
     ui_->waitingSpinner->start();
 
-    show();
+    QFrame::show();
 }
 
 void StatusBarFrame::hideProgressMessage()
@@ -74,10 +74,10 @@ void StatusBarFrame::hideProgressMessage()
 
 void StatusBarFrame::setStyleProperty(const char* name, const QVariant& variant)
 {
-    setProperty(name, variant);
-    style()->unpolish(this);
-    style()->polish(this);
-    update();
+    QFrame::setProperty(name, variant);
+    QFrame::style()->unpolish(this);
+    QFrame::style()->polish(this);
+    QFrame::update();
 }
 
 void StatusBarFrame::setupWaitingSpinner()

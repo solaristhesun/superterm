@@ -2,11 +2,11 @@
 #include "ui_renametabframe.h"
 
 RenameTabFrame::RenameTabFrame(QWidget* parent)
-    : QFrame(parent),
-    ui_(new Ui::RenameTabFrame)
+    : QFrame(parent)
+    , ui_(new Ui::RenameTabFrame)
 {
     ui_->setupUi(this);
-    hide();
+    QFrame::hide();
 }
 
 RenameTabFrame::~RenameTabFrame()
@@ -14,12 +14,12 @@ RenameTabFrame::~RenameTabFrame()
     delete ui_;
 }
 
-void RenameTabFrame::setText(const QString& text)
+void RenameTabFrame::setTabLabel(const QString& text)
 {
     ui_->labelEdit->setText(text);
 }
 
-QString RenameTabFrame::getText() const
+QString RenameTabFrame::tabLabel() const
 {
     return ui_->labelEdit->text();
 }

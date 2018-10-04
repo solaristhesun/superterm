@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget* parent)
     ui_->notificationBar->hide();
     QWidget::resize(800, 600);
 
-    setWindowTitle(Globals::ApplicationFullName);
+    QMainWindow::setWindowTitle(Globals::ApplicationFullName);
 
     connect(shortcutNextTab_, &QShortcut::activated, ui_->tabWidget, &ConsoleTabWidget::activateNextTab);
     connect(shortcutPrevTab_, &QShortcut::activated, ui_->tabWidget, &ConsoleTabWidget::activatePrevTab);

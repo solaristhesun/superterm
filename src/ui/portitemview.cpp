@@ -13,12 +13,12 @@ PortItemView::~PortItemView()
     delete ui_;
 }
 
-void PortItemView::setDescription(QString description)
+void PortItemView::setDescription(const QString& description)
 {
     ui_->descriptionLabel->setText(description);
 }
 
-void PortItemView::setPortName(QString portName)
+void PortItemView::setPortName(const QString& portName)
 {
     ui_->portNameLabel->setText(portName);
 }

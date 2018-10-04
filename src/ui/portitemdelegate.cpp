@@ -1,10 +1,9 @@
-#include "portitemdelegate.h"
-
 #include <QApplication>
 #include <QDebug>
 #include <QPainter>
 
 #include "serial/serialportinfo.h"
+#include "ui/portitemdelegate.h"
 
 PortItemDelegate::PortItemDelegate()
     : view_(new PortItemView(nullptr))
@@ -52,3 +51,5 @@ QSize PortItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QMode
 
     return view_->size();
 }
+
+// EOF <stefan@scheler.com>
