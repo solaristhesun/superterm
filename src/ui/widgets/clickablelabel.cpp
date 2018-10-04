@@ -1,14 +1,19 @@
-#include "clickablelabel.h"
+#include "ui/widgets/clickablelabel.h"
 
-CClickableLabel::CClickableLabel(QWidget* parent, Qt::WindowFlags f)
+ClickableLabel::ClickableLabel(QWidget* parent, Qt::WindowFlags f)
     : QLabel(parent, f)
 {
     // currently empty
 }
 
-CClickableLabel::~CClickableLabel() {}
+ClickableLabel::~ClickableLabel()
+{
+    // currently empty
+}
 
-void CClickableLabel::mousePressEvent(QMouseEvent*)
+void ClickableLabel::mousePressEvent(QMouseEvent*)
 {
     emit clicked();
 }
+
+// EOF <stefan@scheler.com>

@@ -71,7 +71,7 @@
       <widget class="QLineEdit" name="patternEdit"/>
      </item>
      <item>
-      <widget class="CClickableLabel" name="btnColor">
+      <widget class="ClickableLabel" name="btnColor">
        <property name="minimumSize">
         <size>
          <width>50</width>
@@ -135,7 +135,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CClickableLabel</class>
+   <class>ClickableLabel</class>
    <extends>QLabel</extends>
    <header>src/ui/widgets/clickablelabel.h</header>
    <slots>

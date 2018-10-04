@@ -1,15 +1,15 @@
-#ifndef CCLICKABLELABEL_H
-#define CCLICKABLELABEL_H
+#ifndef CLICKABLELABEL_H
+#define CLICKABLELABEL_H
 
 #include <QLabel>
 
-class CClickableLabel : public QLabel
+class ClickableLabel : public QLabel
 {
     Q_OBJECT
 
 public:
-    explicit CClickableLabel(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
-    ~CClickableLabel();
+    explicit ClickableLabel(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
+    ~ClickableLabel();
 
 signals:
     void clicked();
@@ -18,4 +18,4 @@ protected:
     void mousePressEvent(QMouseEvent* event);
 };
 
-#endif // CCLICKABLELABEL_H
+#endif // CLICKABLELABEL_H

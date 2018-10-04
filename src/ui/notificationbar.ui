@@ -33,7 +33,7 @@
     <number>3</number>
    </property>
    <item>
-    <widget class="CClickableLabel" name="label">
+    <widget class="ClickableLabel" name="label">
      <property name="cursor">
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
@@ -64,7 +64,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CClickableLabel</class>
+   <class>ClickableLabel</class>
    <extends>QLabel</extends>
    <header>src/ui/widgets/clickablelabel.h</header>
    <slots>
