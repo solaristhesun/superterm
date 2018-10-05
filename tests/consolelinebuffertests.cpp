@@ -37,5 +37,14 @@ TEST(ConsoleLineBufferTests, append_performanceTesting)
 
     qDebug() << timeElapsedMin << timeElapsedMax << timeElapsedTotal / 10000;
 
+    timer.start();
+    int t = 0;
+    for (int i = 0; i < 10000; i++)
+    {
+        ConsoleLine line = lineBuffer.data(lineBuffer.index(i), Qt::SizeHintRole).value<ConsoleLine>();
+        t+= line.text().length() << t;
+    }
+    qDebug() << "TIME" << timer.nsecsElapsed();
+
     ASSERT_TRUE(true);
 }

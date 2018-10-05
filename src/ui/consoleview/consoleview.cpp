@@ -4,7 +4,6 @@
 #include <QElapsedTimer>
 #include <QScrollBar>
 #include <QDebug>
-#include <QtNetwork>
 
 #include "ui_consoleview.h"
 #include "models/consoleline.h"

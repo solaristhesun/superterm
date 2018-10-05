@@ -32,17 +32,17 @@ QDateTime ConsoleLine::timestamp()
     return timestamp_;
 }
 
-QColor ConsoleLine::color()
+QColor ConsoleLine::color() const
 {
     return color_;
 }
 
-void ConsoleLine::setColor(QColor color)
+void ConsoleLine::setColor(const QColor& color)
 {
     color_ = color;
 }
 
-QString ConsoleLine::text()
+QString ConsoleLine::text() const
 {
     return text_;
 }

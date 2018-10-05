@@ -140,7 +140,7 @@ private:
 
     QVariantList m_highlights;
 
-    bool m_bPortConnected;
+    bool bPortConnected_;
 };
 
 QDebug operator<<(QDebug dbg, const Session& s);

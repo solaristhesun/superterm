@@ -11,11 +11,11 @@ public:
     ConsoleLine();
 
     void append(QChar c);
-    void setColor(QColor color);
+    void setColor(const QColor& color);
 
     QDateTime timestamp();
-    QColor    color();
-    QString   text();
+    QColor    color() const;
+    QString   text() const;
 
 private:
     QDateTime timestamp_;

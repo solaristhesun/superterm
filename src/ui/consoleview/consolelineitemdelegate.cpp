@@ -21,38 +21,29 @@ ConsoleLineItemDelegate::ConsoleLineItemDelegate(ConsoleView *consoleView)
 
 QSize ConsoleLineItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    QElapsedTimer timer; timer.start();
-    // sizeHint is performance critical
-    ConsoleLine line = qvariant_cast<ConsoleLine>(index.data());
-quint64 t1 = timer.nsecsElapsed();
-    QSize size;
-    int numChars = charsPerLine_;
-    int numLines = 1;
-    if (numChars > 0)
-        numLines = line.text().length() / numChars + 1;
-quint64 t2 = timer.nsecsElapsed();
-    size.setHeight((fontHeight_+2)*numLines);
-    size.setWidth(option.rect.width());
-    //qDebug() << "size" << index.row() <<  t1 << t2 << timer.nsecsElapsed();
-    return size;
+    const int numChars = index.data(Qt::SizeHintRole).toInt();
+    const int numLines = (charsPerLine_ > 0) ? (numChars / charsPerLine_) + 1 : 1;
+
+    return QSize(option.rect.width(), (fontHeight_+2) * numLines);
 }
 
 void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    //qDebug() << "PAINT" << index.row();
-    QFontMetrics metrics(consoleView_->font());
+    QElapsedTimer timer; timer.start();
 
-    QRect adjusted = option.rect.adjusted(0,+1,0,-1);
-
-    ConsoleLine line = qvariant_cast<ConsoleLine>(index.data());
-    QColor backgroundColor = line.color();
-    painter->save();
-
+    ConsoleLine line = index.data().value<ConsoleLine>();
     QString timestamp = line.timestamp().toString(timestampFormat_);
     QString text = line.text();
+    QColor backgroundColor = line.color();
 
     int xTextStart = 0;
 
+    QRect textRect = option.rect.adjusted(0,+1,0,-1);
+
+    QFontMetrics metrics(consoleView_->font());
+    painter->setFont(consoleView_->font());
+
+    // paint background of line
     if (option.state & QStyle::State_Selected)
     {
         painter->fillRect(option.rect, consoleView_->palette().highlight());
@@ -62,33 +53,30 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
         painter->fillRect(option.rect, backgroundColor);
     }
 
-    painter->setFont(consoleView_->font());
-    painter->setPen(QColor(Qt::white).darker(150));
-
+    // paint timestamp
     if (consoleView_->timestampsEnabled())
     {
-        painter->setPen(QColor(Qt::white).darker(125));
-        painter->drawText(adjusted, Qt::AlignLeft, timestamp);
-        painter->setPen(QColor("white").darker(125)); // FIXME: only required if background is repainted
-        painter->drawLine(timestampWidth()+2,0,timestampWidth()+2,option.rect.bottom()); // FIXME: only required if background is repainted
+        painter->setPen(consoleView_->textColor().darker(150));
+        painter->drawText(textRect, timestamp);
+        painter->drawLine(timestampWidth()+2,option.rect.y(),timestampWidth()+2,option.rect.bottom());
         xTextStart += timestampWidth() + 7;
     }
 
-    adjusted.setLeft(xTextStart);
+    painter->setPen(QColor(Qt::white).darker(150));
+
+    textRect.setLeft(xTextStart);
 
     // draw text
     painter->setPen(consoleView_->textColor());
 
-    int numChars = charsPerLine_;
-    int numLines = 1;
-    if (numChars > 0)
-        numLines = line.text().length() / numChars + 1;
+    const int numChars = text.length();
+    const int numLines = (charsPerLine_ > 0) ? (numChars / charsPerLine_) + 1 : 1;
 
     int lastLineWidth = 0;
     for (int i = 0; i < numLines; i++)
     {
         QString lineText = text.mid(i*numChars, numChars);
-        painter->drawText(adjusted.x(), option.rect.y()+ (fontHeight_+1) + (i)*(fontHeight_+2)-metrics.descent(),lineText);
+        painter->drawText(textRect.x(), option.rect.y()+ (fontHeight_+1) + (i)*(fontHeight_+2)-metrics.descent(),lineText);
 
         if (i+1 == numLines)
         {
@@ -103,7 +91,7 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
         painter->drawRect(xTextStart + lastLineWidth, option.rect.y() + (numLines-1)*fontHeight_, cursorWidth_, fontHeight_);
     }
 
-    painter->restore();
+    qDebug() << "Paint" << index.row() << option.rect << timer.nsecsElapsed();
 }
 
 int ConsoleLineItemDelegate::timestampWidth() const

@@ -110,6 +110,12 @@ QVariant ConsoleLineBuffer::data(const QModelIndex &index, int role) const
     if (index.row() >= list_.size() || index.row() < 0)
         return QVariant();
 
+    if (role == Qt::SizeHintRole)
+    {
+        const ConsoleLine& line = list_.at(index.row());
+        return QVariant::fromValue(line.text().length());
+    }
+
     if (role == Qt::DisplayRole) {
         return QVariant::fromValue(list_.at(index.row()));
     }
