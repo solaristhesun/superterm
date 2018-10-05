@@ -13,7 +13,6 @@ class ConsoleTab;
 
 class QSerialPort;
 class ConsoleLineBuffer;
-class CConsoleTabWidget;
 class PortEnumerator;
 class QMenu;
 class PortEndpoint;
@@ -81,9 +80,6 @@ private:
     Session*            session_;
     QMenu*              contextMenu_;
     int                 lastTabIndex_;
-
-    static quint32 m_u32counter;
-    QStringList    m_highlightings;
 
     void fillComboBoxes();
     void createContextMenu();

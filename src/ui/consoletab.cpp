@@ -37,8 +37,6 @@
 #include "models/consolelinebuffer.h"
 #include "models/highlightingsmodel.h"
 
-quint32 ConsoleTab::m_u32counter = 1;
-
 Q_DECLARE_METATYPE(QSerialPort::DataBits)
 Q_DECLARE_METATYPE(QSerialPort::StopBits)
 Q_DECLARE_METATYPE(QSerialPort::Parity)
@@ -577,7 +575,7 @@ void ConsoleTab::onKeyPressed(QKeyEvent* e)
     {
         portEndpoint_->writeData(b);
     }
-#if 0
+#if 1
     lineBuffer_->append(key);
 
     if (key == 'd')

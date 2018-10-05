@@ -2,9 +2,9 @@
 #include <QDebug>
 #include <QSerialPort>
 
-#include "src/session/session.h"
-#include "src/misc/globals.h"
-#include "connectionbar.h"
+#include "session/session.h"
+#include "misc/globals.h"
+#include "ui/connectionbar.h"
 #include "ui_connectionbar.h"
 
 ConnectionBar::ConnectionBar(QWidget* parent)

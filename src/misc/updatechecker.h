@@ -3,10 +3,9 @@
 
 #include <QObject>
 
-#include "misc/softwareversion.h"
-
 class QNetworkAccessManager;
 class QNetworkReply;
+class SoftwareVersion;
 
 class UpdateChecker : public QObject
 {

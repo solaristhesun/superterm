@@ -12,7 +12,6 @@ namespace Ui
 class HighlightingsFrame;
 }
 
-class QListWidgetItem;
 class HighlightingsModel;
 class QSortFilterProxyModel;
 

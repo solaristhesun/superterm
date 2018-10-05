@@ -4,6 +4,7 @@
 
 #include "serial/serialportinfo.h"
 #include "ui/portitemdelegate.h"
+#include "ui/portitemview.h"
 
 PortItemDelegate::PortItemDelegate()
     : view_(new PortItemView(nullptr))

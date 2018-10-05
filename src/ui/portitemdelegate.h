@@ -3,7 +3,7 @@
 
 #include <QItemDelegate>
 
-#include "ui/portitemview.h"
+class PortItemView;
 
 class PortItemDelegate : public QItemDelegate
 {

@@ -7,7 +7,7 @@
 #include "session/session.h"
 
 Session::Session()
-    : m_bPortConnected(true)
+    : bPortConnected_(true)
 {
     // currently nothing
 }
@@ -80,12 +80,12 @@ void Session::removeFiles()
 
 void Session::setPortConnected(bool bPortConnected)
 {
-    m_bPortConnected = bPortConnected;
+    bPortConnected_ = bPortConnected;
 }
 
 bool Session::isPortConnected() const
 {
-    return m_bPortConnected;
+    return bPortConnected_;
 }
 
 QDebug operator<<(QDebug dbg, const Session& s)

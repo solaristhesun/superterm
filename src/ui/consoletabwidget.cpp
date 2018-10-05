@@ -7,7 +7,6 @@
 #include "ui/consoletabbar.h"
 #include "ui/consoletab.h"
 #include "ui/consoletabfactory.h"
-#include "ui/consoletab.h"
 #include "ui/mainwindow.h"
 #include "serial/portenumerator.h"
 #include "session/session.h"

@@ -7,6 +7,7 @@
 #include "misc/updatechecker.h"
 #include "misc/uniqueidentifier.h"
 #include "misc/globals.h"
+#include "misc/softwareversion.h"
 
 UpdateChecker::UpdateChecker()
     : QObject(nullptr)

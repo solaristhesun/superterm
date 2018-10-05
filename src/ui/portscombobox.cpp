@@ -3,7 +3,6 @@
 #include "ui/portscombobox.h"
 #include "ui/portitemdelegate.h"
 #include "serial/portenumerator.h"
-#include "serial/serialportinfo.h"
 
 PortsComboBox::PortsComboBox(QWidget* parent)
     : QComboBox(parent)

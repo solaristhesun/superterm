@@ -4,6 +4,7 @@
 #include <QKeyEvent>
 #include <QListView>
 #include <QObject>
+#include <QPen>
 
 namespace Ui
 {
@@ -18,7 +19,7 @@ class ConsoleView : public QListView
 
 public:
     explicit ConsoleView(QWidget* parent = nullptr);
-    ~ConsoleView();
+    ~ConsoleView() override;
 
     void paintEvent(QPaintEvent* event) override;
 
@@ -37,10 +38,10 @@ public:
     void setTimestampsEnabled(const bool bTimestampsEnabled);
     bool timestampsEnabled() const;
 
-    void   setTextColor(QColor color);
+    void   setTextColor(const QColor& color);
     QColor textColor() const;
 
-    void   setBackgroundColor(QColor color);
+    void   setBackgroundColor(const QColor& color);
     QColor backgroundColor() const;
 
     void setAutoScrollToBottom(const bool bAutoScrollToBottom);
@@ -51,16 +52,18 @@ public slots:
     void scrollToBottom();
 
 private:
-    void drawTimestampsArea();
+    void paintTimestampsArea(QPainter& painter, const QRect& rect);
     void copySelectionToClipboard();
 
 private:
     Ui::ConsoleView*         ui_;
     ConsoleLineItemDelegate* itemDelegate_;
+    QBrush                   backgroundBrush_;
+    QBrush                   timestampBrush_;
+    QPen                     timestampPen_;
     bool                     bTimestampsEnabled_;
     bool                     bAutoScrollToBottom_;
     QColor                   textColor_;
-    QColor                   backgroundColor_;
     bool                     bAutoScrollTriggered;
 };
 

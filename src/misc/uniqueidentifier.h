@@ -3,8 +3,6 @@
 
 #include <QString>
 
-class QRandomGenerator;
-
 class UniqueIdentifier
 {
 public:

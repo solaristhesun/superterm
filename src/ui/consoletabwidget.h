@@ -5,9 +5,6 @@
 
 class ConsoleTab;
 class ConsoleTabBar;
-class PortEnumerator;
-class Session;
-class MainWindow;
 class QMenu;
 
 class ConsoleTabWidget : public QTabWidget

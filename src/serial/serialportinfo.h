@@ -25,6 +25,6 @@ private:
     bool            bBusy_;
 };
 
-Q_DECLARE_METATYPE(SerialPortInfo);
+Q_DECLARE_METATYPE(SerialPortInfo)
 
 #endif // SERIALPORTINFO_H

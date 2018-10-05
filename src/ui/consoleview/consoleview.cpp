@@ -4,16 +4,22 @@
 #include <QElapsedTimer>
 #include <QScrollBar>
 #include <QDebug>
+#include <QtNetwork>
 
-#include "consoleview.h"
 #include "ui_consoleview.h"
 #include "models/consoleline.h"
+#include "ui/consoleview/consoleview.h"
 #include "ui/consoleview/consolelineitemdelegate.h"
+
+static QElapsedTimer timer;  // FIXME: remove
 
 ConsoleView::ConsoleView(QWidget *parent)
     : QListView(parent)
     , ui_(new Ui::ConsoleView)
     , itemDelegate_(new ConsoleLineItemDelegate(this))
+    , backgroundBrush_(Qt::SolidPattern)
+    , timestampBrush_(Qt::SolidPattern)
+    , timestampPen_(Qt::SolidLine)
     , bTimestampsEnabled_(false)
     , bAutoScrollToBottom_(true)
     , bAutoScrollTriggered(false)
@@ -60,26 +66,29 @@ void ConsoleView::mousePressEvent(QMouseEvent * event)
 void ConsoleView::paintEvent(QPaintEvent *event)
 {
     QPainter painter(viewport());
-    QRect cr = rect();
 
-    painter.setPen(backgroundColor());
-    painter.setBrush(QBrush(backgroundColor()));
-    painter.drawRect(0, cr.y(), cr.width(), cr.height());
+    painter.fillRect(event->rect(), backgroundBrush_);
 
     if (bTimestampsEnabled_)
     {
-        int widthTimeStamp = itemDelegate_->timestampWidth();
-
-        painter.setPen(backgroundColor().darker(120));
-        painter.setBrush(QBrush(QColor(backgroundColor().darker(120))));
-        painter.drawRect(0,cr.y(),widthTimeStamp+2,cr.height());
-        painter.setPen(QColor("white").darker(150));
-        painter.drawLine(widthTimeStamp+2, cr.y(), widthTimeStamp+2, cr.bottom());
+        paintTimestampsArea(painter, event->rect());
     }
 
-    QElapsedTimer timer; timer.start();
+    timer.start();
     QListView::paintEvent(event);
     qDebug() << "paintEvent" << timer.elapsed() << "ms";
+}
+
+void ConsoleView::paintTimestampsArea(QPainter& painter, const QRect& rect)
+{
+    const int timestampWidth = itemDelegate_->timestampWidth()+2;
+
+    // fill area
+    painter.fillRect(rect.x(), rect.y(), timestampWidth, rect.height(), timestampBrush_);
+
+    // draw line
+    painter.setPen(timestampPen_);
+    painter.drawLine(timestampWidth, rect.y(), timestampWidth, rect.height());
 }
 
 void ConsoleView::setModel(QAbstractItemModel *model)
@@ -92,7 +101,7 @@ void ConsoleView::setModel(QAbstractItemModel *model)
 
 void ConsoleView::resizeEvent(QResizeEvent *event)
 {
-    qDebug() << "RESIZE";
+    qDebug() << "ConsoleView::resizeEvent" << event->size();
 
     QListView::reset(); // FIXME: check why this is necessary
     QListView::resizeEvent(event);
@@ -149,9 +158,10 @@ bool ConsoleView::autoScrollToBottom() const
     return bAutoScrollToBottom_;
 }
 
-void ConsoleView::setTextColor(QColor color)
+void ConsoleView::setTextColor(const QColor& color)
 {
     textColor_ = color;
+    timestampPen_.setColor(color.darker(150));
 }
 
 QColor ConsoleView::textColor() const
@@ -159,32 +169,15 @@ QColor ConsoleView::textColor() const
     return textColor_;
 }
 
-void ConsoleView::setBackgroundColor(QColor color)
+void ConsoleView::setBackgroundColor(const QColor& color)
 {
-    backgroundColor_ = color;
+    backgroundBrush_.setColor(color);
+    timestampBrush_.setColor(color.darker(120));
 }
 
 QColor ConsoleView::backgroundColor() const
 {
-    return backgroundColor_;
-}
-
-void ConsoleView::drawTimestampsArea()
-{
-    QPainter painter(viewport());
-    QRect cr = contentsRect();
-    ConsoleLineItemDelegate* delegate = static_cast<ConsoleLineItemDelegate*>(itemDelegate());
-    int widthTimeStamp = delegate->timestampWidth();
-
-    QColor c("#142462");
-    painter.setPen(QColor(c.darker(120)));
-    painter.setBrush(QBrush(QColor(c.darker(120))));
-    //painter.drawRect(0,cr.y(),widthTimeStamp+5,cr.height());
-    painter.setPen(backgroundColor());
-    painter.setBrush(QBrush(backgroundColor()));
-    //painter.drawRect(widthTimeStamp+6, cr.y(), cr.width(), cr.height());
-    painter.setPen(QColor("white").darker(150));
-    //painter.drawLine(widthTimeStamp + 5, cr.y(), widthTimeStamp+5, cr.bottom());
+    return backgroundBrush_.color();
 }
 
 QSize ConsoleView::getCharWidth() const
@@ -200,7 +193,7 @@ void ConsoleView::copySelectionToClipboard()
 
     for (QModelIndex& index : list)
     {
-        ConsoleLine line = qvariant_cast<ConsoleLine>(QListView::model()->data(index));
+        ConsoleLine line = QListView::model()->data(index).value<ConsoleLine>();
 
         if (bTimestampsEnabled_)
         {

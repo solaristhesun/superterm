@@ -6,7 +6,6 @@
 #include <QStringList>
 
 #include "models/consoleline.h"
-#include "models/highlighting.h"
 
 class QFile;
 class HighlightingsModel;

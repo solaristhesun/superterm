@@ -3,7 +3,6 @@
 #include <QString>
 #include <QDataStream>
 
-#include "ipc/message.h"
 #include "ipc/messagecodec.h"
 
 Message MessageCodec::decode(QByteArray& message)

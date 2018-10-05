@@ -12,7 +12,7 @@ public:
     QColor  color;
 };
 
-Q_DECLARE_METATYPE(Highlighting);
+Q_DECLARE_METATYPE(Highlighting)
 
 QDataStream& operator<<(QDataStream& out, const Highlighting& v);
 QDataStream& operator>>(QDataStream& in, Highlighting& v);
