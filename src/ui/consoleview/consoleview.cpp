@@ -135,6 +135,7 @@ void ConsoleView::scrollToBottom()
 void ConsoleView::setTimestampsEnabled(const bool bTimestampsEnabled)
 {
     bTimestampsEnabled_ = bTimestampsEnabled;
+    itemDelegate_->updateFontMetrics();
 }
 
 bool ConsoleView::timestampsEnabled() const

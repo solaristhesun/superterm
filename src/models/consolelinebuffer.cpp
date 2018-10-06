@@ -26,8 +26,6 @@ void ConsoleLineBuffer::appendToLastLine(QChar c)
     ConsoleLine& line = list_.last();
 
     line.append(c);
-
-   // emit dataChanged(QAbstractListModel::index(list_.count()), QAbstractListModel::index(list_.count()));
 }
 
 void ConsoleLineBuffer::createNewLine()
@@ -52,10 +50,8 @@ void ConsoleLineBuffer::append(QString data)
 
 void ConsoleLineBuffer::append(QByteArray data)
 {
-    QElapsedTimer timer; timer.start();
-    QElapsedTimer timer2;
-    quint64 t;quint64 t2;
-    int firstChangedRow = list_.count();
+    const int firstChangedRow = list_.count();
+
     for (int i = 0; i < data.size(); ++i)
     {
         const char c = data.at(i);
@@ -63,26 +59,17 @@ void ConsoleLineBuffer::append(QByteArray data)
 
         if (c == '\n')
         {
-            //timer2.start();
             refreshSingleHighlighting(list_.last());
             writeLineToLogFile(list_.last());
-             timer2.start();
-            //createNewLine();
-                          timer2.start();
-             beginInsertRows(QModelIndex(), list_.count(), list_.count());
-t2 = timer2.nsecsElapsed();
-             list_.append(ConsoleLine());
-      //       qDebug () << "endInsertRows";
-             endInsertRows();
-                         t = timer2.nsecsElapsed();
+            beginInsertRows(QModelIndex(), list_.count(), list_.count());
+            list_.append(ConsoleLine());
+            endInsertRows();
         }
     }
 
-    int lastChangedRow = list_.count();
-    //qDebug() << "dataChanged" << firstChangedRow << lastChangedRow;
-    emit dataChanged(QAbstractListModel::index(firstChangedRow), QAbstractListModel::index(lastChangedRow));
+    const int lastChangedRow = list_.count();
 
-    //qDebug() << "append" << data.size() << timer.nsecsElapsed() << t2 <<t << list_.count();
+    emit dataChanged(QAbstractListModel::index(firstChangedRow), QAbstractListModel::index(lastChangedRow));
 }
 
 void ConsoleLineBuffer::writeLineToLogFile(ConsoleLine& line)
@@ -116,7 +103,8 @@ QVariant ConsoleLineBuffer::data(const QModelIndex &index, int role) const
         return QVariant::fromValue(line.text().length());
     }
 
-    if (role == Qt::DisplayRole) {
+    if (role == Qt::DisplayRole)
+    {
         return QVariant::fromValue(list_.at(index.row()));
     }
 

@@ -18,7 +18,7 @@ public:
     void updateFontMetrics();
 
 private:
-    int charsPerLine(int width) const;
+    int charsPerLine(const int width) const;
 
 private:
     ConsoleView* consoleView_;
@@ -26,6 +26,7 @@ private:
     int          timestampWidth_;
     int          cursorWidth_;
     int          fontHeight_;
+    int          fontDescent_;
     int          charsPerLine_;
 };
 
