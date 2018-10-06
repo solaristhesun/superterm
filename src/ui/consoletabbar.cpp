@@ -4,6 +4,8 @@
 #include <QPushButton>
 #include <QRect>
 #include <QApplication>
+#include <QStyle>
+
 #include "mainwindow.h"
 
 #include "ui/consoletab.h"
@@ -20,7 +22,7 @@ ConsoleTabBar::ConsoleTabBar(QWidget* parent)
     QTabBar::setMovable(false);
     QTabBar::setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 
-    addTabButton_->setStyleSheet("QPushButton { border: 1px solid #cacaca; border-right: 0; border-top-left-radius: 2px; border-bottom-left-radius: 2px;margin: 1px;     background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #E1E1E1, stop: 0.4 #DDDDdd, stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3); } QPushButton:hover, QPushButton:pressed { background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #fafafa, stop: 0.4 #f4f4f4, stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);} ");
+    addTabButton_->setObjectName(QStringLiteral("addTabBtn"));
     addTabButton_->setGeometry(QRect(0, 200, 27, 27 ));
     addTabButton_->setFocusPolicy(Qt::NoFocus);
     addTabButton_->setIcon(QIcon(":/icons/application_add_16x16.png"));

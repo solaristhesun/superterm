@@ -1,15 +1,15 @@
-QComboBox, QLineEdit, QPushButton
+QFrame#consoleTab QComboBox, QLineEdit, QPushButton
 {
     height: 22px;
     min-height: 22px;
 }
 
-QPushButton
+QFrame#consoleTab QPushButton
 {
     padding: 2px;
 }
 
-QPushButton
+QFrame#consoleTab QPushButton
 {
     min-width: 80px;
     padding-left: 5px;
@@ -76,6 +76,18 @@ QTabWidget::tab-bar
 
 QTabWidget::pane
 {
+}
+
+QPushButton#addTabBtn
+{
+    border: 1px solid #cacaca; border-right: 0; border-top-left-radius: 2px; border-bottom-left-radius: 2px;margin: 1px;     background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #E1E1E1, stop: 0.4 #DDDDdd, stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3); } QPushButton:hover, QPushButton:pressed { background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #fafafa, stop: 0.4 #f4f4f4, stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
+}
+
+QPushButton#addTabBtn::hover
+{
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
+                                stop: 0 #fafafa, stop: 0.4 #f4f4f4,
+                                stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
 }
 
 /* Style the tab using the tab sub-control. Note that
