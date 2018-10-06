@@ -1,27 +1,25 @@
-QPlainTextEdit
+QComboBox, QLineEdit, QPushButton
 {
-    margin: 0;
-    border : 0;
-    padding: 0px;
-    selection-color: yellow;
-}
-
-QComboBox
-{
-    min-height: 20px;
+    height: 22px;
+    min-height: 22px;
 }
 
 QPushButton
 {
-    height: 20px;
-    min-height: 20px;
+    padding: 2px;
 }
 
-QPlainTextEdit
+QPushButton
 {
-    background-color: #003460;
-    color: white;
-    border: 1px solid white;
+    min-width: 80px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+QFrame#connectionBar QPushButton#btnClose
+{
+    width: 22px;
+    min-width: 22px;
 }
 
 QFrame#connectionBar
@@ -40,7 +38,6 @@ QFrame#statusBar
 {
     border-top: 1px solid white;
     background-color: #6fdc6f;
-    min-height: 37px;
 }
 
 QFrame#highlightingsFrame, QFrame#logPanel
@@ -49,16 +46,12 @@ QFrame#highlightingsFrame, QFrame#logPanel
     background-color: #ffe6ab;
 }
 
-QFrame#highlightingsFrame QPushButton, QLineEdit, QLabel
-{
-    height: 20px;
-}
-
 QLabel#btnColor
 {
     border: 1px solid white;
     min-width: 60px;
     margin: 1px 0px 1px 0px;
+    height: 22px;
 }
 
 QFrame#statusBar[theme="error"]
