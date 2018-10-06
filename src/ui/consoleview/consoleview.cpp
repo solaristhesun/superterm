@@ -96,6 +96,7 @@ void ConsoleView::setModel(QAbstractItemModel *model)
 
     connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)),
             this, SLOT(onRowsInserted(QModelIndex,int,int)), Qt::UniqueConnection);
+    connect(model, &QAbstractItemModel::dataChanged, this, &ConsoleView::onDataChanged);
 }
 
 void ConsoleView::resizeEvent(QResizeEvent *event)
@@ -114,6 +115,19 @@ void ConsoleView::setFont(const QFont& font)
 }
 
 void ConsoleView::onRowsInserted(QModelIndex,int,int)
+{
+    if (bAutoScrollToBottom_)
+    {
+        //QListView::scrollToBottom();
+        if (!bAutoScrollTriggered)
+        {
+            bAutoScrollTriggered = true;
+            QTimer::singleShot(50, this, &ConsoleView::scrollToBottom);
+        }
+    }
+}
+
+void ConsoleView::onDataChanged(QModelIndex, QModelIndex, QVector<int>)
 {
     if (bAutoScrollToBottom_)
     {

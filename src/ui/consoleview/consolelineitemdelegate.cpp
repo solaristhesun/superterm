@@ -112,7 +112,7 @@ int ConsoleLineItemDelegate::charsPerLine(const int width) const
         pixelsAvailable -= timestampWidth() + 6;
     }
 
-    return pixelsAvailable / cursorWidth_+1; // FIXME: +1 is acutally wrong
+    return pixelsAvailable / cursorWidth_;
 }
 
 void ConsoleLineItemDelegate::updateFontMetrics()

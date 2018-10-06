@@ -49,6 +49,7 @@ public:
 
 public slots:
     void onRowsInserted(QModelIndex, int, int);
+    void onDataChanged(QModelIndex, QModelIndex, QVector<int>);
     void scrollToBottom();
 
 private:
