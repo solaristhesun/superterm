@@ -13,7 +13,8 @@ QComboBox
 
 QPushButton
 {
-    min-height: 18px;
+    height: 20px;
+    min-height: 20px;
 }
 
 QPlainTextEdit
@@ -48,16 +49,16 @@ QFrame#highlightingsFrame, QFrame#logPanel
     background-color: #ffe6ab;
 }
 
+QFrame#highlightingsFrame QPushButton, QLineEdit, QLabel
+{
+    height: 20px;
+}
 
 QLabel#btnColor
 {
     border: 1px solid white;
-    min-width: 50px;
-}
-
-QFrame#highlightingsFrame QPushButton, QLineEdit, QLabel
-{
-    height: 20px;
+    min-width: 60px;
+    margin: 1px 0px 1px 0px;
 }
 
 QFrame#statusBar[theme="error"]

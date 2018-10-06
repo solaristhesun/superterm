@@ -82,7 +82,9 @@ void HighlightingsFrame::changeColor()
 
 void HighlightingsFrame::refreshColorButton()
 {
-    ui_->btnColor->setStyleSheet(QString("background-color: %1;").arg(highlighting_.color.name()));
+    ui_->btnColor->setStyleSheet(QString("background-color: %1; border: 1px solid %2;")
+        .arg(highlighting_.color.name())
+        .arg(highlighting_.color.darker(150).name()));
 }
 
 void HighlightingsFrame::deleteHighlighting()
