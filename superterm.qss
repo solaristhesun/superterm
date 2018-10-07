@@ -5,7 +5,7 @@ QWidget#consoleTab QPushButton
     min-width: 80px;
     padding-left: 5px;
     padding-right: 5px;
-    background-color: #eeeeee;
+    background-color: white; /*#eeeeee;*/
     border: 1px solid #adadad;
 }
 
@@ -22,13 +22,14 @@ QWidget#consoleTab QPushButton:default
 QWidget#consoleTab QLineEdit
 {
     min-height: 28px;
+    border: 1px solid #adadad;
     /*margin: 1px 0px 1px 0px;*/
 }
 
 QWidget#consoleTab QComboBox
 {
     border: 1px solid #adadad;
-    background-color: #eeeeee;
+    background-color: white;
     padding-left: 5px;
     padding-right: 5px;
     min-height: 26px;
