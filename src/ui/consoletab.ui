@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>ConsoleTab</class>
- <widget class="QWidget" name="ConsoleTab">
+ <widget class="QWidget" name="consoleTab">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -267,7 +267,7 @@
   <connection>
    <sender>actionChangeColor</sender>
    <signal>triggered()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>showColorDialog()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -299,7 +299,7 @@
   <connection>
    <sender>actionChangeFont</sender>
    <signal>triggered()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>showFontDialog()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -315,7 +315,7 @@
   <connection>
    <sender>actionClear</sender>
    <signal>triggered()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>clearTab()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -347,7 +347,7 @@
   <connection>
    <sender>actionAbout</sender>
    <signal>triggered()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>showAboutDialog()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -363,7 +363,7 @@
   <connection>
    <sender>actionFullscreen</sender>
    <signal>triggered()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>toggleFullScreen()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -395,7 +395,7 @@
   <connection>
    <sender>logPanel</sender>
    <signal>loggingStarted()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>startLogging()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -411,7 +411,7 @@
   <connection>
    <sender>logPanel</sender>
    <signal>loggingStopped()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>stopLogging()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -427,7 +427,7 @@
   <connection>
    <sender>actionToggleAutoscroll</sender>
    <signal>triggered()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>toggleAutoScroll()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -443,7 +443,7 @@
   <connection>
    <sender>connectionBar</sender>
    <signal>connectClicked()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>onConnectClicked()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -459,7 +459,7 @@
   <connection>
    <sender>connectionBar</sender>
    <signal>saveClicked()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>showSaveDialog()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -475,7 +475,7 @@
   <connection>
    <sender>connectionBar</sender>
    <signal>configurationChanged(QString)</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>onConfigurationChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -491,7 +491,7 @@
   <connection>
    <sender>actionChangeFontColor</sender>
    <signal>triggered()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>showFontColorDialog()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -507,7 +507,7 @@
   <connection>
    <sender>actionRenameTab</sender>
    <signal>triggered()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>showRenameTabDialog()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -523,7 +523,7 @@
   <connection>
    <sender>actionToggleTimeStamps</sender>
    <signal>triggered()</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>toggleTimeStamps()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -539,7 +539,7 @@
   <connection>
    <sender>consoleView</sender>
    <signal>customContextMenuRequested(QPoint)</signal>
-   <receiver>ConsoleTab</receiver>
+   <receiver>consoleTab</receiver>
    <slot>showContextMenu(QPoint)</slot>
    <hints>
     <hint type="sourcelabel">
