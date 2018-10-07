@@ -1,5 +1,6 @@
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QDebug>
 
 #include "ui_logfilepanel.h"
 #include "ui/logfilepanel.h"
@@ -34,8 +35,14 @@ void LogfilePanel::showFileDialog()
 void LogfilePanel::onFileNameChanged(const QString& fileName)
 {
     QFileInfo fileInfo(fileName);
+    QFileInfo dirInfo(fileInfo.absolutePath());
 
-    ui_->btnStart->setEnabled(fileInfo.absoluteDir().exists() && !fileInfo.fileName().isEmpty());
+    const bool bButtonEnabled = fileInfo.absoluteDir().exists()
+        && dirInfo.isWritable()
+        && !fileInfo.fileName().isEmpty()
+        && !fileInfo.isDir();
+
+    ui_->btnStart->setEnabled(bButtonEnabled);
 }
 
 void LogfilePanel::onStartButtonClicked()
