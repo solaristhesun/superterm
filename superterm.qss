@@ -1,25 +1,69 @@
-QFrame#consoleTab QComboBox, QLineEdit, QPushButton
+QWidget#consoleTab QPushButton
 {
-    height: 22px;
-    min-height: 22px;
-}
-
-QFrame QPushButton
-{
-    padding: 2px;
-}
-
-QFrame QPushButton
-{
+    height: 28px;
+    min-height: 28px;
     min-width: 80px;
     padding-left: 5px;
     padding-right: 5px;
+    background-color: #eeeeee;
+    border: 1px solid #adadad;
+}
+
+QWidget#consoleTab QPushButton:hover
+{
+    background-color: #f6f6f6;
+}
+
+QWidget#consoleTab QPushButton:default
+{
+    border: 1px solid #00a2e8;
+}
+
+QWidget#consoleTab QLineEdit
+{
+    min-height: 28px;
+    /*margin: 1px 0px 1px 0px;*/
+}
+
+QWidget#consoleTab QComboBox
+{
+    border: 1px solid #adadad;
+    background-color: #eeeeee;
+    padding-left: 5px;
+    padding-right: 5px;
+    min-height: 26px;
+    min-width: 80px;
+/*    margin: 1px 0px 1px 0px;*/
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+
+    border-left-width: 0px;
+}
+
+
+QComboBox::down-arrow {
+    image: url(:/icons/arrow_down.png);
+    width: 8px;
+    height: 8px;
+}
+
+QLabel#btnColor
+{
+    min-height: 28px;
+    border: 1px solid white;
+    min-width: 60px;
+    /*margin: 1px 0px 1px 0px;*/
 }
 
 QFrame#connectionBar QPushButton#btnClose
 {
-    width: 22px;
-    min-width: 22px;
+    padding: 0px;
+    width: 28px;
+    min-width: 28px;
 }
 
 QFrame#connectionBar
@@ -46,14 +90,6 @@ QFrame#highlightingsFrame, QFrame#logPanel
     background-color: #ffe6ab;
 }
 
-QLabel#btnColor
-{
-    border: 1px solid white;
-    min-width: 60px;
-    margin: 1px 0px 1px 0px;
-    height: 22px;
-}
-
 QFrame#statusBar[theme="error"]
 {
     background-color: #ff4040;
@@ -69,25 +105,16 @@ QFrame#statusBar QLabel
     color: black;
 }
 
-QTabWidget::tab-bar
+
+QFrame#notificationBar
 {
-    top: 0px;
+    background-color: rgb(239, 41, 41);
 }
 
-QTabWidget::pane
+QFrame#notificationBar QLabel
 {
-}
-
-QPushButton#addTabBtn
-{
-    border: 1px solid #cacaca; border-right: 0; border-top-left-radius: 2px; border-bottom-left-radius: 2px;margin: 1px;     background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #E1E1E1, stop: 0.4 #DDDDdd, stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3); } QPushButton:hover, QPushButton:pressed { background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #fafafa, stop: 0.4 #f4f4f4, stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
-}
-
-QPushButton#addTabBtn::hover
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
-                                stop: 0 #fafafa, stop: 0.4 #f4f4f4,
-                                stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
+    color: white;
+    font-weight: bold;
 }
 
 /* Style the tab using the tab sub-control. Note that
@@ -141,13 +168,20 @@ QTabBar::tab:only-one
 {
 }
 
-QFrame#notificationBar
+QTabWidget::tab-bar
 {
-    background-color: rgb(239, 41, 41);
+    top: 0px;
 }
 
-QFrame#notificationBar QLabel
+QTabWidget::pane
 {
-    color: white;
-    font-weight: bold;
 }
+
+/*
+QPushButton#addTabBtn:hover
+{
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
+                                stop: 0 #fafafa, stop: 0.4 #f4f4f4,
+                                stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
+}
+*/
