@@ -376,16 +376,16 @@
   <connection>
    <sender>actionLogging</sender>
    <signal>triggered()</signal>
-   <receiver>logPanel</receiver>
-   <slot>show()</slot>
+   <receiver>consoleTab</receiver>
+   <slot>showLogToFileFrame()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>272</x>
-     <y>187</y>
+     <x>581</x>
+     <y>137</y>
     </hint>
    </hints>
   </connection>
@@ -573,5 +573,6 @@
   <slot>showRenameTabDialog()</slot>
   <slot>clearTab()</slot>
   <slot>toggleTimeStamps()</slot>
+  <slot>showLogToFileFrame()</slot>
  </slots>
 </ui>

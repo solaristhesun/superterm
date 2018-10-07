@@ -669,6 +669,23 @@ void ConsoleTab::onReconnectionSignal(const Message& message)
     }
 }
 
+void ConsoleTab::showLogToFileFrame()
+{
+    if (!lineBuffer_->isLogging())
+    {
+        QString fileNameProposal = QCoreApplication::applicationDirPath();
+
+        if (session_)
+        {
+            fileNameProposal += "/superterm_" + session_->getTabLabel() + ".log";
+        }
+
+        ui_->logPanel->setLogFileName(fileNameProposal);
+    }
+
+    ui_->logPanel->show();
+}
+
 void ConsoleTab::onReconnectionCancel()
 {
     portEndpoint_->writeSignal(Message::CancelConSig);

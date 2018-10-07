@@ -22,6 +22,7 @@ public:
 
     bool startLogging(QString fileName);
     void stopLogging();
+    bool isLogging() const;
 
     void append(QByteArray data);
     void append(QString data);

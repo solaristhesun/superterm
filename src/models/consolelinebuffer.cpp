@@ -147,6 +147,11 @@ bool ConsoleLineBuffer::startLogging(QString fileName)
     return true;
 }
 
+bool ConsoleLineBuffer::isLogging() const
+{
+    return logFile_ != nullptr;
+}
+
 void ConsoleLineBuffer::stopLogging()
 {
     if (logFile_ != nullptr)

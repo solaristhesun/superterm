@@ -22,7 +22,7 @@ LogfilePanel::~LogfilePanel()
 void LogfilePanel::showFileDialog()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                                    QDir::homePath(),
+                                                    getLogFileName(),
                                                     tr("Logfiles (*.log)"));
 
     if (!fileName.isEmpty())

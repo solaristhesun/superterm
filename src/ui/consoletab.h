@@ -53,6 +53,7 @@ public slots:
     void showAboutDialog();
     void toggleFullScreen();
     void toggleAutoScroll();
+    void showLogToFileFrame();
     void startLogging();
     void stopLogging();
     void showSaveDialog();
