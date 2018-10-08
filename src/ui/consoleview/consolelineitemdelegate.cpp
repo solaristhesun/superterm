@@ -59,7 +59,7 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
     // paint timestamp
     if (consoleView_->timestampsEnabled())
     {
-        painter->setPen(consoleView_->textColor().darker(150));
+        painter->setPen(consoleView_->textColor().darker(105));
         painter->drawText(textRect, timestamp);
         painter->drawLine(timestampWidth()+2,option.rect.y(),timestampWidth()+2,option.rect.bottom());
         xTextStart += timestampWidth() + 6;
