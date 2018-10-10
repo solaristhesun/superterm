@@ -30,6 +30,7 @@ public:
 
 private slots:
     void refreshHighlighting();
+    void completeInsertion();
 
 private:
     void appendToLastLine(QChar c);
@@ -41,6 +42,9 @@ private:
     QVector<ConsoleLine> list_;
     HighlightingsModel*  highlightingsModel_;
     QFile*               logFile_;
+    bool                 bInsertStarted_;
+    int                  firstRow_;
+    int                  lastRow_;
 };
 
 #endif // CONSOLELINEBUFFER_H

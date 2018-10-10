@@ -48,3 +48,9 @@ TEST(ConsoleLineBufferTests, append_performanceTesting)
 
     ASSERT_TRUE(true);
 }
+
+TEST(ConsoleLineBufferTests, append_partialLine)
+{
+    HighlightingsModel model;
+    ConsoleLineBuffer lineBuffer(&model);
+}

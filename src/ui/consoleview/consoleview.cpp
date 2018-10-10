@@ -64,18 +64,20 @@ void ConsoleView::mousePressEvent(QMouseEvent * event)
 
 void ConsoleView::paintEvent(QPaintEvent *event)
 {
+#if 1
     QPainter painter(viewport());
 
     painter.fillRect(event->rect(), backgroundBrush_);
+    //painter.drawRect(event->rect());
 
     if (bTimestampsEnabled_)
     {
         paintTimestampsArea(painter, event->rect());
     }
-
+#endif
     timer.start();
     QListView::paintEvent(event);
-    qDebug() << "paintEvent" << timer.elapsed() << "ms";
+    qDebug() << "paintEvent" << event->rect()<< timer.elapsed() << "ms";
 }
 
 void ConsoleView::paintTimestampsArea(QPainter& painter, const QRect& rect)

@@ -1,3 +1,4 @@
+#include <QThread>
 #include <QColorDialog>
 #include <QSerialPort>
 #include <QDebug>
@@ -575,14 +576,16 @@ void ConsoleTab::onKeyPressed(QKeyEvent* e)
     {
         portEndpoint_->writeData(b);
     }
-#if 1
+#if 0
     lineBuffer_->append(key);
-
-    if (key == 'd')
+#endif
+#if 1
+    if (key == 'Q')
     {
-        for (int i = 1; i < 50; i++)
+        for (int i = 1; i < 2; i++)
         {
             lineBuffer_->append(QByteArray("01234567890123456789012345678901234567890123456789012345678\r\n"));
+            //QThread::msleep(1);
         }
     }
 #endif
