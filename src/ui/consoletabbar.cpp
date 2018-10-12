@@ -89,7 +89,7 @@ void ConsoleTabBar::mouseMoveEvent(QMouseEvent* event)
         // check if tab is over tabbar of other mainwindow
         for (QWidget* widget : QApplication::topLevelWidgets())
         {
-            if (widget->objectName() == "CMainWindow" && widget != currentWindow)
+            if (widget->inherits("QMainWindow") && widget != currentWindow)
             {
                 MainWindow* otherWindow = static_cast<MainWindow*>(widget);
                 QRect        tabBarRect = otherWindow->getTabBarRect();
