@@ -48,7 +48,6 @@ public:
 
 private slots:
     void refreshHighlighting();
-    void completeInsertion();
 
 private:
     void appendToLastLine(QChar c);

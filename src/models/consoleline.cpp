@@ -24,7 +24,7 @@ ConsoleLine::ConsoleLine()
     // currently empty
 }
 
-void ConsoleLine::append(QChar c)
+void ConsoleLine::append(const QChar c)
 {
     if (text_.length() == 0)
     {
@@ -45,7 +45,7 @@ void ConsoleLine::append(QChar c)
     }
 }
 
-QDateTime ConsoleLine::timestamp()
+QDateTime ConsoleLine::timestamp() const
 {
     return timestamp_;
 }

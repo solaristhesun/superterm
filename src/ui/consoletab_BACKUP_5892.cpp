@@ -1,21 +1,3 @@
-/*
- * This file is part of superterm.
- *
- * Copyright (c) 2014-2018 Stefan Scheler.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, version 3.
- *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
 #include <QThread>
 #include <QColorDialog>
 #include <QSerialPort>
@@ -545,10 +527,9 @@ void ConsoleTab::showAboutDialog()
     const QString contents = QString(
         "<p><font color=#000080><font size=6><b>%1</b></font> <font size=4>(revision %2)</font></font></p>"
         "<p align=left>Copyright &copy; 2015-2018 Stefan Scheler. %3</p>"
-        "<p>Based on Qt %4</p>"
-        "<p><a href=\"%5\">%6</a></p>"
+        "<p><a href=\"%4\">%5</a></p>"
         "<p>The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</p>")
-                             .arg(Globals::ApplicationFullName, QString::number(Globals::ApplicationRevision), tr("All rights reserved."), QT_VERSION_STR, Globals::ApplicationWebsite, tr("Visit superterm website"));
+                             .arg(Globals::ApplicationFullName, QString::number(Globals::ApplicationRevision), tr("All rights reserved."), Globals::ApplicationWebsite, tr("Visit superterm website"));
 
     QMessageBox::about(this, tr("About superterm"), contents);
 }
@@ -595,9 +576,22 @@ void ConsoleTab::onKeyPressed(QKeyEvent* e)
     {
         portEndpoint_->writeData(b);
     }
-
 #if 0
-    lineBuffer_->append(key); // local echo
+    lineBuffer_->append(key);
+#endif
+#if 1
+    if (key == 'Q')
+    {
+        for (int i = 1; i < 2; i++)
+        {
+<<<<<<< Updated upstream
+            lineBuffer_->append(QByteArray("01234567890123456789012345678901234567890123456789012345678\r\n"));
+            //QThread::msleep(1);
+=======
+            lineBuffer_->append(QByteArray("01234567890\n12345678901234\n0567890123456789\n0123456789012345678\r\n"));
+>>>>>>> Stashed changes
+        }
+    }
 #endif
 }
 

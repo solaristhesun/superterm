@@ -25,10 +25,12 @@
 
 Message::Message()
 {
+    // currently empty
 }
 
 Message::~Message()
 {
+    // currently empty
 }
 
 Message::Message(const Cmd& cmd, const QByteArray& payload)

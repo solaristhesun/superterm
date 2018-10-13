@@ -19,7 +19,6 @@
 #include <QPainter>
 #include <QTimer>
 #include <QClipboard>
-#include <QElapsedTimer>
 #include <QScrollBar>
 #include <QDebug>
 
@@ -27,8 +26,6 @@
 #include "models/consoleline.h"
 #include "ui/consoleview/consoleview.h"
 #include "ui/consoleview/consolelineitemdelegate.h"
-
-static QElapsedTimer timer;  // FIXME: remove
 
 ConsoleView::ConsoleView(QWidget *parent)
     : QListView(parent)
@@ -82,20 +79,16 @@ void ConsoleView::mousePressEvent(QMouseEvent * event)
 
 void ConsoleView::paintEvent(QPaintEvent *event)
 {
-#if 1
     QPainter painter(viewport());
 
     painter.fillRect(event->rect(), backgroundBrush_);
-    //painter.drawRect(event->rect());
 
     if (bTimestampsEnabled_)
     {
         paintTimestampsArea(painter, event->rect());
     }
-#endif
-    timer.start();
+
     QListView::paintEvent(event);
-    qDebug() << "paintEvent" << event->rect()<< timer.elapsed() << "ms";
 }
 
 void ConsoleView::paintTimestampsArea(QPainter& painter, const QRect& rect)

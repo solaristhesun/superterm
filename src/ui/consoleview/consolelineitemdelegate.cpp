@@ -17,7 +17,6 @@
  */
 
 #include <QPainter>
-#include <QElapsedTimer>
 #include <QScrollBar>
 #include <QDebug>
 
@@ -50,8 +49,6 @@ QSize ConsoleLineItemDelegate::sizeHint(const QStyleOptionViewItem &option, cons
 
 void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    QElapsedTimer timer; timer.start();
-
     ConsoleLine line = index.data().value<ConsoleLine>();
     QString timestamp = line.timestamp().toString(timestampFormat_);
     QString text = line.text();
@@ -112,8 +109,6 @@ void ConsoleLineItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
         painter->setBrush(QBrush(Qt::white, Qt::SolidPattern));
         painter->drawRect(xTextStart + lastLineWidth, option.rect.y() + (numLines-1)*(fontHeight_+2), cursorWidth_, fontHeight_);
     }
-
-    //qDebug() << "Paint" << index.row() << option.rect << timer.nsecsElapsed();
 }
 
 int ConsoleLineItemDelegate::timestampWidth() const

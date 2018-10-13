@@ -28,10 +28,10 @@ class ConsoleLine
 public:
     ConsoleLine();
 
-    void append(QChar c);
+    void append(const QChar c);
     void setColor(const QColor& color);
 
-    QDateTime timestamp();
+    QDateTime timestamp() const;
     QColor    color() const;
     QString   text() const;
 

@@ -73,19 +73,13 @@ void ConsoleLineBuffer::append(QString data)
 
 void ConsoleLineBuffer::append(QByteArray data)
 {
-    const int firstChangedRow = list_.count();
     bool bLineCompleted = false;
-
-    qDebug() << "append" << data;
 
     int currentLines = list_.count();
     int numLines = data.count('\n');
 
-    //qDebug() << "append" << data << currentLines << numLines;
-
     if (numLines > 0)
     {
-        //qDebug() << "beginInsertRows" << currentLines <<  currentLines + numLines - 1;
         beginInsertRows(QModelIndex(), currentLines, currentLines + numLines -1);
     }
 
@@ -108,24 +102,11 @@ void ConsoleLineBuffer::append(QByteArray data)
         endInsertRows();
     }
 
-    const int lastChangedRow = list_.count();
-
     if (!bLineCompleted)
     {
         QModelIndex index = createIndex(list_.count(), 0);
-        //qDebug() << "data changed";
         emit dataChanged(index, index);
     }
-
-    //qDebug() << "append" << timer.elapsed() << data.size() << data;
-}
-
-void ConsoleLineBuffer::completeInsertion()
-{
-    qDebug() << "completeInsertion" << firstRow_ << lastRow_;
-    beginInsertRows(QModelIndex(), firstRow_, lastRow_);
-    endInsertRows();
-    bInsertStarted_ = false;
 }
 
 void ConsoleLineBuffer::writeLineToLogFile(ConsoleLine& line)
