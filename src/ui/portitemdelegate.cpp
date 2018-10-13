@@ -30,6 +30,10 @@ PortItemDelegate::PortItemDelegate()
     // currently emtpy
 }
 
+PortItemDelegate::~PortItemDelegate()
+{
+    delete view_;
+}
 
 void PortItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {

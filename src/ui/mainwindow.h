@@ -36,9 +36,9 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget* parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() override;
 
-    QSize       sizeHint() const;
+    QSize       sizeHint() const override;
     void        attachTab(ConsoleTab* tab);
     void        addExistingTabsFromFile();
     ConsoleTab* detachTab();

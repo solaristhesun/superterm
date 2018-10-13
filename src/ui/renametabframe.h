@@ -32,7 +32,7 @@ class RenameTabFrame : public QFrame
 
 public:
     explicit RenameTabFrame(QWidget* parent = nullptr);
-    ~RenameTabFrame();
+    ~RenameTabFrame() override;
 
     void    setTabLabel(const QString& text);
     QString tabLabel() const;

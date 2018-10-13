@@ -32,7 +32,7 @@ class PortItemView : public QFrame
 
 public:
     explicit PortItemView(QWidget* parent = nullptr);
-    ~PortItemView();
+    ~PortItemView() override;
 
     void setPortName(const QString& portName);
     void setDescription(const QString& description);

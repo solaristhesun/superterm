@@ -29,30 +29,22 @@ class ConsoleTabBar : public QTabBar
     Q_OBJECT
 public:
     explicit ConsoleTabBar(QWidget* parent = nullptr);
-    ~ConsoleTabBar();
+    ~ConsoleTabBar() override;
 
-    void mouseReleaseEvent(QMouseEvent* event);
-    void mousePressEvent(QMouseEvent* event);
-    void mouseMoveEvent(QMouseEvent* event);
-    void showEvent(QShowEvent* event);
-    void tabInserted(int index);
-    void tabRemoved(int index);
+    void mouseReleaseEvent(QMouseEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void showEvent(QShowEvent* event) override;
+    void tabInserted(int index) override;
+    void tabRemoved(int index) override;
 
     void moveButton();
-    void moveTab(int from, int to);
-
-    MainWindow* getNewMainWindow() const
-    {
-        return newMainWindow_;
-    }
-    QPoint getClickOffset() const
-    {
-        return offset_;
-    }
+    MainWindow* getNewMainWindow() const;
+    QPoint getClickOffset() const;
 
 signals:
     void addButtonClicked();
-    void tabDetached(int index);
+    void tabDetached(const int index);
 
 public slots:
 

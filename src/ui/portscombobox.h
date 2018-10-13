@@ -30,7 +30,7 @@ class PortsComboBox : public QComboBox
     Q_OBJECT
 public:
     explicit PortsComboBox(QWidget* parent = nullptr);
-    void showPopup();
+    void showPopup() override;
 
     void setPortEnumerator(PortEnumerator* pe);
     void setPort(QString port);
@@ -38,8 +38,8 @@ public:
     SerialPortInfo currentPortInfo() const;
     void           setCurrentDeviceName(const QString& deviceName);
 
-    void showEvent(QShowEvent* event);
-    void hideEvent(QHideEvent* event);
+    void showEvent(QShowEvent* event) override;
+    void hideEvent(QHideEvent* event) override;
 
 private slots:
     void onEnumerationFinished();

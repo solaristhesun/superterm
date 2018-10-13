@@ -32,7 +32,7 @@ class StatusBarFrame : public QFrame
 
 public:
     explicit StatusBarFrame(QWidget* parent = nullptr);
-    ~StatusBarFrame();
+    ~StatusBarFrame() override;
 
     void showMessage(const QString& message, const int timeout = 0);
     void showProgressMessage(const QString& message);

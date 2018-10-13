@@ -33,6 +33,8 @@ class ConnectionBar : public QFrame
 {
     Q_OBJECT
 public:
+    ~ConnectionBar() override;
+
     void    loadFromSession(Session* session);
     void    onConnected();
     void    onDisconnected();
@@ -51,10 +53,9 @@ public:
     void    setFlowControl(const QString& flowControl);
     void    setPortEnumerator(PortEnumerator* pe);
     explicit ConnectionBar(QWidget* parent = nullptr);
-    ~ConnectionBar();
 
 protected:
-    void showEvent(QShowEvent* event);
+    void showEvent(QShowEvent* event) override;
 
 public slots:
     void onMoreClicked();

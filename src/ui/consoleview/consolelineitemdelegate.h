@@ -28,8 +28,8 @@ class ConsoleLineItemDelegate : public QItemDelegate
 public:
     explicit ConsoleLineItemDelegate(ConsoleView* parent);
 
-    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
-    void  paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+    void  paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
     int timestampWidth() const;
 

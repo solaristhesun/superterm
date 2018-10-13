@@ -26,7 +26,7 @@ class UniqueIdentifier
 public:
     UniqueIdentifier();
 
-    QString toString();
+    QString toString() const;
 
 private:
     quint64 id1_;

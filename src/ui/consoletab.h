@@ -45,7 +45,7 @@ class ConsoleTab : public QWidget
 
 public:
     ConsoleTab(PortEnumerator* pe, Session* session = nullptr);
-    ~ConsoleTab();
+    ~ConsoleTab() override;
 
     void hideButton(int index);
 

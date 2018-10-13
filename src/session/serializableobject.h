@@ -39,10 +39,6 @@ public:
 
         return varList;
     }
-
-signals:
-
-public slots:
 };
 
 QDataStream& operator<<(QDataStream& ds, const SerializableObject& obj);

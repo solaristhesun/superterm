@@ -32,7 +32,7 @@ class LogfilePanel : public QFrame
 
 public:
     explicit LogfilePanel(QWidget* parent = nullptr);
-    ~LogfilePanel();
+    ~LogfilePanel() override;
 
     QString getLogFileName() const;
     void    setLogFileName(QString fileName);

@@ -47,6 +47,7 @@ ConsoleView::ConsoleView(QWidget *parent)
 ConsoleView::~ConsoleView()
 {
     delete ui_;
+    delete itemDelegate_;
 }
 
 void ConsoleView::mouseReleaseEvent(QMouseEvent * event)

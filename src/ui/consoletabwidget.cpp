@@ -69,12 +69,12 @@ ConsoleTab* ConsoleTabWidget::currentWidget() const
     return static_cast<ConsoleTab*>(QTabWidget::currentWidget());
 }
 
-ConsoleTab* ConsoleTabWidget::widget(int index) const
+ConsoleTab* ConsoleTabWidget::widget(const int index) const
 {
     return static_cast<ConsoleTab*>(QTabWidget::widget(index));
 }
 
-void ConsoleTabWidget::destroyTab(int index)
+void ConsoleTabWidget::destroyTab(const int index)
 {
     QWidget* tab = QTabWidget::widget(index);
 

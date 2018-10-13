@@ -32,7 +32,7 @@ class NotificationBar : public QFrame
 
 public:
     explicit NotificationBar(QWidget* parent = nullptr);
-    ~NotificationBar();
+    ~NotificationBar() override;
 
     void setNotificationText(const QString& text);
     void setLink(const QString& link);

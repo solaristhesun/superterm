@@ -22,10 +22,8 @@
 #include <QPushButton>
 #include <QRect>
 #include <QApplication>
-#include <QStyle>
 
-#include "mainwindow.h"
-
+#include "ui/mainwindow.h"
 #include "ui/consoletab.h"
 #include "ui/consoletabbar.h"
 
@@ -51,6 +49,7 @@ ConsoleTabBar::ConsoleTabBar(QWidget* parent)
 ConsoleTabBar::~ConsoleTabBar()
 {
     qDebug() << "ConsoleTabBar::~ConsoleTabBar()";
+    delete addTabButton_;
 }
 
 void ConsoleTabBar::tabInserted(int)
@@ -167,6 +166,15 @@ void ConsoleTabBar::mousePressEvent(QMouseEvent* event)
     offset_.setY(offset_.y() + mainWindow->geometry().y() - mainWindow->frameGeometry().y());
 
     QTabBar::mousePressEvent(event);
+}
+
+MainWindow* ConsoleTabBar::getNewMainWindow() const
+{
+    return newMainWindow_;
+}
+QPoint ConsoleTabBar::getClickOffset() const
+{
+    return offset_;
 }
 
 // EOF <stefan@scheler.com>

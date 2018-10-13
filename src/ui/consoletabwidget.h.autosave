@@ -38,7 +38,7 @@ public:
     void        aboutToQuit();
     void        destroyTab(const int index);
     ConsoleTab* currentWidget() const;
-    ConsoleTab* widget(int index) const;
+    ConsoleTab* widget(const int index) const;
 
 public slots:
     void closeTab(int index);
