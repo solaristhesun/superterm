@@ -28,7 +28,7 @@
 PortEnumerator::PortEnumerator()
 {
     qDebug() << "CPortEnumerator::CPortEnumerator()";
-    QObject::moveToThread(&m_workerThread);
+    QObject::moveToThread(&workerThread_);
 }
 
 PortEnumerator::~PortEnumerator()
@@ -40,32 +40,27 @@ void PortEnumerator::startEnumeration()
 {
     qDebug() << "CPortEnumerator::startEnumeration()";
     QTimer::singleShot(0, this, &PortEnumerator::enumeratePorts);
-    m_workerThread.start();
+    workerThread_.start();
 }
 
 void PortEnumerator::stopEnumeration()
 {
     qDebug() << "CPortEnumerator::stopEnumeration()";
-    m_workerThread.exit(0);
+    workerThread_.exit(0);
 }
 
 void PortEnumerator::enumeratePorts()
 {
     QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
 
-    QMutexLocker locker(&m_mutex);
-    m_portsList.clear();
+    QMutexLocker locker(&mutex_);
+    portsList_.clear();
     for (const QSerialPortInfo& portInfo : ports)
     {
         SerialPortInfo info(portInfo);
-        m_portsList << info;
+        portsList_ << info;
     }
-
-//#if defined(Q_OS_LINUX) && defined(DEBUG)
-    m_portsList << SerialPortInfo(QSerialPortInfo("/dev/COM1"));
-//#endif
-
-    std::sort(m_portsList.begin(), m_portsList.end(), SerialPortInfo::compare);
+    std::sort(portsList_.begin(), portsList_.end(), SerialPortInfo::compare);
 
     emit enumerationFinished();
 
@@ -74,8 +69,8 @@ void PortEnumerator::enumeratePorts()
 
 QList<SerialPortInfo> PortEnumerator::getAvailablePorts()
 {
-    QMutexLocker locker(&m_mutex);
-    return m_portsList;
+    QMutexLocker locker(&mutex_);
+    return portsList_;
 }
 
 // EOF <stefan@scheler.com>

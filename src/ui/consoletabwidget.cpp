@@ -35,7 +35,7 @@ ConsoleTabWidget::ConsoleTabWidget(QWidget* parent)
     , contextMenu_(nullptr)
     , renameTabAction_(new QAction(tr("Rename tab..."), this))
 {
-    qDebug() << "CConsoleTabWidget::CConsoleTabWidget()";
+    qDebug() << "ConsoleTabWidget::ConsoleTabWidget()";
 
     QTabWidget::setTabBar(tabBar_);
 
@@ -50,7 +50,7 @@ ConsoleTabWidget::ConsoleTabWidget(QWidget* parent)
 
 ConsoleTabWidget::~ConsoleTabWidget()
 {
-    qDebug() << "CConsoleTabWidget::~CConsoleTabWidget()";
+    qDebug() << "ConsoleTabWidget::~ConsoleTabWidget()";
     delete tabBar_;
     delete renameTabAction_;
     delete contextMenu_;

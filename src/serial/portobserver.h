@@ -41,8 +41,8 @@ signals:
     void disconnected();
 
 private:
-    bool         m_bActive;
-    QSerialPort* m_port;
+    bool         bActive_;
+    QSerialPort* port_;
 };
 
 #endif // PORTOBSERVER_H

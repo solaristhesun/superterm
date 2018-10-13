@@ -42,10 +42,10 @@ public slots:
     void onPortDisconnected();
 
 private:
-    QLocalSocket* m_socket;
-    QSerialPort*  m_port;
-    PortObserver* m_observer;
-    bool          m_bHasSendReconSignal;
+    QLocalSocket* socket_;
+    QSerialPort*  port_;
+    PortObserver* observer_;
+    bool          bHasSendReconSignal_;
 };
 
 #endif // PORTAPPLICATION_H

@@ -61,8 +61,8 @@ public:
     int  getSize() const;
 
 private:
-    Cmd        m_cmd;
-    QByteArray m_payload;
+    Cmd        cmd_;
+    QByteArray payload_;
 };
 
 QDataStream& operator<<(QDataStream& ds, const Message& obj);

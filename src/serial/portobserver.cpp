@@ -22,8 +22,8 @@
 #include "portobserver.h"
 
 PortObserver::PortObserver()
-    : m_bActive(false)
-    , m_port(nullptr)
+    : bActive_(false)
+    , port_(nullptr)
 {
     QThread::start();
 }
@@ -35,23 +35,23 @@ PortObserver::~PortObserver()
 
 void PortObserver::setActive(bool bActive)
 {
-    m_bActive = bActive;
+    bActive_ = bActive;
 }
 
 void PortObserver::setPort(QSerialPort* port)
 {
-    m_port = port;
+    port_ = port;
 }
 
 void PortObserver::run()
 {
     while (true)
     {
-        if (m_bActive)
+        if (bActive_)
         {
-            if (m_port)
+            if (port_)
             {
-                QSerialPortInfo info(*m_port);
+                QSerialPortInfo info(*port_);
 
                 if (!info.isBusy())
                 {

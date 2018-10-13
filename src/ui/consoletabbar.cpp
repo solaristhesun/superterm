@@ -34,7 +34,7 @@ ConsoleTabBar::ConsoleTabBar(QWidget* parent)
     , addTabButton_(new QPushButton(this))
     , newMainWindow_(nullptr)
 {
-    qDebug() << "CConsoleTabBar::CConsoleTabBar()";
+    qDebug() << "ConsoleTabBar::ConsoleTabBar()";
 
     QTabBar::setFocusPolicy(Qt::NoFocus);
     QTabBar::setMovable(false);
@@ -50,7 +50,7 @@ ConsoleTabBar::ConsoleTabBar(QWidget* parent)
 
 ConsoleTabBar::~ConsoleTabBar()
 {
-    qDebug() << "CConsoleTabBar::~CConsoleTabBar()";
+    qDebug() << "ConsoleTabBar::~ConsoleTabBar()";
 }
 
 void ConsoleTabBar::tabInserted(int)

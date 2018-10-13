@@ -44,9 +44,9 @@ private slots:
     void enumeratePorts();
 
 private:
-    QThread               m_workerThread;
-    QMutex                m_mutex;
-    QList<SerialPortInfo> m_portsList;
+    QThread               workerThread_;
+    QMutex                mutex_;
+    QList<SerialPortInfo> portsList_;
 };
 
 #endif // PORTENUMERATOR_H

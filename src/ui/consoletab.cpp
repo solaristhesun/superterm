@@ -73,7 +73,7 @@ ConsoleTab::ConsoleTab(PortEnumerator* pe, Session* session)
     , contextMenu_(nullptr)
     , lastTabIndex_(0)
 {
-    qDebug() << "CConsoleTab::CConsoleTab()";
+    qDebug() << "ConsoleTab::ConsoleTab()";
 
     ui_->setupUi(this);
     ui_->highlightingsFrame->setModel(highlightingsModel_);
@@ -133,7 +133,7 @@ ConsoleTab::ConsoleTab(PortEnumerator* pe, Session* session)
 
 ConsoleTab::~ConsoleTab()
 {
-    qDebug() << "CConsoleTab::~CConsoleTab()";
+    qDebug() << "ConsoleTab::~ConsoleTab()";
     delete ui_;
     delete contextMenu_;
     delete lineBuffer_;

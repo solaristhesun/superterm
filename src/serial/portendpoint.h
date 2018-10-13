@@ -58,9 +58,9 @@ public slots:
     void onSocketError(QLocalSocket::LocalSocketError error);
 
 private:
-    QProcess*     m_process;
-    QLocalServer* m_server;
-    QLocalSocket* m_socket;
+    QProcess*     process_;
+    QLocalServer* server_;
+    QLocalSocket* socket_;
 };
 
 #endif // CPORTENDPOINT_H

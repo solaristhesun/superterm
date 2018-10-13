@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget* parent)
     , shortcutNextTab_(new QShortcut(QKeySequence("Alt+Right"), this))
     , shortcutPrevTab_(new QShortcut(QKeySequence("Alt+Left"), this))
 {
-    qDebug() << "CMainWindow::CMainWindow()";
+    qDebug() << "MainWindow::MainWindow()";
 
     ui_->setupUi(this);
     ui_->notificationBar->hide();
@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget* parent)
 
 MainWindow::~MainWindow()
 {
-    qDebug() << "CMainWindow::~CMainWindow()" << this;
+    qDebug() << "MainWindow::~MainWindow()" << this;
     delete shortcutNextTab_;
     delete shortcutPrevTab_;
     delete ui_;

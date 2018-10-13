@@ -53,54 +53,54 @@ Message::Message(const Cmd& cmd, const Signal& signal)
 
 void Message::setCmd(const Cmd& cmd)
 {
-    m_cmd = cmd;
+    cmd_ = cmd;
 }
 
 Message::Cmd Message::getCmd() const
 {
-    return m_cmd;
+    return cmd_;
 }
 
 void Message::setPayload(const QByteArray& payload)
 {
-    m_payload = payload;
+    payload_ = payload;
 }
 
 QByteArray Message::getPayload() const
 {
-    return m_payload;
+    return payload_;
 }
 
 void Message::setStringData(const QString& string)
 {
-    m_payload = string.toLatin1();
+    payload_ = string.toLatin1();
 }
 
 QString Message::getStringData() const
 {
-    return QString(m_payload);
+    return QString(payload_);
 }
 
 void Message::setSignal(const Signal& signal)
 {
-    m_payload = QByteArray().append(signal);
+    payload_ = QByteArray().append(signal);
 }
 
 Message::Signal Message::getSignal() const
 {
-    return (Signal) m_payload.at(0);
+    return (Signal) payload_.at(0);
 }
 
 bool Message::isCmd(const Cmd& cmd) const
 {
-    return m_cmd == cmd;
+    return cmd_ == cmd;
 }
 
 int Message::getSize() const
 {
     /* Total message size is 4 bytes for command + 4 bytes for payload size
      *  + number of bytes in payload */
-    return (sizeof(Cmd) + sizeof(qint32) + m_payload.size());
+    return (sizeof(Cmd) + sizeof(qint32) + payload_.size());
 }
 
 QDataStream& operator<<(QDataStream& ds, const Message& message)

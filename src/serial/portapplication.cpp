@@ -72,12 +72,12 @@ void dumpDCB(const char* szFileName)
 
 PortApplication::PortApplication(int& argc, char** argv)
     : QCoreApplication(argc, argv)
-    , m_socket(new QLocalSocket(this))
-    , m_port(nullptr)
-    , m_observer(new PortObserver())
-    , m_bHasSendReconSignal(false)
+    , socket_(new QLocalSocket(this))
+    , port_(nullptr)
+    , observer_(new PortObserver())
+    , bHasSendReconSignal_(false)
 {
-    // currently nothing
+    // currently empty
 }
 
 int PortApplication::exec()
@@ -89,33 +89,33 @@ int PortApplication::exec()
     QSerialPort::StopBits    stopBits = static_cast<QSerialPort::StopBits>(arguments().at(5).toInt());
     QSerialPort::FlowControl flowControl = static_cast<QSerialPort::FlowControl>(arguments().at(6).toInt());
 
-    connect(m_socket, &QLocalSocket::connected, this, &PortApplication::onSocketConnected);
-    connect(m_socket, &QLocalSocket::disconnected, this, &PortApplication::onSocketDisconnected);
-    connect(m_socket, &QLocalSocket::readyRead, this, &PortApplication::onSocketData);
-    connect(m_socket, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::error), this, &PortApplication::onSocketError);
-    connect(m_observer, &PortObserver::disconnected, this, &PortApplication::onPortDisconnected);
+    connect(socket_, &QLocalSocket::connected, this, &PortApplication::onSocketConnected);
+    connect(socket_, &QLocalSocket::disconnected, this, &PortApplication::onSocketDisconnected);
+    connect(socket_, &QLocalSocket::readyRead, this, &PortApplication::onSocketData);
+    connect(socket_, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::error), this, &PortApplication::onSocketError);
+    connect(observer_, &PortObserver::disconnected, this, &PortApplication::onPortDisconnected);
 
-    m_port = new QSerialPort(portName);
+    port_ = new QSerialPort(portName);
 
-    if (m_port->open(QIODevice::ReadWrite))
+    if (port_->open(QIODevice::ReadWrite))
     {
         QTextStream(stdout) << "open:" << portName << endl;
-        m_port->setBaudRate(baudRate);
-        m_port->setFlowControl(flowControl);
-        m_port->setParity(parity);
-        m_port->setStopBits(stopBits);
-        m_port->setDataBits(dataBits);
+        port_->setBaudRate(baudRate);
+        port_->setFlowControl(flowControl);
+        port_->setParity(parity);
+        port_->setStopBits(stopBits);
+        port_->setDataBits(dataBits);
     }
     else
     {
-        QTextStream(stdout) << "error:" << m_port->errorString();
+        QTextStream(stdout) << "error:" << port_->errorString();
         return 1;
     }
 
-    connect(m_port, &QSerialPort::readyRead, this, &PortApplication::onSerialDataAvailable);
+    connect(port_, &QSerialPort::readyRead, this, &PortApplication::onSerialDataAvailable);
 
-    m_socket->abort();
-    m_socket->connectToServer("serial:" + portName.replace("/", "_"));
+    socket_->abort();
+    socket_->connectToServer("serial:" + portName.replace("/", "_"));
 
     QTextStream(stdout) << "started:" << portName << endl;
 
@@ -124,12 +124,12 @@ int PortApplication::exec()
 
 void PortApplication::onSerialDataAvailable()
 {
-    m_socket->write(MessageCodec::encodeData(m_port->readAll()));
+    socket_->write(MessageCodec::encodeData(port_->readAll()));
 }
 
 void PortApplication::onSocketData()
 {
-    QByteArray array = m_socket->readAll();
+    QByteArray array = socket_->readAll();
 
     while (array.size() > 0)
     {
@@ -137,13 +137,13 @@ void PortApplication::onSocketData()
 
         if (message.isCmd(Message::DataCmd))
         {
-            m_port->write(message.getPayload());
+            port_->write(message.getPayload());
         }
         else if (message.isCmd(Message::SigCmd))
         {
             if (message.getSignal() == Message::CancelConSig)
             {
-                m_observer->setActive(false);
+                observer_->setActive(false);
             }
         }
     }
@@ -152,15 +152,15 @@ void PortApplication::onSocketData()
 void PortApplication::onSocketDisconnected()
 {
     QTextStream(stdout) << "disconnected" << endl;
-    m_observer->setActive(false);
+    observer_->setActive(false);
     QCoreApplication::quit();
 }
 
 void PortApplication::onSocketConnected()
 {
     QTextStream(stdout) << "connected" << endl;
-    m_observer->setPort(m_port);
-    m_observer->setActive(true);
+    observer_->setPort(port_);
+    observer_->setActive(true);
 }
 
 void PortApplication::onSocketError(QLocalSocket::LocalSocketError error)
@@ -171,32 +171,32 @@ void PortApplication::onSocketError(QLocalSocket::LocalSocketError error)
 
 void PortApplication::onPortDisconnected()
 {
-    QString                  portName = m_port->portName();
-    quint32                  baudRate = m_port->baudRate();
-    QSerialPort::DataBits    dataBits = m_port->dataBits();
-    QSerialPort::Parity      parity = m_port->parity();
-    QSerialPort::StopBits    stopBits = m_port->stopBits();
-    QSerialPort::FlowControl flowControl = m_port->flowControl();
+    QString                  portName = port_->portName();
+    quint32                  baudRate = port_->baudRate();
+    QSerialPort::DataBits    dataBits = port_->dataBits();
+    QSerialPort::Parity      parity = port_->parity();
+    QSerialPort::StopBits    stopBits = port_->stopBits();
+    QSerialPort::FlowControl flowControl = port_->flowControl();
 
-    m_port->close();
+    port_->close();
 
-    if (!m_bHasSendReconSignal)
+    if (!bHasSendReconSignal_)
     {
-        m_socket->write(MessageCodec::encodeSignal(Message::IsConSig));
-        m_bHasSendReconSignal = true;
+        socket_->write(MessageCodec::encodeSignal(Message::IsConSig));
+        bHasSendReconSignal_ = true;
     }
 
-    if (m_port->open(QIODevice::ReadWrite))
+    if (port_->open(QIODevice::ReadWrite))
     {
-        m_port->setPortName(portName);
-        m_port->setBaudRate(baudRate);
-        m_port->setFlowControl(flowControl);
-        m_port->setParity(parity);
-        m_port->setStopBits(stopBits);
-        m_port->setDataBits(dataBits);
+        port_->setPortName(portName);
+        port_->setBaudRate(baudRate);
+        port_->setFlowControl(flowControl);
+        port_->setParity(parity);
+        port_->setStopBits(stopBits);
+        port_->setDataBits(dataBits);
 
-        m_socket->write(MessageCodec::encodeSignal(Message::DoneConSig));
-        m_bHasSendReconSignal = false;
+        socket_->write(MessageCodec::encodeSignal(Message::DoneConSig));
+        bHasSendReconSignal_ = false;
     }
 }
 
