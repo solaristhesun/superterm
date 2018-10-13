@@ -27,6 +27,7 @@ SOURCES += \
     src/serial/serialportinfo.cpp \
     src/serial/portendpoint.cpp \
     src/serial/portapplication.cpp \
+    src/serial/mockportapp.cpp \
     src/session/session.cpp \
     src/session/serializableobject.cpp \
     src/ipc/message.cpp \
@@ -63,6 +64,7 @@ HEADERS += \
     src/serial/serialportinfo.h \
     src/serial/portendpoint.h \
     src/serial/portapplication.h \
+    src/serial/mockportapp.h \
     src/session/session.h \
     src/session/serializableobject.h \
     src/ipc/message.h \

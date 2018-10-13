@@ -29,16 +29,23 @@
 #include "ui/consoletabfactory.h"
 #include "ui/highlightingsframe.h"
 #include "serial/portapplication.h"
+#include "serial/mockportapp.h"
 #include "serial/portenumerator.h"
 #include "singleapplication/singleapplication.h"
 #include "models/highlighting.h"
 #include "misc/softwareversion.h"
 
+#define DEBUG 0
+
 int main(int argc, char* argv[])
 {
     if (argc == 7)
     {
+#if DEBUG
+        MockPortApp a(argc, argv);
+#else
         PortApplication a(argc, argv);
+#endif
         return a.exec();
     }
     else

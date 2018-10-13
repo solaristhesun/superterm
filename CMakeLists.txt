@@ -60,6 +60,7 @@ set(superterm_SRCS
 	src/serial/portendpoint.cpp
 	src/serial/serialportinfo.cpp
 	src/serial/portapplication.cpp
+	src/serial/mockportapp.cpp
 	src/serial/portobserver.cpp
 	src/models/consolelinebuffer.cpp
 	src/models/consoleline.cpp
