@@ -188,7 +188,7 @@ bool ConsoleView::autoScrollToBottom() const
 void ConsoleView::setTextColor(const QColor& color)
 {
     textColor_ = color;
-    timestampPen_.setColor(color.darker(150));
+    timestampPen_.setColor(color.darker(105));
 }
 
 QColor ConsoleView::textColor() const
