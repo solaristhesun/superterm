@@ -41,7 +41,7 @@ ConsoleTabBar::ConsoleTabBar(QWidget* parent)
     QTabBar::setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 
     addTabButton_->setObjectName(QStringLiteral("addTabBtn"));
-    addTabButton_->setGeometry(QRect(0, 200, 27, 27 ));
+    addTabButton_->setGeometry(QRect(0, 200, 26, 26));
     addTabButton_->setFocusPolicy(Qt::NoFocus);
     addTabButton_->setIcon(QIcon(":/icons/application_add_16x16.png"));
 
@@ -70,8 +70,7 @@ void ConsoleTabBar::moveButton()
     if (iLastTabIndex != -1)
     {
         QRect rect = tabRect(iLastTabIndex);
-        int   y = rect.bottom();
-        addTabButton_->move(rect.bottomRight().x() - 28 + 3, y);
+        addTabButton_->move(rect.bottomRight().x() - 28+1, rect.bottom()+4);
     }
 }
 
