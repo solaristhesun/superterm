@@ -607,7 +607,7 @@ void ConsoleTab::startLogging()
 
     if (lineBuffer_->startLogging(fileName))
     {
-        ui_->statusBar->showMessage(tr("Logging to %1 started.").arg(fileName), 3000);
+        ui_->statusBar->showMessage(tr("Logging to %1 started.").arg(QDir::toNativeSeparators(fileName)), 3000);
 
         if (session_)
         {
@@ -617,7 +617,7 @@ void ConsoleTab::startLogging()
     }
     else
     {
-        ui_->statusBar->showMessage(tr("Logging to %1 failed.").arg(fileName));
+        ui_->statusBar->showMessage(tr("Logging to %1 failed.").arg(QDir::toNativeSeparators(fileName)));
     }
 }
 

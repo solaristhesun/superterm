@@ -1,6 +1,5 @@
 build_ninja/
 build/
-emulator/emulator
 Makefile
 *.user
 *.qm

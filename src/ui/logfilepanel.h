@@ -49,6 +49,7 @@ signals:
 private:
     Ui::LogfilePanel* ui_;
     bool              bEnabled_;
+    QString           filename_;
 };
 
 #endif // LOGFILEPANEL_H

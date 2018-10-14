@@ -27,25 +27,25 @@
 
 PortEnumerator::PortEnumerator()
 {
-    qDebug() << "CPortEnumerator::CPortEnumerator()";
+    qDebug() << "PortEnumerator::PortEnumerator()";
     QObject::moveToThread(&workerThread_);
 }
 
 PortEnumerator::~PortEnumerator()
 {
-    qDebug() << "CPortEnumerator::~CPortEnumerator()";
+    qDebug() << "PortEnumerator::~PortEnumerator()";
 }
 
 void PortEnumerator::startEnumeration()
 {
-    qDebug() << "CPortEnumerator::startEnumeration()";
+    qDebug() << "PortEnumerator::startEnumeration()";
     QTimer::singleShot(0, this, &PortEnumerator::enumeratePorts);
     workerThread_.start();
 }
 
 void PortEnumerator::stopEnumeration()
 {
-    qDebug() << "CPortEnumerator::stopEnumeration()";
+    qDebug() << "PortEnumerator::stopEnumeration()";
     workerThread_.exit(0);
 }
 

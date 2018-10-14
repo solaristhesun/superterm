@@ -27,6 +27,7 @@ LogfilePanel::LogfilePanel(QWidget* parent)
     : QFrame(parent)
     , ui_(new Ui::LogfilePanel)
     , bEnabled_(false)
+    , filename_()
 {
     ui_->setupUi(this);
 
@@ -46,7 +47,7 @@ void LogfilePanel::showFileDialog()
 
     if (!fileName.isEmpty())
     {
-        ui_->editFileName->setText(fileName);
+        setLogFileName(fileName);
     }
 }
 
@@ -86,12 +87,13 @@ void LogfilePanel::onStartButtonClicked()
 
 QString LogfilePanel::getLogFileName() const
 {
-    return ui_->editFileName->text();
+    return filename_;
 }
 
 void LogfilePanel::setLogFileName(QString fileName)
 {
-    ui_->editFileName->setText(fileName);
+    filename_ = fileName;
+    ui_->editFileName->setText(QDir::toNativeSeparators(fileName));
 }
 
 // EOF <stefan@scheler.com>

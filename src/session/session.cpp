@@ -27,12 +27,12 @@
 Session::Session()
     : bPortConnected_(true)
 {
-    // currently nothing
+    qDebug() << "Session::Session";
 }
 
 Session::~Session()
 {
-    qDebug() << "CSession::~CSession";
+    qDebug() << "Session::~Session";
 
     QString fileName = QCoreApplication::applicationDirPath() + "/superterm_" + m_deviceName + ".session";
     QFile::remove(fileName);
