@@ -38,6 +38,7 @@ class Session;
 class MainWindow;
 class Message;
 class HighlightingsModel;
+class ConsoleTabMenu;
 
 class ConsoleTab : public QWidget
 {
@@ -85,6 +86,7 @@ public slots:
     void onRenameTab();
     void clearTab();
     void toggleTimeStamps();
+    void alignWindowsHorizontally();
 
 signals:
     void labelChanged(const QString&);
@@ -97,7 +99,7 @@ private:
     QString             tabLabel_;
     PortEndpoint*       portEndpoint_;
     Session*            session_;
-    QMenu*              contextMenu_;
+    ConsoleTabMenu*     contextMenu_;
     int                 lastTabIndex_;
 
     void fillComboBoxes();

@@ -48,6 +48,7 @@
 #include "ui/mainwindow.h"
 #include "ui/consoletabwidget.h"
 #include "ui/highlightingsframe.h"
+#include "ui/consoletabmenu.h"
 #include "serial/portenumerator.h"
 #include "serial/serialportinfo.h"
 #include "serial/portendpoint.h"
@@ -185,23 +186,8 @@ void ConsoleTab::clearTab()
 
 void ConsoleTab::createContextMenu()
 {
-    contextMenu_ = new QMenu(this);
-    contextMenu_->addAction(ui_->actionConnection);
-    contextMenu_->addAction(ui_->actionLogging);
-    contextMenu_->addAction(ui_->actionToggleTimeStamps);
-    contextMenu_->addAction(ui_->actionHighlight);
-    contextMenu_->addSeparator();
-    contextMenu_->addAction(ui_->actionToggleAutoscroll);
-    contextMenu_->addSeparator();
-    contextMenu_->addAction(ui_->actionChangeFont);
-    contextMenu_->addAction(ui_->actionChangeFontColor);
-    contextMenu_->addAction(ui_->actionChangeColor);
-    contextMenu_->addSeparator();
-    contextMenu_->addAction(ui_->actionClear);
-    contextMenu_->addSeparator();
-    contextMenu_->addAction(ui_->actionFullscreen);
-    contextMenu_->addSeparator();
-    contextMenu_->addAction(ui_->actionAbout);
+
+    contextMenu_ = new ConsoleTabMenu(this->ui_);
     ui_->actionToggleAutoscroll->setChecked(true);
 }
 
@@ -697,6 +683,11 @@ void ConsoleTab::showLogToFileFrame()
     }
 
     ui_->logPanel->show();
+}
+
+void ConsoleTab::alignWindowsHorizontally()
+{
+    qDebug() << "align" << mainWindow_->getTabCount();
 }
 
 void ConsoleTab::onReconnectionCancel()
