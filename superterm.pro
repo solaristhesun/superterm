@@ -110,11 +110,11 @@ OTHER_FILES += \
 TRANSLATIONS += \
     languages/superterm_de.ts
 
-updateqm.input = TRANSLATIONS
-updateqm.output = $$DESTDIR/${QMAKE_FILE_BASE}.qm
-updateqm.commands = lrelease ${QMAKE_FILE_IN} -qm ${QMAKE_FILE_OUT} 
-updateqm.CONFIG += no_link target_predeps
-QMAKE_EXTRA_COMPILERS += updateqm
+#updateqm.input = TRANSLATIONS
+#updateqm.output = $$DESTDIR/${QMAKE_FILE_BASE}.qm
+#updateqm.commands = lrelease ${QMAKE_FILE_IN} -qm ${QMAKE_FILE_OUT}
+#updateqm.CONFIG += no_link target_predeps
+#QMAKE_EXTRA_COMPILERS += updateqm
 
 include(contrib/singleapplication/singleapplication.pri)
 include(contrib/waitingspinnerwidget/waitingspinnerwidget.pri)
@@ -123,7 +123,7 @@ win32:INCLUDEPATH += C:\\DUMP\\projects\\superterm
 win32:RC_FILE += superterm.rc
 win32:CONFIG += embed_manifest_exe
 
-CONFIG += c++11
+CONFIG += c++11 static
 
 INCLUDEPATH += \
     src \
@@ -135,7 +135,10 @@ isEmpty(REVISION){
     REVISION = 0
 }
 
-DEFINES += REVISION=$${REVISION} 
+SUPERTERM_VERSION=2020.10a
+
+DEFINES += REVISION=$${REVISION}
+DEFINES += SUPERTERM_VERSION=$${SUPERTERM_VERSION}
 
 # EOF <stefan@scheler.com>
 

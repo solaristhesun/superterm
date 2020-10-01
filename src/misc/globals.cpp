@@ -22,8 +22,11 @@
 
 #include "misc/globals.h"
 
+#define QUOTE(string) _QUOTE(string)
+#define _QUOTE(string) #string
+
 const QString Globals::ApplicationName = "superterm";
-const SoftwareVersion Globals::ApplicationVersion = SoftwareVersion("2018.10b");
+const SoftwareVersion Globals::ApplicationVersion = SoftwareVersion(QUOTE(SUPERTERM_VERSION));
 const QString Globals::ApplicationFullName = Globals::ApplicationName + " " + Globals::ApplicationVersion.toString();
 const QString Globals::ApplicationWebsite = "https://scheler.com/" + Globals::ApplicationName + "/";
 const quint32 Globals::ApplicationRevision = REVISION;
