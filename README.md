@@ -9,6 +9,11 @@ superterm is the next-generation serial port terminal built for embedded softwar
 - <strong>highlighting capabilities:</strong> you will never miss an important debug message.
 - <strong>portable:</strong> superterm is available for windows and linux platforms.
 
+# Support
+If this software is useful to you, please consider making a donation.
+
+[![paypal](https://www.paypalobjects.com/en_US/DK/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE9BZFW4ZEKYG)
+
 # Screenshots
 ![Screenshot](https://raw.githubusercontent.com/solaristhesun/superterm/master/screenshots/screenshot2.png)
 
