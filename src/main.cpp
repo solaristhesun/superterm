@@ -78,8 +78,11 @@ int main(int argc, char* argv[])
 
         QTranslator appTranslator;
 
+        QString languageCode = QLocale::system().name().split("_")[0];
+        qDebug() << "using language " << languageCode;
+
         // load the new translator
-        appTranslator.load(QString(":/i18n/superterm_%1.qm").arg(QLocale::system().bcp47Name()));
+        appTranslator.load(QString(":/i18n/superterm_%1.qm").arg(languageCode));
         a.installTranslator(&appTranslator);
 
         PortEnumerator portEnumerator;
