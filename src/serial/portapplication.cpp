@@ -92,14 +92,14 @@ int PortApplication::exec()
     connect(socket_, &QLocalSocket::connected, this, &PortApplication::onSocketConnected);
     connect(socket_, &QLocalSocket::disconnected, this, &PortApplication::onSocketDisconnected);
     connect(socket_, &QLocalSocket::readyRead, this, &PortApplication::onSocketData);
-    connect(socket_, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::error), this, &PortApplication::onSocketError);
+    connect(socket_, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::errorOccurred), this, &PortApplication::onSocketError);
     connect(observer_, &PortObserver::disconnected, this, &PortApplication::onPortDisconnected);
 
     port_ = new QSerialPort(portName);
 
     if (port_->open(QIODevice::ReadWrite))
     {
-        QTextStream(stdout) << "open:" << portName << endl;
+        QTextStream(stdout) << "open:" << portName << Qt::endl;
         port_->setBaudRate(baudRate);
         port_->setFlowControl(flowControl);
         port_->setParity(parity);
@@ -117,7 +117,7 @@ int PortApplication::exec()
     socket_->abort();
     socket_->connectToServer("serial:" + portName.replace("/", "_"));
 
-    QTextStream(stdout) << "started:" << portName << endl;
+    QTextStream(stdout) << "started:" << portName << Qt::endl;
 
     return QCoreApplication::exec();
 }
@@ -151,21 +151,21 @@ void PortApplication::onSocketData()
 
 void PortApplication::onSocketDisconnected()
 {
-    QTextStream(stdout) << "disconnected" << endl;
+    QTextStream(stdout) << "disconnected" << Qt::endl;
     observer_->setActive(false);
     QCoreApplication::quit();
 }
 
 void PortApplication::onSocketConnected()
 {
-    QTextStream(stdout) << "connected" << endl;
+    QTextStream(stdout) << "connected" << Qt::endl;
     observer_->setPort(port_);
     observer_->setActive(true);
 }
 
 void PortApplication::onSocketError(QLocalSocket::LocalSocketError error)
 {
-    QTextStream(stdout) << error << endl;
+    QTextStream(stdout) << error << Qt::endl;
     QCoreApplication::quit();
 }
 

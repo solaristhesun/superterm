@@ -62,7 +62,7 @@ void PortEndpoint::onSocketConnection()
     {
         connect(socket_, &QLocalSocket::disconnected, socket_, &PortEndpoint::deleteLater);
         connect(socket_, &QLocalSocket::readyRead, this, &PortEndpoint::onSocketData);
-        connect(socket_, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::error), this, &PortEndpoint::onSocketError);
+        connect(socket_, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::errorOccurred), this, &PortEndpoint::onSocketError);
 
         emit connected();
     }

@@ -35,17 +35,17 @@ MockPortApp::MockPortApp(int& argc, char** argv)
 int MockPortApp::exec()
 {
     QString portName = arguments().at(1);
-    quint32 baudRate = arguments().at(2).toUInt();
+    //quint32 baudRate = arguments().at(2).toUInt();
 
     connect(socket_, &QLocalSocket::connected, this, &MockPortApp::onSocketConnected);
     connect(socket_, &QLocalSocket::disconnected, this, &MockPortApp::onSocketDisconnected);
     connect(socket_, &QLocalSocket::readyRead, this, &MockPortApp::onSocketData);
-    connect(socket_, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::error), this, &MockPortApp::onSocketError);
+    connect(socket_, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::errorOccurred), this, &MockPortApp::onSocketError);
 
     socket_->abort();
     socket_->connectToServer("serial:" + portName.replace("/", "_"));
 
-    QTextStream(stdout) << "started:" << portName << endl;
+    QTextStream(stdout) << "started:" << portName << Qt::endl;
 
     return QCoreApplication::exec();
 }
@@ -74,20 +74,20 @@ void MockPortApp::onSocketData()
 
 void MockPortApp::onSocketDisconnected()
 {
-    QTextStream(stdout) << "disconnected" << endl;
+    QTextStream(stdout) << "disconnected" << Qt::endl;
     QCoreApplication::quit();
 }
 
 void MockPortApp::onSocketConnected()
 {
-    QTextStream(stdout) << "connected" << endl;
+    QTextStream(stdout) << "connected" << Qt::endl;
 
     sendDummyData();
 }
 
 void MockPortApp::onSocketError(QLocalSocket::LocalSocketError error)
 {
-    QTextStream(stdout) << error << endl;
+    QTextStream(stdout) << error << Qt::endl;
     QCoreApplication::quit();
 }
 
