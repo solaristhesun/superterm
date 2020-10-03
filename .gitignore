@@ -1,6 +1,6 @@
 build_ninja/
 build/
-Makefile
+Makefile*
 *.user
 *.qm
 .*
