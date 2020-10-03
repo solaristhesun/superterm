@@ -77,7 +77,9 @@ int main(int argc, char* argv[])
         a.installTranslator(&qtTranslator);
 
         QTranslator appTranslator;
-        appTranslator.load(QCoreApplication::applicationDirPath() + "/" + Globals::ApplicationName + "_" + QLocale::system().name());
+
+        // load the new translator
+        appTranslator.load(QString(":/i18n/superterm_%1.qm").arg(QLocale::system().bcp47Name()));
         a.installTranslator(&appTranslator);
 
         PortEnumerator portEnumerator;
